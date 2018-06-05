@@ -1,0 +1,28 @@
+DateTime,01/May/2018,Machine,1,Process,1,JobWorker,1,JobRecBy,1,Barcode,')INSERT INTO Web.ReportHeaders (ReportName, Controller, Action, SqlProc, Notes, ParentReportHeaderId, ReportSQL, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate, IsGridReport, IsPDFReport, IsHideHeaderDetail)
+VALUES ('Service Tax Group', 'Report_ReportPrint', 'ReportPrint', 'sp_ServiceTaxGroup', NULL, NULL, NULL, 
+'Admin', 'Admin', '2016-08-25 16:43:04.507', '2016-08-25 16:43:04.507', NULL, 1, NULL)
+
+
+INSERT INTO Web.ReportLines (ReportHeaderId, DisplayName, FieldName, DataType, Type, ListItem, DefaultValue, IsVisible, ServiceFuncGet, ServiceFuncSet, SqlProcGetSet, SqlProcGet, SqlProcSet, CacheKey, Serial, NoOfCharToEnter, SqlParameter, IsCollapse, IsMandatory, PlaceHolder, ToolTip, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
+VALUES ((SELECT ReportHeaderId FROM Web.ReportHeaders WHERE ReportName = 'Service Tax Group'), 'Report Type', 
+'ReportType', 'Text', '1.Format', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 
+'@ReportType', 0, 0, NULL, NULL, 'Admin', 'Admin', '2016-08-25 16:43:04.833', '2016-08-25 16:43:04.833')
+
+INSERT INTO Web.Menus (MenuName, Srl, IconName, Description, URL, ModuleId, SubModuleId, ControllerActionId, IsVisible, isDivisionBased, isSiteBased, RouteId, IsActive, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate, AreaName, ControllerName, ActionName, DocumentCategoryId, ProductNatureId)
+VALUES ('Service Tax Group', '6.15', 'glyphicon glyphicon-book', 'Reports', 'ReportDomain', 1104, 3, (SELECT ControllerActionId  FROM Web.ControllerActions WHERE ControllerName = 'GridReport'
+AND ActionName = 'GridReportLayout'), 
+1, NULL, NULL, NULL, 1, 'Admin', 'Admin', '2016-08-25 16:42:26.41', '2016-08-25 16:42:26.41', NULL, 'GridReport', 'GridReportLayout', NULL, NULL)
+
+
+
+CREATE PROCEDURE [Web].[sp_ServiceTaxGroup]
+    @ReportType VARCHAR(Max) = NULL
+AS
+BEGIN
+BEGIN TRY 
+	EXEC (@ReportType)
+END TRY
+BEGIN CATCH
+ 	SELECT ERROR_MESSAGE() AS ErrorMessage;
+END CATCH
+End--,1,1
