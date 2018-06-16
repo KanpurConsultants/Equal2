@@ -385,7 +385,7 @@ namespace Jobs.Controllers
                     personaddress.ObjectState = Model.ObjectState.Added;
                     _PersonAddressService.Create(personaddress);
 
-
+                    account.LedgerAccountId = new LedgerAccountService(_unitOfWork).MaxId()+1;
                     account.LedgerAccountName = person.Name;
                     account.LedgerAccountSuffix = person.Suffix;
                     account.CreatedDate = DateTime.Now;

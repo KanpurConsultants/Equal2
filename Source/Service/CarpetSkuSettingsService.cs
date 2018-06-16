@@ -41,12 +41,20 @@ namespace Service
 
         public CarpetSkuSettings GetCarpetSkuSettings(int DivisionId, int SiteId)
         {
-            return _unitOfWork.Repository<CarpetSkuSettings>().Query().Get().Where(m=>m.DivisionId==DivisionId&&m.SiteId==SiteId).FirstOrDefault();
+            CarpetSkuSettings temp;
+            temp = _unitOfWork.Repository<CarpetSkuSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId).FirstOrDefault();
+            if (temp == null)
+                temp = _unitOfWork.Repository<CarpetSkuSettings>().Query().Get().FirstOrDefault();
+            return temp;
         }
 
         public CarpetSkuSettings GetCarpetSkuSettingsForExcelImport(int SiteId, int? DivisionId)
         {
-            return _unitOfWork.Repository<CarpetSkuSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId ).FirstOrDefault();
+            CarpetSkuSettings temp;
+            temp = _unitOfWork.Repository<CarpetSkuSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId).FirstOrDefault();
+            if (temp == null)
+                temp = _unitOfWork.Repository<CarpetSkuSettings>().Query().Get().FirstOrDefault();
+            return temp;
         }
 
         public CarpetSkuSettings Create(CarpetSkuSettings s)

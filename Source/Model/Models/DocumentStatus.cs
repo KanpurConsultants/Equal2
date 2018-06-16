@@ -10,6 +10,7 @@ namespace Model.Models
 {
     public class DocumentStatus : EntityBase, IHistoryLog
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int DocumentStatusId { get; set; }
 

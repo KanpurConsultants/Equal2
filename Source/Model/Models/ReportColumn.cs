@@ -10,6 +10,7 @@ namespace Model.Models
 {
     public class ReportColumn : EntityBase, IHistoryLog
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ReportColumnId { get; set; }
 

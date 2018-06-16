@@ -16,6 +16,7 @@ namespace Model.Models
             RateDecimalPlaces = 2;
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProductGroupId { get; set; }
 

@@ -9,11 +9,11 @@ namespace Jobs.Constants.City
 {
     public static class CityConstants
     {
-        public static class Bhadohi
+        public static class Kanpur
         {
             public const int CityId = 1;
-            public const string CityName = "Bhadohi";
-            public const int StateId = StateConstants.UttarPradesh.StateId;
+            public const string CityName = "Kanpur";
+            public const int StateId = StateConstants.UTTARPRADESH.StateId;
         }
     }
 }

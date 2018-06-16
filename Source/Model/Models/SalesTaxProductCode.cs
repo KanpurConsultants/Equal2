@@ -6,6 +6,7 @@ namespace Model.Models
 {
     public class SalesTaxProductCode : EntityBase, IHistoryLog
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int SalesTaxProductCodeId { get; set; }
 

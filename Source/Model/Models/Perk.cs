@@ -10,6 +10,7 @@ namespace Model.Models
 {
     public class Perk : EntityBase, IHistoryLog
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         [Display(Name = "Perk Id")]
         public int PerkId { get; set; }

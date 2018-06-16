@@ -18,6 +18,7 @@ namespace Model.Models
             Sizes = new List<Size>();
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProductShapeId { get; set; }
 

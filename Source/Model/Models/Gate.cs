@@ -15,6 +15,7 @@ namespace Model.Models
             //DocumentTypes = new List<DocumentType>();
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int GateId { get; set; }
 

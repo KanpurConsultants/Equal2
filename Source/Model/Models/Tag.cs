@@ -15,6 +15,7 @@ namespace Model.Models
             ProductTag = new List<ProductTag>();
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int TagId { get; set; }
 

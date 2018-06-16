@@ -13,17 +13,17 @@ namespace Model.Models
         public SalarySettings()
         {
         }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int SalarySettingsId { get; set; }
 
         [ForeignKey("DocType")]
-        public int DocTypeId { get; set; }
+        public int ? DocTypeId { get; set; }
         public virtual DocumentType DocType { get; set; }
 
-        public int SiteId { get; set; }
+        public int ? SiteId { get; set; }
         public virtual Site Site { get; set; }
-        public int DivisionId { get; set; }
+        public int ? DivisionId { get; set; }
         public virtual Division Division { get; set; }
 
         public string filterContraSites { get; set; }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Models
 {
     public class Counter : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int CounterId { get; set; }
         public string ImageFolderName { get; set; }

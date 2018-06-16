@@ -10,6 +10,7 @@ namespace Model.Models
         {
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int BusinessSessionId { get; set; }
 

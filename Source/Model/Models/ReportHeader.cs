@@ -14,6 +14,7 @@ namespace Model.Models
         {
             ReportLines = new List<ReportLine>();
         }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ReportHeaderId { get; set; }
         public string ReportName { get; set; }

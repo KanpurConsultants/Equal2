@@ -244,9 +244,9 @@ namespace Jobs.Controllers
                 p.DocTypeId = id;
                 p.ShipMethodId = temp.ShipMethodId;
                 p.DeliveryTermsId = temp.DeliveryTermsId;
-                p.Priority = temp.Priority;
-                p.CurrencyId = temp.CurrencyId;
-                p.UnitConversionForId = temp.UnitConversionForId;
+                p.Priority = temp.Priority ==null ? 0 : (int)temp.Priority;
+                p.CurrencyId = temp.CurrencyId == null ? 0 : (int)temp.CurrencyId;  
+                p.UnitConversionForId = temp.UnitConversionForId == null ? (byte) 0: (byte)temp.UnitConversionForId;  
                 p.ProcessId = temp.ProcessId;
                 PrepareViewBag(p);
             }

@@ -585,6 +585,7 @@ namespace Jobs.Areas.Rug.Controllers
                 {
 
                     ProductGroup group = new ProductGroup();
+                    group.ProductGroupId  = new ProductGroupService(_unitOfWork).MaxId() + 1;
                     group.ProductGroupName = vm.ProductGroupName;
                     group.ProductTypeId = new ProductTypeService(_unitOfWork).GetProductTypeByName(ProductTypeConstants.Rug).ProductTypeId;
                     group.CreatedBy = User.Identity.Name;
@@ -1866,7 +1867,7 @@ namespace Jobs.Areas.Rug.Controllers
                     pro.ProductDesignId = vm.ProductDesignId;
                     pro.ProductInvoiceGroupId = vm.ProductInvoiceGroupId;
                     pro.ProductDesignPatternId = vm.ProductDesignPatternId;
-                    pro.ColourId = vm.ColourId;
+                    pro.ColourId = 1;
                     pro.ContentId = vm.ContentId;
                     pro.FaceContentId = vm.FaceContentId;
                     pro.ProductShapeId = vm.ProductShapeId;

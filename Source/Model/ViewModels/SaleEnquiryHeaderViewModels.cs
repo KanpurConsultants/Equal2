@@ -48,10 +48,10 @@ namespace Model.ViewModels
         public virtual Buyer BillToBuyer { get; set; }
 
         [ForeignKey("Currency"), Display(Name = "Currency"),Required(ErrorMessage="The Currency Field is Required"),Range(1,int.MaxValue,ErrorMessage="Currency field is required")]
-        public int CurrencyId { get; set; }
+        public int ? CurrencyId { get; set; }
         public virtual Currency Currency { get; set; }
         [Required(ErrorMessage="Please select a Priority")]
-        public int Priority { get; set; }
+        public int ? Priority { get; set; }
 
         [ForeignKey("ShipMethod"), Display(Name = "Ship Method"), Required(ErrorMessage = "The ShipMethod Field is Required")]
         public int ? ShipMethodId { get; set; }
@@ -108,7 +108,7 @@ namespace Model.ViewModels
          public string DeliveryTermsName { get; set; }
          public string PriorityName { get; set; }
          public string ShipMethodName { get; set; }
-         public byte UnitConversionForId { get; set; }
+         public byte ? UnitConversionForId { get; set; }
          public string UnitConversionForName { get; set; }
          public string ReviewBy { get; set; }
          public bool? Reviewed { get; set; }

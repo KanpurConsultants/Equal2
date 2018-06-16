@@ -6,6 +6,7 @@ namespace Model.Models
 {
     public class ActivityType : EntityBase, IHistoryLog
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ActivityTypeId { get; set; }
 

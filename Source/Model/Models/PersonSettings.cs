@@ -10,7 +10,7 @@ namespace Model.Models
 {
     public class PersonSettings : EntityBase, IHistoryLog
     {
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int PersonSettingsId { get; set; }
 

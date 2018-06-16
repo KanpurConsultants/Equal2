@@ -13,7 +13,7 @@ namespace Jobs.Constants.Site
             public const int SiteId = 1;
             public const string SiteName = "Main";
             public const string SiteCode = "Main";
-            public const int CityId = CityConstants.Bhadohi.CityId;
+            public const int CityId = CityConstants.Kanpur.CityId;
         }
     }
 }

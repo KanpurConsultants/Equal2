@@ -11,6 +11,7 @@ namespace Model.Models
     public class DocumentTypeDivision : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int DocumentTypeDivisionId { get; set; }
 

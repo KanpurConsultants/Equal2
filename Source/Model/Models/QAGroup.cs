@@ -11,6 +11,7 @@ namespace Model.Models
     public class QAGroup : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]        
         public int QAGroupId { get; set; }
 

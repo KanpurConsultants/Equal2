@@ -10,16 +10,16 @@ namespace Model.Models
 {
     public class SaleDispatchSetting : EntityBase, IHistoryLog
     {
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int SaleDispatchSettingId { get; set; }
 
         [ForeignKey("DocType"), Display(Name = "Order Type")]
-        public int DocTypeId { get; set; }
+        public int ? DocTypeId { get; set; }
         public virtual DocumentType DocType { get; set; }
-        public int SiteId { get; set; }
+        public int ? SiteId { get; set; }
         public virtual Site Site { get; set; }
-        public int DivisionId { get; set; }
+        public int ? DivisionId { get; set; }
         public virtual Division Division { get; set; }
         public bool? isVisibleDimension1 { get; set; }
         public bool? isVisibleDimension2 { get; set; }

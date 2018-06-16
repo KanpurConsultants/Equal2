@@ -11,6 +11,7 @@ namespace Model.Models
     public class PersonRateGroup : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int PersonRateGroupId { get; set; }
 

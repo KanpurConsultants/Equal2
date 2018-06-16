@@ -13,7 +13,7 @@ namespace Model.Models
         public ProductCategorySettings()
         {
         }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProductCategorySettingsId { get; set; }
 

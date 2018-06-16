@@ -276,7 +276,7 @@ namespace Jobs.Controllers
                         if (SaleOrderRecord.Currency != null)
                             s.CurrencyId = _currencyService.GetCurrencyByName(SaleOrderRecord.Currency).ID;
                         else
-                            s.CurrencyId = temp.CurrencyId;
+                            s.CurrencyId = (int)temp.CurrencyId;
 
                         if (SaleOrderRecord.ShipMethod == null)
                             s.ShipMethodId = temp.ShipMethodId;
@@ -289,7 +289,7 @@ namespace Jobs.Controllers
                             s.DeliveryTermsId = _DeliveryTermsService.GetDeliveryTermsByName(SaleOrderRecord.DeliveryTerms).DeliveryTermsId;
 
                         if (SaleOrderRecord.Priority == null)
-                            s.Priority = temp.Priority;
+                            s.Priority = (int)temp.Priority;
                         else if (SaleOrderRecord.Priority == "Low")
                             s.Priority = (int)(SaleOrderPriority.Low);                        
                         else if (SaleOrderRecord.Priority == "High")
@@ -299,8 +299,8 @@ namespace Jobs.Controllers
 
                         if(temp!=null)
                         {
-                            s.DocTypeId = temp.DocTypeId;
-                            s.UnitConversionForId = temp.UnitConversionForId;
+                            s.DocTypeId = (int)temp.DocTypeId;
+                            s.UnitConversionForId = (Byte)temp.UnitConversionForId;
                         }
                                    
                         _SaleOrderHeaderService.Create(s);

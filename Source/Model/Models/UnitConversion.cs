@@ -10,6 +10,7 @@ namespace Model.Models
 {
     public class UnitConversion : EntityBase, IHistoryLog
     {
+       
         [Key]
         public int UnitConversionId { get; set; }
 

@@ -11,6 +11,7 @@ namespace Model.Models
     public class PackingSetting : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int PackingSettingId { get; set; }
 

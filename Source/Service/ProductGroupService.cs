@@ -25,6 +25,7 @@ namespace Service
         void Update(ProductGroup pt);
         ProductGroup Add(ProductGroup pt);
         IQueryable<ProductGroup> GetProductGroupList(int ProductTypeId);
+        IQueryable<ProductGroupIndexViewModel> GetProductGroupsList(string ProductTypeId);
         IEnumerable<ProductGroup> GetProductGroupListForItemType(int Id);
 
         // IEnumerable<ProductGroup> GetProductGroupList(int buyerId);
@@ -35,6 +36,7 @@ namespace Service
         int PrevIdForCarpet(int id);
         int NextId(int id, int ptypeid);
         int PrevId(int id, int ptypeid);
+        int MaxId();
 
     }
 
@@ -60,6 +62,17 @@ namespace Service
         public ProductGroup Find(string Name)
         {
             return ProductGroupRepository.Get().Where(i => i.ProductGroupName == Name).FirstOrDefault();
+        }
+
+        public int MaxId()
+        {
+            int temp = 0;
+            
+            temp = (from p in db.ProductGroups
+                    select p.ProductGroupId).Max();
+
+            return temp;
+
         }
 
         public IQueryable<CarpetIndexViewModel> GetCarpetListForIndex(bool sample)
@@ -323,6 +336,31 @@ namespace Service
         public IQueryable<ProductGroup> GetProductGroupList(int ProductTypeId)
         {
             var pt = _unitOfWork.Repository<ProductGroup>().Query().Get().OrderBy(m => m.ProductGroupName).Where(m => m.ProductTypeId == ProductTypeId);
+
+            return pt;
+        }
+
+        public IQueryable<ProductGroupIndexViewModel> GetProductGroupsList(string ProductTypeId)
+        {
+            
+                string[] ContraProductTypes = null;
+                if (!string.IsNullOrEmpty(ProductTypeId)) { ContraProductTypes = ProductTypeId.Split(",".ToCharArray()); }
+                else { ContraProductTypes = new string[] { "NA" }; }
+
+                IQueryable<ProductGroupIndexViewModel> pt = (from fp in db.ProductGroups
+                      join pg in db.ProductTypes on fp.ProductTypeId equals pg.ProductTypeId into ProductTypeTable
+                      from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
+                      where 1==1
+                      && (string.IsNullOrEmpty(ProductTypeId) ? 1 == 1 : ContraProductTypes.Contains(fp.ProductTypeId.ToString()))
+                      orderby fp.ProductGroupName
+                      select new ProductGroupIndexViewModel
+                      {
+                          ProductGroupId = fp.ProductGroupId,
+                          ProductGroupName = fp.ProductGroupName,
+                          IsActive = fp.IsActive,
+                          IsSystemDefine = fp.IsSystemDefine,
+                          ProductTypeName = ProductTypeTab.ProductTypeName
+                      });
 
             return pt;
         }

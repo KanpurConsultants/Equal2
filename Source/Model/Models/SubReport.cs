@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace Model.Models
 {
     public class SubReport : EntityBase, IHistoryLog
-    {       
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int SubReportId { get; set; }
         public string SubReportName { get; set; }

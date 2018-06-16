@@ -11,6 +11,7 @@ namespace Model.Models
     public class JobReceiveSettings : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int JobReceiveSettingsId { get; set; }
 

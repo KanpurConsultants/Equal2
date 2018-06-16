@@ -15,6 +15,7 @@ namespace Model.Models
         //    //Products = new List<Product>();
         //}
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int DocumentShipMethodId { get; set; }
         [Display(Name = "Document Ship Method")]

@@ -11,6 +11,7 @@ namespace Model.Models
     public class JobOrderSettings : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int JobOrderSettingsId { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿@using Core.Common;
 @using Model.ViewModels;
 @model IQueryable<Model.ViewModels.ProductIndexViewModel>
+@using GridMvc.Html; 
 
 @{
     ViewBag.Title = "Index";
@@ -23,7 +24,8 @@
 
         <div class="panel-info">
             <div class="btn-group">
-                @Html.ActionLink(" ", "Create", "Product", null, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip" })
+                @*@Html.ActionLink(" ", "Create", "Product", null, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip" })*@
+                @Html.ActionLink(" ", "ChooseProductType", "Product", new { @id = @ViewBag.id }, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip", @data_modal = "" })
                 @Html.ActionLink(" ", "Delete", "Product", null, new { @class = "cbtn btn-circle glyphicon glyphicon-trash toolbar", @title = "Delete", @data_toggle = "tooltip", @id = "DeleteRecord", @data_modalDelete = "" })
             </div>
             <div class="btn-group">
@@ -40,6 +42,7 @@
         @Html.Grid(Model).Columns(columns =>
    {
        columns.Add(m => m.ProductId, true);
+       columns.Add(foo => foo.ProductTypeName).Sortable(true).Titled("Product Type").Format("{0:dd/MMM/yyyy}").Filterable(true);
        columns.Add(foo => foo.ProductName).Sortable(true).Titled("Name").Format("{0:dd/MMM/yyyy}").Filterable(true);
        columns.Add(foo => foo.ProductDescription).Sortable(true).Titled("Description").Format("{0:dd/MMM/yyyy}").Filterable(true);
        columns.Add(foo => foo.ProductCode).Sortable(true).Titled("Code").Format("{0:dd/MMM/yyyy}").Filterable(true);

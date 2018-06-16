@@ -45,7 +45,12 @@ namespace Service
 
         public SaleOrderSettings GetSaleOrderSettings(int DocTypeId, int? DivisionId, int SiteId)
         {
-            return _unitOfWork.Repository<SaleOrderSettings>().Query().Get().Where(m=>m.DivisionId==DivisionId&&m.SiteId==SiteId && m.DocTypeId==DocTypeId).FirstOrDefault();
+            SaleOrderSettings temp;
+            temp = _unitOfWork.Repository<SaleOrderSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId && m.DocTypeId == DocTypeId).FirstOrDefault();
+            if (temp == null)
+                temp = _unitOfWork.Repository<SaleOrderSettings>().Query().Get().FirstOrDefault();
+            return temp;
+
         }
 
         public SaleOrderSettings GetSaleOrderSettingsForExcelImport(int SiteId, int? DivisionId)
@@ -87,12 +92,11 @@ namespace Service
         //new added
         public SaleOrderSettings GetSaleOrderSettingsForDocument(int DocTypeId, int DivisionId, int SiteId)
         {
-            return (from p in db.SaleOrderSettings
-                    where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
-                    select p
-                        ).FirstOrDefault();
-
-
+            SaleOrderSettings temp;
+            temp = _unitOfWork.Repository<SaleOrderSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId && m.DocTypeId == DocTypeId).FirstOrDefault();
+            if (temp == null)
+                temp = _unitOfWork.Repository<SaleOrderSettings>().Query().Get().FirstOrDefault();
+            return temp;
         }
 
         public void Dispose()

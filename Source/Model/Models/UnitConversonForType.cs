@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Model.Models
 {
-    public class UnitConversionFor
+    public class UnitConversionFor : EntityBase
     {
         [Key]
         public byte UnitconversionForId { get; set; }

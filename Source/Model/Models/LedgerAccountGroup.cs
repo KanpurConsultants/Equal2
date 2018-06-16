@@ -13,7 +13,7 @@ namespace Model.Models
         public LedgerAccountGroup()
         {
         }
-        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int LedgerAccountGroupId { get; set; }
 

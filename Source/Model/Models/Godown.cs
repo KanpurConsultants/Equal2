@@ -21,7 +21,7 @@ namespace Model.Models
 
 
         [Display(Name = "Code")]
-        [MaxLength(50, ErrorMessage = "Godown Code cannot exceed 50 characters"), Required]
+        [MaxLength(20, ErrorMessage = "Godown Code cannot exceed 50 characters")]
         [Index("IX_Godown_GodownCode", IsUnique = true)]
         public string GodownCode { get; set; }
 

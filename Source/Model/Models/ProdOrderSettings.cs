@@ -11,6 +11,7 @@ namespace Model.Models
     public class ProdOrderSettings : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProdOrderSettingsId { get; set; }
 

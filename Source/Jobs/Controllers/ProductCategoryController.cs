@@ -113,6 +113,7 @@ namespace Jobs.Controllers
 
                 if (vm.ProductCategoryId <= 0)
                 {
+                    pt.ProductCategoryId = new ProductCategoryService(_unitOfWork).MaxId() + 1;
                     pt.CreatedDate = DateTime.Now;
                     pt.ModifiedDate = DateTime.Now;
                     pt.CreatedBy = User.Identity.Name;

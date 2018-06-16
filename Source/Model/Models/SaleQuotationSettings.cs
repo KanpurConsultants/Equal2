@@ -14,27 +14,28 @@ namespace Model.Models
         {
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int SaleQuotationSettingsId { get; set; }
 
         [ForeignKey("DocType"), Display(Name = "Quotation Type")]
-        public int DocTypeId { get; set; }
+        public int ? DocTypeId { get; set; }
         public virtual DocumentType DocType { get; set; }
 
-        public int Priority { get; set; }
+        public int ? Priority { get; set; }
 
         [ForeignKey("ShipMethod"),Display(Name="Ship Method")]
-        public int ShipMethodId { get; set; }
+        public int ? ShipMethodId { get; set; }
         public virtual ShipMethod ShipMethod { get; set; }
-        public int CurrencyId { get; set; }
+        public int ? CurrencyId { get; set; }
         public virtual Currency Currency { get; set; }
 
         [ForeignKey("DeliveryTerms"),Display(Name="Delivery Terms")]
-        public int DeliveryTermsId { get; set; }
+        public int ? DeliveryTermsId { get; set; }
         public virtual DeliveryTerms DeliveryTerms { get; set; }
-        public int SiteId { get; set; }
+        public int ? SiteId { get; set; }
         public virtual Site Site { get; set; }
-        public int DivisionId { get; set; }
+        public int ? DivisionId { get; set; }
         public virtual Division Division { get; set; }
 
         [ForeignKey("UnitConversionFor")]

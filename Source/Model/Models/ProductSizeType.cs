@@ -17,6 +17,7 @@ namespace Model.Models
         {
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProductSizeTypeId { get; set; }
 

@@ -10,6 +10,7 @@ namespace Model.Models
 {
     public class ReportLine : EntityBase, IHistoryLog
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ReportLineId { get; set; }
         [ForeignKey("ReportHeader")]

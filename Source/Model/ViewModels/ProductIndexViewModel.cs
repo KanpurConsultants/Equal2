@@ -32,6 +32,8 @@ namespace Model.ViewModels
 
         [Display(Name = "Product Group")]
         public string ProductGroupName { get; set; }
+        [Display(Name = "Product Type")]
+        public string ProductTypeName { get; set; }
 
         [Display(Name = "Product Construction")]
         public string ProductConstructionName { get; set; }

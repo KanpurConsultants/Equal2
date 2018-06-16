@@ -11,6 +11,7 @@ namespace Model.Models
     public class DocumentTypeSite : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int DocumentTypeSiteId { get; set; }
 

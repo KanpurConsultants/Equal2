@@ -8,6 +8,7 @@ namespace Model.Models
     public class NotificationSubject : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int NotificationSubjectId { get; set; }
 

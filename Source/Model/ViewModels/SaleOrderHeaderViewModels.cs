@@ -41,17 +41,17 @@ namespace Model.ViewModels
 
         [ForeignKey("SaleToBuyer"), Display(Name = "Sale To Buyer"),Required(ErrorMessage="Please select Sale To Buyer"),Range(1,int.MaxValue,ErrorMessage="Sale To Buyer field is required")]
         public int SaleToBuyerId { get; set; }
-        public virtual Buyer SaleToBuyer { get; set; }
+        public virtual Person SaleToBuyer { get; set; }
 
         [ForeignKey("BillToBuyer"), Display(Name = "Bill To Buyer"),Required(ErrorMessage="Please select Bill To Buyer"),Range(1,int.MaxValue,ErrorMessage="Bill To Buyer field is required")]
         public int BillToBuyerId { get; set; }
-        public virtual Buyer BillToBuyer { get; set; }
+        public virtual Person BillToBuyer { get; set; }
 
         [ForeignKey("Currency"), Display(Name = "Currency"),Required(ErrorMessage="The Currency Field is Required"),Range(1,int.MaxValue,ErrorMessage="Currency field is required")]
-        public int CurrencyId { get; set; }
+        public int ? CurrencyId { get; set; }
         public virtual Currency Currency { get; set; }
         [Required(ErrorMessage="Please select a Priority")]
-        public int Priority { get; set; }
+        public int ? Priority { get; set; }
 
         [ForeignKey("ShipMethod"), Display(Name = "Ship Method"), Required(ErrorMessage = "The ShipMethod Field is Required")]
         public int ? ShipMethodId { get; set; }

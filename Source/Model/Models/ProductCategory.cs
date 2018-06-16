@@ -14,6 +14,7 @@ namespace Model.Models
         {
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProductCategoryId { get; set; }
 

@@ -11,6 +11,7 @@ namespace Model.Models
     public class DocSmsContent : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int DocSmsContentId { get; set; }
 

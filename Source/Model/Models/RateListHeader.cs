@@ -11,6 +11,7 @@ namespace Model.Models
     public class RateListHeader : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]        
         public int RateListHeaderId { get; set; }
                                         

@@ -24,7 +24,6 @@ namespace Model.Models
 
         [Display (Name="Narration")]
         [Required]
-        [Index("IX_Narration_NarrationName", IsUnique = true)]
         public string NarrationName { get; set; }
 
         [Display(Name = "Is Active ?")]

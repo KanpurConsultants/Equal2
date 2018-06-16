@@ -11,6 +11,7 @@ namespace Model.Models
     public class ProductTypeSettings : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProductTypeSettingsId { get; set; }
 

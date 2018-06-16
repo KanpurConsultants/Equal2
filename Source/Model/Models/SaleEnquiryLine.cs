@@ -18,12 +18,12 @@ namespace Model.Models
         public int SaleEnquiryLineId { get; set; }
 
         [ForeignKey("SaleEnquiryHeader")]
-        [Index("IX_SaleEnquiryLine_SaleOrdeHeaderProductDueDate", IsUnique = true, Order = 1)]
+        [Index("IX_SaleEnquiryLine_SaleOrdeHeaderProductDueDate")]
         public int SaleEnquiryHeaderId { get; set; }
         public virtual SaleEnquiryHeader SaleEnquiryHeader { get; set; }
 
         [ForeignKey("Product"),Display(Name="Product")]
-        [Index("IX_SaleEnquiryLine_SaleOrdeHeaderProductDueDate", IsUnique = true, Order = 2)]
+        [Index("IX_SaleEnquiryLine_SaleOrdeHeaderProductDueDate")]
         public int? ProductId { get; set; }
         public virtual Product Product { get; set; }
 

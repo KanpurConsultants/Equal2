@@ -31,6 +31,7 @@ namespace Service
         string GetProductNatureName(int id);
         int NextId(int id, int ptypeid);
         int PrevId(int id, int ptypeid);
+        int MaxId();
     }
 
     public class ProductCategoryService : IProductCategoryService
@@ -46,6 +47,17 @@ namespace Service
             ProductCategoryRepository = new RepositoryQuery<ProductCategory>(_ProductCategoryRepository);
         }
 
+
+        public int MaxId()
+        {
+            int temp = 0;
+
+            temp = (from p in db.ProductCategory
+                    select p.ProductCategoryId).Max();
+
+            return temp;
+
+        }
 
         public ProductCategory Find(string Name)
         {            

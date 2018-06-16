@@ -6,7 +6,7 @@ namespace Model.Models
 {
     public class CalculationLineLedgerAccount : EntityBase, IHistoryLog
     {
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int CalculationLineLedgerAccountId { get; set; }
 

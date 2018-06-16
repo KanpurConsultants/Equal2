@@ -11,6 +11,7 @@ namespace Model.Models
     public class DocNotificationContent : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int DocNotificationContentId { get; set; }
 

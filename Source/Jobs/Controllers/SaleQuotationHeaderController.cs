@@ -224,7 +224,7 @@ namespace Jobs.Controllers
             p.TermsAndConditions = settings.TermsAndConditions;
             p.ShipMethodId = settings.ShipMethodId;
             p.DeliveryTermsId = settings.DeliveryTermsId;
-            p.CurrencyId = settings.CurrencyId;
+            p.CurrencyId = (int)settings.CurrencyId;
 
             PrepareViewBag(id);
 

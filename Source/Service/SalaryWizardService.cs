@@ -78,8 +78,7 @@ namespace Service
 		                        FROM Web.LedgerAdjs La
 		                        GROUP BY La.DrLedgerId
 	                        ) AS VAdj ON L.LedgerId = VAdj.DrLedgerId
-	                        WHERE D.DocumentTypeName = '" + Jobs.Constants.DocumentType.DocumentTypeConstants.Loans.DocumentTypeName + "'" + @"
-                            AND IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
+	                        WHERE  IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
 	                        GROUP BY E.PersonID
                         ) AS VLoan ON E.PersonID = VLoan.PersonID
                         LEFT JOIN (
@@ -95,8 +94,7 @@ namespace Service
 		                        FROM Web.LedgerAdjs La
 		                        GROUP BY La.DrLedgerId
 	                        ) AS VAdj ON L.LedgerId = VAdj.DrLedgerId
-	                        WHERE D.DocumentTypeName = '" + Jobs.Constants.DocumentType.DocumentTypeConstants.Advances.DocumentTypeName + "'" + @"
-                            AND IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
+	                        WHERE  IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
 	                        GROUP BY E.PersonID
                         ) AS VAdvance ON E.PersonID = VAdvance.PersonID
                         WHERE isnull(E.IsActive,1) =1 AND DT.DocumentTypeName = 'Job Worker'" +
@@ -139,8 +137,7 @@ namespace Service
 		                        FROM Web.LedgerAdjs La
 		                        GROUP BY La.DrLedgerId
 	                        ) AS VAdj ON L.LedgerId = VAdj.DrLedgerId
-	                        WHERE D.DocumentTypeName = '" + Jobs.Constants.DocumentType.DocumentTypeConstants.Loans.DocumentTypeName + "'" + @"
-                            AND IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
+	                        WHERE  IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
 	                        GROUP BY E.EmployeeId
                         ) AS VLoan ON E.EmployeeId = VLoan.EmployeeId
                         LEFT JOIN (
@@ -156,8 +153,7 @@ namespace Service
 		                        FROM Web.LedgerAdjs La
 		                        GROUP BY La.DrLedgerId
 	                        ) AS VAdj ON L.LedgerId = VAdj.DrLedgerId
-	                        WHERE D.DocumentTypeName = '" + Jobs.Constants.DocumentType.DocumentTypeConstants.Advances.DocumentTypeName + "'" + @"
-                            AND IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
+	                        WHERE  IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
 	                        GROUP BY E.EmployeeId
                         ) AS VAdvance ON E.EmployeeId = VAdvance.EmployeeId
                         WHERE isnull(P.IsActive,1) =1 And E.DateOfJoining <= @DocDate AND E.DateOfRelieving IS NULL " +
@@ -209,8 +205,7 @@ namespace Service
 		                        FROM Web.LedgerAdjs La
 		                        GROUP BY La.DrLedgerId
 	                        ) AS VAdj ON L.LedgerId = VAdj.DrLedgerId
-	                        WHERE D.DocumentTypeName = '" + Jobs.Constants.DocumentType.DocumentTypeConstants.Loans.DocumentTypeName + "'" + @"
-                            AND IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
+	                        WHERE  IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
 	                        GROUP BY E.PersonID
                         ) AS VLoan ON E.PersonID = VLoan.PersonID
                         LEFT JOIN (
@@ -226,8 +221,7 @@ namespace Service
 		                        FROM Web.LedgerAdjs La
 		                        GROUP BY La.DrLedgerId
 	                        ) AS VAdj ON L.LedgerId = VAdj.DrLedgerId
-	                        WHERE D.DocumentTypeName = '" + Jobs.Constants.DocumentType.DocumentTypeConstants.Advances.DocumentTypeName + "'" + @"
-                            AND IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
+	                        WHERE  IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
 	                        GROUP BY E.PersonID
                         ) AS VAdvance ON E.PersonID = VAdvance.PersonID
                         Where L.SalaryHeaderId = @SalaryHeaderId ";
@@ -260,8 +254,7 @@ namespace Service
 		                        FROM Web.LedgerAdjs La
 		                        GROUP BY La.DrLedgerId
 	                        ) AS VAdj ON L.LedgerId = VAdj.DrLedgerId
-	                        WHERE D.DocumentTypeName = '" + Jobs.Constants.DocumentType.DocumentTypeConstants.Loans.DocumentTypeName + "'" + @"
-                            AND IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
+	                        WHERE  IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
 	                        GROUP BY E.EmployeeId
                         ) AS VLoan ON E.EmployeeId = VLoan.EmployeeId
                         LEFT JOIN (
@@ -277,8 +270,7 @@ namespace Service
 		                        FROM Web.LedgerAdjs La
 		                        GROUP BY La.DrLedgerId
 	                        ) AS VAdj ON L.LedgerId = VAdj.DrLedgerId
-	                        WHERE D.DocumentTypeName = '" + Jobs.Constants.DocumentType.DocumentTypeConstants.Advances.DocumentTypeName + "'" + @"
-                            AND IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
+	                        WHERE  IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0
 	                        GROUP BY E.EmployeeId
                         ) AS VAdvance ON E.EmployeeId = VAdvance.EmployeeId
                         Where L.SalaryHeaderId = @SalaryHeaderId ";
@@ -304,8 +296,7 @@ namespace Service
 		                    FROM Web.LedgerAdjs La
 		                    GROUP BY La.DrLedgerId
 	                    ) AS VAdj ON L.LedgerId = VAdj.DrLedgerId
-	                    WHERE L.LedgerAccountId = @LedgerAccountId
-                        And D.DocumentTypeName = '" + Jobs.Constants.DocumentType.DocumentTypeConstants.Loans.DocumentTypeName + "'" + @"
+	                    WHERE L.LedgerAccountId = @LedgerAccountId    
                         AND IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0 ";
 
             IEnumerable<LoanLedgerIdList> SalaryWizardResultViewModel = db.Database.SqlQuery<LoanLedgerIdList>(mQry, SqlParameterLedgerAccountId).ToList();
@@ -330,7 +321,6 @@ namespace Service
 		                    GROUP BY La.DrLedgerId
 	                    ) AS VAdj ON L.LedgerId = VAdj.DrLedgerId
 	                    WHERE L.LedgerAccountId = @LedgerAccountId
-                        And D.DocumentTypeName = '" + Jobs.Constants.DocumentType.DocumentTypeConstants.Advances.DocumentTypeName + "'" + @"
                         AND IsNull(L.AmtDr,0) - IsNull(VAdj.AdjustedAmount,0) > 0 ";
 
             IEnumerable<AdvanceLedgerIdList> SalaryWizardResultViewModel = db.Database.SqlQuery<AdvanceLedgerIdList>(mQry, SqlParameterLedgerAccountId).ToList();

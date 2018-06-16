@@ -14,11 +14,12 @@ namespace Model.Models
         {
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int CarpetSkuSettingsId { get; set; }
-        public int SiteId { get; set; }
+        public int ? SiteId { get; set; }
         public virtual Site Site { get; set; }
-        public int DivisionId { get; set; }
+        public int ? DivisionId { get; set; }
         public virtual Division Division { get; set; }
 
 
@@ -46,7 +47,8 @@ namespace Model.Models
         public bool? isVisibleMapType { get; set; }
         public bool? isVisibleStencilSize { get; set; }
         public bool? isVisibleSalesTaxProductCode { get; set; }
-
+        public bool? AddColourInProductName { get; set; }
+        
 
 
 

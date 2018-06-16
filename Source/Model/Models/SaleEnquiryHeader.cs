@@ -57,10 +57,10 @@ namespace Model.Models
         public virtual Person BillToBuyer { get; set; }
 
         [ForeignKey("Currency"),Display(Name="Currency")]
-        public int CurrencyId { get; set; }
+        public int ? CurrencyId { get; set; }
         public virtual Currency Currency { get; set; }
 
-        public int Priority { get; set; }
+        public int ? Priority { get; set; }
 
         [ForeignKey("ShipMethod"),Display(Name="Ship Method"),Required]
         public int ? ShipMethodId { get; set; }

@@ -11,6 +11,7 @@ namespace Model.Models
     public class DocumentTypeSettings : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int DocumentTypeSettingsId { get; set; }
 
@@ -77,6 +78,12 @@ namespace Model.Models
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
 
+        [Display(Name = "IsNumberingDocCategoryWise")]
+        public Boolean IsNumberingDocCategoryWise { get; set; }
+        [Display(Name = "IsNumberingSiteWise")]
+        public Boolean IsNumberingSiteWise { get; set; }
+        [Display(Name = "IsNumberingDivisionWise")]
+        public Boolean IsNumberingDivisionWise { get; set; }
         [MaxLength(50)]
         public string OMSId { get; set; }
     }

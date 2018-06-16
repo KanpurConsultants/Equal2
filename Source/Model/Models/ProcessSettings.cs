@@ -11,6 +11,7 @@ namespace Model.Models
     public class ProcessSettings : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProcessSettingsId { get; set; }
 

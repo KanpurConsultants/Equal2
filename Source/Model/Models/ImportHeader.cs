@@ -14,6 +14,8 @@ namespace Model.Models
         {
             ImportLines = new List<ImportLine>();
         }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ImportHeaderId { get; set; }
         public string ImportName { get; set; }

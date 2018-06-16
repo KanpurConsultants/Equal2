@@ -3754,7 +3754,7 @@ namespace Jobs.Controllers
           }
 
           public ActionResult GetColours(string searchTerm, int pageSize, int pageNum)
-          {
+         {
               //Get the paged results and the total count of the results for this query. ProductCacheKeyHint
               var productCacheKeyHint = "ColoursCacheKeyHint";
 

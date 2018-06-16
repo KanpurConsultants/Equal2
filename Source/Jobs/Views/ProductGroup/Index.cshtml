@@ -1,4 +1,4 @@
-﻿@model IQueryable<Model.Models.ProductGroup>
+﻿@model IQueryable<Model.ViewModels.ProductGroupIndexViewModel>
 @using GridMvc.Html; 
 
 @{
@@ -32,7 +32,7 @@
                 @Html.ActionLink(" ", "", "", null, new { @class = "glyphicon glyphicon-export toolbar right", @title = "Export", @data_toggle = "tooltip" })
             </h4>*@
             <div class="btn-group">
-                @Html.ActionLink(" ", "Create", "ProductGroup", new { id = @ViewBag.id }, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip" })
+                @Html.ActionLink(" ", "ChooseProductType", "ProductGroup", new { @id = @ViewBag.id }, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip", @data_modal = "" })
                 @Html.ActionLink(" ", "Print", "ProductGroup", null, new { @class = "cbtn btn-circle glyphicon glyphicon-print toolbar", @title = "Print", @data_toggle = "tooltip" })
                 @Html.ActionLink(" ", "Delete", "ProductGroup", null, new { @class = "cbtn btn-circle glyphicon glyphicon-trash toolbar", @title = "Delete", @data_toggle = "tooltip", @id = "DeleteRecord", @data_modalDelete = "" })
             </div>
@@ -53,6 +53,7 @@
    {
        columns.Add(foo => foo.ProductGroupId, true);
        columns.Add(foo => foo.ProductGroupName).Sortable(true).Titled("Name").Filterable(true).Css("modal-link");
+       columns.Add(m => m.ProductTypeName).Titled("Product Type").Filterable(true).Sortable(true);
        columns.Add(m => m.IsSystemDefine).Sortable(true).Titled("System Defined");
        columns.Add(m => m.IsActive).Sortable(true).Titled("Is Active").Filterable(true);
        columns.Add(true).RenderValueAs(m => "<a href='/ProductGroup/Edit/" + m.ProductGroupId + "' hidden class='RecEditurl'></a><a href='/ProductGroup/Delete/" + m.ProductGroupId + "' hidden class='RecDelurl'></a>");
@@ -71,23 +72,6 @@
 
     });
 
-    //$('a#DeleteRecord').click(function (e) {
-       
-    //    var tes = DeleteValidation();
-    //    if (!tes) {
-    //        e.stopImmediatePropagation();
-    //        return false;
-    //    }
-    //    var editiiid = $('table.grid-table .grid-row.grid-row-selected').find('[data-name="ProductGroupId"]').text();
-
-
-    //    var url = '/ProductGroup/Delete/' + editiiid;
-    //    $(this).attr('href', url);
-    //    return;
-    //})
-    //$('#myModal').on('shown.bs.modal', function () {
-    //    $("#Reason").focus();
-    //});
 
     $('a#Settings').click(function (e) {
         var $this = $(this);
@@ -100,4 +84,11 @@
         $(this).attr('href', url);
         return;
     })
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        enableModalTransitions();
+    })
+
 </script>

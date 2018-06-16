@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace Model.Models
 {
     public class ProductTypeQaAttribute : EntityBase, IHistoryLog
-    {      
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]       
         public int Id { get; set; }
 

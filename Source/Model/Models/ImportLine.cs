@@ -10,6 +10,7 @@ namespace Model.Models
 {
     public class ImportLine : EntityBase, IHistoryLog
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ImportLineId { get; set; }
         [ForeignKey("ImportHeader")]

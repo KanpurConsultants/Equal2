@@ -292,6 +292,26 @@ namespace Jobs.Constants.DocumentNature
             public const int DocumentNatureId = 550;
             public const string DocumentNatureName = "Cheque Cancel";
         }
+        public static class PaymentRequest
+        {
+            public const int DocumentNatureId = 551;
+            public const string DocumentNatureName = "Payment Request";
+        }
+        public static class LeaveRequest
+        {
+            public const int DocumentNatureId = 552;
+            public const string DocumentNatureName = "Leave Request";
+        }
+        public static class PaymentAdvise
+        {
+            public const int DocumentNatureId = 553;
+            public const string DocumentNatureName = "Payment Advise";
+        }
+        public static class Salary
+        {
+            public const int DocumentNatureId = 554;
+            public const string DocumentNatureName = "Salary";
+        }
         public static class ExpenseVoucher
         {
             public const int DocumentNatureId = 560;
@@ -305,5 +325,18 @@ namespace Jobs.Constants.DocumentNature
             public const string DocumentNatureName = "Person";
         }
         #endregion
+
+        public static class ProductType
+        {
+            public const int DocumentNatureId = 571;
+            public const string DocumentNatureName = "Product Type";
+        }
+
+        //Only For Carpet Industry
+        public static class Carpet
+        {
+            public const int DocumentNatureId = 1001;
+            public const string DocumentNatureName = "Carpet";
+        }
     }
 }

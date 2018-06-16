@@ -11,6 +11,7 @@ namespace Model.Models
     public class MaterialPlanSettings : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int MaterialPlanSettingsId { get; set; }
 

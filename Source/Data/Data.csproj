@@ -93,13 +93,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\AreaConstants.cs" />
+    <Compile Include="Constants\ProductDesignConstants.cs" />
+    <Compile Include="Constants\ProductSizeTypesConstants.cs" />
     <Compile Include="Constants\CalculationFooterConstants.cs" />
     <Compile Include="Constants\CalculationProductConstants.cs" />
     <Compile Include="Constants\ChargeConstants.cs" />
     <Compile Include="Constants\ChargeGroupSettingConstants.cs" />
     <Compile Include="Constants\ChargeGroupProductConstants.cs" />
+    <Compile Include="Constants\ActivityTypesConstants.cs" />
+    <Compile Include="Constants\ProductShapeConstants.cs" />
+    <Compile Include="Constants\ProductGroupConstants.cs" />
+    <Compile Include="Constants\UnitConversionForConstants.cs" />
     <Compile Include="Constants\CityConstants.cs" />
     <Compile Include="Constants\CalculationConstants.cs" />
+    <Compile Include="Constants\PersonSettingConstants.cs" />
     <Compile Include="Constants\PersonContactTypeConstants.cs" />
     <Compile Include="Constants\DeliveryTermsConstants.cs" />
     <Compile Include="Constants\ProductTypeConstants.cs" />
@@ -135,14 +143,6 @@
     <Compile Include="Constants\SubModuleConstants.cs" />
     <Compile Include="InitializeTables.cs" />
     <Compile Include="LogApplicationDbContext.cs" />
-    <Compile Include="Migrations\201802050758131_PropertyTax.cs" />
-    <Compile Include="Migrations\201802050758131_PropertyTax.Designer.cs">
-      <DependentUpon>201802050758131_PropertyTax.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805220729060_LedgerSupplmentry.cs" />
-    <Compile Include="Migrations\201805220729060_LedgerSupplmentry.Designer.cs">
-      <DependentUpon>201805220729060_LedgerSupplmentry.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NotificationApplicationDbContext.cs" />
     <Compile Include="Infrastructure\IStandardModelDbSets.cs" />
@@ -181,14 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802050758131_PropertyTax.resx">
-      <DependentUpon>201802050758131_PropertyTax.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805220729060_LedgerSupplmentry.resx">
-      <DependentUpon>201805220729060_LedgerSupplmentry.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--<Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

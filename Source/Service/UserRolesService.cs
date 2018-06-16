@@ -109,7 +109,8 @@ namespace Service
 
             var RolesList = (from p in ((ApplicationDbContext)_context).UserRole
                              join t in ((ApplicationDbContext)_context).Roles on p.RoleId equals t.Id
-                             where p.UserId == UserId && p.ExpiryDate == null && RoleIdArr.Contains(p.RoleId)
+                             where p.UserId == UserId && p.ExpiryDate == null 
+                             && ( RoleId ==null ? 1==1 :RoleIdArr.Contains(p.RoleId))
                              select p.RoleId).ToList();
           
             if(RolesList.Count() <= 0 && RolesList.Count <= 0)

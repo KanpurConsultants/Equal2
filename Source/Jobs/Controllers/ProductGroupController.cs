@@ -46,29 +46,31 @@ namespace Jobs.Controllers
         }
         // GET: /ProductMaster/
 
-        public ActionResult Index(int id)//ProductTypeId
-        {
-            //return RedirectToAction("Create");
+
+        public ActionResult Index(string id)//ProductTypeId
+        {           
             ViewBag.id = id;
-            var settings = new ProductTypeSettingsService(_unitOfWork).GetProductTypeSettingsForDocument(id);
-
-            if (settings == null && UserRoles.Contains("SysAdmin"))
-            {
-                return RedirectToAction("Create", "ProductTypeSettings", new { id = id }).Warning("Please create Product Type Settings");
-            }
-            else if (settings == null && !UserRoles.Contains("SysAdmin"))
-            {
-                return View("~/Views/Shared/InValidSettings.cshtml");
-            }
-
-            string ProductTypeName = new ProductTypeService(_unitOfWork).Find(id).ProductTypeName;
-            ViewBag.Name = (settings.ProductGroupCaption ?? "Product Group") + "-" + ProductTypeName;
-
-
-            //ViewBag.Name = new ProductTypeService(_unitOfWork).Find(id).ProductTypeName;
-            var p = _ProductGroupService.GetProductGroupList(id);
+            ViewBag.Name = "Product Group";
+            var p = _ProductGroupService.GetProductGroupsList(id);
             return View(p);
         }
+
+        public ActionResult ChooseProductType(string id)
+        {
+            ViewBag.Name = "Choose Product Type";
+            ViewBag.ProductTypeList = new ProductTypeService(_unitOfWork).GetProductTypeList().ToList();
+            ViewBag.id = id;
+            return PartialView("ChooseProductType");
+        }
+
+        [HttpPost]
+        public ActionResult ChooseProductType(ProductType vm)
+        {
+            
+               return Create(vm.ProductTypeId);         
+
+        }
+
         public ActionResult ProductTypeIndex(int id)//NatureId
         {
             var producttype = new ProductTypeService(_unitOfWork).GetProductTypeListForGroup(id).Where(m => m.IsActive != false).ToList();
@@ -136,7 +138,7 @@ namespace Jobs.Controllers
             {
                 if (vm.ProductGroupId <= 0)
                 {
-
+                    pt.ProductGroupId = new ProductGroupService(_unitOfWork).MaxId()+1;
                     pt.CreatedDate = DateTime.Now;
                     pt.ModifiedDate = DateTime.Now;
                     pt.CreatedBy = User.Identity.Name;

@@ -10,6 +10,7 @@ namespace Model.Models
 {
     public class LedgerSetting : EntityBase,IHistoryLog
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int LedgerSettingId { get; set; }
 

@@ -10,6 +10,7 @@ namespace Model.Models
 {
     public class StockInHandSetting : EntityBase
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int StockInHandSettingId { get; set; }
         public string UserName { get; set; }

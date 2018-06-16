@@ -10,6 +10,7 @@ namespace Model.Models
 {
     public class Route : EntityBase, IHistoryLog
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int RouteId { get; set; }
         

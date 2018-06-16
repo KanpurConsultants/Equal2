@@ -33,6 +33,7 @@ namespace Service
         LedgerAccountViewModel GetLedgerAccountForEdit(int LedgerAccountId);
         int NextId(int id);
         int PrevId(int id);
+        int MaxId();
     }
 
     public class LedgerAccountService : ILedgerAccountService
@@ -168,6 +169,17 @@ namespace Service
                 return temp;
             else
                 return id;
+        }
+
+        public int MaxId()
+        {
+            int temp = 0;
+
+            temp = (from p in db.LedgerAccount
+                        select p.LedgerAccountId).Max();
+
+           return temp;
+
         }
 
         public string GetLedgerAccountnature(int LedgerAccountId)

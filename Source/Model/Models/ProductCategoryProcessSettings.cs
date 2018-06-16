@@ -13,7 +13,7 @@ namespace Model.Models
         public ProductCategoryProcessSettings()
         {
         }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProductCategoryProcessSettingsId { get; set; }
 

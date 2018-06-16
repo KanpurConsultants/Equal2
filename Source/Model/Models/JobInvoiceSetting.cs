@@ -16,6 +16,7 @@ namespace Model.Models
             IsVisibleRate = true;
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int JobInvoiceSettingsId { get; set; }
 

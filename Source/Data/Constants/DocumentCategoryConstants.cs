@@ -43,20 +43,15 @@ namespace Jobs.Constants.DocumentCategory
             public const int DocumentCategoryId = 70;
             public const string DocumentCategoryName = "Sale Order Amendment";
         }
-        public static class SaleInspectionRequest
+        public static class CustomerAuditRequest
         {
             public const int DocumentCategoryId = 80;
-            public const string DocumentCategoryName = "Sale Inspection Request";
+            public const string DocumentCategoryName = "Customer Audit Request";
         }
-        public static class SaleInspectionRequestCancel
-        {
-            public const int DocumentCategoryId = 90;
-            public const string DocumentCategoryName = "Sale Inspection Request Cancel";
-        }
-        public static class SaleInspection
+        public static class CustomerAudit
         {
             public const int DocumentCategoryId = 100;
-            public const string DocumentCategoryName = "Sale Inspection";
+            public const string DocumentCategoryName = "Customer Audit";
         }
         public static class Packing
         {
@@ -68,62 +63,62 @@ namespace Jobs.Constants.DocumentCategory
             public const int DocumentCategoryId = 120;
             public const string DocumentCategoryName = "Performa Invoice";
         }
-        public static class SaleGoodsDispatch
+        public static class GoodsDispatch
         {
             public const int DocumentCategoryId = 130;
-            public const string DocumentCategoryName = "Sale Goods Dispatch";
+            public const string DocumentCategoryName = "Goods Dispatch";
         }
-        public static class SaleGoodsDispatchReturn
+        public static class GoodsReturnInword
         {
             public const int DocumentCategoryId = 140;
-            public const string DocumentCategoryName = "Sale Goods Dispatch Return";
+            public const string DocumentCategoryName = "Goods Return (Inword)";
         }
         public static class SaleInvoice
         {
             public const int DocumentCategoryId = 150;
             public const string DocumentCategoryName = "Sale Invoice";
         }
-        public static class SaleInvoiceReturn
+        public static class SaleReturn
         {
             public const int DocumentCategoryId = 160;
-            public const string DocumentCategoryName = "Sale Invoice Return";
+            public const string DocumentCategoryName = "Sale Return";
         }
-        public static class SaleDeliveryOrder
+        public static class DeliveryOrder
         {
             public const int DocumentCategoryId = 170;
-            public const string DocumentCategoryName = "Sale Delivery Order";
+            public const string DocumentCategoryName = "Delivery Order";
         }
-        public static class SaleDeliveryOrderCancel
+        public static class DeliveryOrderCancel
         {
             public const int DocumentCategoryId = 180;
-            public const string DocumentCategoryName = "Sale Delivery Order Cancel";
+            public const string DocumentCategoryName = "Delivery Order Cancel";
         }
-        public static class QualityChecking
+        public static class QualityCheckingOutword
         {
             public const int DocumentCategoryId = 190;
-            public const string DocumentCategoryName = "Quality Checking";
+            public const string DocumentCategoryName = "Quality Checking (Outword)";
         }
-        public static class DebitNoteSale
+        public static class WayBillOutword
         {
             public const int DocumentCategoryId = 200;
-            public const string DocumentCategoryName = "Debit Note (Sale)";
+            public const string DocumentCategoryName = "Way Bill (Outword)";
         }
-        public static class CreditNoteSale
+        public static class WayBillInword
         {
             public const int DocumentCategoryId = 210;
-            public const string DocumentCategoryName = "Credit Note (Sale)";
+            public const string DocumentCategoryName = "Way Bill (Inword)";
         }
         #endregion
         #region "Purchase"
-        public static class PurchaseIndent
+        public static class PurchasePlan
         {
             public const int DocumentCategoryId = 220;
-            public const string DocumentCategoryName = "Purchase Indent";
+            public const string DocumentCategoryName = "Purchase Plan";
         }
-        public static class PurchaseIndentCancel
+        public static class PurchasePlanCancel
         {
             public const int DocumentCategoryId = 230;
-            public const string DocumentCategoryName = "Purchase Indent Cancel";
+            public const string DocumentCategoryName = "Purchase Plan Cancel";
         }
         public static class PurchaseEnquiry
         {
@@ -160,57 +155,52 @@ namespace Jobs.Constants.DocumentCategory
             public const int DocumentCategoryId = 300;
             public const string DocumentCategoryName = "Purchase Order Amendment";
         }
-        public static class PurchaseInspectionRequest
+        public static class SupplierAuditRequest
         {
             public const int DocumentCategoryId = 320;
-            public const string DocumentCategoryName = "Purchase Inspection Request";
+            public const string DocumentCategoryName = "Supplier Audit Request";
         }
-        public static class PurchaseInspectionRequestCancel
-        {
-            public const int DocumentCategoryId = 330;
-            public const string DocumentCategoryName = "Purchase Inspection Request Cancel";
-        }
-        public static class PurchaseInspection
+        public static class SupplierAudit
         {
             public const int DocumentCategoryId = 340;
-            public const string DocumentCategoryName = "Purchase Inspection";
+            public const string DocumentCategoryName = "Supplier Audit";
         }
-        public static class PurchaseGoodsReceipt
+        public static class GoodsReceipt
         {
             public const int DocumentCategoryId = 350;
-            public const string DocumentCategoryName = "Purchase Goods Receipt";
+            public const string DocumentCategoryName = "Goods Receipt";
         }
-        public static class PurchaseGoodsReceiptQC
+        public static class QualityCheckingInword
         {
             public const int DocumentCategoryId = 360;
-            public const string DocumentCategoryName = "Purchase Goods Receipt QC";
+            public const string DocumentCategoryName = "Quality Checking (Inword)";
         }
-        public static class PurchaseGoodsReturn
+        public static class GoodsReturnOutword
         {
             public const int DocumentCategoryId = 370;
-            public const string DocumentCategoryName = "Purchase Goods Return";
+            public const string DocumentCategoryName = "Goods Return (Outword)";
         }
         public static class PurchaseInvoice
         {
             public const int DocumentCategoryId = 380;
             public const string DocumentCategoryName = "Purchase Invoice";
         }
-        public static class PurchaseInvoiceReturn
+        public static class PurchaseReturn
         {
             public const int DocumentCategoryId = 390;
-            public const string DocumentCategoryName = "Purchase Invoice Return";
+            public const string DocumentCategoryName = "Purchase Return";
         }
         #endregion
         #region "Job"
-        public static class ProductionOrder
+        public static class ManufacturingPlan
         {
             public const int DocumentCategoryId = 400;
-            public const string DocumentCategoryName = "Production Order";
+            public const string DocumentCategoryName = "Manufacturing Plan";
         }
-        public static class ProductionOrderCancel
+        public static class ManufacturingPlanCancel
         {
             public const int DocumentCategoryId = 410;
-            public const string DocumentCategoryName = "Production Order Cancel";
+            public const string DocumentCategoryName = "Manufacturing Plan Cancel";
         }
         public static class JobEnquiry
         {
@@ -282,11 +272,6 @@ namespace Jobs.Constants.DocumentCategory
             public const int DocumentCategoryId = 550;
             public const string DocumentCategoryName = "Job Invoice";
         }
-        public static class JobInvoiceReturn
-        {
-            public const int DocumentCategoryId = 560;
-            public const string DocumentCategoryName = "Job Invoice Return";
-        }
         public static class DebitNoteOutward
         {
             public const int DocumentCategoryId = 570;
@@ -299,30 +284,30 @@ namespace Jobs.Constants.DocumentCategory
         }
         #endregion
         #region "Inventory"
-        public static class StockRequisition
+        public static class MaterialRequest
         {
             public const int DocumentCategoryId = 590;
-            public const string DocumentCategoryName = "Stock Requisition";
+            public const string DocumentCategoryName = "Material Request";
         }
-        public static class StockRequisitionCancel
+        public static class MaterialRequestCancel
         {
             public const int DocumentCategoryId = 600;
-            public const string DocumentCategoryName = "Stock Requisition Cancel";
+            public const string DocumentCategoryName = "Material Request Cancel";
         }
-        public static class StockIssue
+        public static class MaterialIssue
         {
             public const int DocumentCategoryId = 610;
-            public const string DocumentCategoryName = "Stock Issue";
+            public const string DocumentCategoryName = "Material Issue";
         }
-        public static class StockReceive
+        public static class MaterialReceive
         {
             public const int DocumentCategoryId = 620;
-            public const string DocumentCategoryName = "Stock Receive";
+            public const string DocumentCategoryName = "Material Receive";
         }
-        public static class StockTransfer
+        public static class MaterialTransfer
         {
             public const int DocumentCategoryId = 630;
-            public const string DocumentCategoryName = "Stock Transfer";
+            public const string DocumentCategoryName = "Material Transfer";
         }
         public static class StockExchange
         {
@@ -378,6 +363,26 @@ namespace Jobs.Constants.DocumentCategory
             public const int DocumentCategoryId = 730;
             public const string DocumentCategoryName = "Cheque Cancel";
         }
+        public static class PaymentRequest
+        {
+            public const int DocumentCategoryId = 731;
+            public const string DocumentCategoryName = "Payment Request";
+        }
+        public static class LeaveRequest
+        {
+            public const int DocumentCategoryId = 732;
+            public const string DocumentCategoryName = "Leave Request";
+        }
+        public static class PaymentAdvise
+        {
+            public const int DocumentCategoryId = 733;
+            public const string DocumentCategoryName = "Payment Advise";
+        }
+        public static class Salary
+        {
+            public const int DocumentCategoryId = 734;
+            public const string DocumentCategoryName = "Salary";
+        }
         public static class ExpenseVoucher
         {
             public const int DocumentCategoryId = 740;
@@ -390,6 +395,119 @@ namespace Jobs.Constants.DocumentCategory
             public const int DocumentCategoryId = 750;
             public const string DocumentCategoryName = "Person";
         }
-       #endregion
+        #endregion
+
+        public static class ProductType
+        {
+            public const int DocumentCategoryId = 751;
+            public const string DocumentCategoryName = "Product Type";
+        }
+
+        public static class ProductCategory
+        {
+            public const int DocumentCategoryId = 752;
+            public const string DocumentCategoryName = "Product Category";
+        }
+
+        public static class ProductGroup
+        {
+            public const int DocumentCategoryId = 753;
+            public const string DocumentCategoryName = "Product Group";
+        }
+        public static class Product
+        {
+            public const int DocumentCategoryId = 754;
+            public const string DocumentCategoryName = "Product";
+        }
+        public static class Quality
+        {
+            public const int DocumentCategoryId = 755;
+            public const string DocumentCategoryName = "Quality";
+        }
+
+        public static class ProductSize
+        {
+            public const int DocumentCategoryId = 756;
+            public const string DocumentCategoryName = "Product Size";
+        }
+
+        public static class Content
+        {
+            public const int DocumentCategoryId = 757;
+            public const string DocumentCategoryName = "Content";
+        }
+
+        public static class Construction
+        {
+            public const int DocumentCategoryId = 758;
+            public const string DocumentCategoryName = "Construction";
+        }
+
+        public static class ColourWays
+        {
+            public const int DocumentCategoryId = 759;
+            public const string DocumentCategoryName = "Colour Ways";
+        }
+
+        public static class Colour
+        {
+            public const int DocumentCategoryId = 760;
+            public const string DocumentCategoryName = "Colour";
+        }
+
+        public static class Collection
+        {
+            public const int DocumentCategoryId = 761;
+            public const string DocumentCategoryName = "Collection";
+        }
+        public static class CarpetSample
+        {
+            public const int DocumentCategoryId = 762;
+            public const string DocumentCategoryName = "Carpet Sample";
+        }
+        public static class ProductQuality
+        {
+            public const int DocumentCategoryId = 763;
+            public const string DocumentCategoryName = "Product Quality";
+        }
+        public static class Size
+        {
+            public const int DocumentCategoryId = 764;
+            public const string DocumentCategoryName = "Size";
+        }
+        public static class ProductCollection
+        {
+            public const int DocumentCategoryId = 765;
+            public const string DocumentCategoryName = "Product Collection";
+        }
+        public static class ProductContent
+        {
+            public const int DocumentCategoryId = 766;
+            public const string DocumentCategoryName = "Product Content";
+        }
+
+        public static class ProcessSequence
+        {
+            public const int DocumentCategoryId = 767;
+            public const string DocumentCategoryName = "Process Sequence";
+        }
+
+        //public static class Colour
+        //{
+        //    public const int DocumentCategoryId = 768;
+        //    public const string DocumentCategoryName = "Colour";
+        //}
+        //public static class Colour
+        //{
+        //    public const int DocumentCategoryId = 769;
+        //    public const string DocumentCategoryName = "Colour";
+        //}
+        //Only For Carpet Industry
+        public static class Carpet
+        {
+            public const int DocumentCategoryId = 1001;
+            public const string DocumentCategoryName = "Carpet";
+        }
+
     }
 }

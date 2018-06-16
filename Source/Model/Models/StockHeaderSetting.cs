@@ -15,6 +15,7 @@ namespace Model.Models
             isPostedInStock = true;
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int StockHeaderSettingsId { get; set; }
 

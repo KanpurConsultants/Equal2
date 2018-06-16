@@ -13,12 +13,12 @@ namespace Model.Models
         public ProductBuyerSettings()
         {
         }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProductBuyerSettingsId { get; set; }
-        public int SiteId { get; set; }
+        public int ? SiteId { get; set; }
         public virtual Site Site { get; set; }
-        public int DivisionId { get; set; }
+        public int ? DivisionId { get; set; }
         public virtual Division Division { get; set; }
 
         [Display(Name = "Buyer Specification Display Name"), MaxLength(50)]

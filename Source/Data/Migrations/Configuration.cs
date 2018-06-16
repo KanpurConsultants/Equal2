@@ -9,7 +9,7 @@ namespace Data.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "Data.Models.ApplicationDbContext";
         }
 

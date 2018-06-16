@@ -10,6 +10,7 @@ namespace Model.Models
 {
     public class PerkDocumentType : EntityBase, IHistoryLog
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int PerkDocumentTypeId { get; set; }
 

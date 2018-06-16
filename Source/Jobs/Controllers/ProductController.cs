@@ -59,12 +59,28 @@ namespace Jobs.Controllers
 
         // GET: /ProductMaster/
 
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
-            var Product = _ProductService.GetProductListForIndex();
+            var Product = _ProductService.GetProductListForIndex(id);
             return View(Product);
         }
 
+
+        public ActionResult ChooseProductType(string id)
+        {
+            ViewBag.Name = "Choose Product Type";
+            ViewBag.ProductTypeList = new ProductTypeService(_unitOfWork).GetProductTypeList().ToList();
+            ViewBag.id = id;
+            return PartialView("ChooseProductType");
+        }
+
+        [HttpPost]
+        public ActionResult ChooseProductType(ProductType vm)
+        {
+
+            return Create();
+
+        }
 
         // GET: /ProductMaster/Create
 

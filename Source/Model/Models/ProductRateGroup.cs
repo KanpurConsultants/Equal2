@@ -11,6 +11,7 @@ namespace Model.Models
     public class ProductRateGroup : EntityBase, IHistoryLog
     {
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProductRateGroupId { get; set; }
 

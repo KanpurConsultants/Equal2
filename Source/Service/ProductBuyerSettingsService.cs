@@ -41,12 +41,20 @@ namespace Service
 
         public ProductBuyerSettings GetProductBuyerSettings(int DivisionId, int SiteId)
         {
-            return _unitOfWork.Repository<ProductBuyerSettings>().Query().Get().Where(m=>m.DivisionId==DivisionId&&m.SiteId==SiteId).FirstOrDefault();
+            ProductBuyerSettings temp;
+            temp = _unitOfWork.Repository<ProductBuyerSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId).FirstOrDefault();
+            if (temp == null)
+                temp = _unitOfWork.Repository<ProductBuyerSettings>().Query().Get().FirstOrDefault();
+            return temp;
         }
 
         public ProductBuyerSettings GetProductBuyerSettingsForExcelImport(int SiteId, int? DivisionId)
         {
-            return _unitOfWork.Repository<ProductBuyerSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId ).FirstOrDefault();
+            ProductBuyerSettings temp;
+            temp = _unitOfWork.Repository<ProductBuyerSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId).FirstOrDefault();
+            if (temp == null)
+                temp = _unitOfWork.Repository<ProductBuyerSettings>().Query().Get().FirstOrDefault();
+            return temp;
         }
 
         public ProductBuyerSettings Create(ProductBuyerSettings s)

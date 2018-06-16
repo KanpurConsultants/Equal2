@@ -16,6 +16,7 @@ namespace Model.Models
             IsApplicableGST = true;
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int SiteDivisionSettingsId { get; set; }
         public int SiteId { get; set; }
