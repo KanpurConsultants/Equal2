@@ -9,9 +9,9 @@ using Model.Models;
 
 namespace Reports.Presentation.IdentityExtensions
 {
-    public class UserValidation : IIdentityValidator<ApplicationUser>
+    public class UserValidation : IIdentityValidator<User>
     {
-        public System.Threading.Tasks.Task<IdentityResult> ValidateAsync(ApplicationUser item)
+        public System.Threading.Tasks.Task<IdentityResult> ValidateAsync(User item)
         {
             if (item.UserName.ToLower().Contains("bad"))
                 return Task.FromResult(IdentityResult.Failed("UserName cannot contain bad"));

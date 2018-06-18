@@ -23,11 +23,17 @@ namespace Jobs
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "SiteSelection", action = "SiteSelection", id = UrlParameter.Optional },
+            //    namespaces: new[] { "Jobs.Controllers" }
+            //);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "SiteSelection", action = "SiteSelection", id = UrlParameter.Optional },
-                namespaces: new[] { "Jobs.Controllers" }
+                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
             );
         }
     }

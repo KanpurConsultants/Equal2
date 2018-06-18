@@ -7,6 +7,7 @@ using Model.Models;
 using Data.Models;
 using System.Collections;
 using System.Reflection;
+using System.IO;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
@@ -2253,6 +2254,51 @@ namespace Data.Models
             mQry = "INSERT INTO Web.ProductTypeSettings (ProductTypeSettingsId, ProductTypeId, UnitId, isShowMappedDimension1, isShowUnMappedDimension1, isApplicableDimension1, Dimension1Caption, isShowMappedDimension2, isShowUnMappedDimension2, isApplicableDimension2, Dimension2Caption, isShowMappedDimension3, isShowUnMappedDimension3, isApplicableDimension3, Dimension3Caption, isShowMappedDimension4, isShowUnMappedDimension4, isApplicableDimension4, Dimension4Caption, isVisibleProductDescription, isVisibleProductSpecification, isVisibleProductCategory, isVisibleSalesTaxGroup, isVisibleSaleRate, isVisibleStandardCost, isVisibleTags, isVisibleMinimumOrderQty, isVisibleReOrderLevel, isVisibleGodownId, isVisibleBinLocationId, isVisibleProfitMargin, isVisibleCarryingCost, isVisibleLotManagement, isVisibleConsumptionDetail, isVisibleProductProcessDetail, isVisibleDefaultDimension1, isVisibleDefaultDimension2, isVisibleDefaultDimension3, isVisibleDefaultDimension4, isVisibleDiscontinueDate, isVisibleSalesTaxProductCode, IndexFilterParameter, ProductNameCaption, ProductCodeCaption, ProductDescriptionCaption, ProductSpecificationCaption, ProductGroupCaption, ProductCategoryCaption, SalesTaxProductCodeCaption, SqlProcProductCode, ImportMenuId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
                     " VALUES(2, " + ProductTypeConstants.Yarn.ProductTypeId + ", 'KG', 0, 0, 1, 'Shade', 0, 0, 0, NULL, 0, 0, 0, NULL, 0, 0, 0, NULL, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Admin', 'Admin', Getdate(), Getdate())";
             db.Database.ExecuteSqlCommand(mQry);
+
+        }
+        private void InitializeSqlProcedureScripts(ApplicationDbContext db)
+        {
+            string script = "";
+            try
+            {
+                script = File.ReadAllText(@"~\SqlScripts\spDocumentTypeService_FGetNewDocNo_GetNewDocNo.sql");
+                db.Database.ExecuteSqlCommand(script);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            try
+            {
+                script = File.ReadAllText(@"~\SqlScripts\spCarpetMaster_MakeCustomProductName_spGetCustomCarpetSkuName.sql");
+                db.Database.ExecuteSqlCommand(script);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            try
+            {
+                script = File.ReadAllText(@"~\SqlScripts\spCarpetMaster_MakeCustomProductName_spGetCustomCarpetSkuName.sql");
+                db.Database.ExecuteSqlCommand(script);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            try
+            {
+                script = File.ReadAllText(@"~\SqlScripts\spCarpetMaster_MakeCustomProductName_spGetCustomCarpetSkuName.sql");
+                db.Database.ExecuteSqlCommand(script);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
 
         }
 

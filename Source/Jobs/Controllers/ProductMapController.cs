@@ -179,7 +179,7 @@ namespace Jobs.Controllers
                     {
                         sqlConnection.Open();
 
-                        SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.FuncConvertSqFeetToSqYard( " + Size.Area + ")", sqlConnection);
+                        SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.fProductMap_Edit_ConvertSqFeetToSqYard( " + Size.Area + ")", sqlConnection);
 
                         UnitConv.ToQty = Convert.ToDecimal(Totalf.ExecuteScalar() == DBNull.Value ? 0 : Totalf.ExecuteScalar());
                     }

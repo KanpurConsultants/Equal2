@@ -190,7 +190,7 @@ namespace Model
 
         //User Models
         DbSet<IdentityUser> Users { get; set; }
-        DbSet<UserInfo> UserInfo { get; set; }
+        //DbSet<UserInfo> UserInfo { get; set; }
         DbSet<TempUserStore> TempUserStore { get; set; }//temprory user password store /ToDo: need to remove after Identity 2.0 implimentation 
 
         //Log Models

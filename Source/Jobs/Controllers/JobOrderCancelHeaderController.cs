@@ -550,7 +550,7 @@ namespace Jobs.Controllers
         [Authorize]
         public ActionResult Detail(int id, string IndexType, string transactionType)
         {
-            var UManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var UManager = new UserManager<User>(new UserStore<User>(db));
             var UserRoles = UManager.GetRoles(User.Identity.GetUserId());
             if (UserRoles.Contains("manager"))
             {

@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Models
 {
-    public class ApplicationUser : IdentityUser, IObjectState
+    public class User : IdentityUser, IObjectState
     {
-        public ApplicationUser()
+        public User()
         {
 
         }

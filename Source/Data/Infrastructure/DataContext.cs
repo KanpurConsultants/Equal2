@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Data.Infrastructure
 {
-    public class DataContext : IdentityDbContext<ApplicationUser>, IDataContext
+    public class DataContext : IdentityDbContext<User>, IDataContext
     {
         private readonly Guid _instanceId;
         public DataContext(string nameOrConnectionString,bool Schema) : base(nameOrConnectionString,Schema)

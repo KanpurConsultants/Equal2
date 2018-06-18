@@ -62,6 +62,8 @@ namespace Jobs.Controllers
         public ActionResult Index(string id)
         {
             var Product = _ProductService.GetProductListForIndex(id);
+            ViewBag.id = id;
+            ViewBag.Name = "Product";
             return View(Product);
         }
 
@@ -115,6 +117,8 @@ namespace Jobs.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Post(ProductViewModel pvm)
         {
+            //Mapper.CreateMap<Product, ProductViewModel>();
+            //ProductViewModel cvm = Mapper.Map<Product, ProductViewModel>(pv);
             Product pt1 = AutoMapper.Mapper.Map<ProductViewModel, Product>(pvm);
             if (ModelState.IsValid)
             {

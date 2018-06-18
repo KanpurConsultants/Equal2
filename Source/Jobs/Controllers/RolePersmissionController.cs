@@ -411,4 +411,10 @@ namespace Jobs.Controllers
             base.Dispose(disposing);
         }
     }
+
+    public class RoleViewModel
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
 }

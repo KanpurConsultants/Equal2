@@ -3568,7 +3568,7 @@ namespace Jobs.Areas.Rug.Controllers
                     {
                         sqlConnection.Open();
 
-                        SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.FuncConvertSqFeetToSqYard( " + AreaFT2 + ")", sqlConnection);
+                        SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize( " + AreaFT2 + ")", sqlConnection);
 
                         SizeExist.ToQty = Convert.ToDecimal(Totalf.ExecuteScalar() == DBNull.Value ? 0 : Totalf.ExecuteScalar());
                     }
@@ -3606,7 +3606,7 @@ namespace Jobs.Areas.Rug.Controllers
                     {
                         sqlConnection.Open();
 
-                        SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.FuncConvertSqFeetToSqYard( " + AreaFT2 + ")", sqlConnection);
+                        SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize( " + AreaFT2 + ")", sqlConnection);
 
                         UnitConv.ToQty = Convert.ToDecimal(Totalf.ExecuteScalar() == DBNull.Value ? 0 : Totalf.ExecuteScalar());
                     }
@@ -3837,7 +3837,7 @@ namespace Jobs.Areas.Rug.Controllers
             SqlParameter SqlParameterColourWaysId = new SqlParameter("@ProductDesignId", ColourWaysId);
             SqlParameter SqlParameterStandardSizeId = new SqlParameter("@StandardSizeID", StandardSizeId);
 
-            FirstProductName FirstProduct = db.Database.SqlQuery<FirstProductName>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_GetFirstProductForColourWayAndSize @ProductDesignId, @StandardSizeID", SqlParameterColourWaysId, SqlParameterStandardSizeId).FirstOrDefault();
+            FirstProductName FirstProduct = db.Database.SqlQuery<FirstProductName>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spCarpetMaster_CreateTrace_GetFirstProductForColourWayAndSize @ProductDesignId, @StandardSizeID", SqlParameterColourWaysId, SqlParameterStandardSizeId).FirstOrDefault();
 
             if (FirstProduct != null)
             {
@@ -4017,7 +4017,7 @@ namespace Jobs.Areas.Rug.Controllers
             using (SqlConnection sqlConnection = new SqlConnection((string)System.Web.HttpContext.Current.Session["DefaultConnectionString"]))
             {
                 sqlConnection.Open();
-                SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.FuncConvertSqFeetToSqYard( " + SqFeet + ")", sqlConnection);
+                SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize( " + SqFeet + ")", sqlConnection);
                 SqYard = Convert.ToDecimal(Totalf.ExecuteScalar() == DBNull.Value ? 0 : Totalf.ExecuteScalar());
             }
             return SqYard;
@@ -4123,7 +4123,7 @@ namespace Jobs.Areas.Rug.Controllers
             SqlParameter SqlParameterStandardSizeName = new SqlParameter("@StandardSizeName", SizeName);
             SqlParameter SqlParameterColourName = new SqlParameter("@ColourName", ColourName);
 
-            FirstProductName CustomProductName = db.Database.SqlQuery<FirstProductName>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_GetCustomCarpetSkuName @ProductGroupName, @StandardSizeName, @ColourName", SqlParameterProductGroupName, SqlParameterStandardSizeName, SqlParameterColourName).FirstOrDefault();
+            FirstProductName CustomProductName = db.Database.SqlQuery<FirstProductName>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spCarpetMaster_MakeCustomProductName_GetCustomCarpetSkuName @ProductGroupName, @StandardSizeName, @ColourName", SqlParameterProductGroupName, SqlParameterStandardSizeName, SqlParameterColourName).FirstOrDefault();
 
             return CustomProductName;
         }

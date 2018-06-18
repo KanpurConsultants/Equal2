@@ -184,7 +184,7 @@ namespace Jobs.App_Start
             container.RegisterType<IRepository<SaleInvoiceHeaderCharge>, Repository<SaleInvoiceHeaderCharge>>();
             container.RegisterType<ISaleInvoiceHeaderChargeService, SaleInvoiceHeaderChargeService>(new PerRequestLifetimeManager());
             
-            container.RegisterType<Jobs.Controllers.AccountController>(new InjectionConstructor());
+            //container.RegisterType<Jobs.Controllers.AccountController>(new InjectionConstructor());
             //container.RegisterType<ApplicationDbContext, ApplicationDbContext>("New");
 
             container.RegisterType<IDisplay_JobOrderBalanceService, Display_JobOrderBalanceService>(new PerRequestLifetimeManager());
@@ -339,6 +339,18 @@ namespace Jobs.App_Start
             container.RegisterType<IJobOrderInspectionLineService, JobOrderInspectionLineService>(new PerRequestLifetimeManager());
 
 
+            ///////////////////For Login////////////////////////////
+            
+            container.RegisterType<Microsoft.AspNet.Identity.IUserStore<Login.Models.ApplicationUser>, Microsoft.AspNet.Identity.EntityFramework.UserStore<Login.Models.ApplicationUser>>();
+
+            container.RegisterType<System.Data.Entity.DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
+            container.RegisterType<Microsoft.AspNet.Identity.UserManager<Login.Models.ApplicationUser>>(new HierarchicalLifetimeManager());
+            container.RegisterType<Controllers.AccountController>(new InjectionConstructor());
+
+
+            //container.RegisterType<Microsoft.AspNet.Identity.UserManager<Login.Models.ApplicationUser>, Login.ApplicationUserManager>();
+            //container.RegisterType<Microsoft.AspNet.Identity.Owin.SignInManager<Login.Models.ApplicationUser, string>, Login.ApplicationSignInManager>();
+            ///////////////////End For Login////////////////////////////
 
             //////////////////////////////////////////Finance Services///////////////////////////////////////////////////
 

@@ -327,22 +327,25 @@ namespace Service
             if (!string.IsNullOrEmpty(ProductTypeId)) { ContraProductTypes = ProductTypeId.Split(",".ToCharArray()); }
             else { ContraProductTypes = new string[] { "NA" }; }
 
-            var temp = (from p in db.Product
-                        join p3 in db.ProductGroups on p.ProductGroupId equals p3.ProductGroupId
-                        join p4 in db.Divisions on p.DivisionId equals p4.DivisionId into table2
+            IQueryable<ProductIndexViewModel> temp = (from p in db.Product
+                                                      join pg in db.ProductGroups on p.ProductGroupId equals pg.ProductGroupId into PGTable
+                                                      from PGTab in PGTable.DefaultIfEmpty()
+                                                      join pt in db.ProductTypes on PGTab.ProductTypeId equals pt.ProductTypeId into ProductTypeTable
+                                                      from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
+                                                      join p4 in db.Divisions on p.DivisionId equals p4.DivisionId into table2
                         from tab2 in table2.DefaultIfEmpty()
                         join p5 in db.Units on p.UnitId equals p5.UnitId into table3
                         from tab3 in table3.DefaultIfEmpty()
                         where 1 == 1
-                        && (string.IsNullOrEmpty(ProductTypeId) ? 1 == 1 : ContraProductTypes.Contains(p3.ProductTypeId.ToString()))
+                        && (string.IsNullOrEmpty(ProductTypeId) ? 1 == 1 : ContraProductTypes.Contains(PGTab.ProductTypeId.ToString()))
                         orderby p.ProductName
                         select new ProductIndexViewModel
                         {
                             ProductId = p.ProductId,
                             ProductCode = p.ProductCode,
                             ProductName = p.ProductName,
-                            ProductGroupName = p3.ProductGroupName,
-                            ProductTypeName =p3.ProductType.ProductTypeName,
+                            ProductGroupName = PGTab.ProductGroupName,
+                            ProductTypeName = ProductTypeTab.ProductTypeName,
                             UnitName = tab3.UnitName,
                             DivisionName = tab2.DivisionName,
                         });

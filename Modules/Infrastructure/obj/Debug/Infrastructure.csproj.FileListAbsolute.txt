@@ -26,3 +26,17 @@ D:\Active Projects\ERP\Modules\Infrastructure\bin\Debug\Microsoft.AspNet.Identit
 D:\Active Projects\ERP\Modules\Infrastructure\obj\Debug\Infrastructure.csprojResolveAssemblyReference.cache
 D:\Active Projects\ERP\Modules\Infrastructure\obj\Debug\Infrastructure.dll
 D:\Active Projects\ERP\Modules\Infrastructure\obj\Debug\Infrastructure.pdb
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\Infrastructure.dll.config
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\Infrastructure.dll
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\Infrastructure.pdb
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\EntityFramework.dll
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\EntityFramework.SqlServer.dll
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\EntityFramework.xml
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\EntityFramework.SqlServer.xml
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\obj\Debug\Infrastructure.csprojResolveAssemblyReference.cache
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\obj\Debug\Infrastructure.dll
+D:\Kanpur Consultants\Equal2\Modules\Infrastructure\obj\Debug\Infrastructure.pdb

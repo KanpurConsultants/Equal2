@@ -83,7 +83,9 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -110,6 +112,8 @@
     <Compile Include="DatabaseViews\SaleInvoiceViewModels.cs" />
     <Compile Include="DatabaseViews\StockVirtual.cs" />
     <Compile Include="Models\ActivityLog.cs" />
+    <Compile Include="Models\Application.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\BinLocation.cs" />
     <Compile Include="Models\Caste.cs" />
     <Compile Include="Models\ChargeGroupPersonCalculation.cs" />
@@ -123,6 +127,7 @@
     <Compile Include="Models\ChargeGroupSettings.cs" />
     <Compile Include="Models\DocumentTypeAttributes.cs" />
     <Compile Include="Models\DocumentTypeProcess.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobInvoiceHeaderAttributes.cs" />
     <Compile Include="Models\EmployeeCharge.cs" />
     <Compile Include="Models\JobOrderBomMaterialIssue.cs" />
@@ -198,7 +203,6 @@
     <Compile Include="Models\SaleQuotationLineCharge.cs" />
     <Compile Include="Models\SaleQuotationSettings.cs" />
     <Compile Include="Models\Agent.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\AttendanceHeader.cs" />
     <Compile Include="Models\AttendanceLine.cs" />
@@ -267,7 +271,9 @@
     <Compile Include="Models\Shift.cs" />
     <Compile Include="Models\SubReport.cs" />
     <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\UserApplication.cs" />
     <Compile Include="Models\UserTeam.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\BankReconciliationViewModel.cs" />
     <Compile Include="ViewModels\ChargeGroupPersonCalculationViewModel.cs" />
     <Compile Include="ViewModels\CollectionSettingsViewModel.cs" />
@@ -275,6 +281,7 @@
     <Compile Include="ViewModels\CompanySettingsViewModel.cs" />
     <Compile Include="ViewModels\ControllerActionViewModel.cs" />
     <Compile Include="ViewModels\DARViewModel.cs" />
+    <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\NarrationViewModel.cs" />
     <Compile Include="ViewModels\Dimension1.cs">
       <SubType>Code</SubType>

@@ -197,8 +197,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -258,6 +258,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
@@ -426,6 +427,7 @@
     <Compile Include="Areas\Rug\Controllers\PackingSettingsController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\JobInvoiceHeaderrdl.cs" />
     <Compile Include="Controllers\JobOrderCancelHeaderrdl.cs" />
     <Compile Include="Controllers\JobOrderHeaderrdl.cs" />
@@ -435,6 +437,7 @@
     <Compile Include="Controllers\LedgerLine_WithCalculationController.cs" />
     <Compile Include="Controllers\MailboxController.cs" />
     <Compile Include="Controllers\LedgerWizardController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SalaryWizardController.cs" />
     <Compile Include="Controllers\LedgerAccountMergingController.cs" />
     <Compile Include="Areas\Rug\Controllers\PersonMerging.cs">
@@ -633,7 +636,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Areas\Rug\RugAreaRegistration.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminSetupController.cs" />
     <Compile Include="Controllers\AgentController.cs" />
     <Compile Include="Controllers\AttendanceHeaderController.cs" />
@@ -2980,6 +2982,7 @@
     <Content Include="Areas\Rug\Views\WeavingReceive\Create.cshtml" />
     <Content Include="Areas\Rug\Views\WeavingReceive\Summary.cshtml" />
     <Content Include="Areas\Rug\Views\WeavingReceive\SummaryIAP.cshtml" />
+    <Content Include="Content\AdminLTE-Login.css" />
     <Content Include="Content\AdminLTE.css" />
     <Content Include="Content\AdminLTEBoxContainer.css" />
     <Content Include="Content\alertifyjs\alertify.css" />
@@ -3684,15 +3687,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
@@ -5327,6 +5321,21 @@
     <Content Include="Views\Narration\Index.cshtml" />
     <Content Include="Views\ProductGroup\ChooseProductType.cshtml" />
     <Content Include="Views\Product\ChooseProductType.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\InviteOnly.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\LoginNew.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\UserPermissionError.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

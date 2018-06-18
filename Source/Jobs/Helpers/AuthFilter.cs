@@ -27,22 +27,22 @@ namespace Jobs.Helpers
             if (user == null || !user.Identity.IsAuthenticated)
             {
 
-                if (System.Configuration.ConfigurationManager.AppSettings["LoginDomain"] == null)
-                {
-                    throw new Exception("Login domain is not configured in Jobs Project");
-                }
+                //if (System.Configuration.ConfigurationManager.AppSettings["LoginDomain"] == null)
+                //{
+                //    throw new Exception("Login domain is not configured in Jobs Project");
+                //}
 
-                if (System.Configuration.ConfigurationManager.AppSettings["DefaultDomain"] == null)
-                {
-                    throw new Exception("Default domain is not configured in Jobs Project");
-                }
+                //if (System.Configuration.ConfigurationManager.AppSettings["DefaultDomain"] == null)
+                //{
+                //    throw new Exception("Default domain is not configured in Jobs Project");
+                //}
 
 
-                //filterContext.Result = new HttpUnauthorizedResult();
-                string loginURL = (string)System.Configuration.ConfigurationManager.AppSettings["LoginDomain"] + "?returnUrl=";
+                ////filterContext.Result = new HttpUnauthorizedResult();
+                //string loginURL = (string)System.Configuration.ConfigurationManager.AppSettings["LoginDomain"] + "?returnUrl=";
 
-                string ReturnDomain = (string)System.Configuration.ConfigurationManager.AppSettings["DefaultDomain"];
-                filterContext.Result = new RedirectResult(loginURL + ReturnDomain);
+                //string ReturnDomain = (string)System.Configuration.ConfigurationManager.AppSettings["DefaultDomain"];
+                //filterContext.Result = new RedirectResult(loginURL + ReturnDomain);
             }
             else
             {
