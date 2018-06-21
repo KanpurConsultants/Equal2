@@ -10,8 +10,8 @@ namespace Model.Models
 
         }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
 
         // HomeTown will be stored in the same table as Users
         //public string HomeTown { get; set; }

@@ -56,7 +56,7 @@ namespace Model.Models
         [MaxLength(100)]
         public string ImageFileName { get; set; }
         public bool IsSisterConcern { get; set; }
-        public virtual User ApplicationUser { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual ICollection<PersonContact> PersonContacts { get; set; }
         public virtual ICollection<PersonAddress> PersonAddresses { get; set; }
 

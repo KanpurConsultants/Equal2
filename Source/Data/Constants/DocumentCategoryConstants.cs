@@ -460,11 +460,6 @@ namespace Jobs.Constants.DocumentCategory
             public const int DocumentCategoryId = 761;
             public const string DocumentCategoryName = "Collection";
         }
-        public static class CarpetSample
-        {
-            public const int DocumentCategoryId = 762;
-            public const string DocumentCategoryName = "Carpet Sample";
-        }
         public static class ProductQuality
         {
             public const int DocumentCategoryId = 763;
@@ -492,22 +487,10 @@ namespace Jobs.Constants.DocumentCategory
             public const string DocumentCategoryName = "Process Sequence";
         }
 
-        //public static class Colour
-        //{
-        //    public const int DocumentCategoryId = 768;
-        //    public const string DocumentCategoryName = "Colour";
-        //}
-        //public static class Colour
-        //{
-        //    public const int DocumentCategoryId = 769;
-        //    public const string DocumentCategoryName = "Colour";
-        //}
-        //Only For Carpet Industry
-        public static class Carpet
+        public static class Master
         {
-            public const int DocumentCategoryId = 1001;
-            public const string DocumentCategoryName = "Carpet";
+            public const int DocumentCategoryId = 768;
+            public const string DocumentCategoryName = "Master";
         }
-
     }
 }

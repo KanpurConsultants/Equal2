@@ -463,9 +463,11 @@
             $('#DocTypeId').focus();
         })
 
+
         $("#DocNo").on("change", function () {
             $(this).DuplicateCheckForCreate({ name: 'SaleOrderHeader', value: $(this).val(), doctype: $("#DocTypeId").val() });
         });
+
 
         var IsSaved=false;
         var ValidationCount=0;
@@ -621,7 +623,6 @@
         //    });
 
         //}
-
     </script>
 
 }
@@ -630,7 +631,6 @@
 <script type="text/javascript">
     var form_clean;
     $(document).ready(function () {
-
         //CustomSelectFunction($("#BillToBuyerId"), '/ComboHelpList/GetPersonWithProcess', '/ComboHelpList/SetSinglePerson', ' ', false, 0,$('#ProcessId').val());
         //CustomSelectFunction($("#SaleToBuyerId"), '/ComboHelpList/GetPersonWithProcess', '/ComboHelpList/SetSinglePerson', ' ', false, 0,$('#ProcessId').val());
 

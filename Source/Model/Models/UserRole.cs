@@ -16,7 +16,7 @@ namespace Model.Models
         [MaxLength(128)]
         [ForeignKey("User")]
         public string UserId { get; set; }
-        public virtual User User { get; set; }
+        public virtual ApplicationUser User { get; set; }
                 
         [MaxLength(128)]
         public string RoleId { get; set; }

@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Login.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class ApplicationUser : IdentityUser
+    public class LoginUser : IdentityUser
     {
         //[Required]
         //public string UserType { get; set; }
@@ -23,7 +23,7 @@ namespace Login.Models
         [ForeignKey("Application")]
         public int ApplicationId { get; set; }
         public virtual Application Application { get; set; }
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<LoginUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
@@ -32,21 +32,21 @@ namespace Login.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class LoginApplicationDbContext : IdentityDbContext<LoginUser>
     {
-        public ApplicationDbContext()
+        public LoginApplicationDbContext()
             : base("LoginDB", throwIfV1Schema: false)
         {
         }
 
-        public static ApplicationDbContext Create()
+        public static LoginApplicationDbContext Create()
         {
-            return new ApplicationDbContext();
+            return new LoginApplicationDbContext();
         }
 
-        static ApplicationDbContext()
+        static LoginApplicationDbContext()
         {
-            Database.SetInitializer<ApplicationDbContext>(null); // Existing data, do nothing   
+            Database.SetInitializer<LoginApplicationDbContext>(null); // Existing data, do nothing   
             //Database.SetInitializer(new ApplicationDbContextInitializer());
         }
 

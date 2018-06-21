@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\AreaConstants.cs" />
+    <Compile Include="Constants\IndustryTypeConstants.cs" />
     <Compile Include="Constants\ProductDesignConstants.cs" />
     <Compile Include="Constants\ProductSizeTypesConstants.cs" />
     <Compile Include="Constants\CalculationFooterConstants.cs" />
@@ -104,6 +105,13 @@
     <Compile Include="Constants\ActivityTypesConstants.cs" />
     <Compile Include="Constants\ProductShapeConstants.cs" />
     <Compile Include="Constants\ProductGroupConstants.cs" />
+    <Compile Include="Constants\Rug_ControllerActionConstants.cs" />
+    <Compile Include="Constants\Rug_DocumentNatureConstants.cs" />
+    <Compile Include="Constants\Rug_DocumentCategoryConstants.cs" />
+    <Compile Include="Constants\Rug_DocumentTypeConstants.cs" />
+    <Compile Include="Constants\Rug_MenuConstants.cs" />
+    <Compile Include="Constants\Rug_ProductGroupConstants.cs" />
+    <Compile Include="Constants\Rug_ProductTypeConstants.cs" />
     <Compile Include="Constants\UnitConversionForConstants.cs" />
     <Compile Include="Constants\CityConstants.cs" />
     <Compile Include="Constants\CalculationConstants.cs" />
@@ -164,6 +172,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="UpdateTableStructureController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

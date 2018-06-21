@@ -98,7 +98,7 @@ namespace Jobs.Areas.Rug.Controllers
                 var CostCenters = (from p in db.CostCenter
                                    join t in db.CostCenterStatus on p.CostCenterId equals t.CostCenterId into CostCenterStatusTable
                                    from CostCenterStatusTab in CostCenterStatusTable.DefaultIfEmpty()
-                                   join jos in db.JobOrderSettings on new { A = p.ReferenceDocTypeId ?? 0, B = p.SiteId ?? 0, C = p.DivisionId ?? 0 } equals new { A = jos.DocTypeId, B = jos.SiteId, C = jos.DivisionId } into josTable
+                                   join jos in db.JobOrderSettings on new { A = p.ReferenceDocTypeId ?? 0, B = p.SiteId ?? 0, C = p.DivisionId ?? 0 } equals new { A = (int)jos.DocTypeId, B = (int)jos.SiteId, C = (int)jos.DivisionId } into josTable
                                    from josTab in josTable.DefaultIfEmpty()
                                    where CostCenterIds.Contains(p.CostCenterId)
                                    select new

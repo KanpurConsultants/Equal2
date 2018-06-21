@@ -262,9 +262,9 @@ namespace Jobs.Controllers
                 p.DocTypeId = id;
                 p.ShipMethodId = settings.ShipMethodId;
                 p.DeliveryTermsId = settings.DeliveryTermsId;
-                p.Priority = (int) settings.Priority;
-                p.CurrencyId = (int)settings.CurrencyId;
-                p.UnitConversionForId = (byte)settings.UnitConversionForId;
+                p.Priority = settings.Priority;
+                p.CurrencyId = settings.CurrencyId;
+                p.UnitConversionForId = settings.UnitConversionForId;
                 p.ProcessId = settings.ProcessId;
                 PrepareViewBag(p);
             }

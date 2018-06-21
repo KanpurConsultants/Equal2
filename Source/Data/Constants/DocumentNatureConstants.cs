@@ -332,11 +332,11 @@ namespace Jobs.Constants.DocumentNature
             public const string DocumentNatureName = "Product Type";
         }
 
-        //Only For Carpet Industry
-        public static class Carpet
+        public static class Master
         {
-            public const int DocumentNatureId = 1001;
-            public const string DocumentNatureName = "Carpet";
+            public const int DocumentNatureId = 572;
+            public const string DocumentNatureName = "Master";
         }
+
     }
 }

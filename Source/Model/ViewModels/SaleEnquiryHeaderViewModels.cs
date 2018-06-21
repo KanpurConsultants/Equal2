@@ -44,7 +44,7 @@ namespace Model.ViewModels
         public virtual Buyer SaleToBuyer { get; set; }
 
         [ForeignKey("BillToBuyer"), Display(Name = "Bill To Buyer"),Required(ErrorMessage="Please select Bill To Buyer"),Range(1,int.MaxValue,ErrorMessage="Bill To Buyer field is required")]
-        public int BillToBuyerId { get; set; }
+        public int  BillToBuyerId { get; set; }
         public virtual Buyer BillToBuyer { get; set; }
 
         [ForeignKey("Currency"), Display(Name = "Currency"),Required(ErrorMessage="The Currency Field is Required"),Range(1,int.MaxValue,ErrorMessage="Currency field is required")]

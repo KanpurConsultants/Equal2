@@ -174,7 +174,7 @@ namespace Jobs.Controllers
             vm.DocTypeId = id;
             vm.OrderById = new EmployeeService(_unitOfWork).GetEmloyeeForUser(User.Identity.GetUserId()) ?? 0;
             vm.DocDate = DateTime.Now;
-            vm.ProcessId = settings.ProcessId;
+            vm.ProcessId = (int)settings.ProcessId;
             vm.DocNo = new DocumentTypeService(_unitOfWork).FGetNewDocNo("DocNo", ConfigurationManager.AppSettings["DataBaseSchema"] + ".JobOrderCancelHeaders", vm.DocTypeId, vm.DocDate, vm.DivisionId, vm.SiteId);
             vm.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(vm.DocTypeId);
             ViewBag.Mode = "Add";
@@ -550,7 +550,7 @@ namespace Jobs.Controllers
         [Authorize]
         public ActionResult Detail(int id, string IndexType, string transactionType)
         {
-            var UManager = new UserManager<User>(new UserStore<User>(db));
+            var UManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             var UserRoles = UManager.GetRoles(User.Identity.GetUserId());
             if (UserRoles.Contains("manager"))
             {

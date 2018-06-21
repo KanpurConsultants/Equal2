@@ -16,12 +16,12 @@ namespace Model.Models
         public int JobOrderSettingsId { get; set; }
 
         [ForeignKey("DocType"), Display(Name = "Order Type")]
-        public int DocTypeId { get; set; }
+        public int ? DocTypeId { get; set; }
         public virtual DocumentType DocType { get; set; }      
 
-        public int SiteId { get; set; }
+        public int ? SiteId { get; set; }
         public virtual Site Site { get; set; }
-        public int DivisionId { get; set; }
+        public int ? DivisionId { get; set; }
         public virtual Division Division { get; set; }
         public bool? isVisibleMachine { get; set; }
         public bool? isMandatoryMachine { get; set; }
@@ -59,7 +59,7 @@ namespace Model.Models
         public bool? isPostedInStockProcess { get; set; }
         public bool? isPostedInStockVirtual { get; set; }
 
-        public bool isVisibleLineUnitConversionFor { get; set; }
+        public bool ? isVisibleLineUnitConversionFor { get; set; }
 
         public bool? isVisibleStockIn { get; set; }
         public bool? IsMandatoryStockIn { get; set; }
@@ -132,11 +132,11 @@ namespace Model.Models
 
         [ForeignKey("UnitConversionFor")]
         [Display(Name = "Unit Conversion For")]
-        public byte UnitConversionForId { get; set; }
+        public byte ? UnitConversionForId { get; set; }
         public virtual UnitConversionFor UnitConversionFor { get; set; }
 
         [ForeignKey("Process")]
-        public int ProcessId { get; set; }
+        public int?  ProcessId { get; set; }
         public virtual Process Process { get; set; }
 
         [ForeignKey("Calculation")]
@@ -213,7 +213,7 @@ namespace Model.Models
         public string Event_AfterLineDelete { get; set; }
 
         public int ? MaxDays { get; set; }
-        public int ExcessQtyAllowedPer { get; set; }
+        public int ? ExcessQtyAllowedPer { get; set; }
         public int ? NoOfPrintCopies { get; set; }
         
         [ForeignKey("DocumentPrintReportHeader")]

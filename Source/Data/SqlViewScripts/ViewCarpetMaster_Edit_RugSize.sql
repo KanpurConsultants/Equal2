@@ -1,7 +1,3 @@
-IF OBJECT_ID ('Web.ViewCarpetMaster_Edit_RugSize') IS NOT NULL
-	DROP VIEW [Web].[ViewCarpetMaster_Edit_RugSize]
-GO
-
 CREATE VIEW [Web].[ViewCarpetMaster_Edit_RugSize]
 AS
 SELECT P.ProductId, SS.SizeId AS StandardSizeID, SS.SizeName + IsNull(SSS.ProductShapeShortName,'') AS StandardSizeName, SS.Area AS StandardSizeArea,  
@@ -45,6 +41,5 @@ LEFT JOIN Web.Sizes ST ON ST.SizeId = PST.SizeId
 LEFT JOIN Web.ProductShapes SST ON ST.ProductShapeId = SST.ProductShapeId
 LEFT JOIN Web.Sizes SP ON SP.SizeId = PSP.SizeId
 LEFT JOIN Web.ProductShapes SSP ON SP.ProductShapeId = SSP.ProductShapeId
-GO
 
 

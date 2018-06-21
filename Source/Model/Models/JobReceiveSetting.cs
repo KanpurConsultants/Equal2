@@ -17,15 +17,15 @@ namespace Model.Models
 
         [ForeignKey("DocType"), Display(Name = "Order Type")]
         [Index("IX_JobReceiveSettings_DocID", IsUnique = true, Order = 1)]
-        public int DocTypeId { get; set; }
+        public int ? DocTypeId { get; set; }
         public virtual DocumentType DocType { get; set; }
 
         [Index("IX_JobReceiveSettings_DocID", IsUnique = true, Order = 2)]
-        public int SiteId { get; set; }
+        public int ? SiteId { get; set; }
         public virtual Site Site { get; set; }
         
         [Index("IX_JobReceiveSettings_DocID", IsUnique = true, Order = 3)]
-        public int DivisionId { get; set; }
+        public int ? DivisionId { get; set; }
         public virtual Division Division { get; set; }
         public bool? isVisibleMachine { get; set; }
         public bool? isMandatoryMachine { get; set; }
@@ -105,7 +105,7 @@ namespace Model.Models
         public string filterContraDocTypes { get; set; }
 
         [ForeignKey("Process")]
-        public int ProcessId { get; set; }
+        public int ? ProcessId { get; set; }
         public virtual Process Process { get; set; }
 
         [ForeignKey("ImportMenu")]

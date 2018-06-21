@@ -12,7 +12,7 @@ namespace Jobs.Rug.Constants
         {
             public const int ProductTypeId = 10001;
             public const string ProductTypeName = "Rug";
-            public const int ProductNatureId = ProductNatureConstants.FinishedMaterial.ProductNatureId;
+            public const int ProductNatureId = ProductNatureConstants.TradingProduct.ProductNatureId;
 
         }
         public static class Yarn

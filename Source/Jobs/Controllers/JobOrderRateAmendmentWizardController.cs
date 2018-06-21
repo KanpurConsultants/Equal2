@@ -446,7 +446,7 @@ namespace Jobs.Controllers
             vm.JobOrderSettings = Mapper.Map<JobOrderSettings, JobOrderSettingsViewModel>(settings);
             vm.DocTypeId = id;
             vm.DocDate = DateTime.Now;
-            vm.ProcessId = settings.ProcessId;
+            vm.ProcessId = (int)settings.ProcessId;
             var EmpId = new EmployeeService(_unitOfWork).GetEmloyeeForUser(User.Identity.GetUserId());
             if (EmpId.HasValue && EmpId.Value != 0)
                 vm.OrderById = EmpId.Value;

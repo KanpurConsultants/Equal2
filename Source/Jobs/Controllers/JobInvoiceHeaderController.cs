@@ -208,7 +208,7 @@ namespace Jobs.Controllers
                 vm.SalesTaxGroupPersonId = settings.SalesTaxGroupPersonId;
             }
 
-            vm.ProcessId = settings.ProcessId;
+            vm.ProcessId = (int)settings.ProcessId;
             vm.DocDate = DateTime.Now;
             vm.DocTypeId = id;
             vm.DocNo = new DocumentTypeService(_unitOfWork).FGetNewDocNo("DocNo", ConfigurationManager.AppSettings["DataBaseSchema"] + ".JobInvoiceHeaders", vm.DocTypeId, vm.DocDate, vm.DivisionId, vm.SiteId);

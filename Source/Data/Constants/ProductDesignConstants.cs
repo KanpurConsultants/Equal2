@@ -1,5 +1,5 @@
 ﻿using Jobs.Constants.Country;
-using Jobs.Constants.ProductType;
+using Jobs.Constants.RugProductType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace Jobs.Constants.ProductDesign
         {
             public const int ProductDesignId = 1;
             public const string ProductDesignName = "N/A";
-            public const int ProductTypeId = ProductTypeConstants.Rug.ProductTypeId;
+            public const int ProductTypeId = RugProductTypeConstants.Rug.ProductTypeId;
         }
        
     }

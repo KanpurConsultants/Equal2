@@ -1,5 +1,7 @@
 ﻿using Jobs.Constants.DocumentCategory;
 using Jobs.Constants.DocumentNature;
+using Jobs.Constants.RugDocumentCategory;
+using Jobs.Constants.RugDocumentNature;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -932,224 +934,120 @@ namespace Jobs.Constants.DocumentType
 
         #endregion
 
-        //Only For Carpet Industry
-        public static class CarpetDesign
-        {
-            public const int DocumentTypeId = 1001;
-            public const string DocumentTypeShortName = "CRDSN";
-            public const string DocumentTypeName = "Carpet Design";
-            public const int DocumentCategoryId = DocumentCategoryConstants.Carpet.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
 
-        public static class Quality
-        {
-            public const int DocumentTypeId = 1002;
-            public const string DocumentTypeShortName = "QLTY";
-            public const string DocumentTypeName = "Quality";
-            public const int DocumentCategoryId = DocumentCategoryConstants.Quality.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class Design
-        {
-            public const int DocumentTypeId = 1003;
-            public const string DocumentTypeShortName = "Desig";
-            public const string DocumentTypeName = "Design";
-            public const int DocumentCategoryId = DocumentCategoryConstants.Carpet.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class Size
-        {
-            public const int DocumentTypeId = 1004;
-            public const string DocumentTypeShortName = "Size";
-            public const string DocumentTypeName = "Size";
-            public const int DocumentCategoryId = DocumentCategoryConstants.ProductSize.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class Content
-        {
-            public const int DocumentTypeId = 1005;
-            public const string DocumentTypeShortName = "CONT";
-            public const string DocumentTypeName = "Content";
-            public const int DocumentCategoryId = DocumentCategoryConstants.Content.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class Construction
-        {
-            public const int DocumentTypeId = 1006;
-            public const string DocumentTypeShortName = "CONST";
-            public const string DocumentTypeName = "Construction";
-            public const int DocumentCategoryId = DocumentCategoryConstants.Construction.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class ColourWays
-        {
-            public const int DocumentTypeId = 1007;
-            public const string DocumentTypeShortName = "COLWY";
-            public const string DocumentTypeName = "Colour Ways";
-            public const int DocumentCategoryId = DocumentCategoryConstants.ColourWays.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class Colour
-        {
-            public const int DocumentTypeId = 1008;
-            public const string DocumentTypeShortName = "COL";
-            public const string DocumentTypeName = "Colour";
-            public const int DocumentCategoryId = DocumentCategoryConstants.Colour.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-
-        public static class Collection
-        {
-            public const int DocumentTypeId = 1009;
-            public const string DocumentTypeShortName = "COLL";
-            public const string DocumentTypeName = "Collection";
-            public const int DocumentCategoryId = DocumentCategoryConstants.Collection.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class Carpet
-        {
-            public const int DocumentTypeId = 1010;
-            public const string DocumentTypeShortName = "Rug";
-            public const string DocumentTypeName = "Carpet";
-            public const int DocumentCategoryId = DocumentCategoryConstants.Carpet.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class CarpetSample
-        {
-            public const int DocumentTypeId = 1011;
-            public const string DocumentTypeShortName = "RUGSA";
-            public const string DocumentTypeName = "Carpet Sample";
-            public const int DocumentCategoryId = DocumentCategoryConstants.CarpetSample.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-
-        public static class ProductQuality
-        {
-            public const int DocumentTypeId = 1012;
-            public const string DocumentTypeShortName = "PRQU";
-            public const string DocumentTypeName = "Product Quality";
-            public const int DocumentCategoryId = DocumentCategoryConstants.ProductQuality.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class OtherSize
-        {
-            public const int DocumentTypeId = 1013;
-            public const string DocumentTypeShortName = "OSZ";
-            public const string DocumentTypeName = "Other Size";
-            public const int DocumentCategoryId = DocumentCategoryConstants.Size.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class StandardSize
-        {
-            public const int DocumentTypeId = 1014;
-            public const string DocumentTypeShortName = "SSZ";
-            public const string DocumentTypeName = "Standard Size";
-            public const int DocumentCategoryId = DocumentCategoryConstants.Size.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class ProductCollection
-        {
-            public const int DocumentTypeId = 1015;
-            public const string DocumentTypeShortName = "PRCL";
-            public const string DocumentTypeName = "Product Collection";
-            public const int DocumentCategoryId = DocumentCategoryConstants.ProductCollection.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class ProductContent
-        {
-            public const int DocumentTypeId = 1016;
-            public const string DocumentTypeShortName = "PCOT";
-            public const string DocumentTypeName = "Product Content";
-            public const int DocumentCategoryId = DocumentCategoryConstants.ProductContent.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        public static class ProcessSequence
-        {
-            public const int DocumentTypeId = 1017;
-            public const string DocumentTypeShortName = "PRSQ";
-            public const string DocumentTypeName = "Process Sequence";
-            public const int DocumentCategoryId = DocumentCategoryConstants.ProcessSequence.DocumentCategoryId;
-            public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
-            public const string Nature = null;
-            public const string PrintTitle = null;
-        }
-
-        //public static class Carpet
+        //public static class ProductUid
         //{
-        //    public const int DocumentTypeId = 1018;
-        //    public const string DocumentTypeShortName = "Rug";
-        //    public const string DocumentTypeName = "Carpet";
-        //    public const int DocumentCategoryId = DocumentCategoryConstants.Carpet.DocumentCategoryId;
-        //    public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
+        //    public const int DocumentTypeId = 710;
+        //    public const string DocumentTypeShortName = "PUID ";
+        //    public const string DocumentTypeName = "Product Uid";
+        //    public const int DocumentCategoryId = DocumentCategoryConstants.Master.DocumentCategoryId;
+        //    public const int DocumentNatureId = DocumentNatureConstants.Master.DocumentNatureId;
         //    public const string Nature = null;
         //    public const string PrintTitle = null;
         //}
 
-        //public static class Carpet
+        //public static class ProcessSequence
         //{
-        //    public const int DocumentTypeId = 1019;
-        //    public const string DocumentTypeShortName = "Rug";
-        //    public const string DocumentTypeName = "Carpet";
-        //    public const int DocumentCategoryId = DocumentCategoryConstants.Carpet.DocumentCategoryId;
-        //    public const int DocumentNatureId = DocumentNatureConstants.Carpet.DocumentNatureId;
+        //    public const int DocumentTypeId = 711;
+        //    public const string DocumentTypeShortName = "PRSQ";
+        //    public const string DocumentTypeName = "Process Sequence";
+        //    public const int DocumentCategoryId = DocumentCategoryConstants.Master.DocumentCategoryId;
+        //    public const int DocumentNatureId = DocumentNatureConstants.Master.DocumentNatureId;
+        //    public const string Nature = null;
+        //    public const string PrintTitle = null;
+        //}
+
+        //public static class City
+        //{
+        //    public const int DocumentTypeId = 712;
+        //    public const string DocumentTypeShortName = "City";
+        //    public const string DocumentTypeName = "City";
+        //    public const int DocumentCategoryId = DocumentCategoryConstants.Master.DocumentCategoryId;
+        //    public const int DocumentNatureId = DocumentNatureConstants.Master.DocumentNatureId;
+        //    public const string Nature = null;
+        //    public const string PrintTitle = null;
+        //}
+
+        //public static class ProcessSequence
+        //{
+        //    public const int DocumentTypeId = 713;
+        //    public const string DocumentTypeShortName = "PRSQ";
+        //    public const string DocumentTypeName = "Process Sequence";
+        //    public const int DocumentCategoryId = DocumentCategoryConstants.Master.DocumentCategoryId;
+        //    public const int DocumentNatureId = DocumentNatureConstants.Master.DocumentNatureId;
+        //    public const string Nature = null;
+        //    public const string PrintTitle = null;
+        //}
+
+        //public static class ProcessSequence
+        //{
+        //    public const int DocumentTypeId = 714;
+        //    public const string DocumentTypeShortName = "PRSQ";
+        //    public const string DocumentTypeName = "Process Sequence";
+        //    public const int DocumentCategoryId = DocumentCategoryConstants.Master.DocumentCategoryId;
+        //    public const int DocumentNatureId = DocumentNatureConstants.Master.DocumentNatureId;
+        //    public const string Nature = null;
+        //    public const string PrintTitle = null;
+        //}
+
+        //public static class ProcessSequence
+        //{
+        //    public const int DocumentTypeId = 715;
+        //    public const string DocumentTypeShortName = "PRSQ";
+        //    public const string DocumentTypeName = "Process Sequence";
+        //    public const int DocumentCategoryId = DocumentCategoryConstants.Master.DocumentCategoryId;
+        //    public const int DocumentNatureId = DocumentNatureConstants.Master.DocumentNatureId;
+        //    public const string Nature = null;
+        //    public const string PrintTitle = null;
+        //}
+
+        //public static class ProcessSequence
+        //{
+        //    public const int DocumentTypeId = 716;
+        //    public const string DocumentTypeShortName = "PRSQ";
+        //    public const string DocumentTypeName = "Process Sequence";
+        //    public const int DocumentCategoryId = DocumentCategoryConstants.Master.DocumentCategoryId;
+        //    public const int DocumentNatureId = DocumentNatureConstants.Master.DocumentNatureId;
+        //    public const string Nature = null;
+        //    public const string PrintTitle = null;
+        //}
+
+        //public static class ProcessSequence
+        //{
+        //    public const int DocumentTypeId = 717;
+        //    public const string DocumentTypeShortName = "PRSQ";
+        //    public const string DocumentTypeName = "Process Sequence";
+        //    public const int DocumentCategoryId = DocumentCategoryConstants.Master.DocumentCategoryId;
+        //    public const int DocumentNatureId = DocumentNatureConstants.Master.DocumentNatureId;
+        //    public const string Nature = null;
+        //    public const string PrintTitle = null;
+        //}
+
+        //public static class ProcessSequence
+        //{
+        //    public const int DocumentTypeId = 718;
+        //    public const string DocumentTypeShortName = "PRSQ";
+        //    public const string DocumentTypeName = "Process Sequence";
+        //    public const int DocumentCategoryId = DocumentCategoryConstants.Master.DocumentCategoryId;
+        //    public const int DocumentNatureId = DocumentNatureConstants.Master.DocumentNatureId;
+        //    public const string Nature = null;
+        //    public const string PrintTitle = null;
+        //}
+
+        //public static class ProcessSequence
+        //{
+        //    public const int DocumentTypeId = 719;
+        //    public const string DocumentTypeShortName = "PRSQ";
+        //    public const string DocumentTypeName = "Process Sequence";
+        //    public const int DocumentCategoryId = DocumentCategoryConstants.Master.DocumentCategoryId;
+        //    public const int DocumentNatureId = DocumentNatureConstants.Master.DocumentNatureId;
         //    public const string Nature = null;
         //    public const string PrintTitle = null;
         //}
 
 
         /*
-        public const string ProductUid = "Product Uid";
-        public const string ProcessSequence = "Process Sequence";
         public const string City = "City";
-        public const string Buyer = "Buyer";
         public const string Process = "Process";
         public const string Godown = "Godown";
         public const string Gate = "Gate";

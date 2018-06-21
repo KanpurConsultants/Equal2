@@ -341,10 +341,10 @@ namespace Jobs.App_Start
 
             ///////////////////For Login////////////////////////////
             
-            container.RegisterType<Microsoft.AspNet.Identity.IUserStore<Login.Models.ApplicationUser>, Microsoft.AspNet.Identity.EntityFramework.UserStore<Login.Models.ApplicationUser>>();
+            container.RegisterType<Microsoft.AspNet.Identity.IUserStore<Login.Models.LoginUser>, Microsoft.AspNet.Identity.EntityFramework.UserStore<Login.Models.LoginUser>>();
 
             container.RegisterType<System.Data.Entity.DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());
-            container.RegisterType<Microsoft.AspNet.Identity.UserManager<Login.Models.ApplicationUser>>(new HierarchicalLifetimeManager());
+            container.RegisterType<Microsoft.AspNet.Identity.UserManager<Login.Models.LoginUser>>(new HierarchicalLifetimeManager());
             container.RegisterType<Controllers.AccountController>(new InjectionConstructor());
 
 

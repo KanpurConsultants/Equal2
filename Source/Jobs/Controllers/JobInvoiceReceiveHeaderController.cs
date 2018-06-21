@@ -251,7 +251,7 @@ namespace Jobs.Controllers
 
             if ((settings.isVisibleProcessHeader ?? false) == false)
             {
-                vm.ProcessId = settings.ProcessId;
+                vm.ProcessId = (int)settings.ProcessId;
             }
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, id, vm.ProcessId, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)
@@ -2517,7 +2517,7 @@ EXEC(@Qry);	";
                             LineList.Add(new LineDetailListViewModel { Amount = line.Amount, Rate = line.Rate, LineTableId = line.JobInvoiceReturnLineId, HeaderTableId = item.JobInvoiceReturnHeaderId, PersonID = InvoiceRetHeader.JobWorkerId, DealQty = line.DealQty });
 
                             List<CalculationProductViewModel> ChargeRates = new CalculationProductService(_unitOfWork).GetChargeRates(CalculationId, InvoiceRetHeader.DocTypeId, InvoiceRetHeader.SiteId, InvoiceRetHeader.DivisionId,
-                                    Settings.ProcessId, InvoiceRetHeader.SalesTaxGroupPersonId, item.SalesTaxGroupProductId).ToList();
+                                    (int)Settings.ProcessId, InvoiceRetHeader.SalesTaxGroupPersonId, item.SalesTaxGroupProductId).ToList();
                             if (ChargeRates != null)
                             {
                                 LineChargeRates.Add(new LineChargeRates { LineId = line.JobInvoiceReturnLineId, ChargeRates = ChargeRates });

@@ -401,11 +401,6 @@ namespace Jobs.Constants.ControllerAction
             public const string ControllerName = "LedgerAccount";
             public const string ActionName = "Index";
         }
-        public static class LedgerAccountGroup
-        {
-            public const string ControllerName = "LedgerAccountGroup";
-            public const string ActionName = "Index";
-        }
         public static class CostCenter
         {
             public const int ControllerActionId = 74;
@@ -475,13 +470,13 @@ namespace Jobs.Constants.ControllerAction
         public static class AssignPermissions
         {
             public const int ControllerActionId = 85;
-            public const string ControllerName = "CalculationLedgerAccounts";
+            public const string ControllerName = "AssignPermissions";
             public const string ActionName = "Index";
         }
         public static class CreateRoles
         {
             public const int ControllerActionId = 86;
-            public const string ControllerName = "CalculationLedgerAccounts";
+            public const string ControllerName = "CreateRoles";
             public const string ActionName = "Index";
         }
         public static class Reason
@@ -526,54 +521,13 @@ namespace Jobs.Constants.ControllerAction
             public const string ControllerName = "Tasks";
             public const string ActionName = "Index";
         }
-        #endregion
 
-        //Only For Carpet Industry
-        public static class CarpetMaster
+        public static class LedgerAccountGroup
         {
             public const int ControllerActionId = 94;
-            public const string ControllerName = "CarpetMaster";
+            public const string ControllerName = "LedgerAccountGroup";
             public const string ActionName = "Index";
         }
-
-        public static class Quality
-        {
-            public const int ControllerActionId = 95;
-            public const string ControllerName = "ProductQuality";
-            public const string ActionName = "Index";
-        }
-        public static class Size
-        {
-            public const int ControllerActionId = 96;
-            public const string ControllerName = "Size";
-            public const string ActionName = "Index";
-        }
-
-        public static class Collection
-        {
-            public const int ControllerActionId = 97;
-            public const string ControllerName = "ProductCollection";
-            public const string ActionName = "Index";
-        }
-
-        public static class ProductContent
-        {
-            public const int ControllerActionId = 98;
-            public const string ControllerName = "ProductContentHeader";
-            public const string ActionName = "Index";
-        }
-
-        public static class ProcessSequenceHeader
-        {
-            public const int ControllerActionId = 99;
-            public const string ControllerName = "ProcessSequenceHeader";
-            public const string ActionName = "Index";
-        }
-        public static class Colour
-        {
-            public const int ControllerActionId = 100;
-            public const string ControllerName = "Colour";
-            public const string ActionName = "Index";
-        }
+        #endregion
     }
 }

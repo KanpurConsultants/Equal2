@@ -120,7 +120,7 @@ namespace Model.ViewModels
          public string DeliveryTermsName { get; set; }
          public string PriorityName { get; set; }
          public string ShipMethodName { get; set; }
-         public byte UnitConversionForId { get; set; }
+         public byte ? UnitConversionForId { get; set; }
          public string UnitConversionForName { get; set; }
          public string ReviewBy { get; set; }
          public bool? Reviewed { get; set; }

@@ -196,7 +196,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             vm.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(id);
 
-            vm.ProcessId = jobreceivesettings.ProcessId;
+            vm.ProcessId = (int)jobreceivesettings.ProcessId;
             //Akash
             //vm.DocDate = DateTime.Now;
             vm.DocTypeId = id;

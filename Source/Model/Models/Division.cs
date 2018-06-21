@@ -46,6 +46,9 @@ namespace Model.Models
         [MaxLength(25)]
         public string ThemeColour { get; set; }
 
+        [MaxLength(25)]
+        public string IndustryType { get; set; }
+
         public ICollection<Product> Products { get; set; }
 
         public string LogoBlob { get; set; }

@@ -113,7 +113,7 @@
     <Compile Include="DatabaseViews\StockVirtual.cs" />
     <Compile Include="Models\ActivityLog.cs" />
     <Compile Include="Models\Application.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\BinLocation.cs" />
     <Compile Include="Models\Caste.cs" />
     <Compile Include="Models\ChargeGroupPersonCalculation.cs" />

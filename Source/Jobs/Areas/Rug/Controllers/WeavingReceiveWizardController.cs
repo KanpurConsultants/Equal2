@@ -144,7 +144,7 @@ namespace Jobs.Areas.Rug.Controllers
 
 
             //p.JobReceiveById = new EmployeeService(_unitOfWork).GetEmloyeeForUser(User.Identity.GetUserId());
-            p.ProcessId = settings.ProcessId;
+            p.ProcessId = (int)settings.ProcessId;
             if (System.Web.HttpContext.Current.Session["DefaultGodownId"] != null)
             {
                 p.GodownId = (int) System.Web.HttpContext.Current.Session["DefaultGodownId"];

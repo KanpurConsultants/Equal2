@@ -126,7 +126,7 @@ namespace Jobs.Controllers
 
                             Application AppRecord = new Application();
 
-                            using (ApplicationDbContext db = new ApplicationDbContext())
+                            using (LoginApplicationDbContext db = new LoginApplicationDbContext())
                             {
                                 AppRecord = (from p in db.Application
                                              where p.ApplicationURL.ToUpper().Trim() == returnUrl.ToUpper().Trim()
@@ -162,7 +162,7 @@ namespace Jobs.Controllers
                             Application AppRecord = new Application();
                             string RoleId = "";
 
-                            using (ApplicationDbContext db = new ApplicationDbContext())
+                            using (LoginApplicationDbContext db = new LoginApplicationDbContext())
                             {
 
                                 var userId = user.Id;
@@ -296,7 +296,7 @@ namespace Jobs.Controllers
                 return RedirectToAction("Login");
             }
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            using (LoginApplicationDbContext db = new LoginApplicationDbContext())
             {
                 //ViewBag.UserTypeList = db.UserType.ToList();
 
@@ -327,11 +327,11 @@ namespace Jobs.Controllers
             {
                 int AppId = GetApplicationId(model.RetUrl);
 
-                var user = new ApplicationUser
+                var user = new LoginUser
                 {
                     UserName = model.UserName,
                     Email = model.Email,
-                    FirstName = model.FirstName,
+                    //FirstName = model.FirstName,
                     //LastName = model.LastName,
                     City = "",
                     EmailConfirmed = true,
@@ -382,7 +382,7 @@ namespace Jobs.Controllers
                         Application AppRecord = new Application();
                         string Roles = "";
 
-                        using (ApplicationDbContext db = new ApplicationDbContext())
+                        using (LoginApplicationDbContext db = new LoginApplicationDbContext())
                         {
 
                             AppRecord = db.Application.Find(user.ApplicationId);
@@ -421,7 +421,7 @@ namespace Jobs.Controllers
                 AddErrors(result);
             }
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            using (LoginApplicationDbContext db = new LoginApplicationDbContext())
             {
                 //ViewBag.UserTypeList = db.UserType.ToList();
             }
@@ -449,7 +449,7 @@ namespace Jobs.Controllers
         private async Task AddUserApplication(int ApplicationId, string UserId, string InvitationBy, DateTime InvitationDate, string UserRole,
             int SiteId = 0, int DivisionId = 0)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            using (LoginApplicationDbContext db = new LoginApplicationDbContext())
             {
                 UserApplication AlreadyExist = db.UserApplication.Where(m => m.ApplicationId == ApplicationId && m.UserId == UserId).FirstOrDefault();
 
@@ -482,7 +482,7 @@ namespace Jobs.Controllers
                 ValidationMsg = "Invitation Send By User is not valid.";
             else
             {
-                using (ApplicationDbContext db = new ApplicationDbContext())
+                using (LoginApplicationDbContext db = new LoginApplicationDbContext())
                 {
                     var InvitationByUser = db.Users.Find(InvitationBy);
                     if (InvitationByUser == null)
@@ -490,7 +490,7 @@ namespace Jobs.Controllers
                 }
             }
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            using (LoginApplicationDbContext db = new LoginApplicationDbContext())
             {
                 var Application = db.Application.Find(AppId);
                 if (Application == null)
@@ -690,7 +690,7 @@ namespace Jobs.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new LoginUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -826,7 +826,7 @@ namespace Jobs.Controllers
 
                 Application AppRecord = new Application();
 
-                using (ApplicationDbContext db = new ApplicationDbContext())
+                using (LoginApplicationDbContext db = new LoginApplicationDbContext())
                 {
                     AppRecord = (from p in db.Application
                                  where p.ApplicationURL.ToUpper().Trim() == RetUrl.ToUpper().Trim()
@@ -845,7 +845,7 @@ namespace Jobs.Controllers
 
                 Application AppRecord = new Application();
 
-                using (ApplicationDbContext db = new ApplicationDbContext())
+                using (LoginApplicationDbContext db = new LoginApplicationDbContext())
                 {
                     AppRecord = (from p in db.Application
                                  where p.ApplicationURL.ToUpper().Trim() == Domain.ToUpper().Trim()

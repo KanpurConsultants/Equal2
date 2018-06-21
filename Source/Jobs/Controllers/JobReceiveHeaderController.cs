@@ -157,7 +157,7 @@ namespace Jobs.Controllers
 
             if ((settings.isVisibleProcessHeader ?? false) == false)
             {
-                vm.ProcessId = settings.ProcessId;
+                vm.ProcessId = (int)settings.ProcessId;
             }
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, id, vm.ProcessId, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)

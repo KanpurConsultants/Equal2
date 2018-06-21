@@ -15,11 +15,11 @@ namespace Jobs.Constants.ProductType
             public const string ProductTypeName = "Raw Material";
             public const int ProductNatureId = ProductNatureConstants.RawMaterial.ProductNatureId;
         }
-        public static class FinishedMaterial
+        public static class TradingProduct
         {
             public const int ProductTypeId = 2;
-            public const string ProductTypeName = "Finished Material";
-            public const int ProductNatureId = ProductNatureConstants.FinishedMaterial.ProductNatureId;
+            public const string ProductTypeName = "Trading Product";
+            public const int ProductNatureId = ProductNatureConstants.TradingProduct.ProductNatureId;
         }
         public static class OtherMaterial
         {
@@ -52,31 +52,5 @@ namespace Jobs.Constants.ProductType
             public const int ProductNatureId = ProductNatureConstants.LedgerAccount.ProductNatureId;
         }
 
-        //Only For Carpet Industry
-        public static class Rug
-        {
-            public const int ProductTypeId = 8;
-            public const string ProductTypeName = "Rug";
-            public const int ProductNatureId = ProductNatureConstants.FinishedMaterial.ProductNatureId;
-        }
-        public static class Yarn
-        {
-            public const int ProductTypeId = 9;
-            public const string ProductTypeName = "Yarn";
-            public const int ProductNatureId = ProductNatureConstants.RawMaterial.ProductNatureId;
-        }
-
-        public static class Trace
-        {
-            public const int ProductTypeId = 10;
-            public const string ProductTypeName = "Trace";
-            public const int ProductNatureId = ProductNatureConstants.RawMaterial.ProductNatureId;
-        }
-        public static class Map
-        {
-            public const int ProductTypeId = 11;
-            public const string ProductTypeName = "Map";
-            public const int ProductNatureId = ProductNatureConstants.RawMaterial.ProductNatureId;
-        }
     }
 }

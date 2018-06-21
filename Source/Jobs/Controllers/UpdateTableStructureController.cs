@@ -19,6 +19,12 @@ namespace Module
         {
             _ModuleService = mService;
         }
+        public ActionResult UpdateTablesFromData()
+        {
+            Data.Models.UpdateTableStructure D = new Data.Models.UpdateTableStructure();
+            D.UpdateTables();
+            return RedirectToAction("Module", "Menu");
+        }
 
         public ActionResult UpdateTables()
         {

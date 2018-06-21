@@ -50,7 +50,7 @@ namespace Service
 
             if (ExistingUser == null)
             {
-                User NewUser = new User();
+                ApplicationUser NewUser = new ApplicationUser();
                 NewUser.Id = UserId;
                 NewUser.UserName = UserName;
                 NewUser.Id = UserId;

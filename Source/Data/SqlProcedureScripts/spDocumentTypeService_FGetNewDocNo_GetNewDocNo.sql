@@ -1,9 +1,3 @@
-
-IF OBJECT_ID ('Web.[spDocumentTypeService_FGetNewDocNo_GetNewDocNo]') IS NOT NULL
-	DROP PROCEDURE Web.[spDocumentTypeService_FGetNewDocNo_GetNewDocNo]
-GO
-
-
 CREATE PROCEDURE [Web].[spDocumentTypeService_FGetNewDocNo_GetNewDocNo]
     @FieldName VARCHAR(50), @TableName VARCHAR(50),@DocTypeId INT, @DocDate SMALLDATETIME, @DivisionId INT, @SiteId INT --,@NewDocNo nVarChar(50) OUTPUT
 AS
@@ -132,5 +126,5 @@ BEGIN
 	--Return @NewDocNo
 	--PRINT @NewDocNo
 END
-GO
+
 

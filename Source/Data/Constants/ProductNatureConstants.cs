@@ -13,10 +13,10 @@ namespace Jobs.Constants.ProductNature
             public const int ProductNatureId = 1;
             public const string ProductNatureName = "Raw Material";
         }
-        public static class FinishedMaterial
+        public static class TradingProduct
         {
             public const int ProductNatureId = 2;
-            public const string ProductNatureName = "Finished Material";
+            public const string ProductNatureName = "Trading Product";
         }
         public static class OtherMaterial
         {

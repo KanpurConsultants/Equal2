@@ -56,6 +56,14 @@ using Jobs.Constants.ProductSizeTypes;
 using Jobs.Constants.ProductDesign;
 using Jobs.Constants.ProductShape;
 using Jobs.Constants.ProductGroup;
+using Jobs.Constants.RugMenu;
+using Jobs.Constants.RugControllerAction;
+using Jobs.Constants.RugDocumentCategory;
+using Jobs.Constants.RugDocumentNature;
+using Jobs.Constants.RugDocumentType;
+using Jobs.Constants.RugProductType;
+using Jobs.Constants.RugProductGroup;
+using Jobs.Constants.IndustryType;
 
 namespace Data.Models
 {
@@ -71,13 +79,21 @@ namespace Data.Models
         }
         public void InsertData()
         {
+            System.Web.HttpContext.Current.Session["IndustryType"] = IndustryTypeConstants.Rug.IndustryTypeName;
+
+
             InsertActivityTypes();
             InsertDocumentNature();
+            InsertRugDocumentNature();
             InsertDocumentCategories();
+            InsertRugDocumentCategories();
             InsertDocumentTypes();
+            InsertRugDocumentTypes();
             InsertControllerActions();
+            InsertRugControllerActions();
             InsertModules();
             InsertSubModules();
+            InsertRugMenus(); 
             InsertMenus();
             InsertCountry();
             InsertState();
@@ -104,7 +120,9 @@ namespace Data.Models
             InsertProductNature();
             InsertProductShape();
             InsertProductType();
+            InsertRugProductType();
             InsertProductGroup();
+            InsertRugProductGroup();
             InsertChargeType();
             InsertCharge();
             InsertChargeGroupPerson();
@@ -114,18 +132,16 @@ namespace Data.Models
             InsertCalculationProduct();
             InsertCalculationFooter();
             InsertPersonSetting();
-            InitializeUserTables(db);
-            InitializePersonTables(db);
-
-            //Only For Carpet Industry
             InsertProductSizeTypes();
             InsertProductDesign();
 
-            InitializeSettingsTables(db);
-            InitializeProcedure(db);
-            InitializeFunction(db);
-            InitializeSqlViews(db);
+
+            UpdateTableStructure D = new UpdateTableStructure();
+            D.UpdateTables();
+
         }
+
+
         public void InsertActivityTypes()
         {
             try
@@ -286,6 +302,48 @@ namespace Data.Models
                 string message = ex.Message;
             }
         }
+        public void InsertRugDocumentNature()
+        {
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                try
+                {
+                    Type DocumentNatureConstantsType = typeof(RugDocumentNatureConstants);
+
+                    System.Type[] ChildClassCollection = DocumentNatureConstantsType.GetNestedTypes();
+
+                    foreach (System.Type ChildClass in ChildClassCollection)
+                    {
+                        int DocumentNatureId = (int)ChildClass.GetField("DocumentNatureId").GetRawConstantValue();
+                        if (db.DocumentNature.Find(DocumentNatureId) == null)
+                        {
+                            DocumentNature DocumentNature = new DocumentNature();
+                            DocumentNature.DocumentNatureId = (int)ChildClass.GetField("DocumentNatureId").GetRawConstantValue();
+                            DocumentNature.DocumentNatureName = (string)ChildClass.GetField("DocumentNatureName").GetRawConstantValue();
+                            DocumentNature.IsActive = true;
+                            DocumentNature.IsSystemDefine = true;
+                            DocumentNature.ObjectState = Model.ObjectState.Added;
+                            db.DocumentNature.Add(DocumentNature);
+                        }
+                        else
+                        {
+                            DocumentNature DocumentNature = db.DocumentNature.Find(DocumentNatureId);
+                            DocumentNature.DocumentNatureName = (string)ChildClass.GetField("DocumentNatureName").GetRawConstantValue();
+                            DocumentNature.IsActive = true;
+                            DocumentNature.IsSystemDefine = true;
+                            DocumentNature.ObjectState = Model.ObjectState.Modified;
+                            db.DocumentNature.Add(DocumentNature);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+        }
         public void InsertDocumentCategories()
         {
             try
@@ -322,6 +380,47 @@ namespace Data.Models
             catch (Exception ex)
             {
                 string message = ex.Message;
+            }
+        }
+        public void InsertRugDocumentCategories()
+        {
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                try
+                {
+                    Type DocumentCategoryConstantsType = typeof(RugDocumentCategoryConstants);
+
+                    System.Type[] ChildClassCollection = DocumentCategoryConstantsType.GetNestedTypes();
+
+                    foreach (System.Type ChildClass in ChildClassCollection)
+                    {
+                        int DocumentCategoryId = (int)ChildClass.GetField("DocumentCategoryId").GetRawConstantValue();
+                        if (db.DocumentCategory.Find(DocumentCategoryId) == null)
+                        {
+                            DocumentCategory DocumentCategory = new DocumentCategory();
+                            DocumentCategory.DocumentCategoryId = (int)ChildClass.GetField("DocumentCategoryId").GetRawConstantValue();
+                            DocumentCategory.DocumentCategoryName = (string)ChildClass.GetField("DocumentCategoryName").GetRawConstantValue();
+                            DocumentCategory.IsActive = true;
+                            DocumentCategory.IsSystemDefine = true;
+                            DocumentCategory.ObjectState = Model.ObjectState.Added;
+                            db.DocumentCategory.Add(DocumentCategory);
+                        }
+                        else
+                        {
+                            DocumentCategory DocumentCategory = db.DocumentCategory.Find(DocumentCategoryId);
+                            DocumentCategory.DocumentCategoryName = (string)ChildClass.GetField("DocumentCategoryName").GetRawConstantValue();
+                            DocumentCategory.IsActive = true;
+                            DocumentCategory.IsSystemDefine = true;
+                            DocumentCategory.ObjectState = Model.ObjectState.Modified;
+                            db.DocumentCategory.Add(DocumentCategory);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
             }
         }
         public void InsertDocumentTypes()
@@ -380,6 +479,65 @@ namespace Data.Models
                 string message = ex.Message;
             }
         }
+        public void InsertRugDocumentTypes()
+        {
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                try
+                {
+                    Type DocumentTypeConstantsType = typeof(RugDocumentTypeConstants);
+
+                    System.Type[] ChildClassCollection = DocumentTypeConstantsType.GetNestedTypes();
+
+                    foreach (System.Type ChildClass in ChildClassCollection)
+                    {
+                        int DocumentTypeId = (int)ChildClass.GetField("DocumentTypeId").GetRawConstantValue();
+
+                        if (db.DocumentType.Find(DocumentTypeId) == null)
+                        {
+                            DocumentType DocumentType = new DocumentType();
+                            DocumentType.DocumentTypeId = (int)ChildClass.GetField("DocumentTypeId").GetRawConstantValue();
+                            DocumentType.DocumentTypeShortName = (string)ChildClass.GetField("DocumentTypeShortName").GetRawConstantValue();
+                            DocumentType.DocumentTypeName = (string)ChildClass.GetField("DocumentTypeName").GetRawConstantValue();
+                            DocumentType.DocumentCategoryId = (int)ChildClass.GetField("DocumentCategoryId").GetRawConstantValue();
+                            DocumentType.DocumentNatureId = (int)ChildClass.GetField("DocumentNatureId").GetRawConstantValue();
+                            DocumentType.Nature = (string)ChildClass.GetField("Nature").GetRawConstantValue();
+                            DocumentType.PrintTitle = (string)ChildClass.GetField("PrintTitle").GetRawConstantValue();
+                            DocumentType.IsActive = true;
+                            DocumentType.IsSystemDefine = true;
+                            DocumentType.CreatedBy = "System";
+                            DocumentType.ModifiedBy = "System";
+                            DocumentType.CreatedDate = System.DateTime.Now;
+                            DocumentType.ModifiedDate = System.DateTime.Now;
+                            DocumentType.ObjectState = Model.ObjectState.Added;
+                            db.DocumentType.Add(DocumentType);
+                        }
+                        else
+                        {
+                            DocumentType DocumentType = db.DocumentType.Find(DocumentTypeId);
+                            DocumentType.DocumentTypeShortName = (string)ChildClass.GetField("DocumentTypeShortName").GetRawConstantValue();
+                            DocumentType.DocumentTypeName = (string)ChildClass.GetField("DocumentTypeName").GetRawConstantValue();
+                            DocumentType.DocumentCategoryId = (int)ChildClass.GetField("DocumentCategoryId").GetRawConstantValue();
+                            DocumentType.DocumentNatureId = (int)ChildClass.GetField("DocumentNatureId").GetRawConstantValue();
+                            DocumentType.Nature = (string)ChildClass.GetField("Nature").GetRawConstantValue();
+                            DocumentType.PrintTitle = (string)ChildClass.GetField("PrintTitle").GetRawConstantValue();
+                            DocumentType.IsActive = true;
+                            DocumentType.IsSystemDefine = true;
+                            DocumentType.ModifiedBy = "System";
+                            DocumentType.ModifiedDate = System.DateTime.Now;
+                            DocumentType.ObjectState = Model.ObjectState.Modified;
+                            db.DocumentType.Add(DocumentType);
+                        }
+                        db.SaveChanges();
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+        }
         public void InsertControllerActions()
         {
             try
@@ -421,6 +579,52 @@ namespace Data.Models
             catch (Exception ex)
             {
                 string message = ex.Message;
+            }
+        }
+        public void InsertRugControllerActions()
+        {
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                try
+                {
+                    Type ControllerActionConstantsType = typeof(RugControllerActionConstants);
+
+                    System.Type[] ChildClassCollection = ControllerActionConstantsType.GetNestedTypes();
+
+                    foreach (System.Type ChildClass in ChildClassCollection)
+                    {
+                        int ControllerActionId = (int)ChildClass.GetField("ControllerActionId").GetRawConstantValue();
+
+                        if (db.ControllerAction.Find(ControllerActionId) == null)
+                        {
+                            ControllerAction ControllerAction = new ControllerAction();
+                            ControllerAction.ControllerActionId = (int)ChildClass.GetField("ControllerActionId").GetRawConstantValue();
+                            ControllerAction.ControllerName = (string)ChildClass.GetField("ControllerName").GetRawConstantValue();
+                            ControllerAction.ActionName = (string)ChildClass.GetField("ActionName").GetRawConstantValue();
+                            ControllerAction.CreatedBy = "System";
+                            ControllerAction.ModifiedBy = "System";
+                            ControllerAction.CreatedDate = System.DateTime.Now;
+                            ControllerAction.ModifiedDate = System.DateTime.Now;
+                            ControllerAction.ObjectState = Model.ObjectState.Added;
+                            db.ControllerAction.Add(ControllerAction);
+                        }
+                        else
+                        {
+                            ControllerAction ControllerAction = db.ControllerAction.Find(ControllerActionId);
+                            ControllerAction.ControllerName = (string)ChildClass.GetField("ControllerName").GetRawConstantValue();
+                            ControllerAction.ActionName = (string)ChildClass.GetField("ActionName").GetRawConstantValue();
+                            ControllerAction.ModifiedBy = "System";
+                            ControllerAction.ModifiedDate = System.DateTime.Now;
+                            ControllerAction.ObjectState = Model.ObjectState.Modified;
+                            db.ControllerAction.Add(ControllerAction);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
             }
         }
         public void InsertModules()
@@ -574,6 +778,72 @@ namespace Data.Models
             catch (Exception ex)
             {
                 string message = ex.Message;
+            }
+        }
+        public void InsertRugMenus()
+        {
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                try
+                {
+                    Type MenuConstantsType = typeof(RugMenuConstants);
+
+                    System.Type[] ChildClassCollection = MenuConstantsType.GetNestedTypes();
+
+                    foreach (System.Type ChildClass in ChildClassCollection)
+                    {
+                        int MenuId = (int)ChildClass.GetField("MenuId").GetRawConstantValue();
+
+                        if (db.Menu.Find(MenuId) == null)
+                        {
+                            Menu Menu = new Menu();
+                            Menu.MenuId = (int)ChildClass.GetField("MenuId").GetRawConstantValue();
+                            Menu.MenuName = (string)ChildClass.GetField("MenuName").GetRawConstantValue();
+                            Menu.Srl = (string)ChildClass.GetField("Srl").GetRawConstantValue();
+                            Menu.IconName = (string)ChildClass.GetField("IconName").GetRawConstantValue();
+                            Menu.Description = (string)ChildClass.GetField("Description").GetRawConstantValue();
+                            Menu.ModuleId = (int)ChildClass.GetField("ModuleId").GetRawConstantValue();
+                            Menu.SubModuleId = (int)ChildClass.GetField("SubModuleId").GetRawConstantValue();
+                            Menu.ControllerName = (string)ChildClass.GetField("ControllerName").GetRawConstantValue();
+                            Menu.ActionName = (string)ChildClass.GetField("ActionName").GetRawConstantValue();
+                            Menu.RouteId = (string)ChildClass.GetField("RouteId").GetValue("RouteId");
+                            Menu.URL = (string)ChildClass.GetField("URL").GetRawConstantValue();
+                            Menu.IsVisible = (bool)ChildClass.GetField("IsVisible").GetRawConstantValue();
+                            Menu.AreaName = (string)ChildClass.GetField("AreaName").GetRawConstantValue();
+                            Menu.CreatedBy = "System";
+                            Menu.ModifiedBy = "System";
+                            Menu.CreatedDate = System.DateTime.Now;
+                            Menu.ModifiedDate = System.DateTime.Now;
+                            Menu.ObjectState = Model.ObjectState.Added;
+                            db.Menu.Add(Menu);
+                        }
+                        else
+                        {
+                            Menu Menu = db.Menu.Find(MenuId);
+                            Menu.MenuName = (string)ChildClass.GetField("MenuName").GetRawConstantValue();
+                            Menu.Srl = (string)ChildClass.GetField("Srl").GetRawConstantValue();
+                            Menu.IconName = (string)ChildClass.GetField("IconName").GetRawConstantValue();
+                            Menu.Description = (string)ChildClass.GetField("Description").GetRawConstantValue();
+                            Menu.ModuleId = (int)ChildClass.GetField("ModuleId").GetRawConstantValue();
+                            Menu.SubModuleId = (int)ChildClass.GetField("SubModuleId").GetRawConstantValue();
+                            Menu.ControllerName = (string)ChildClass.GetField("ControllerName").GetRawConstantValue();
+                            Menu.ActionName = (string)ChildClass.GetField("ActionName").GetRawConstantValue();
+                            Menu.RouteId = (string)ChildClass.GetField("RouteId").GetValue("RouteId");
+                            Menu.URL = (string)ChildClass.GetField("URL").GetRawConstantValue();
+                            Menu.IsVisible = (bool)ChildClass.GetField("IsVisible").GetRawConstantValue();
+                            Menu.AreaName = (string)ChildClass.GetField("AreaName").GetRawConstantValue();
+                            Menu.ModifiedBy = "System";
+                            Menu.ModifiedDate = System.DateTime.Now;
+                            Menu.ObjectState = Model.ObjectState.Modified;
+                            db.Menu.Add(Menu);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
             }
         }
         public void InsertCountry()
@@ -1722,6 +1992,104 @@ namespace Data.Models
                 string message = ex.Message;
             }
         }
+        public void InsertRugProductType()
+        {
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                try
+                {
+                    Type ProductTypeConstantsType = typeof(RugProductTypeConstants);
+
+                    System.Type[] ChildClassCollection = ProductTypeConstantsType.GetNestedTypes();
+
+                    foreach (System.Type ChildClass in ChildClassCollection)
+                    {
+                        int ProductTypeId = (int)ChildClass.GetField("ProductTypeId").GetRawConstantValue();
+                        if (db.ProductTypes.Find(ProductTypeId) == null)
+                        {
+                            ProductType ProductType = new ProductType();
+                            ProductType.ProductTypeId = (int)ChildClass.GetField("ProductTypeId").GetRawConstantValue();
+                            ProductType.ProductNatureId = (int)ChildClass.GetField("ProductNatureId").GetRawConstantValue();
+                            ProductType.ProductTypeName = (string)ChildClass.GetField("ProductTypeName").GetRawConstantValue();
+                            ProductType.IsActive = true;
+                            ProductType.IsSystemDefine = true;
+                            ProductType.CreatedBy = "System";
+                            ProductType.ModifiedBy = "System";
+                            ProductType.CreatedDate = System.DateTime.Now;
+                            ProductType.ModifiedDate = System.DateTime.Now;
+                            ProductType.ObjectState = Model.ObjectState.Added;
+                            db.ProductTypes.Add(ProductType);
+                        }
+                        else
+                        {
+                            ProductType ProductType = db.ProductTypes.Find(ProductTypeId);
+                            ProductType.ProductNatureId = (int)ChildClass.GetField("ProductNatureId").GetRawConstantValue();
+                            ProductType.ProductTypeName = (string)ChildClass.GetField("ProductTypeName").GetRawConstantValue();
+                            ProductType.IsActive = true;
+                            ProductType.IsSystemDefine = true;
+                            ProductType.ModifiedBy = "System";
+                            ProductType.ModifiedDate = System.DateTime.Now;
+                            ProductType.ObjectState = Model.ObjectState.Modified;
+                            db.ProductTypes.Add(ProductType);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+        }
+        public void InsertRugProductGroup()
+        {
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                try
+                {
+                    Type ProductGroupConstantsType = typeof(RugProductGroupConstants);
+
+                    System.Type[] ChildClassCollection = ProductGroupConstantsType.GetNestedTypes();
+
+                    foreach (System.Type ChildClass in ChildClassCollection)
+                    {
+                        int ProductGroupId = (int)ChildClass.GetField("ProductGroupId").GetRawConstantValue();
+                        if (db.ProductGroups.Find(ProductGroupId) == null)
+                        {
+                            ProductGroup ProductGroup = new ProductGroup();
+                            ProductGroup.ProductGroupId = (int)ChildClass.GetField("ProductGroupId").GetRawConstantValue();
+                            ProductGroup.ProductTypeId = (int)ChildClass.GetField("ProductTypeId").GetRawConstantValue();
+                            ProductGroup.ProductGroupName = (string)ChildClass.GetField("ProductGroupName").GetRawConstantValue();
+                            ProductGroup.IsActive = true;
+                            ProductGroup.IsSystemDefine = true;
+                            ProductGroup.CreatedBy = "System";
+                            ProductGroup.ModifiedBy = "System";
+                            ProductGroup.CreatedDate = System.DateTime.Now;
+                            ProductGroup.ModifiedDate = System.DateTime.Now;
+                            ProductGroup.ObjectState = Model.ObjectState.Added;
+                            db.ProductGroups.Add(ProductGroup);
+                        }
+                        else
+                        {
+                            ProductGroup ProductGroup = db.ProductGroups.Find(ProductGroupId);
+                            ProductGroup.ProductTypeId = (int)ChildClass.GetField("ProductTypeId").GetRawConstantValue();
+                            ProductGroup.ProductGroupName = (string)ChildClass.GetField("ProductGroupName").GetRawConstantValue();
+                            ProductGroup.IsActive = true;
+                            ProductGroup.IsSystemDefine = true;
+                            ProductGroup.ModifiedBy = "System";
+                            ProductGroup.ModifiedDate = System.DateTime.Now;
+                            ProductGroup.ObjectState = Model.ObjectState.Modified;
+                            db.ProductGroups.Add(ProductGroup);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+        }
         public void InsertChargeType()
         {
             try
@@ -2169,527 +2537,6 @@ namespace Data.Models
             {
                 string message = ex.Message;
             }
-        }
-        private void InitializeUserTables(ApplicationDbContext db)
-        {
-            string mQry = "";
-
-            mQry = " INSERT INTO Web.AspNetRoles (Id, Name) VALUES ('302b9430-498e-46e8-8ead-9e92867b7c9f', 'Admin') ";
-            db.Database.ExecuteSqlCommand(mQry);
-
-            mQry = " INSERT INTO Web.Users (Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName, FirstName, LastName, Discriminator) " +
-                    " VALUES ('99bddeed-49d4-45fd-8f2c-df57c78434dd', 'meet2arpit@rediffmail.com', 1, 'AIrF0x9YIMRYD8NbDwddsu59QH2AojxsDKdH3yxRYT180EEJqSrnTmWjF1fgxnSZ8g==', '432a52e7-c4f9-4ef5-81cf-7fdc75c7d964', NULL, 0, 0, NULL, 0, 1, 'admin', NULL, NULL, '1') ";
-            db.Database.ExecuteSqlCommand(mQry);
-
-            mQry = @"INSERT INTO Web.UserRoles (UserId, RoleId, SiteId, DivisionId,  ExpiryDate, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate) 
-                    VALUES ('99bddeed-49d4-45fd-8f2c-df57c78434dd', '302b9430-498e-46e8-8ead-9e92867b7c9f', 
-                    " + SiteConstants.MainSite.SiteId + @",
-                    " + DivisionConstants.MainDivision.DivisionId + @",
-                    NULL, 'Admin', getdate(), 'Admin', getdate()) ";
-            db.Database.ExecuteSqlCommand(mQry);
-        }
-        private void InitializePersonTables(ApplicationDbContext db)
-        {
-            string mQry = "";
-
-            mQry = "INSERT INTO Web.People (DocTypeId, Name, Suffix, Code, IsActive, IsSisterConcern, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
-                    " VALUES(" + DocumentTypeConstants.Customer.DocumentTypeId + ", 'Customer', '00000721', '00000721', 1, 0, 'Admin', 'Admin', getdate(), getdate()) ";
-            db.Database.ExecuteSqlCommand(mQry);
-
-            mQry = "INSERT INTO Web.BusinessEntities (PersonID, IsSisterConcern, DivisionIds, SiteIds) " +
-                    " SELECT P.PersonID, 0, '|"+ DivisionConstants.MainDivision.DivisionId.ToString()  + "|','|" + SiteConstants.MainSite.SiteId.ToString() + "|' " +
-                    " FROM web.People P WITH(nolock) " +
-                    " WHERE P.Name = 'Customer' AND P.DocTypeId =  " + DocumentTypeConstants.Customer.DocumentTypeId + "";
-            db.Database.ExecuteSqlCommand(mQry);
-
-
-            mQry = "INSERT INTO Web.LedgerAccounts (LedgerAccountId, LedgerAccountName, LedgerAccountSuffix, PersonId, LedgerAccountGroupId, IsActive, IsSystemDefine, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
-                    " SELECT (SELECT Max(G.LedgerAccountId) FROM web.LedgerAccounts G WITH (Nolock) ) +1 AS LedgerAccountId, P.Name AS LedgerAccountName, P.Suffix AS LedgerAccountSuffix, P.PersonID, " + LedgerAccountGroupConstants.SundryDebtors.LedgerAccountGroupId + ", 1, 1, 'Admin', 'Admin', getdate(), getdate() " +
-                    " FROM web.People P WITH(nolock) " +
-                    " WHERE P.Name = 'Customer' AND P.DocTypeId =  " + DocumentTypeConstants.Customer.DocumentTypeId + "";
-            db.Database.ExecuteSqlCommand(mQry);
-
-            mQry = "INSERT INTO Web.PersonAddresses (PersonId, CityId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
-                    "SELECT P.PersonID, " + CityConstants.Kanpur.CityId + ", 'Admin', 'Admin', getdate(), getdate() " +
-                    " FROM web.People P WITH(nolock) " +
-                    " WHERE P.Name = 'Customer' AND P.DocTypeId = " + DocumentTypeConstants.Customer.DocumentTypeId + "";
-            db.Database.ExecuteSqlCommand(mQry);
-
-            mQry = "INSERT INTO Web.PersonRoles (PersonId, RoleDocTypeId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
-                "SELECT P.PersonID,  " + DocumentTypeConstants.Customer.DocumentTypeId + ", 'Admin', 'Admin', getdate(), getdate() " +
-                " FROM web.People P WITH(nolock) " +
-                " WHERE P.Name = 'Customer' AND P.DocTypeId = " + DocumentTypeConstants.Customer.DocumentTypeId + "";
-            db.Database.ExecuteSqlCommand(mQry);
-
-
-           mQry= "INSERT INTO Web.PersonProcesses(PersonId, ProcessId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
-                "SELECT P.PersonID,  " + ProcessConstants.Sale.ProcessId + ", 'Admin', 'Admin', getdate(), getdate() " +
-                " FROM web.People P WITH(nolock) " +
-                " WHERE P.Name = 'Customer' AND P.DocTypeId = " + DocumentTypeConstants.Customer.DocumentTypeId + "";
-            db.Database.ExecuteSqlCommand(mQry);
-
-        }
-
-
-        private void InitializeSettingsTables(ApplicationDbContext db)
-        {
-            string mQry = "";
-            mQry = "INSERT INTO Web.SaleEnquirySettings(SaleEnquirySettingsId,  isVisibleCurrency, isVisibleShipMethod, isVisibleDealUnit, UnitConversionForId, ProcessId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate,  filterPersonRoles) " +
-                    " VALUES(1, 1, 1, 1, " + UnitConversionForConstants.Standard.UnitconversionForId + ", " + ProcessConstants.Sale.ProcessId + ", 'Admin', 'Admin', getdate(), getdate(), '" + DocumentTypeConstants.Customer.DocumentTypeId.ToString () + "')";
-            db.Database.ExecuteSqlCommand(mQry);
-
-            mQry = "INSERT INTO Web.ProductBuyerSettings (ProductBuyerSettingsId,BuyerSpecificationDisplayName, BuyerSpecification1DisplayName, BuyerSpecification2DisplayName, BuyerSpecification3DisplayName, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
-                    " VALUES(1, 'BuyerSpecification', 'BuyerSpecification1', 'BuyerSpecification2', 'BuyerSpecification3', 'Admin', 'Admin', getdate(), getdate())";
-            db.Database.ExecuteSqlCommand(mQry);
-
-            mQry = "INSERT INTO Web.CarpetSkuSettings (CarpetSkuSettingsId,isVisibleProductDesign, isVisibleProductStyle, isVisibleProductManufacturer, isVisibleProductDesignPattern, isVisibleContent, isVisibleOriginCountry, isVisibleInvoiceGroup, isVisibleDrawbackTarrif, isVisibleStandardCost, isVisibleStandardWeight, isVisibleSupplierDetail, isVisibleSample, isVisibleCounterNo, isVisibleTags, isVisibleDivision, isVisibleColour, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate, OMSId, ProductDesignId, OriginCountryId, AddColourInProductName, isVisibleProductionRemark, isVisibleGrossWeight, UnitConversions, isVisibleMapScale, isVisibleCBM, isVisibleTraceType, isVisibleMapType, isVisibleStencilSize, PerimeterSizeTypeId, NameBaseOnSize, isVisibleSalesTaxProductCode, SalesTaxProductCodeCaption) " +
-                    " VALUES(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Admin', 'Admin', Getdate(), Getdate(), NULL, " + ProductDesignConstants.NA.ProductDesignId + ", 1, 1, 0, 1, 'MT2', NULL, NULL, NULL, NULL, NULL, " + ProductSizeTypesConstants.Standard.ProductSizeTypeId + ", 'ManufacturingSizeName', NULL, NULL)";
-            db.Database.ExecuteSqlCommand(mQry);
-
-
-            mQry = "INSERT INTO Web.ProductTypeSettings (ProductTypeSettingsId, ProductTypeId, UnitId, isShowMappedDimension1, isShowUnMappedDimension1, isApplicableDimension1, Dimension1Caption, isShowMappedDimension2, isShowUnMappedDimension2, isApplicableDimension2, Dimension2Caption, isShowMappedDimension3, isShowUnMappedDimension3, isApplicableDimension3, Dimension3Caption, isShowMappedDimension4, isShowUnMappedDimension4, isApplicableDimension4, Dimension4Caption, isVisibleProductDescription, isVisibleProductSpecification, isVisibleProductCategory, isVisibleSalesTaxGroup, isVisibleSaleRate, isVisibleStandardCost, isVisibleTags, isVisibleMinimumOrderQty, isVisibleReOrderLevel, isVisibleGodownId, isVisibleBinLocationId, isVisibleProfitMargin, isVisibleCarryingCost, isVisibleLotManagement, isVisibleConsumptionDetail, isVisibleProductProcessDetail, isVisibleDefaultDimension1, isVisibleDefaultDimension2, isVisibleDefaultDimension3, isVisibleDefaultDimension4, isVisibleDiscontinueDate, isVisibleSalesTaxProductCode, IndexFilterParameter, ProductNameCaption, ProductCodeCaption, ProductDescriptionCaption, ProductSpecificationCaption, ProductGroupCaption, ProductCategoryCaption, SalesTaxProductCodeCaption, SqlProcProductCode, ImportMenuId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
-                    " VALUES(1, " + ProductTypeConstants.Rug.ProductTypeId + ", 'Pcs', 0, 0, 1, 'Colour', 0, 0, 0, NULL, 0, 0, 0, NULL, 0, 0, 0, NULL, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Admin', 'Admin', Getdate(), Getdate())";
-            db.Database.ExecuteSqlCommand(mQry);
-
-            mQry = "INSERT INTO Web.ProductTypeSettings (ProductTypeSettingsId, ProductTypeId, UnitId, isShowMappedDimension1, isShowUnMappedDimension1, isApplicableDimension1, Dimension1Caption, isShowMappedDimension2, isShowUnMappedDimension2, isApplicableDimension2, Dimension2Caption, isShowMappedDimension3, isShowUnMappedDimension3, isApplicableDimension3, Dimension3Caption, isShowMappedDimension4, isShowUnMappedDimension4, isApplicableDimension4, Dimension4Caption, isVisibleProductDescription, isVisibleProductSpecification, isVisibleProductCategory, isVisibleSalesTaxGroup, isVisibleSaleRate, isVisibleStandardCost, isVisibleTags, isVisibleMinimumOrderQty, isVisibleReOrderLevel, isVisibleGodownId, isVisibleBinLocationId, isVisibleProfitMargin, isVisibleCarryingCost, isVisibleLotManagement, isVisibleConsumptionDetail, isVisibleProductProcessDetail, isVisibleDefaultDimension1, isVisibleDefaultDimension2, isVisibleDefaultDimension3, isVisibleDefaultDimension4, isVisibleDiscontinueDate, isVisibleSalesTaxProductCode, IndexFilterParameter, ProductNameCaption, ProductCodeCaption, ProductDescriptionCaption, ProductSpecificationCaption, ProductGroupCaption, ProductCategoryCaption, SalesTaxProductCodeCaption, SqlProcProductCode, ImportMenuId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
-                    " VALUES(2, " + ProductTypeConstants.Yarn.ProductTypeId + ", 'KG', 0, 0, 1, 'Shade', 0, 0, 0, NULL, 0, 0, 0, NULL, 0, 0, 0, NULL, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Admin', 'Admin', Getdate(), Getdate())";
-            db.Database.ExecuteSqlCommand(mQry);
-
-        }
-        private void InitializeSqlProcedureScripts(ApplicationDbContext db)
-        {
-            string script = "";
-            try
-            {
-                script = File.ReadAllText(@"~\SqlScripts\spDocumentTypeService_FGetNewDocNo_GetNewDocNo.sql");
-                db.Database.ExecuteSqlCommand(script);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                script = File.ReadAllText(@"~\SqlScripts\spCarpetMaster_MakeCustomProductName_spGetCustomCarpetSkuName.sql");
-                db.Database.ExecuteSqlCommand(script);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                script = File.ReadAllText(@"~\SqlScripts\spCarpetMaster_MakeCustomProductName_spGetCustomCarpetSkuName.sql");
-                db.Database.ExecuteSqlCommand(script);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                script = File.ReadAllText(@"~\SqlScripts\spCarpetMaster_MakeCustomProductName_spGetCustomCarpetSkuName.sql");
-                db.Database.ExecuteSqlCommand(script);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-
-        }
-
-        private void InitializeProcedure(ApplicationDbContext db)
-        {
-            string mQry = "";
-            mQry = @"CREATE PROCEDURE[Web].[GetNewDocNo]
-        @FieldName VARCHAR(50), @TableName VARCHAR(50),@DocTypeId INT, @DocDate SMALLDATETIME, @DivisionId INT, @SiteId INT --,@NewDocNo nVarChar(50) OUTPUT
-    AS
-BEGIN
-    DECLARE @StartDate SMALLDATETIME
-    DECLARE @EndDate SMALLDATETIME
-    DECLARE @Ref_Prefix VARCHAR(10)
-    DECLARE @Ref_PadLength INT
-
-    DECLARE @IsNumberingCategoryWise BIT
-    DECLARE @DocCategoryId INT
-    DECLARE @IsNumberingSiteWise BIT
-    DECLARE @IsNumberingDivisionWise BIT
-
-    SELECT @IsNumberingCategoryWise=IsNumberingDocCategoryWise, @IsNumberingSiteWise=IsNumberingSiteWise , @IsNumberingDivisionWise=IsNumberingDivisionWise
-    FROM web.DocumentTypeSettings WHERE DocumentTypeId = @DocTypeId
-
-    SET @DocCategoryId =(SELECT DocumentCategoryId  FROM web.DocumentTypes WHERE DocumentTypeId = @DocTypeId)
-
-
-    SET @Ref_PadLength = 5
-    IF(@DocDate >= '01/Apr/2018' AND @DocDate <= '31/Mar/2019 23:59:59' )
-    BEGIN
-        SET @StartDate = '01/Apr/2018'
-		SET @EndDate = '31/Mar/2019 23:59:59'
-        SET @Ref_Prefix = '18-'
-    END
-    ELSE IF(@DocDate >= '01/Apr/2017' AND @DocDate <= '31/Mar/2018 23:59:59' )
-    BEGIN
-        SET @StartDate = '01/Apr/2017'
-		--SET @EndDate = '31/Mar/2018 23:59:59'
-        SET @EndDate = '31/Mar/2018'
-        SET @Ref_Prefix = '17-'
-    END
-    ELSE IF(@DocDate >= '01/Apr/2016' AND @DocDate <= '31/Mar/2017 23:59:59' )
-    BEGIN
-        SET @StartDate = '01/Apr/2016'
-		SET @EndDate = '31/Mar/2017 23:59:59'
-        SET @Ref_Prefix = '16-'
-    END
-    ELSE IF(@DocDate >= '01/Apr/2015' AND @DocDate <= '31/Mar/2016 23:59:59' )
-    BEGIN
-        SET @StartDate = '01/Apr/2015'
-		SET @EndDate = '31/Mar/2016 23:59:59'
-        SET @Ref_Prefix = '15-'
-    END
-    ELSE IF(@DocDate >= '01/Apr/2014' AND @DocDate <= '31/Mar/2015' )
-    BEGIN
-        SET @StartDate = '01/Apr/2014'
-		SET @EndDate = '31/Mar/2015'
-        SET @Ref_Prefix = '14-'
-    END
-       ELSE IF(@DocDate >= '01/Apr/2013' AND @DocDate <= '31/Mar/2014' )
-    BEGIN
-        SET @StartDate = '01/Apr/2013'
-		SET @EndDate = '31/Mar/2014'
-        SET @Ref_Prefix = '13-'
-    END
-       ELSE IF(@DocDate >= '01/Apr/2012' AND @DocDate <= '31/Mar/2013' )
-    BEGIN
-        SET @StartDate = '01/Apr/2012'
-		SET @EndDate = '31/Mar/2013'
-        SET @Ref_Prefix = '12-'
-    END
-       ELSE IF(@DocDate >= '01/Apr/2011' AND @DocDate <= '31/Mar/2012' )
-    BEGIN
-        SET @StartDate = '01/Apr/2011'
-		SET @EndDate = '31/Mar/2012'
-        SET @Ref_Prefix = '11-'
-    END
-       ELSE IF(@DocDate >= '01/Apr/2010' AND @DocDate <= '31/Mar/2011' )
-    BEGIN
-        SET @StartDate = '01/Apr/2010'
-		SET @EndDate = '31/Mar/2011'
-        SET @Ref_Prefix = '10-'
-    END
-
-
-    DECLARE @Sql VARCHAR(2000)
-
-    IF @IsNumberingCategoryWise = 1
-    BEGIN
-           IF(@IsNumberingSiteWise= 0 AND @IsNumberingDivisionWise = 0)
-        BEGIN
-        SET @sql = N' 
-	    SELECT ''' + @Ref_Prefix +  ''' + 
-        RIGHT(''0000''+ Convert(nvarchar, IsNull(Max(Convert(Numeric, Replace(Replace(Replace(' + @FieldName +',''' + @Ref_Prefix +''',''''),''-'',''''),''.'',''''))),0) + 1) ,5) As NewDocNo
-        From ' + @TableName +' H With(NoLock)
-        LEFT JOIN Web.DocumentTypes DT With(NoLock)  on DT.DocumentTypeId =H.DocTypeId
-       WHERE IsNumeric(Replace(Replace(Replace(' + @FieldName +',''-'',''''),''.'',''''),''' + @Ref_Prefix +''',''''))>0  
-	    And DocumentCategoryId = ' + Convert(nvarchar ,@DocCategoryId) +'
-        And DocDate Between ''' + Convert(nvarchar ,@StartDate) +''' and  ''' + Convert(nvarchar ,@EndDate) +''' 
-	    AND IsNumeric(' + @FieldName +') = 0'
-	    END
-        ELSE
-        BEGIN
-        SET @sql = N' 
-	    SELECT ''' + @Ref_Prefix +  ''' + 
-        RIGHT(''0000''+ Convert(nvarchar, IsNull(Max(Convert(Numeric, Replace(Replace(Replace(' + @FieldName +',''' + @Ref_Prefix +''',''''),''-'',''''),''.'',''''))),0) + 1) ,5) As NewDocNo
-        From ' + @TableName +' H With(NoLock)
-        LEFT JOIN Web.DocumentTypes DT With(NoLock)  on DT.DocumentTypeId =H.DocTypeId
-       WHERE IsNumeric(Replace(Replace(Replace(' + @FieldName +',''-'',''''),''.'',''''),''' + @Ref_Prefix +''',''''))>0  
-	    And DocumentCategoryId = ' + Convert(nvarchar ,@DocCategoryId) +' And DivisionId = ' + Convert(nvarchar ,@DivisionId) +'
-        And SiteId = ' + Convert(nvarchar ,@SiteId) +'
-        And DocDate Between ''' + Convert(nvarchar ,@StartDate) +''' and  ''' + Convert(nvarchar ,@EndDate) +''' 
-	    AND IsNumeric(' + @FieldName +') = 0'
-	    END
-    END
-    ELSE
-       BEGIN
-        SET @sql = N' 
-        SELECT ''' + @Ref_Prefix +  ''' + 
-        RIGHT(''0000''+ Convert(nvarchar, IsNull(Max(Convert(Numeric, Replace(Replace(Replace(' + @FieldName +',''' + @Ref_Prefix +''',''''),''-'',''''),''.'',''''))),0) + 1) ,5) As NewDocNo
-        From ' + @TableName +' With(NoLock)
-        WHERE IsNumeric(Replace(Replace(Replace(' + @FieldName +',''-'',''''),''.'',''''),''' + @Ref_Prefix +''',''''))>0  
-	    And DocTypeId = ' + Convert(nvarchar ,@DocTypeId) +' And DivisionId = ' + Convert(nvarchar ,@DivisionId) +'
-        And SiteId = ' + Convert(nvarchar ,@SiteId) +'
-        And DocDate Between ''' + Convert(nvarchar ,@StartDate) +''' and  ''' + Convert(nvarchar ,@EndDate) +''' 
-	    AND IsNumeric(' + @FieldName +') = 0'
-	END
-
-    Exec(@sql)
-    PRINT @sql
-	
-	--SET @NewDocNo = @Ref_Prefix + RIGHT('000' + IsNull(@NewDocNo, ''), 4)
-    --Return @NewDocNo
-	--PRINT @NewDocNo
-END";
-            db.Database.ExecuteSqlCommand(mQry);
-
-
-
-            mQry = @"CREATE  PROCEDURE Web.sp_GetCustomCarpetSkuName (@ProductGroupName VARCHAR(50), @StandardSizeName VARCHAR(50), @ColourName VARCHAR(50))
-                    AS
-                    SELECT Replace(@ProductGroupName, '-', '') + '-' + @StandardSizeName + '-' + @ColourName AS ProductName";
-            db.Database.ExecuteSqlCommand(mQry);
-
-            mQry = @"CREATE  PROCEDURE Web.sp_GetUnitConversionForSize (@SizeId INT, @ToUnitId NVARCHAR(3), @Attribute NVARCHAR(20) = NULL)
-AS 
-
-DECLARE @ToQty DECIMAL(18,4) = 0
-DECLARE @ProductShape NVARCHAR(10)
-DECLARE @UnitId NVARCHAR(10)
-
-SELECT @ProductShape = Ps.ProductShapeName, @UnitId=S.UnitId 
-FROM Web.Sizes S
-LEFT JOIN Web.ProductShapes Ps ON S.ProductShapeId = Ps.ProductShapeId
-WHERE SizeId = @SizeId
-
-
-IF (@ToUnitId = 'MT2')
-BEGIN
-IF (@UnitId = 'MET')
-	BEGIN
-	SELECT @ToQty=(S.Length+S.LengthFraction/100)* (S.Width +S.WidthFraction/100)
-	FROM Web.Sizes S
-	WHERE SizeId = @SizeId
-	END 
-ELSE 
-	BEGIN 
-	DECLARE @LengthCms DECIMAL(18,4) = 0
-	DECLARE @WidthCms DECIMAL(18,4) = 0
-	
-	SELECT @LengthCms = IsNull(F.Cms,0)
-	FROM Web.Sizes S
-	LEFT JOIN Web.FeetConversionToCms F ON S.Length = F.Feet AND S.LengthFraction = F.Inch
-	WHERE SizeId = @SizeId
-	AND F.FeetConversionToCmsId IS NOT NULL
-	
-	SELECT @WidthCms = IsNull(F.Cms,0)
-	FROM Web.Sizes S
-	LEFT JOIN Web.FeetConversionToCms F ON S.Width = F.Feet AND S.WidthFraction = F.Inch
-	WHERE SizeId = @SizeId
-	AND F.FeetConversionToCmsId IS NOT NULL
-	
-	
-	SET @ToQty =(@LengthCms * @WidthCms)/10000
-	END 
-END
-
-IF (@ToUnitId = 'FT')
-BEGIN
-IF (@UnitId = 'MET')
-	BEGIN
-	
-	
-		
-DECLARE @SCL DECIMAL(18,5) 
-DECLARE @SCW DECIMAL(18,5) 
-
-DECLARE @SLF DECIMAL(18,5) 
-DECLARE @SLI DECIMAL(18,5) 
-DECLARE @SWF DECIMAL(18,5) 
-DECLARE @SWI DECIMAL(18,5) 
-
-
-
-SELECT @SCL=0.393701*(S.Length*100+S.LengthFraction), @SCW=0.393701*(S.Width*100 +S.WidthFraction)
-FROM Web.Sizes S
-WHERE SizeId = @SizeId
-	
-
-SET @SLF=round(convert(INT,@SCL)/12,0)
-SET @SWF=round(convert(INT,@SCW)/12,0)
-SET @SLI=round(@SCL%12,0)
-SET @SWI=round(@SCW%12,0)
-
-
-
-		IF (@ProductShape = 'Rectangle')
-		BEGIN
-			IF (@Attribute = 'Length')
-			BEGIN
-				SELECT @ToQty = Round((@SLF + (@SLI / 12)) * 2,3)
-				FROM Web.Sizes S
-				WHERE SizeId = @SizeId
-			END 
-			
-			IF (@Attribute = 'Width')
-			BEGIN
-				SELECT @ToQty = Round((@SWF + (@SWI / 12)) * 2,3)
-				FROM Web.Sizes S
-				WHERE SizeId = @SizeId
-			END 
-			
-			IF (@Attribute = 'Length + Width')
-			BEGIN
-				SELECT @ToQty = Round(((@SLF + (@SLI / 12)) * 2) + ((@SWF + (@SWI / 12)) * 2),3)
-				FROM Web.Sizes S
-				WHERE SizeId = @SizeId
-			END 
-		END
-		ELSE
-		BEGIN
-			SELECT @ToQty = Floor((@SLF + (@SLI / 12)) * 3.14)
-			FROM Web.Sizes S
-			WHERE SizeId = @SizeId
-		END 
-		
-	END 
-ELSE 
-		BEGIN 
-		IF (@ProductShape = 'Rectangle')
-		BEGIN
-			IF (@Attribute = 'Length')
-			BEGIN
-				SELECT @ToQty = Round((S.Length + (S.LengthFraction / 12)) * 2,3)
-				FROM Web.Sizes S
-				WHERE SizeId = @SizeId
-			END 
-			
-			IF (@Attribute = 'Width')
-			BEGIN
-				SELECT @ToQty = Round((S.Width + (S.WidthFraction / 12)) * 2,3)
-				FROM Web.Sizes S
-				WHERE SizeId = @SizeId
-			END 
-			
-			IF (@Attribute = 'Length + Width')
-			BEGIN
-				SELECT @ToQty = Round(((S.Length + (S.LengthFraction / 12)) * 2) + ((S.Width + (S.WidthFraction / 12)) * 2),3)
-				FROM Web.Sizes S
-				WHERE SizeId = @SizeId
-			END 
-		END
-		ELSE
-		BEGIN
-			SELECT @ToQty = Floor((S.Length + (S.LengthFraction / 12)) * 3.14)
-			FROM Web.Sizes S
-			WHERE SizeId = @SizeId
-		END 
-	END 
-END 
-
-SELECT @ToQty AS ToQty;";
-
-            db.Database.ExecuteSqlCommand(mQry);
-
-            mQry = @"CREATE  Procedure Web.sp_GetFirstProductForColourWayAndSize (@ProductDesignId INT, @StandardSizeID INT)
-AS 
-
-DECLARE @ProductGruopName NVARCHAR(200)
-DECLARE @SizeName NVARCHAR(200)
-
-SELECT @ProductGruopName = Replace(ProductGroupName,'-','')
-FROM Web.ProductGroups
-WHERE ProductGroupId  IN (
-	SELECT Min(Pg.ProductGroupId)
-	FROM Web.FinishedProduct F 
-	LEFT JOIN Web.Products P ON F.ProductId = P.ProductId
-	LEFT JOIN Web.ProductGroups Pg ON P.ProductGroupId = Pg.ProductGroupId
-	WHERE F.ProductDesignId = @ProductDesignId
-)
-
-SELECT @SizeName = Replace(Replace(Replace(Replace(S.SizeName,'`',''),'""',''),'X',''),' ','')  + 
-IsNull(Ps.ProductShapeShortName, '')
-FROM Web.Sizes S
-LEFT JOIN Web.ProductShapes Ps ON S.ProductShapeId = Ps.ProductShapeId
-WHERE S.SizeId = @StandardSizeID
-
-
-
-DECLARE @StencilSizeID INT
-
-SELECT @StencilSizeID = StencilSizeID
-FROM Web.ViewRugSize
-WHERE ProductId IN
-(
-    SELECT Min(F.ProductId)
-    FROM Web.FinishedProduct F
-    LEFT JOIN Web.ViewRugSize Vrs ON F.ProductId = Vrs.ProductId
-    WHERE F.ProductDesignId = @ProductDesignId AND Vrs.StandardSizeID = @StandardSizeID
-)
-
-SELECT @ProductGruopName +'-' + @SizeName AS ProductName, @StandardSizeID AS StandardSizeID, @StencilSizeID AS StencilSizeID ";
- db.Database.ExecuteSqlCommand(mQry);
-
-
-        }
-
-        private void InitializeFunction(ApplicationDbContext db)
-        {
-            string mQry = @"CREATE FUNCTION[Web].[FuncConvertSqFeetToSqYard](@SqFeets DECIMAL(18,4))  
-RETURNS @Results TABLE(SqYard DECIMAL(18,4))  AS BEGIN  DECLARE @MyInt INT
-DECLARE @MyFrcation Decimal(18,4)  DECLARE @TempSqYard Decimal(18,4)
- SET @TempSqYard = @SqFeets * 0.111111111  SET @MyInt = Convert(INT, @TempSqYard)  SET @MyFrcation = @TempSqYard - @MyInt  If(@MyFrcation* 16) > 1      begin SET @MyFrcation = @MyFrcation* 16     SET @MyFrcation = convert(INT, @MyFrcation)     SET @MyFrcation = @MyFrcation / 16     end Else IF @MyInt > 0       BEGIN SET @MyFrcation = 0      END SET @SqFeets = @MyInt + @MyFrcation INSERT INTO @Results(SqYard) VALUES(@SqFeets)  RETURN END";
-            db.Database.ExecuteSqlCommand(mQry);
-
-
-        }
-
-        private void InitializeSqlViews(ApplicationDbContext db)
-        {
-            string mqry = "";
-            mqry = @"IF OBJECT_ID('Web.ViewRugSize') IS NOT NULL
-   DROP VIEW Web.ViewRugSize
-
-
-CREATE VIEW[Web].[ViewRugSize]
-        AS
-SELECT P.ProductId, 
-SS.SizeId AS StandardSizeID, SS.SizeName + IsNull(SSS.ProductShapeShortName,'') AS StandardSizeName, SS.Area AS StandardSizeArea,  
-SM.SizeId AS ManufaturingSizeID, SM.SizeName + IsNull(SSS.ProductShapeShortName,'') AS ManufaturingSizeName, SM.Area AS ManufaturingSizeArea,
-SF.SizeId AS FinishingSizeID,SF.SizeName + IsNull(SSS.ProductShapeShortName,'') AS FinishingSizeName, SF.Area AS FinishingSizeArea   ,
-ST.SizeId AS StencilSizeID,ST.SizeName + IsNull(SSS.ProductShapeShortName,'') AS StencilSizeName, ST.Area AS StencilSizeArea  ,
-SP.SizeId AS MapSizeID,SP.SizeName + IsNull(SSS.ProductShapeShortName,'') AS MapSizeName, SP.Area AS MapSizeArea
-FROM Web.Products P
-LEFT JOIN(
-    SELECT PSS.ProductId, PSS.SizeId
-    FROM Web.ProductSizes PSS
-    WHERE PSS.ProductSizeTypeId = (SELECT ProductsizetypeID FROM Web.ProductSizeTypes WHERE ProductsizetypeName = 'Standard')
-) AS PSS ON P.ProductId = PSS.ProductId
-LEFT JOIN (     
-    SELECT PSM.ProductId, PSM.SizeId
-    FROM Web.ProductSizes PSM
-    WHERE PSM.ProductSizeTypeId = (SELECT ProductsizetypeID FROM Web.ProductSizeTypes WHERE ProductsizetypeName = 'Manufaturing Size')
-) AS PSM ON P.ProductId = PSM.ProductId
-LEFT JOIN (     
-    SELECT PSF.ProductId, PSF.SizeId
-    FROM Web.ProductSizes PSF
-    WHERE PSF.ProductSizeTypeId = (SELECT ProductsizetypeID FROM Web.ProductSizeTypes WHERE ProductsizetypeName = 'Finishing Size')
-) AS PSF ON P.ProductId = PSF.ProductId
-LEFT JOIN (     
-    SELECT PSF.ProductId, PSF.SizeId
-    FROM Web.ProductSizes PSF
-    WHERE PSF.ProductSizeTypeId = (SELECT ProductsizetypeID FROM Web.ProductSizeTypes WHERE ProductsizetypeName = 'Stencil')
-) AS PST ON P.ProductId = PST.ProductId
-LEFT JOIN (     
-    SELECT PSF.ProductId, PSF.SizeId
-    FROM Web.ProductSizes PSF
-    WHERE PSF.ProductSizeTypeId = (SELECT ProductsizetypeID FROM Web.ProductSizeTypes WHERE ProductsizetypeName = 'Map')
-) AS PSP ON P.ProductId = PSP.ProductId
-LEFT JOIN Web.Sizes SS ON SS.SizeId = PSS.SizeId
-LEFT JOIN Web.ProductShapes SSS ON SS.ProductShapeId = SSS.ProductShapeId
-LEFT JOIN Web.Sizes SM ON SM.SizeId = PSM.SizeId
-LEFT JOIN Web.ProductShapes SSM ON SM.ProductShapeId = SSM.ProductShapeId
-LEFT JOIN Web.Sizes SF ON SF.SizeId = PSF.SizeId
-LEFT JOIN Web.ProductShapes SSF ON SF.ProductShapeId = SSF.ProductShapeId
-LEFT JOIN Web.Sizes ST ON ST.SizeId = PST.SizeId
-LEFT JOIN Web.ProductShapes SST ON ST.ProductShapeId = SST.ProductShapeId
-LEFT JOIN Web.Sizes SP ON SP.SizeId = PSP.SizeId
-LEFT JOIN Web.ProductShapes SSP ON SP.ProductShapeId = SSP.ProductShapeId";
-
-            db.Database.ExecuteSqlCommand(mQry);
-
         }
 
     }

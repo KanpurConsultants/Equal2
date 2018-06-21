@@ -297,7 +297,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             p.OrderById = new EmployeeService(_unitOfWork).GetEmloyeeForUser(User.Identity.GetUserId());
             p.UnitConversionForId = settings.UnitConversionForId;
-            p.ProcessId = settings.ProcessId;
+            p.ProcessId = (int)settings.ProcessId;
             p.DealUnitId = settings.DealUnitId;
             PrepareViewBag();
             p.DocTypeId = DocTypeId;
@@ -316,7 +316,7 @@ namespace Jobs.Areas.Rug.Controllers
             var DesignName = Lines.FirstOrDefault().DesignName;
             var ProductGroupId = new ProductGroupService(_unitOfWork).Find(DesignName).ProductGroupId;
 
-            var RateListLine = new RateListLineService(_unitOfWork).GetRateListForDesign(ProductGroupId, settings.ProcessId);
+            var RateListLine = new RateListLineService(_unitOfWork).GetRateListForDesign(ProductGroupId, (int)settings.ProcessId);
 
             if (RateListLine != null)
             {

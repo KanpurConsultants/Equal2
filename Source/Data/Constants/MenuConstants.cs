@@ -18,7 +18,7 @@ namespace Jobs.Constants.Menu
         #region "Sales Transactions"
         public static class SaleEnquiry
         {
-            public const int MenuId = 10;
+            public const int MenuId = 1;
             public const string MenuName = "Sale Enquiry";
             public const string Srl = "1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -35,7 +35,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleEnquiryCancel
         {
-            public const int MenuId = 20;
+            public const int MenuId = 2;
             public const string MenuName = "Sale Enquiry Cancel";
             public const string Srl = "1.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -52,7 +52,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleQuotation
         {
-            public const int MenuId = 30;
+            public const int MenuId = 3;
             public const string MenuName = "Sale Quotation";
             public const string Srl = "1.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -69,7 +69,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleQuotationCancel
         {
-            public const int MenuId = 40;
+            public const int MenuId = 4;
             public const string MenuName = "Sale Quotation Cancel";
             public const string Srl = "1.15";
             public const string IconName = "glyphicon glyphicon-book";
@@ -86,7 +86,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleOrder
         {
-            public const int MenuId = 50;
+            public const int MenuId = 5;
             public const string MenuName = "Sale Order";
             public const string Srl = "1.2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -103,7 +103,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleOrderCancel
         {
-            public const int MenuId = 60;
+            public const int MenuId = 6;
             public const string MenuName = "Sale Order Cancel";
             public const string Srl = "1.25";
             public const string IconName = "glyphicon glyphicon-book";
@@ -120,7 +120,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleOrderAmendment
         {
-            public const int MenuId = 70;
+            public const int MenuId = 7;
             public const string MenuName = "Sale Order Amendment";
             public const string Srl = "1.3";
             public const string IconName = "glyphicon glyphicon-book";
@@ -137,7 +137,7 @@ namespace Jobs.Constants.Menu
 
         public static class CustomerAuditRequest
         {
-            public const int MenuId = 80;
+            public const int MenuId = 8;
             public const string MenuName = "Customer Audit Request";
             public const string Srl = "1.35";
             public const string IconName = "glyphicon glyphicon-book";
@@ -155,7 +155,7 @@ namespace Jobs.Constants.Menu
 
         public static class CustomerAudit
         {
-            public const int MenuId = 100;
+            public const int MenuId = 9;
             public const string MenuName = "Customer Audit";
             public const string Srl = "1.45";
             public const string IconName = "glyphicon glyphicon-book";
@@ -172,7 +172,7 @@ namespace Jobs.Constants.Menu
 
         public static class DeliveryOrder
         {
-            public const int MenuId = 110;
+            public const int MenuId = 10;
             public const string MenuName = "Delivery Order";
             public const string Srl = "1.5";
             public const string IconName = "glyphicon glyphicon-book";
@@ -189,7 +189,7 @@ namespace Jobs.Constants.Menu
 
         public static class DeliveryOrderCancel
         {
-            public const int MenuId = 120;
+            public const int MenuId = 11;
             public const string MenuName = "Delivery Order Cancel";
             public const string Srl = "1.55";
             public const string IconName = "glyphicon glyphicon-book";
@@ -206,7 +206,7 @@ namespace Jobs.Constants.Menu
 
         public static class QualityCheckingOutword
         {
-            public const int MenuId = 130;
+            public const int MenuId = 12;
             public const string MenuName = "Quality Checking (Outword)";
             public const string Srl = "1.6";
             public const string IconName = "glyphicon glyphicon-book";
@@ -223,7 +223,7 @@ namespace Jobs.Constants.Menu
 
         public static class Packing
         {
-            public const int MenuId = 140;
+            public const int MenuId = 13;
             public const string MenuName = "Packing";
             public const string Srl = "1.65";
             public const string IconName = "glyphicon glyphicon-book";
@@ -240,7 +240,7 @@ namespace Jobs.Constants.Menu
 
         public static class PerformaInvoice
         {
-            public const int MenuId = 150;
+            public const int MenuId = 14;
             public const string MenuName = "Performa Invoice";
             public const string Srl = "1.7";
             public const string IconName = "glyphicon glyphicon-book";
@@ -257,7 +257,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleGoodsDispatch
         {
-            public const int MenuId = 160;
+            public const int MenuId = 15;
             public const string MenuName = "Goods Dispatch";
             public const string Srl = "1.75";
             public const string IconName = "glyphicon glyphicon-book";
@@ -274,7 +274,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleInvoice
         {
-            public const int MenuId = 170;
+            public const int MenuId = 16;
             public const string MenuName = "Sale Invoice";
             public const string Srl = "1.8";
             public const string IconName = "glyphicon glyphicon-book";
@@ -292,7 +292,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleReturn
         {
-            public const int MenuId = 200;
+            public const int MenuId = 17;
             public const string MenuName = "Sale Return";
             public const string Srl = "1.95";
             public const string IconName = "glyphicon glyphicon-book";
@@ -310,7 +310,7 @@ namespace Jobs.Constants.Menu
         #region "Sales Masters"
         public static class Customer
         {
-            public const int MenuId = 210;
+            public const int MenuId = 18;
             public const string MenuName = "Customer";
             public const string Srl = "2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -328,7 +328,7 @@ namespace Jobs.Constants.Menu
         #region "Sales Standard Reports"
         public static class SaleOrderReport
         {
-            public const int MenuId = 220;
+            public const int MenuId = 19;
             public const string MenuName = "Sale Order Report";
             public const string Srl = "3";
             public const string IconName = "glyphicon glyphicon-book";
@@ -345,7 +345,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleDispatchReport
         {
-            public const int MenuId = 230;
+            public const int MenuId = 20;
             public const string MenuName = "Sale Dispatch Report";
             public const string Srl = "3.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -362,7 +362,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleInvoiceReport
         {
-            public const int MenuId = 240;
+            public const int MenuId = 21;
             public const string MenuName = "Sale Invoice Report";
             public const string Srl = "3.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -380,7 +380,7 @@ namespace Jobs.Constants.Menu
         #region "Sales Status Reports"
         public static class SaleEnquiryBalance
         {
-            public const int MenuId = 250;
+            public const int MenuId = 22;
             public const string MenuName = "Sale Enquiry Balance";
             public const string Srl = "4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -397,7 +397,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleOrderBalance
         {
-            public const int MenuId = 260;
+            public const int MenuId = 23;
             public const string MenuName = "Sale Order Balance";
             public const string Srl = "4.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -414,7 +414,7 @@ namespace Jobs.Constants.Menu
 
         public static class SaleDispatchBalance
         {
-            public const int MenuId = 270;
+            public const int MenuId = 24;
             public const string MenuName = "Sale Dispatch Balance";
             public const string Srl = "4.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -432,7 +432,7 @@ namespace Jobs.Constants.Menu
         #region "Purchase Transactions"
         public static class PurchasePlan
         {
-            public const int MenuId = 280;
+            public const int MenuId = 25;
             public const string MenuName = "Purchase Plan";
             public const string Srl = "1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -449,7 +449,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchasePlanCancel
         {
-            public const int MenuId = 290;
+            public const int MenuId = 26;
             public const string MenuName = "Purchase Plan Cancel";
             public const string Srl = "1.03";
             public const string IconName = "glyphicon glyphicon-book";
@@ -466,7 +466,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchaseEnquiry
         {
-            public const int MenuId = 300;
+            public const int MenuId = 27;
             public const string MenuName = "Purchase Enquiry";
             public const string Srl = "1.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -483,7 +483,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchaseEnquiryCancel
         {
-            public const int MenuId = 310;
+            public const int MenuId = 28;
             public const string MenuName = "Purchase Enquiry Cancel";
             public const string Srl = "1.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -500,7 +500,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchaseQuotation
         {
-            public const int MenuId = 320;
+            public const int MenuId = 29;
             public const string MenuName = "Purchase Quotation";
             public const string Srl = "1.15";
             public const string IconName = "glyphicon glyphicon-book";
@@ -517,7 +517,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchaseQuotationCancel
         {
-            public const int MenuId = 330;
+            public const int MenuId = 30;
             public const string MenuName = "Purchase Quotation Cancel";
             public const string Srl = "1.2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -534,7 +534,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchaseOrder
         {
-            public const int MenuId = 340;
+            public const int MenuId = 31;
             public const string MenuName = "Purchase Order";
             public const string Srl = "1.25";
             public const string IconName = "glyphicon glyphicon-book";
@@ -551,7 +551,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchaseOrderCancel
         {
-            public const int MenuId = 350;
+            public const int MenuId = 32;
             public const string MenuName = "Purchase Order Cancel";
             public const string Srl = "1.3";
             public const string IconName = "glyphicon glyphicon-book";
@@ -568,7 +568,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchaseOrderAmendment
         {
-            public const int MenuId = 360;
+            public const int MenuId = 33;
             public const string MenuName = "Purchase Order Amendment";
             public const string Srl = "1.35";
             public const string IconName = "glyphicon glyphicon-book";
@@ -585,7 +585,7 @@ namespace Jobs.Constants.Menu
 
         public static class SupplierAuditRequest
         {
-            public const int MenuId = 370;
+            public const int MenuId = 34;
             public const string MenuName = "Supplier Audit Request";
             public const string Srl = "1.4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -603,7 +603,7 @@ namespace Jobs.Constants.Menu
 
         public static class SupplierAudit
         {
-            public const int MenuId = 390;
+            public const int MenuId = 35;
             public const string MenuName = "Supplier Audit";
             public const string Srl = "1.50";
             public const string IconName = "glyphicon glyphicon-book";
@@ -620,7 +620,7 @@ namespace Jobs.Constants.Menu
 
         public static class GoodsReceipt
         {
-            public const int MenuId = 400;
+            public const int MenuId = 36;
             public const string MenuName = "Goods Receipt";
             public const string Srl = "1.55";
             public const string IconName = "glyphicon glyphicon-book";
@@ -637,7 +637,7 @@ namespace Jobs.Constants.Menu
 
         public static class QualityCheckingInword
         {
-            public const int MenuId = 410;
+            public const int MenuId = 37;
             public const string MenuName = "Quality Checking (Inword)";
             public const string Srl = "1.60";
             public const string IconName = "glyphicon glyphicon-book";
@@ -654,7 +654,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchaseInvoice
         {
-            public const int MenuId = 420;
+            public const int MenuId = 38;
             public const string MenuName = "Purchase Invoice";
             public const string Srl = "1.65";
             public const string IconName = "glyphicon glyphicon-book";
@@ -671,7 +671,7 @@ namespace Jobs.Constants.Menu
 
         public static class DebitNoteOutward
         {
-            public const int MenuId = 430;
+            public const int MenuId = 39;
             public const string MenuName = "Debit Note Outward";
             public const string Srl = "1.7";
             public const string IconName = "glyphicon glyphicon-book";
@@ -688,7 +688,7 @@ namespace Jobs.Constants.Menu
 
         public static class CreditNoteOutward
         {
-            public const int MenuId = 440;
+            public const int MenuId = 40;
             public const string MenuName = "Credit Note Outward";
             public const string Srl = "1.75";
             public const string IconName = "glyphicon glyphicon-book";
@@ -706,7 +706,7 @@ namespace Jobs.Constants.Menu
         #region "Purchase Masters"
         public static class Supplier
         {
-            public const int MenuId = 450;
+            public const int MenuId = 41;
             public const string MenuName = "Supplier";
             public const string Srl = "2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -724,7 +724,7 @@ namespace Jobs.Constants.Menu
         #region "Purchase Standard Reports"
         public static class PurchaseOrderSummary
         {
-            public const int MenuId = 460;
+            public const int MenuId = 42;
             public const string MenuName = "Purchase Order Summary";
             public const string Srl = "3";
             public const string IconName = "glyphicon glyphicon-book";
@@ -741,7 +741,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchaseGoodsReceiptSummary
         {
-            public const int MenuId = 470;
+            public const int MenuId = 43;
             public const string MenuName = "Purchase Goods Receipt Summary";
             public const string Srl = "3.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -758,7 +758,7 @@ namespace Jobs.Constants.Menu
 
         public static class PurchaseInvoiceSummary
         {
-            public const int MenuId = 480;
+            public const int MenuId = 44;
             public const string MenuName = "Purchase Invoice Summary";
             public const string Srl = "3.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -776,7 +776,7 @@ namespace Jobs.Constants.Menu
         #region "Purchase Status Reports"
         public static class PurchaseOrderBalance
         {
-            public const int MenuId = 490;
+            public const int MenuId = 45;
             public const string MenuName = "Purchase Order Balance";
             public const string Srl = "4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -794,7 +794,7 @@ namespace Jobs.Constants.Menu
         #region "Production Transactions"
         public static class ManufacturingPlan
         {
-            public const int MenuId = 500;
+            public const int MenuId = 46;
             public const string MenuName = "Manufacturing Plan";
             public const string Srl = "1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -811,7 +811,7 @@ namespace Jobs.Constants.Menu
 
         public static class ManufacturingPlanCancel
         {
-            public const int MenuId = 510;
+            public const int MenuId = 47;
             public const string MenuName = "Manufacturing Plan Cancel";
             public const string Srl = "1.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -828,7 +828,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobEnquiry
         {
-            public const int MenuId = 520;
+            public const int MenuId = 48;
             public const string MenuName = "Job Enquiry";
             public const string Srl = "1.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -845,7 +845,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobEnquiryCancel
         {
-            public const int MenuId = 530;
+            public const int MenuId = 49;
             public const string MenuName = "Job Enquiry Cancel";
             public const string Srl = "1.15";
             public const string IconName = "glyphicon glyphicon-book";
@@ -862,7 +862,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobQuotation
         {
-            public const int MenuId = 540;
+            public const int MenuId = 50;
             public const string MenuName = "Job Quotation";
             public const string Srl = "1.2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -879,7 +879,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobQuotationCancel
         {
-            public const int MenuId = 550;
+            public const int MenuId = 51;
             public const string MenuName = "Job Quotation Cancel";
             public const string Srl = "1.25";
             public const string IconName = "glyphicon glyphicon-book";
@@ -896,7 +896,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobOrder
         {
-            public const int MenuId = 560;
+            public const int MenuId = 52;
             public const string MenuName = "Job Order";
             public const string Srl = "1.3";
             public const string IconName = "glyphicon glyphicon-book";
@@ -913,7 +913,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobOrderCancel
         {
-            public const int MenuId = 570;
+            public const int MenuId = 53;
             public const string MenuName = "Job Order Cancel";
             public const string Srl = "1.35";
             public const string IconName = "glyphicon glyphicon-book";
@@ -930,7 +930,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobOrderAmendment
         {
-            public const int MenuId = 580;
+            public const int MenuId = 54;
             public const string MenuName = "Job Order Amendment";
             public const string Srl = "1.4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -947,7 +947,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobInspectionRequest
         {
-            public const int MenuId = 590;
+            public const int MenuId = 55;
             public const string MenuName = "Job Inspection Request";
             public const string Srl = "1.45";
             public const string IconName = "glyphicon glyphicon-book";
@@ -964,7 +964,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobInspectionRequestCancellation
         {
-            public const int MenuId = 600;
+            public const int MenuId = 56;
             public const string MenuName = "Job Inspection Request Cancellation";
             public const string Srl = "1.5";
             public const string IconName = "glyphicon glyphicon-book";
@@ -981,7 +981,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobInspection
         {
-            public const int MenuId = 610;
+            public const int MenuId = 57;
             public const string MenuName = "Job Inspection";
             public const string Srl = "1.55";
             public const string IconName = "glyphicon glyphicon-book";
@@ -998,7 +998,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobGoodsReceipt
         {
-            public const int MenuId = 620;
+            public const int MenuId = 58;
             public const string MenuName = "Job Goods Receipt";
             public const string Srl = "1.6";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1015,7 +1015,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobGoodsReceiptQC
         {
-            public const int MenuId = 630;
+            public const int MenuId = 59;
             public const string MenuName = "Job Goods Receipt QC";
             public const string Srl = "1.65";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1032,7 +1032,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobInvoice
         {
-            public const int MenuId = 640;
+            public const int MenuId = 60;
             public const string MenuName = "Job Invoice";
             public const string Srl = "1.7";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1049,7 +1049,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobReturn
         {
-            public const int MenuId = 650;
+            public const int MenuId = 61;
             public const string MenuName = "Job Return";
             public const string Srl = "1.9";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1067,7 +1067,7 @@ namespace Jobs.Constants.Menu
         #region "Production Masters"
         public static class JobWorker
         {
-            public const int MenuId = 690;
+            public const int MenuId = 61;
             public const string MenuName = "Job Worker";
             public const string Srl = "2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1085,7 +1085,7 @@ namespace Jobs.Constants.Menu
         #region "Production Standard Reports"
         public static class JobOrderSummary
         {
-            public const int MenuId = 700;
+            public const int MenuId = 62;
             public const string MenuName = "Job Order Summary";
             public const string Srl = "3";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1102,7 +1102,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobReceiveSummary
         {
-            public const int MenuId = 710;
+            public const int MenuId = 63;
             public const string MenuName = "Job Receive Summary";
             public const string Srl = "3.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1119,7 +1119,7 @@ namespace Jobs.Constants.Menu
 
         public static class JobInvoiceSummary
         {
-            public const int MenuId = 720;
+            public const int MenuId = 64;
             public const string MenuName = "Job Invoice Summary";
             public const string Srl = "3.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1137,7 +1137,7 @@ namespace Jobs.Constants.Menu
         #region "Production Status Reports"
         public static class JobOrderBalance
         {
-            public const int MenuId = 730;
+            public const int MenuId = 65;
             public const string MenuName = "Job Order Balance";
             public const string Srl = "4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1155,7 +1155,7 @@ namespace Jobs.Constants.Menu
         #region "Inventory Transactions"
         public static class MaterialIssue
         {
-            public const int MenuId = 740;
+            public const int MenuId = 66;
             public const string MenuName = "Material Issue";
             public const string Srl = "1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1172,7 +1172,7 @@ namespace Jobs.Constants.Menu
 
         public static class MaterialReceive
         {
-            public const int MenuId = 750;
+            public const int MenuId = 67;
             public const string MenuName = "Material Receive";
             public const string Srl = "1.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1189,7 +1189,7 @@ namespace Jobs.Constants.Menu
 
         public static class MaterialTransfer
         {
-            public const int MenuId = 760;
+            public const int MenuId = 68;
             public const string MenuName = "Material Transfer";
             public const string Srl = "1.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1206,7 +1206,7 @@ namespace Jobs.Constants.Menu
 
         public static class StockExchange
         {
-            public const int MenuId = 770;
+            public const int MenuId = 69;
             public const string MenuName = "Stock Exchange";
             public const string Srl = "1.15";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1223,7 +1223,7 @@ namespace Jobs.Constants.Menu
 
         public static class GatePass
         {
-            public const int MenuId = 780;
+            public const int MenuId = 70;
             public const string MenuName = "Gate Pass";
             public const string Srl = "1.2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1240,7 +1240,7 @@ namespace Jobs.Constants.Menu
 
         public static class StockReconciliation
         {
-            public const int MenuId = 790;
+            public const int MenuId = 71;
             public const string MenuName = "Stock Reconciliation";
             public const string Srl = "1.25";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1258,7 +1258,7 @@ namespace Jobs.Constants.Menu
         #region "Inventory Masters"
         public static class Product
         {
-            public const int MenuId = 800;
+            public const int MenuId = 72;
             public const string MenuName = "Product";
             public const string Srl = "2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1275,7 +1275,7 @@ namespace Jobs.Constants.Menu
 
         public static class ProductGroup
         {
-            public const int MenuId = 810;
+            public const int MenuId = 73;
             public const string MenuName = "Product Group";
             public const string Srl = "2.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1292,7 +1292,7 @@ namespace Jobs.Constants.Menu
 
         public static class ProductCategory
         {
-            public const int MenuId = 820;
+            public const int MenuId = 74;
             public const string MenuName = "Product Category";
             public const string Srl = "2.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1301,7 +1301,7 @@ namespace Jobs.Constants.Menu
             public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
             public const string ControllerName = ControllerActionConstants.ProductCategory.ControllerName;
             public const string ActionName = ControllerActionConstants.ProductCategory.ActionName;
-            public static readonly string RouteId = ProductNatureConstants.FinishedMaterial.ProductNatureId.ToString();
+            public static readonly string RouteId = ProductNatureConstants.TradingProduct.ProductNatureId.ToString();
             public const string URL = "JobsDomain";
             public const bool IsVisible = true;
             public const string AreaName = null;
@@ -1309,7 +1309,7 @@ namespace Jobs.Constants.Menu
 
         public static class ProductType
         {
-            public const int MenuId = 830;
+            public const int MenuId = 75;
             public const string MenuName = "Product Type";
             public const string Srl = "2.15";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1326,7 +1326,7 @@ namespace Jobs.Constants.Menu
 
         public static class ProductCustomGroup
         {
-            public const int MenuId = 840;
+            public const int MenuId = 76;
             public const string MenuName = "Product Custom Group";
             public const string Srl = "2.2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1343,7 +1343,7 @@ namespace Jobs.Constants.Menu
 
         public static class Godown
         {
-            public const int MenuId = 850;
+            public const int MenuId = 77;
             public const string MenuName = "Godown";
             public const string Srl = "2.25";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1360,7 +1360,7 @@ namespace Jobs.Constants.Menu
 
         public static class HSNCode
         {
-            public const int MenuId = 860;
+            public const int MenuId = 78;
             public const string MenuName = "HSN Code";
             public const string Srl = "2.3";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1377,7 +1377,7 @@ namespace Jobs.Constants.Menu
 
         public static class Gate
         {
-            public const int MenuId = 870;
+            public const int MenuId = 79;
             public const string MenuName = "Gate";
             public const string Srl = "2.35";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1394,7 +1394,7 @@ namespace Jobs.Constants.Menu
 
         public static class City
         {
-            public const int MenuId = 880;
+            public const int MenuId = 80;
             public const string MenuName = "City";
             public const string Srl = "2.4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1411,7 +1411,7 @@ namespace Jobs.Constants.Menu
 
         public static class State
         {
-            public const int MenuId = 890;
+            public const int MenuId = 81;
             public const string MenuName = "State";
             public const string Srl = "2.45";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1428,7 +1428,7 @@ namespace Jobs.Constants.Menu
 
         public static class Country
         {
-            public const int MenuId = 900;
+            public const int MenuId = 82;
             public const string MenuName = "Country";
             public const string Srl = "2.5";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1448,7 +1448,7 @@ namespace Jobs.Constants.Menu
         #region "Inventory Status Reports"
         public static class StockInHand
         {
-            public const int MenuId = 920;
+            public const int MenuId = 83;
             public const string MenuName = "Stock In Hand";
             public const string Srl = "4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1465,7 +1465,7 @@ namespace Jobs.Constants.Menu
 
         public static class StockInProcess
         {
-            public const int MenuId = 930;
+            public const int MenuId = 84;
             public const string MenuName = "Stock In Process";
             public const string Srl = "4.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1485,7 +1485,7 @@ namespace Jobs.Constants.Menu
         #region "Human Resource Masters"
         public static class Employee
         {
-            public const int MenuId = 950;
+            public const int MenuId = 85;
             public const string MenuName = "Employee";
             public const string Srl = "2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1507,7 +1507,7 @@ namespace Jobs.Constants.Menu
         #region "Accounts Transactions"
         public static class PaymentVoucher
         {
-            public const int MenuId = 980;
+            public const int MenuId = 86;
             public const string MenuName = "Payment Voucher";
             public const string Srl = "1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1524,7 +1524,7 @@ namespace Jobs.Constants.Menu
 
         public static class ReceiptVoucher
         {
-            public const int MenuId = 990;
+            public const int MenuId = 87;
             public const string MenuName = "Receipt Voucher";
             public const string Srl = "1.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1541,7 +1541,7 @@ namespace Jobs.Constants.Menu
 
         public static class JournalVoucher
         {
-            public const int MenuId = 1000;
+            public const int MenuId = 88;
             public const string MenuName = "Journal Voucher";
             public const string Srl = "1.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1558,7 +1558,7 @@ namespace Jobs.Constants.Menu
 
         public static class ContraVoucher
         {
-            public const int MenuId = 1010;
+            public const int MenuId = 89;
             public const string MenuName = "Contra Voucher";
             public const string Srl = "1.15";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1575,7 +1575,7 @@ namespace Jobs.Constants.Menu
 
         public static class DebitNote
         {
-            public const int MenuId = 1020;
+            public const int MenuId = 90;
             public const string MenuName = "Debit Note";
             public const string Srl = "1.2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1592,7 +1592,7 @@ namespace Jobs.Constants.Menu
 
         public static class ChequeCancel
         {
-            public const int MenuId = 1030;
+            public const int MenuId = 91;
             public const string MenuName = "Cheque Cancel";
             public const string Srl = "1.25";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1609,7 +1609,7 @@ namespace Jobs.Constants.Menu
 
         public static class ExpenseVoucher
         {
-            public const int MenuId = 1040;
+            public const int MenuId = 92;
             public const string MenuName = "Expense Voucher";
             public const string Srl = "1.3";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1626,7 +1626,7 @@ namespace Jobs.Constants.Menu
 
         public static class CreditNote
         {
-            public const int MenuId = 1050;
+            public const int MenuId = 93;
             public const string MenuName = "Credit Note";
             public const string Srl = "1.35";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1643,7 +1643,7 @@ namespace Jobs.Constants.Menu
 
         public static class BankReconciliation
         {
-            public const int MenuId = 1060;
+            public const int MenuId = 94;
             public const string MenuName = "Bank Reconciliation";
             public const string Srl = "1.4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1661,7 +1661,7 @@ namespace Jobs.Constants.Menu
         #region "Accounts Masters"
         public static class LedgerAccount
         {
-            public const int MenuId = 1070;
+            public const int MenuId = 95;
             public const string MenuName = "Ledger Account";
             public const string Srl = "2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1678,7 +1678,7 @@ namespace Jobs.Constants.Menu
 
         public static class LedgerAccountGroup
         {
-            public const int MenuId = 1080;
+            public const int MenuId = 96;
             public const string MenuName = "Ledger Account Group";
             public const string Srl = "2.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1695,7 +1695,7 @@ namespace Jobs.Constants.Menu
 
         public static class CostCenter
         {
-            public const int MenuId = 1090;
+            public const int MenuId = 97;
             public const string MenuName = "Cost Center";
             public const string Srl = "2.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1712,7 +1712,7 @@ namespace Jobs.Constants.Menu
 
         public static class TdsCategory
         {
-            public const int MenuId = 1100;
+            public const int MenuId = 98;
             public const string MenuName = "Tds Category";
             public const string Srl = "2.15";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1729,7 +1729,7 @@ namespace Jobs.Constants.Menu
 
         public static class TdsGroup
         {
-            public const int MenuId = 1110;
+            public const int MenuId = 99;
             public const string MenuName = "Tds Group";
             public const string Srl = "2.2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1749,7 +1749,7 @@ namespace Jobs.Constants.Menu
         #region "Accounts Status Reports"
         public static class TrialBalance
         {
-            public const int MenuId = 1130;
+            public const int MenuId = 100;
             public const string MenuName = "Trial Balance";
             public const string Srl = "4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1766,7 +1766,7 @@ namespace Jobs.Constants.Menu
 
         public static class SubTrialBalance
         {
-            public const int MenuId = 1140;
+            public const int MenuId = 101;
             public const string MenuName = "Sub Trial Balance";
             public const string Srl = "4.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1783,7 +1783,7 @@ namespace Jobs.Constants.Menu
 
         public static class BalanceSheet
         {
-            public const int MenuId = 1150;
+            public const int MenuId = 102;
             public const string MenuName = "Balance Sheet";
             public const string Srl = "4.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1800,7 +1800,7 @@ namespace Jobs.Constants.Menu
 
         public static class ProfitAndLossAc
         {
-            public const int MenuId = 1160;
+            public const int MenuId = 103;
             public const string MenuName = "Profit & Loss A/c";
             public const string Srl = "4.15";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1817,7 +1817,7 @@ namespace Jobs.Constants.Menu
 
         public static class CashBook
         {
-            public const int MenuId = 1170;
+            public const int MenuId = 104;
             public const string MenuName = "Cash Book";
             public const string Srl = "4.2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1834,7 +1834,7 @@ namespace Jobs.Constants.Menu
 
         public static class BankBook
         {
-            public const int MenuId = 1180;
+            public const int MenuId = 105;
             public const string MenuName = "Bank Book";
             public const string Srl = "4.25";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1851,7 +1851,7 @@ namespace Jobs.Constants.Menu
 
         public static class DayBook
         {
-            public const int MenuId = 1190;
+            public const int MenuId = 106;
             public const string MenuName = "Day Book";
             public const string Srl = "4.3";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1868,7 +1868,7 @@ namespace Jobs.Constants.Menu
 
         public static class DebtorsAgeingAnalysisFIFO
         {
-            public const int MenuId = 1200;
+            public const int MenuId = 107;
             public const string MenuName = "Debtors Ageing Analysis FIFO";
             public const string Srl = "4.35";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1885,7 +1885,7 @@ namespace Jobs.Constants.Menu
 
         public static class DebtorsOutstandingFIFO
         {
-            public const int MenuId = 1210;
+            public const int MenuId = 108;
             public const string MenuName = "Debtors Outstanding FIFO";
             public const string Srl = "4.4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1902,7 +1902,7 @@ namespace Jobs.Constants.Menu
 
         public static class CreditorsAgeingAnalysisFIFO
         {
-            public const int MenuId = 1220;
+            public const int MenuId = 109;
             public const string MenuName = "Creditors Ageing Analysis FIFO";
             public const string Srl = "4.45";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1919,7 +1919,7 @@ namespace Jobs.Constants.Menu
 
         public static class CreditorsOutstandingFIFO
         {
-            public const int MenuId = 1230;
+            public const int MenuId = 110;
             public const string MenuName = "Creditors Outstanding FIFO";
             public const string Srl = "4.5";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1936,7 +1936,7 @@ namespace Jobs.Constants.Menu
 
         public static class TDSAdvise
         {
-            public const int MenuId = 1240;
+            public const int MenuId = 111;
             public const string MenuName = "TDS Advise";
             public const string Srl = "4.55";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1953,7 +1953,7 @@ namespace Jobs.Constants.Menu
 
         public static class InputTaxReport
         {
-            public const int MenuId = 1250;
+            public const int MenuId = 112;
             public const string MenuName = "Input Tax Report";
             public const string Srl = "4.6";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1971,7 +1971,7 @@ namespace Jobs.Constants.Menu
         #region "Planning Transactions"
         public static class SalesOrderPlan
         {
-            public const int MenuId = 1260;
+            public const int MenuId = 113;
             public const string MenuName = "Sales Order Plan";
             public const string Srl = "1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -1993,7 +1993,7 @@ namespace Jobs.Constants.Menu
         #region "Planning Status Reports"
         public static class SaleOrderPlanStatus
         {
-            public const int MenuId = 1310;
+            public const int MenuId = 114;
             public const string MenuName = "Sale Order Plan Status";
             public const string Srl = "4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2013,7 +2013,7 @@ namespace Jobs.Constants.Menu
         #region "Admin Setup Masters"
         public static class ChargeGroupSettings
         {
-            public const int MenuId = 1330;
+            public const int MenuId = 115;
             public const string MenuName = "Charge Group Settings";
             public const string Srl = "2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2030,7 +2030,7 @@ namespace Jobs.Constants.Menu
 
         public static class DocumentCategory
         {
-            public const int MenuId = 1340;
+            public const int MenuId = 116;
             public const string MenuName = "Document Category";
             public const string Srl = "2.05";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2047,7 +2047,7 @@ namespace Jobs.Constants.Menu
 
         public static class DocumentType
         {
-            public const int MenuId = 1350;
+            public const int MenuId = 117;
             public const string MenuName = "Document Type";
             public const string Srl = "2.1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2064,7 +2064,7 @@ namespace Jobs.Constants.Menu
 
         public static class Site
         {
-            public const int MenuId = 1360;
+            public const int MenuId = 118;
             public const string MenuName = "Site";
             public const string Srl = "2.15";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2081,7 +2081,7 @@ namespace Jobs.Constants.Menu
 
         public static class Division
         {
-            public const int MenuId = 1370;
+            public const int MenuId = 119;
             public const string MenuName = "Division";
             public const string Srl = "2.2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2098,7 +2098,7 @@ namespace Jobs.Constants.Menu
 
         public static class Calculation
         {
-            public const int MenuId = 1380;
+            public const int MenuId = 120;
             public const string MenuName = "Calculation";
             public const string Srl = "2.25";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2115,7 +2115,7 @@ namespace Jobs.Constants.Menu
 
         public static class CalculationLedgerAccounts
         {
-            public const int MenuId = 1390;
+            public const int MenuId = 121;
             public const string MenuName = "Calculation Ledger Accounts";
             public const string Srl = "2.3";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2132,7 +2132,7 @@ namespace Jobs.Constants.Menu
 
         public static class Charge
         {
-            public const int MenuId = 1400;
+            public const int MenuId = 122;
             public const string MenuName = "Charge";
             public const string Srl = "2.35";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2149,7 +2149,7 @@ namespace Jobs.Constants.Menu
 
         public static class AssignPermissions
         {
-            public const int MenuId = 1410;
+            public const int MenuId = 123;
             public const string MenuName = "Assign Permissions";
             public const string Srl = "2.4";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2166,7 +2166,7 @@ namespace Jobs.Constants.Menu
 
         public static class CreateRoles
         {
-            public const int MenuId = 1420;
+            public const int MenuId = 124;
             public const string MenuName = "Create Roles";
             public const string Srl = "2.45";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2183,7 +2183,7 @@ namespace Jobs.Constants.Menu
 
         public static class Reason
         {
-            public const int MenuId = 1430;
+            public const int MenuId = 125;
             public const string MenuName = "Reason";
             public const string Srl = "2.5";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2200,7 +2200,7 @@ namespace Jobs.Constants.Menu
 
         public static class AssignNewRoles
         {
-            public const int MenuId = 1440;
+            public const int MenuId = 126;
             public const string MenuName = "Assign New Roles";
             public const string Srl = "2.55";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2217,7 +2217,7 @@ namespace Jobs.Constants.Menu
 
         public static class AssignTemporaryRoles
         {
-            public const int MenuId = 1450;
+            public const int MenuId = 127;
             public const string MenuName = "Assign Temporary Roles";
             public const string Srl = "2.6";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2234,7 +2234,7 @@ namespace Jobs.Constants.Menu
 
         public static class UpdateTableStructure
         {
-            public const int MenuId = 1460;
+            public const int MenuId = 128;
             public const string MenuName = "Update Table Structure";
             public const string Srl = "2.65";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2251,7 +2251,7 @@ namespace Jobs.Constants.Menu
 
         public static class UserInvitation
         {
-            public const int MenuId = 1470;
+            public const int MenuId = 129;
             public const string MenuName = "User Invitation";
             public const string Srl = "2.7";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2273,7 +2273,7 @@ namespace Jobs.Constants.Menu
         #region "Task Management Transactions"
         public static class DAR
         {
-            public const int MenuId = 1500;
+            public const int MenuId = 130;
             public const string MenuName = "DAR";
             public const string Srl = "1";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2291,7 +2291,7 @@ namespace Jobs.Constants.Menu
         #region "Task Management Masters"
         public static class Tasks
         {
-            public const int MenuId = 1510;
+            public const int MenuId = 131;
             public const string MenuName = "Tasks";
             public const string Srl = "2";
             public const string IconName = "glyphicon glyphicon-book";
@@ -2311,128 +2311,7 @@ namespace Jobs.Constants.Menu
         #region "Task Management Status Reports"
         #endregion
 
-        //Only For Carpet Industry
-        public static class Carpet
-        {
-            public const int MenuId = 2001;
-            public const string MenuName = "Carpet";
-            public const string Srl = "2";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Carpet";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.CarpetMaster.ControllerName;
-            public const string ActionName = ControllerActionConstants.CarpetMaster.ActionName;
-            public static readonly string RouteId = "0";
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = AreaConstants.Rug.AreaName;
-        }
-
-        //Only For Carpet Industry
-        public static class Quality
-        {
-            public const int MenuId = 2002;
-            public const string MenuName = "Quality";
-            public const string Srl = "2";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Quality";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Quality.ControllerName;
-            public const string ActionName = ControllerActionConstants.Quality.ActionName;
-            public static readonly string RouteId = ProductTypeConstants.Rug.ProductTypeId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = AreaConstants.Rug.AreaName;
-        }
 
 
-        //Only For Carpet Industry
-        public static class Size
-        {
-            public const int MenuId = 2003;
-            public const string MenuName = "Size";
-            public const string Srl = "2";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Size";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Size.ControllerName;
-            public const string ActionName = ControllerActionConstants.Size.ActionName;
-            public static readonly string RouteId = ProductTypeConstants.Rug.ProductTypeId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = AreaConstants.Rug.AreaName;
-        }
-
-
-        public static class Collection
-        {
-            public const int MenuId = 2004;
-            public const string MenuName = "Collection";
-            public const string Srl = "2";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Collection";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Collection.ControllerName;
-            public const string ActionName = ControllerActionConstants.Collection.ActionName;
-            public static readonly string RouteId = ProductTypeConstants.Rug.ProductTypeId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = AreaConstants.Rug.AreaName;
-        }
-
-        public static class Content
-        {
-            public const int MenuId = 2005;
-            public const string MenuName = "Content";
-            public const string Srl = "2";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Content";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.ProductContent.ControllerName;
-            public const string ActionName = ControllerActionConstants.ProductContent.ActionName;
-            public static readonly string RouteId = ProductTypeConstants.Rug.ProductTypeId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = AreaConstants.Rug.AreaName;
-        }
-
-       public static class ProcessSequence
-        {
-            public const int MenuId = 2006;
-            public const string MenuName = "Process Sequence";
-            public const string Srl = "2";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Process Sequence";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.ProcessSequenceHeader.ControllerName;
-            public const string ActionName = ControllerActionConstants.ProcessSequenceHeader.ActionName;
-            public static readonly string RouteId = ProductTypeConstants.Rug.ProductTypeId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-
-        public static class Colour
-        {
-            public const int MenuId = 2007;
-            public const string MenuName = "Colour";
-            public const string Srl = "2";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Colour";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Colour.ControllerName;
-            public const string ActionName = ControllerActionConstants.Colour.ActionName;
-            public static readonly string RouteId = ProductTypeConstants.Rug.ProductTypeId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = AreaConstants.Rug.AreaName;
-        }
     }
 }

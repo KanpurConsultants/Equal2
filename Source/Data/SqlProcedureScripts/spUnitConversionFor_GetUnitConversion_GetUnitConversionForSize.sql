@@ -1,9 +1,3 @@
-IF OBJECT_ID ('Web.[spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize]') IS NOT NULL
-	DROP PROCEDURE Web.[spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize]
-GO
-
-
-
 CREATE PROCEDURE [Web].[spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize] (@SizeId INT, @ToUnitId NVARCHAR(3), @Attribute NVARCHAR(20) = NULL)
 AS 
 
@@ -71,5 +65,4 @@ BEGIN
 END 
 
 SELECT @ToQty AS ToQty;
-GO
 

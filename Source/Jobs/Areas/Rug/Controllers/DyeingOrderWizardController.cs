@@ -231,7 +231,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             p.PerkViewModel = Perks;
 
-            p.ProcessId = settings.ProcessId;
+            p.ProcessId = (int)settings.ProcessId;
             PrepareViewBag();
             p.DocTypeId = DocTypeId;
             p.DocNo = new DocumentTypeService(_unitOfWork).FGetNewDocNo("DocNo", ConfigurationManager.AppSettings["DataBaseSchema"] + ".JobOrderHeaders", p.DocTypeId, p.DocDate, p.DivisionId, p.SiteId);

@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using Login.Models;
 using Login;
+using Notifier.Hubs;
 
 namespace Jobs
 {
@@ -15,7 +16,7 @@ namespace Jobs
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext(LoginApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
@@ -30,13 +31,17 @@ namespace Jobs
                 {
                     // Enables the application to validate the security stamp when the user logs in.
                     // This is a security feature which is used when you change a password or add an external login to your account.  
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, LoginUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 },
                 //CookieDomain=(string)System.Configuration.ConfigurationManager.AppSettings["DomainName"]
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+
+            app.MapSignalR();
+
+            RegisterChanges.RegisterDependency();
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
             //app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));

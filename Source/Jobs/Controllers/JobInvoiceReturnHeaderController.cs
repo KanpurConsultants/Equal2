@@ -183,7 +183,7 @@ namespace Jobs.Controllers
 
             if ((settings.isVisibleProcessHeader ?? false) == false)
             {
-                vm.ProcessId = settings.ProcessId;
+                vm.ProcessId = (int)settings.ProcessId;
             }
 
             vm.DocDate = DateTime.Now;

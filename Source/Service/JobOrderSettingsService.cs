@@ -51,10 +51,11 @@ namespace Service
 
         public JobOrderSettings GetJobOrderSettingsForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.JobOrderSettings
-                    where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
-                    select p
-                        ).FirstOrDefault();
+            JobOrderSettings temp;
+            temp = _unitOfWork.Repository<JobOrderSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId && m.DocTypeId == DocTypeId).FirstOrDefault();
+            if (temp == null)
+                temp = _unitOfWork.Repository<JobOrderSettings>().Query().Get().FirstOrDefault();
+            return temp;
         }
 
         

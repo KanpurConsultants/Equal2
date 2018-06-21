@@ -1,7 +1,3 @@
-IF OBJECT_ID ('Web.spCarpetMaster_CreateTrace_GetFirstProductForColourWayAndSize') IS NOT NULL
-	DROP PROCEDURE Web.spCarpetMaster_CreateTrace_GetFirstProductForColourWayAndSize
-GO
-
 CREATE Procedure Web.spCarpetMaster_CreateTrace_GetFirstProductForColourWayAndSize (@ProductDesignId INT, @StandardSizeID INT)
 AS 
 
@@ -39,7 +35,7 @@ WHERE ProductId IN
 )
 
 SELECT @ProductGruopName +'-' + @SizeName AS ProductName, @StandardSizeID AS StandardSizeID, @StencilSizeID AS StencilSizeID 
-GO
+
 
 
 

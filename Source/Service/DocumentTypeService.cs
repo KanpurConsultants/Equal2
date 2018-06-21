@@ -249,7 +249,7 @@ namespace Service
             SqlParameter SqlParameterDivisionId = new SqlParameter("@DivisionId", DivisionId);
             SqlParameter SqlParameterSiteId = new SqlParameter("@SiteId", SiteId);
 
-            NewDocNoViewModel NewDocNoViewModel = db.Database.SqlQuery<NewDocNoViewModel>("" + System.Configuration.ConfigurationManager.AppSettings["DataBaseSchema"] + ".GetNewDocNo @FieldName , @TableName ,@DocTypeId , @DocDate , @DivisionId , @SiteId ", SqlParameterFieldName, SqlParameterTableName, SqlParameterDocTypeId, SqlParameterDocDate, SqlParameterDivisionId, SqlParameterSiteId).FirstOrDefault();
+            NewDocNoViewModel NewDocNoViewModel = db.Database.SqlQuery<NewDocNoViewModel>("" + System.Configuration.ConfigurationManager.AppSettings["DataBaseSchema"] + ".spDocumentTypeService_FGetNewDocNo_GetNewDocNo @FieldName , @TableName ,@DocTypeId , @DocDate , @DivisionId , @SiteId ", SqlParameterFieldName, SqlParameterTableName, SqlParameterDocTypeId, SqlParameterDocDate, SqlParameterDivisionId, SqlParameterSiteId).FirstOrDefault();
 
             if (NewDocNoViewModel != null)
             {

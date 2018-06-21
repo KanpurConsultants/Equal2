@@ -9,7 +9,6 @@ using Model;
 //using Models.Login.Models;
 using Model.Tasks.Models;
 using Model.PropertyTax.Models;
-using Login.Models;
 
 //Database.SetInitializer(new ApplicationDbContextInitializer());
 //CreateDatabseFunctions();
@@ -30,21 +29,21 @@ namespace Data.Models
 
         public string strSchemaName = "Web";
 
-        public ApplicationDbContext()
-            : base((string)System.Web.HttpContext.Current.Session["DefaultConnectionString"] ?? "LoginDB", false)
-        {
-            Configuration.ProxyCreationEnabled = false;
-            Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED");
-            Database.CommandTimeout = 60;
-        }
-
         //public ApplicationDbContext()
-        //    : base("Data Source=DESKTOP-IGOMECN\\SQLEXPRESS;Initial Catalog=RUG12;Integrated Security=true; User Id=sa; pwd=P@ssw0rd!", false)
+        //    : base((string)System.Web.HttpContext.Current.Session["DefaultConnectionString"] ?? "LoginDB", false)
         //{
         //    Configuration.ProxyCreationEnabled = false;
         //    Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED");
         //    Database.CommandTimeout = 60;
         //}
+
+        public ApplicationDbContext()
+            : base("Data Source=DESKTOP-IGOMECN\\SQLEXPRESS;Initial Catalog=RUG12;Integrated Security=true; User Id=sa; pwd=P@ssw0rd!", false)
+        {
+            Configuration.ProxyCreationEnabled = false;
+            Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED");
+            Database.CommandTimeout = 60;
+        }
 
         //public ApplicationDbContext()
         //    : base("DefaultConnection", false)
@@ -56,7 +55,7 @@ namespace Data.Models
         static ApplicationDbContext()
         {
             Database.SetInitializer<ApplicationDbContext>(null); // Existing data, do nothing
-            //Database.SetInitializer(new ApplicationDbContextInitializer()); // Create New database
+            Database.SetInitializer(new ApplicationDbContextInitializer()); // Create New database
             //Database.SetInitializer(new LoginDbContextInitializer()); // Create New database
         }
 
@@ -394,7 +393,7 @@ namespace Data.Models
 
         //User Models
         public DbSet<IdentityUser> Users { get; set; }
-        //public DbSet<UserInfo> UserInfo { get; set; }
+        public DbSet<UserInfo> UserInfo { get; set; }
         public DbSet<TempUserStore> TempUserStore { get; set; }//temprory user password store /ToDo: need to remove after Identity 2.0 implimentation 
 
         //Log Models
@@ -710,7 +709,7 @@ namespace Data.Models
 
             // Change the name of the table to be Users instead of AspNetUsers
             modelBuilder.Entity<IdentityUser>().ToTable("Users");
-            modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+            //modelBuilder.Entity<ApplicationUser>().ToTable("Users");
 
 
             //For Implementing Table Per Hirarchy
