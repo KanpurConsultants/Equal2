@@ -31,7 +31,7 @@ namespace Service
         Calculation GetCalculationByName(string terms);
         int NextId(int id);
         int PrevId(int id);
-        PurchaseOrderLineCharge GetLineFromFormCollection(FormCollection collection);
+        LineCharges GetLineFromFormCollection(FormCollection collection);
     }
 
     public class CalculationService : ICalculationService
@@ -47,9 +47,9 @@ namespace Service
             _CalculationRepository = new Repository<Calculation>(db);
             CalculationRepository = new RepositoryQuery<Calculation>(_CalculationRepository);
         }
-        public PurchaseOrderLineCharge GetLineFromFormCollection(FormCollection collection)
+        public LineCharges GetLineFromFormCollection(FormCollection collection)
         {
-            PurchaseOrderLineCharge temp = new PurchaseOrderLineCharge();
+            LineCharges temp = new LineCharges();
 
             return temp;
         }

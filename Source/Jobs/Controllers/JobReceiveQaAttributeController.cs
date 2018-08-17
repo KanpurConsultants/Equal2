@@ -132,7 +132,7 @@ namespace Jobs.Controllers
 
             vm.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(DocTypeId);
 
-            vm.ProcessId = settings.ProcessId;
+            vm.ProcessId = (int)settings.ProcessId;
             vm.DocDate = DateTime.Now;
             vm.DocTypeId = DocTypeId;
 

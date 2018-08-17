@@ -18,6 +18,7 @@ using Model.ViewModels;
 using System.Xml.Linq;
 using Reports.Controllers;
 using Reports.Reports;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -114,7 +115,7 @@ namespace Jobs.Controllers
         {
             ViewBag.Name = new DocumentTypeService(_unitOfWork).Find(id).DocumentTypeName;
             ViewBag.id = id;
-            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(TransactionDocCategoryConstants.SaleDeliveryOrderCancel).ToList();
+            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(DocumentCategoryConstants.DeliveryOrderCancel.DocumentCategoryName).ToList();
         }
 
 

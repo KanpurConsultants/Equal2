@@ -3,8 +3,7 @@ using System.Linq;
 using Data;
 using Data.Infrastructure;
 using Model.Models;
-
-using Core.Common;
+using Jobs.Constants.RugProductType;
 using System;
 using Model;
 using System.Threading.Tasks;
@@ -85,7 +84,7 @@ namespace Service
                 .Query().Include(i => i.ProductType)
                 .OrderBy(q => q.OrderBy(c => c.ProductCategoryName))
                 .GetPage(pageNumber, pageSize, out totalRecords)
-                .Where(i => i.ProductType.ProductTypeName == ProductTypeConstants.Rug);
+                .Where(i => i.ProductType.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName);
 
             return so;
         }
@@ -96,7 +95,7 @@ namespace Service
             var Con = (from p in db.ProductCategory
                        join pt in db.ProductTypes on p.ProductTypeId equals pt.ProductTypeId into ProductTypeTable
                        from ProductTypetab in ProductTypeTable.DefaultIfEmpty()
-                       where ProductTypetab.ProductTypeName == ProductTypeConstants.Rug
+                       where ProductTypetab.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                        orderby p.ProductCategoryName
                        select p
                         );
@@ -116,14 +115,14 @@ namespace Service
             if (id != 0)
             {
                 temp = (from p in db.ProductCategory
-                        where p.ProductType.ProductTypeName == ProductTypeConstants.Rug
+                        where p.ProductType.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                         orderby p.ProductCategoryName
                         select p.ProductCategoryId).AsEnumerable().SkipWhile(p => p != id).Skip(1).FirstOrDefault();
             }
             else
             {
                 temp = (from p in db.ProductCategory
-                        where p.ProductType.ProductTypeName == ProductTypeConstants.Rug
+                        where p.ProductType.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                         orderby p.ProductCategoryName
                         select p.ProductCategoryId).FirstOrDefault();
             }
@@ -141,14 +140,14 @@ namespace Service
             {
 
                 temp = (from p in db.ProductCategory
-                        where p.ProductType.ProductTypeName == ProductTypeConstants.Rug
+                        where p.ProductType.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                         orderby p.ProductCategoryName
                         select p.ProductCategoryId).AsEnumerable().TakeWhile(p => p != id).LastOrDefault();
             }
             else
             {
                 temp = (from p in db.ProductCategory
-                        where p.ProductType.ProductTypeName == ProductTypeConstants.Rug
+                        where p.ProductType.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                         orderby p.ProductCategoryName
                         select p.ProductCategoryId).AsEnumerable().LastOrDefault();
             }

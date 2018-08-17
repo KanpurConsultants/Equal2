@@ -180,7 +180,7 @@ namespace Model.Models
         [Display(Name = "OnApproveMenu")]
         public int? OnApproveMenuId { get; set; }
         public virtual Menu OnApproveMenu { get; set; }
-        public decimal NonCountedQty { get; set; }
+        public decimal?  NonCountedQty { get; set; }
 
         public decimal? LossQty { get; set; }
 

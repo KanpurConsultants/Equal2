@@ -18,6 +18,7 @@ namespace Jobs.Constants.PersonSetting
             public const int DefaultProcessId = ProcessConstants.Sale.ProcessId;
             public const Boolean isVisibleAddress = true ;
             public const Boolean isVisibleCity = true;
+            public const Boolean isVisiblePersonProcessDetail = false;
         }
         public static class Supplier
         {
@@ -27,6 +28,7 @@ namespace Jobs.Constants.PersonSetting
             public const int DefaultProcessId = ProcessConstants.Purchase.ProcessId;
             public const Boolean isVisibleAddress = true;
             public const Boolean isVisibleCity = true;
+            public const Boolean isVisiblePersonProcessDetail = false;
         }
 
 
@@ -38,6 +40,7 @@ namespace Jobs.Constants.PersonSetting
             public const int DefaultProcessId = ProcessConstants.Sale.ProcessId;
             public const Boolean isVisibleAddress = true;
             public const Boolean isVisibleCity = true;
+            public const Boolean isVisiblePersonProcessDetail = false;
         }
         public static class Transporter
         {
@@ -47,6 +50,7 @@ namespace Jobs.Constants.PersonSetting
             public const int DefaultProcessId = ProcessConstants.Sale.ProcessId;
             public const Boolean isVisibleAddress = true;
             public const Boolean isVisibleCity = true;
+            public const Boolean isVisiblePersonProcessDetail = false;
         }
 
         public static class JobWorker
@@ -54,9 +58,10 @@ namespace Jobs.Constants.PersonSetting
             public const int PersonSettingsId = 5;
             public const int DocTypeId = DocumentTypeConstants.JobWorker.DocumentTypeId;
             public const int LedgerAccountGroupId = LedgerAccountGroupConstants.SundryCreditors.LedgerAccountGroupId;
-            public const int DefaultProcessId = ProcessConstants.Sale.ProcessId;
+            public const int DefaultProcessId = ProcessConstants.Manufacturing.ProcessId;
             public const Boolean isVisibleAddress = true;
             public const Boolean isVisibleCity = true;
+            public const Boolean isVisiblePersonProcessDetail = true;
         }
     }
 }

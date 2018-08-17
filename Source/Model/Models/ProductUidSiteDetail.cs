@@ -55,7 +55,7 @@ namespace Model.Models
 
         [ForeignKey("GenPerson"), Display(Name = "Gen Person")]
         public int? GenPersonId { get; set; }
-        public virtual Buyer GenPerson { get; set; }
+        public virtual Person GenPerson { get; set; }
 
         public int? LastTransactionDocId { get; set; }
 

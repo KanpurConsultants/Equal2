@@ -32,9 +32,20 @@
 
             @foreach (var item in Model)
             {
+                string OpenLink = "/PackingHeader/Index/" + item.DocumentTypeId.ToString();
+                if (item.ControllerName != null && item.ActionName != null)
+                {
+                    OpenLink = "/" + item.ControllerName + "/" + item.ActionName + "/" + item.DocumentTypeId.ToString();
+                }
+                if (item.ControllerName != null && item.ActionName != null && item.AreaName != null)
+                {
+                    OpenLink = "/" + item.AreaName + "/" + item.ControllerName + "/" + item.ActionName + "/" + item.DocumentTypeId.ToString();
+                }
+
 
                 <div class="Box">
-                    <a href="/PackingHeader/Index/@item.DocumentTypeId">
+                    @*<a href="/PackingHeader/Index/@item.DocumentTypeId">*@
+                    <a href=@OpenLink>
                         <div class="InnerContent">
                             <div style="width:100%">
                                 <h1><span class="glyphicon glyphicon-alert"></span></h1>

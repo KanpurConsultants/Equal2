@@ -18,6 +18,8 @@ namespace Model.Models
         public string SiteName { get; set; }
         [MaxLength(250, ErrorMessage = "Site Name cannot exceed 250 characters")]
         public string SiteCode { get; set; }
+        [MaxLength(2)]
+        public string SiteShortCode { get; set; }
         public string Address { get; set; }
         [MaxLength(50, ErrorMessage = "Phone no cannot exceed 50 characters")]
         public string PhoneNo { get; set; }

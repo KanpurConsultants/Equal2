@@ -412,13 +412,7 @@
     <Compile Include="Areas\Rug\Controllers\PackingHeaderController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Areas\Rug\Controllers\PackingHeaderWithBuyerDetailController.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Areas\Rug\Controllers\PackingLineController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Rug\Controllers\PackingLineWithBuyerDetailController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Areas\Rug\Controllers\PackingReportLayoutController.cs">
@@ -428,8 +422,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Display_StockBalanceController .cs" />
     <Compile Include="Controllers\JobInvoiceHeaderrdl.cs" />
     <Compile Include="Controllers\JobOrderCancelHeaderrdl.cs" />
+    <Compile Include="Controllers\PackingHeaderrdl.cs" />
+    <Compile Include="Controllers\MaterialPlanHeaderrdl.cs" />
+    <Compile Include="Controllers\ProdOrderCancelHeaderrdl.cs" />
+    <Compile Include="Controllers\SaleDeliveryOrderHeaderrdl.cs" />
+    <Compile Include="Controllers\ProdOrderHeaderrdl.cs" />
+    <Compile Include="Controllers\SaleOrderCancelHeaderrdl.cs" />
+    <Compile Include="Controllers\SaleOrderHeaderrdl.cs" />
+    <Compile Include="Controllers\SaleEnquiryHeaderrdl.cs" />
     <Compile Include="Controllers\JobOrderHeaderrdl.cs" />
     <Compile Include="Controllers\JobReceiveHeaderrdl.cs" />
     <Compile Include="Controllers\LedgerHeaderrdl.cs" />
@@ -462,9 +465,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Areas\Rug\Controllers\ProductBuyerSettingsController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Rug\Controllers\ProductCollectionController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Areas\Rug\Controllers\ProductConstructionController.cs">
@@ -519,15 +519,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Areas\Rug\Controllers\ProductUidController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Rug\Controllers\PurchaseGoodsReceiptTextImportController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Rug\Controllers\PurchaseGoodsReturnTextImportController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Rug\Controllers\PurchaseOrderEvents.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Areas\Rug\Controllers\RateConversionEvents.cs">
@@ -641,7 +632,6 @@
     <Compile Include="Controllers\AttendanceHeaderController.cs" />
     <Compile Include="Controllers\BankReconciliationController.cs" />
     <Compile Include="Controllers\BarCodeHistoryController.cs" />
-    <Compile Include="Controllers\BuyerController.cs" />
     <Compile Include="Controllers\CalculationController.cs" />
     <Compile Include="Controllers\CalculationFooterController.cs" />
     <Compile Include="Controllers\CalculationHeaderLedgerAccountController.cs" />
@@ -768,7 +758,6 @@
     <Compile Include="Controllers\ProductGroupSettingsController.cs" />
     <Compile Include="Controllers\ProductMapController.cs" />
     <Compile Include="Controllers\ProductProcessController.cs" />
-    <Compile Include="Controllers\ProductPurchaseHistoryController.cs" />
     <Compile Include="Controllers\ProductRateGroupController.cs" />
     <Compile Include="Controllers\ProductRateListWizardController.cs" />
     <Compile Include="Controllers\ProductTraceController.cs" />
@@ -871,7 +860,6 @@
     <Compile Include="Controllers\JobOrderInspectionRequestWizardController.cs" />
     <Compile Include="Controllers\JobOrderInspectionWizardController.cs" />
     <Compile Include="Controllers\JobReceiveSettingsController.cs" />
-    <Compile Include="Controllers\JobWorkerController.cs" />
     <Compile Include="Controllers\LogHistoryController.cs" />
     <Compile Include="Controllers\LogActivity.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -2723,23 +2711,9 @@
     <Content Include="Areas\Rug\Views\PackingBarcodeImport\Error.cshtml" />
     <Content Include="Areas\Rug\Views\PackingBarcodeImport\Index.cshtml" />
     <Content Include="Areas\Rug\Views\PackingBarcodeImport\Sucess.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingHeaderWithBuyerDetail\Create.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingHeaderWithBuyerDetail\Index.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingHeaderWithBuyerDetail\_Reason.cshtml" />
     <Content Include="Areas\Rug\Views\PackingHeader\Create.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingHeader\Delete.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingHeader\Detail.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingHeader\Edit.cshtml" />
     <Content Include="Areas\Rug\Views\PackingHeader\Index.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingHeader\PackingSegmentation.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingHeader\PendingToApprove.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingHeader\PendingToSubmit.cshtml" />
     <Content Include="Areas\Rug\Views\PackingHeader\_Reason.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingLineWithBuyerDetail\_Create.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingLine\Create.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingLine\Delete.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingLine\Edit.cshtml" />
-    <Content Include="Areas\Rug\Views\PackingLine\Index.cshtml" />
     <Content Include="Areas\Rug\Views\PackingLine\_Create.cshtml" />
     <Content Include="Areas\Rug\Views\PackingReportLayout\PackingReportLayout.cshtml" />
     <Content Include="Areas\Rug\Views\PackingSetting\Create.cshtml" />
@@ -2767,10 +2741,6 @@
     <Content Include="Areas\Rug\Views\ProductBuyer\Create.cshtml" />
     <Content Include="Areas\Rug\Views\ProductBuyer\Index.cshtml" />
     <Content Include="Areas\Rug\Views\ProductBuyer\_Reason.cshtml" />
-    <Content Include="Areas\Rug\Views\ProductCollection\Create.cshtml" />
-    <Content Include="Areas\Rug\Views\ProductCollection\Index.cshtml" />
-    <Content Include="Areas\Rug\Views\ProductCollection\ProductTypeIndex.cshtml" />
-    <Content Include="Areas\Rug\Views\ProductCollection\_Reason.cshtml" />
     <Content Include="Areas\Rug\Views\ProductConstruction\Create.cshtml" />
     <Content Include="Areas\Rug\Views\ProductConstruction\Details.cshtml" />
     <Content Include="Areas\Rug\Views\ProductConstruction\Index.cshtml" />
@@ -3188,6 +3158,7 @@
     <Content Include="Scripts\DashboardV2.js" />
     <Content Include="Scripts\DisplayJobInvoiceSummary\DisplayJobInvoiceSummary.js" />
     <Content Include="Scripts\DisplaySaleOrderInventoryStatus\DisplaySaleOrderInventoryStatus.js" />
+    <Content Include="Scripts\DisplayStockBalance\DisplayStockBalance.js" />
     <Content Include="Scripts\Mailbox\Compose-menu.js" />
     <Content Include="Scripts\Mailbox\Compose.js" />
     <Content Include="Scripts\Mailbox\Inbox-menu.js" />
@@ -3408,9 +3379,6 @@
     <Content Include="Areas\Rug\Views\ProductBuyer\Delete.cshtml" />
     <Content Include="Areas\Rug\Views\ProductBuyer\Details.cshtml" />
     <Content Include="Areas\Rug\Views\ProductBuyer\Edit.cshtml" />
-    <Content Include="Areas\Rug\Views\ProductCollection\Delete.cshtml" />
-    <Content Include="Areas\Rug\Views\ProductCollection\Details.cshtml" />
-    <Content Include="Areas\Rug\Views\ProductCollection\Edit.cshtml" />
     <Content Include="Areas\Rug\Views\ProductConstruction\Delete.cshtml" />
     <Content Include="Areas\Rug\Views\ProductConstruction\Edit.cshtml" />
     <Content Include="Areas\Rug\Views\ProductConsumptionHeader\Delete.cshtml" />
@@ -5336,6 +5304,7 @@
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\UserPermissionError.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Display_StockBalance\Display_StockBalance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

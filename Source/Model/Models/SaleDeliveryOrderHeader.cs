@@ -36,7 +36,7 @@ namespace Model.Models
 
         [ForeignKey("Buyer"),Display(Name="Buyer")]
         public int BuyerId { get; set; }
-        public virtual Buyer Buyer { get; set; }
+        public virtual Person Buyer { get; set; }
 
         public int Priority { get; set; }
 

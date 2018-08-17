@@ -47,7 +47,7 @@ namespace Model.Models
 
         [ForeignKey("JobWorker"), Display(Name = "Job Worker")]
         public int JobWorkerId { get; set; }
-        public virtual JobWorker JobWorker { get; set; }
+        public virtual Person JobWorker { get; set; }
 
 
         [ForeignKey("InspectionBy"), Display(Name = "Inspection By")]

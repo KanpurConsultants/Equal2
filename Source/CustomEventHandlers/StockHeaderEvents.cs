@@ -3,7 +3,7 @@ using Data.Models;
 using System;
 using StockHeaderDocumentEvents;
 using System.Linq;
-using Core.Common;
+using Jobs.Constants.RugDocumentType;
 using Model.Models;
 
 namespace Jobs.Controllers
@@ -42,7 +42,7 @@ namespace Jobs.Controllers
                                ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.MaterialIssueForWeaving
+                           where p.DocumentTypeName == RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeName
                            select p).FirstOrDefault();
 
             var IssueLineCostCenterRecords = (from p in DbContext.StockLine
@@ -103,7 +103,7 @@ namespace Jobs.Controllers
                            ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.MaterialIssueForWeaving
+                           where p.DocumentTypeName == RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeName
                            select p).FirstOrDefault();
 
             var IssueLineCostCenterRecords = (from p in DbContext.StockLine
@@ -153,7 +153,7 @@ namespace Jobs.Controllers
                                ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.MaterialIssueForWeaving
+                           where p.DocumentTypeName == RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeName
                            select p).FirstOrDefault();
 
             var IssueLineCostCenterRecords = (from p in DbContext.StockLine
@@ -232,7 +232,7 @@ namespace Jobs.Controllers
 
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.MaterialIssueForWeaving
+                           where p.DocumentTypeName == RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeName
                            select p).FirstOrDefault();
 
             var IssueLineCostCenterRecords = (from p in DbContext.StockLine

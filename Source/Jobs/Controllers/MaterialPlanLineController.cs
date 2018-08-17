@@ -442,79 +442,79 @@ namespace Jobs.Controllers
                 {
 
 
-                    PurchaseIndentHeader ExistingIndent = new PurchaseIndentHeaderService(_unitOfWork).GetPurchaseIndentForMaterialPlan(header.MaterialPlanHeaderId);
-                    int PurchaseIndentSr = 1;
-                    if (ExistingIndent == null)
-                    {
+                    //PurchaseIndentHeader ExistingIndent = new PurchaseIndentHeaderService(_unitOfWork).GetPurchaseIndentForMaterialPlan(header.MaterialPlanHeaderId);
+                    //int PurchaseIndentSr = 1;
+                    //if (ExistingIndent == null)
+                    //{
 
-                        PurchaseIndentHeader indentHeader = new PurchaseIndentHeader();
-                        indentHeader.CreatedBy = User.Identity.Name;
-                        indentHeader.CreatedDate = DateTime.Now;
-                        indentHeader.DivisionId = header.DivisionId;
-                        indentHeader.DocDate = header.DocDate;
-                        indentHeader.DocNo = header.DocNo;
-                        indentHeader.DocTypeId = settings.DocTypePurchaseIndentId.Value;
-                        indentHeader.ModifiedBy = User.Identity.Name;
-                        indentHeader.MaterialPlanHeaderId = header.MaterialPlanHeaderId;
-                        indentHeader.ModifiedDate = DateTime.Now;
-                        indentHeader.Remark = header.Remark;
-                        indentHeader.SiteId = header.SiteId;
+                        //PurchaseIndentHeader indentHeader = new PurchaseIndentHeader();
+                        //indentHeader.CreatedBy = User.Identity.Name;
+                        //indentHeader.CreatedDate = DateTime.Now;
+                        //indentHeader.DivisionId = header.DivisionId;
+                        //indentHeader.DocDate = header.DocDate;
+                        //indentHeader.DocNo = header.DocNo;
+                        //indentHeader.DocTypeId = settings.DocTypePurchaseIndentId.Value;
+                        //indentHeader.ModifiedBy = User.Identity.Name;
+                        //indentHeader.MaterialPlanHeaderId = header.MaterialPlanHeaderId;
+                        //indentHeader.ModifiedDate = DateTime.Now;
+                        //indentHeader.Remark = header.Remark;
+                        //indentHeader.SiteId = header.SiteId;
+                        ////indentHeader.Status = header.Status;
                         //indentHeader.Status = header.Status;
-                        indentHeader.Status = header.Status;
-                        indentHeader.LockReason = "Purchase Indent automatically generated from planning.";
-                        indentHeader.DepartmentId = (int)DepartmentConstants.Production;
-                        indentHeader.ObjectState = Model.ObjectState.Added;
-                        context.PurchaseIndentHeader.Add(indentHeader);
-                        foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
-                        {
-                            PurchaseIndentLine indentLine = new PurchaseIndentLine();
-                            indentLine.CreatedBy = User.Identity.Name;
-                            indentLine.CreatedDate = DateTime.Now;
-                            indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
-                            indentLine.ModifiedBy = User.Identity.Name;
-                            indentLine.ModifiedDate = DateTime.Now;
-                            indentLine.ProductId = item.ProductId;
-                            indentLine.Dimension1Id = item.Dimension1Id;
-                            indentLine.Dimension2Id = item.Dimension2Id;
-                            indentLine.Dimension3Id = item.Dimension3Id;
-                            indentLine.Dimension4Id = item.Dimension4Id;
-                            indentLine.Specification = item.Specification;
-                            indentLine.PurchaseIndentHeaderId = indentHeader.PurchaseIndentHeaderId;
-                            indentLine.Qty = item.PurchPlanQty;
-                            indentLine.Sr = PurchaseIndentSr++;
-                            indentLine.Remark = item.Remark;
-                            indentLine.LockReason = "Purchase Indent automatically generated from planning.";
-                            indentLine.ObjectState = Model.ObjectState.Added;
-                            context.PurchaseIndentLine.Add(indentLine);
-                        }
+                        //indentHeader.LockReason = "Purchase Indent automatically generated from planning.";
+                        //indentHeader.DepartmentId = (int)DepartmentConstants.Production;
+                        //indentHeader.ObjectState = Model.ObjectState.Added;
+                    //    context.PurchaseIndentHeader.Add(indentHeader);
+                    //    foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
+                    //    {
+                    //        PurchaseIndentLine indentLine = new PurchaseIndentLine();
+                    //        indentLine.CreatedBy = User.Identity.Name;
+                    //        indentLine.CreatedDate = DateTime.Now;
+                    //        indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
+                    //        indentLine.ModifiedBy = User.Identity.Name;
+                    //        indentLine.ModifiedDate = DateTime.Now;
+                    //        indentLine.ProductId = item.ProductId;
+                    //        indentLine.Dimension1Id = item.Dimension1Id;
+                    //        indentLine.Dimension2Id = item.Dimension2Id;
+                    //        indentLine.Dimension3Id = item.Dimension3Id;
+                    //        indentLine.Dimension4Id = item.Dimension4Id;
+                    //        indentLine.Specification = item.Specification;
+                    //        indentLine.PurchaseIndentHeaderId = indentHeader.PurchaseIndentHeaderId;
+                    //        indentLine.Qty = item.PurchPlanQty;
+                    //        indentLine.Sr = PurchaseIndentSr++;
+                    //        indentLine.Remark = item.Remark;
+                    //        indentLine.LockReason = "Purchase Indent automatically generated from planning.";
+                    //        indentLine.ObjectState = Model.ObjectState.Added;
+                    //        context.PurchaseIndentLine.Add(indentLine);
+                    //    }
 
-                    }
-                    else
-                    {
-                        PurchaseIndentSr = new PurchaseIndentLineService(_unitOfWork).GetMaxSr(ExistingIndent.PurchaseIndentHeaderId);
-                        foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
-                        {
-                            PurchaseIndentLine indentLine = new PurchaseIndentLine();
-                            indentLine.CreatedBy = User.Identity.Name;
-                            indentLine.CreatedDate = DateTime.Now;
-                            indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
-                            indentLine.ModifiedBy = User.Identity.Name;
-                            indentLine.Specification = item.Specification;
-                            indentLine.ModifiedDate = DateTime.Now;
-                            indentLine.ProductId = item.ProductId;
-                            indentLine.Dimension1Id = item.Dimension1Id;
-                            indentLine.Dimension2Id = item.Dimension2Id;
-                            indentLine.Dimension3Id = item.Dimension3Id;
-                            indentLine.Dimension4Id = item.Dimension4Id;
-                            indentLine.Sr = PurchaseIndentSr++;
-                            indentLine.PurchaseIndentHeaderId = ExistingIndent.PurchaseIndentHeaderId;
-                            indentLine.Qty = item.PurchPlanQty;
-                            indentLine.Remark = item.Remark;
-                            indentLine.LockReason = "Purchase Indent automatically generated from planning.";
-                            indentLine.ObjectState = Model.ObjectState.Added;
-                            context.PurchaseIndentLine.Add(indentLine);
-                        }
-                    }
+                    //}
+                    //else
+                    //{
+                    //    PurchaseIndentSr = new PurchaseIndentLineService(_unitOfWork).GetMaxSr(ExistingIndent.PurchaseIndentHeaderId);
+                    //    foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
+                    //    {
+                    //        PurchaseIndentLine indentLine = new PurchaseIndentLine();
+                    //        indentLine.CreatedBy = User.Identity.Name;
+                    //        indentLine.CreatedDate = DateTime.Now;
+                    //        indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
+                    //        indentLine.ModifiedBy = User.Identity.Name;
+                    //        indentLine.Specification = item.Specification;
+                    //        indentLine.ModifiedDate = DateTime.Now;
+                    //        indentLine.ProductId = item.ProductId;
+                    //        indentLine.Dimension1Id = item.Dimension1Id;
+                    //        indentLine.Dimension2Id = item.Dimension2Id;
+                    //        indentLine.Dimension3Id = item.Dimension3Id;
+                    //        indentLine.Dimension4Id = item.Dimension4Id;
+                    //        indentLine.Sr = PurchaseIndentSr++;
+                    //        indentLine.PurchaseIndentHeaderId = ExistingIndent.PurchaseIndentHeaderId;
+                    //        indentLine.Qty = item.PurchPlanQty;
+                    //        indentLine.Remark = item.Remark;
+                    //        indentLine.LockReason = "Purchase Indent automatically generated from planning.";
+                    //        indentLine.ObjectState = Model.ObjectState.Added;
+                    //        context.PurchaseIndentLine.Add(indentLine);
+                    //    }
+                    //}
 
 
 
@@ -1211,76 +1211,76 @@ namespace Jobs.Controllers
                 if (isPP)
                 {
 
-                    PurchaseIndentHeader ExistingIndent = new PurchaseIndentHeaderService(_unitOfWork).GetPurchaseIndentForMaterialPlan(header.MaterialPlanHeaderId);
-                    int PurchaseIndentSr = 1;
-                    if (ExistingIndent == null)
-                    {
+                    //PurchaseIndentHeader ExistingIndent = new PurchaseIndentHeaderService(_unitOfWork).GetPurchaseIndentForMaterialPlan(header.MaterialPlanHeaderId);
+                    //int PurchaseIndentSr = 1;
+                    //if (ExistingIndent == null)
+                    //{
 
-                        PurchaseIndentHeader indentHeader = new PurchaseIndentHeader();
-                        indentHeader.CreatedBy = User.Identity.Name;
-                        indentHeader.CreatedDate = DateTime.Now;
-                        indentHeader.DivisionId = temp.DivisionId;
-                        indentHeader.DocDate = temp.DocDate;
-                        indentHeader.DocNo = temp.DocNo;
-                        indentHeader.DocTypeId = settings.DocTypePurchaseIndentId.Value;
-                        indentHeader.MaterialPlanHeaderId = header.MaterialPlanHeaderId;
-                        indentHeader.ModifiedBy = User.Identity.Name;
-                        indentHeader.ModifiedDate = DateTime.Now;
-                        indentHeader.Remark = temp.Remark;
-                        indentHeader.SiteId = temp.SiteId;
-                        //indentHeader.Status = temp.Status;
-                        indentHeader.LockReason = "Purchase Indent automatically generated from planning.";
-                        indentHeader.Status = header.Status;
-                        indentHeader.DepartmentId = (int)DepartmentConstants.Production;
-                        indentHeader.ObjectState = Model.ObjectState.Added;
-                        context.PurchaseIndentHeader.Add(indentHeader);
-                        foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
-                        {
-                            PurchaseIndentLine indentLine = new PurchaseIndentLine();
-                            indentLine.CreatedBy = User.Identity.Name;
-                            indentLine.CreatedDate = DateTime.Now;
-                            indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
-                            indentLine.ModifiedBy = User.Identity.Name;
-                            indentLine.Dimension1Id = item.Dimension1Id;
-                            indentLine.Dimension2Id = item.Dimension2Id;
-                            indentLine.Dimension3Id = item.Dimension3Id;
-                            indentLine.Dimension4Id = item.Dimension4Id;
-                            indentLine.Sr = PurchaseIndentSr++;
-                            indentLine.ModifiedDate = DateTime.Now;
-                            indentLine.ProductId = item.ProductId;
-                            indentLine.PurchaseIndentHeaderId = indentHeader.PurchaseIndentHeaderId;
-                            indentLine.Qty = item.PurchPlanQty;
-                            indentLine.Remark = item.Remark;
-                            indentLine.LockReason = "Purchase Indent automatically generated from planning.";
-                            indentLine.ObjectState = Model.ObjectState.Added;
-                            context.PurchaseIndentLine.Add(indentLine);
-                        }
-                    }
-                    else
-                    {
-                        PurchaseIndentSr = new PurchaseIndentLineService(_unitOfWork).GetMaxSr(ExistingIndent.PurchaseIndentHeaderId);
-                        foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
-                        {
-                            PurchaseIndentLine indentLine = new PurchaseIndentLine();
-                            indentLine.CreatedBy = User.Identity.Name;
-                            indentLine.CreatedDate = DateTime.Now;
-                            indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
-                            indentLine.ModifiedBy = User.Identity.Name;
-                            indentLine.ModifiedDate = DateTime.Now;
-                            indentLine.ProductId = item.ProductId;
-                            indentLine.Dimension1Id = item.Dimension1Id;
-                            indentLine.Dimension2Id = item.Dimension2Id;
-                            indentLine.Dimension3Id = item.Dimension3Id;
-                            indentLine.Dimension4Id = item.Dimension4Id;
-                            indentLine.Sr = PurchaseIndentSr++;
-                            indentLine.PurchaseIndentHeaderId = ExistingIndent.PurchaseIndentHeaderId;
-                            indentLine.Qty = item.PurchPlanQty;
-                            indentLine.Remark = item.Remark;
-                            indentLine.LockReason = "Purchase Indent automatically generated from planning.";
-                            indentLine.ObjectState = Model.ObjectState.Added;
-                            context.PurchaseIndentLine.Add(indentLine);
-                        }
-                    }
+                    //    PurchaseIndentHeader indentHeader = new PurchaseIndentHeader();
+                    //    indentHeader.CreatedBy = User.Identity.Name;
+                    //    indentHeader.CreatedDate = DateTime.Now;
+                    //    indentHeader.DivisionId = temp.DivisionId;
+                    //    indentHeader.DocDate = temp.DocDate;
+                    //    indentHeader.DocNo = temp.DocNo;
+                    //    indentHeader.DocTypeId = settings.DocTypePurchaseIndentId.Value;
+                    //    indentHeader.MaterialPlanHeaderId = header.MaterialPlanHeaderId;
+                    //    indentHeader.ModifiedBy = User.Identity.Name;
+                    //    indentHeader.ModifiedDate = DateTime.Now;
+                    //    indentHeader.Remark = temp.Remark;
+                    //    indentHeader.SiteId = temp.SiteId;
+                    //    //indentHeader.Status = temp.Status;
+                    //    indentHeader.LockReason = "Purchase Indent automatically generated from planning.";
+                    //    indentHeader.Status = header.Status;
+                    //    indentHeader.DepartmentId = (int)DepartmentConstants.Production;
+                    //    indentHeader.ObjectState = Model.ObjectState.Added;
+                    //    context.PurchaseIndentHeader.Add(indentHeader);
+                    //    foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
+                    //    {
+                    //        PurchaseIndentLine indentLine = new PurchaseIndentLine();
+                    //        indentLine.CreatedBy = User.Identity.Name;
+                    //        indentLine.CreatedDate = DateTime.Now;
+                    //        indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
+                    //        indentLine.ModifiedBy = User.Identity.Name;
+                    //        indentLine.Dimension1Id = item.Dimension1Id;
+                    //        indentLine.Dimension2Id = item.Dimension2Id;
+                    //        indentLine.Dimension3Id = item.Dimension3Id;
+                    //        indentLine.Dimension4Id = item.Dimension4Id;
+                    //        indentLine.Sr = PurchaseIndentSr++;
+                    //        indentLine.ModifiedDate = DateTime.Now;
+                    //        indentLine.ProductId = item.ProductId;
+                    //        indentLine.PurchaseIndentHeaderId = indentHeader.PurchaseIndentHeaderId;
+                    //        indentLine.Qty = item.PurchPlanQty;
+                    //        indentLine.Remark = item.Remark;
+                    //        indentLine.LockReason = "Purchase Indent automatically generated from planning.";
+                    //        indentLine.ObjectState = Model.ObjectState.Added;
+                    //        context.PurchaseIndentLine.Add(indentLine);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    PurchaseIndentSr = new PurchaseIndentLineService(_unitOfWork).GetMaxSr(ExistingIndent.PurchaseIndentHeaderId);
+                    //    foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
+                    //    {
+                    //        PurchaseIndentLine indentLine = new PurchaseIndentLine();
+                    //        indentLine.CreatedBy = User.Identity.Name;
+                    //        indentLine.CreatedDate = DateTime.Now;
+                    //        indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
+                    //        indentLine.ModifiedBy = User.Identity.Name;
+                    //        indentLine.ModifiedDate = DateTime.Now;
+                    //        indentLine.ProductId = item.ProductId;
+                    //        indentLine.Dimension1Id = item.Dimension1Id;
+                    //        indentLine.Dimension2Id = item.Dimension2Id;
+                    //        indentLine.Dimension3Id = item.Dimension3Id;
+                    //        indentLine.Dimension4Id = item.Dimension4Id;
+                    //        indentLine.Sr = PurchaseIndentSr++;
+                    //        indentLine.PurchaseIndentHeaderId = ExistingIndent.PurchaseIndentHeaderId;
+                    //        indentLine.Qty = item.PurchPlanQty;
+                    //        indentLine.Remark = item.Remark;
+                    //        indentLine.LockReason = "Purchase Indent automatically generated from planning.";
+                    //        indentLine.ObjectState = Model.ObjectState.Added;
+                    //        context.PurchaseIndentLine.Add(indentLine);
+                    //    }
+                    //}
                 }
 
 

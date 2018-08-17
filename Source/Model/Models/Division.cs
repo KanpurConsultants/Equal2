@@ -43,6 +43,9 @@ namespace Model.Models
 
         public int? CompanyId { get; set; }
 
+        [MaxLength(2)]
+        public string DivisionShortCode { get; set; }
+
         [MaxLength(25)]
         public string ThemeColour { get; set; }
 
@@ -52,6 +55,12 @@ namespace Model.Models
         public ICollection<Product> Products { get; set; }
 
         public string LogoBlob { get; set; }
+
+        public string ReportHeaderTextRight1 { get; set; }
+        public string ReportHeaderTextRight2 { get; set; }
+        public string ReportHeaderTextRight3 { get; set; }
+        public string ReportHeaderTextRight4 { get; set; }
+
 
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }

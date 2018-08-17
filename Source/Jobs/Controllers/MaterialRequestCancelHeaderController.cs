@@ -21,6 +21,7 @@ using MaterialRequestCancelDocumentEvents;
 using Reports.Reports;
 using Reports.Controllers;
 using Model.ViewModels;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -75,7 +76,7 @@ namespace Jobs.Controllers
 
         public void PrepareViewBag(int id)
         {
-            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(TransactionDocCategoryConstants.RequisitionCancel).ToList();
+            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(DocumentCategoryConstants.MaterialRequestCancel.DocumentCategoryName).ToList();
             ViewBag.Name = new DocumentTypeService(_unitOfWork).Find(id).DocumentTypeName;
             ViewBag.id = id;
 

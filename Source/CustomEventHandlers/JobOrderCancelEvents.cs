@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DocumentEvents;
+using Jobs.Constants.RugDocumentType;
 using JobOrderCancelDocumentEvents;
 
 namespace Jobs.Controllers
@@ -56,7 +56,7 @@ namespace Jobs.Controllers
             DbContext.Dispose();
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             if (DocType.Contains(JobHeader.DocTypeId) && Temp.Qty != 0)
@@ -133,7 +133,7 @@ namespace Jobs.Controllers
 
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             if (Temp.Select(m => m.DocTypeId).Intersect(DocType).Any())
@@ -207,7 +207,7 @@ namespace Jobs.Controllers
             DbContext.Dispose();
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
 
@@ -280,7 +280,7 @@ namespace Jobs.Controllers
             DbContext.Dispose();
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             if (JobHeader.Select(m => m.DocTypeId).Intersect(DocType).Any())

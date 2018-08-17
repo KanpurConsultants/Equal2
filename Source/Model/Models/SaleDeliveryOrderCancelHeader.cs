@@ -44,7 +44,7 @@ namespace Model.Models
         [ForeignKey("Buyer")]
         [Display(Name = "Buyer Name")]
         public int BuyerId { get; set; }
-        public virtual Buyer Buyer { get; set; }
+        public virtual Person Buyer { get; set; }
 
         [ForeignKey("OrderBy"), Display(Name = "Order By")]
         public int OrderById { get; set; }

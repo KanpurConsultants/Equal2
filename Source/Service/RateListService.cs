@@ -3,7 +3,7 @@ using System.Linq;
 using Data;
 using Data.Infrastructure;
 using Model.Models;
-
+using Jobs.Constants.RugProductType;
 using Core.Common;
 using System;
 using Model;
@@ -102,7 +102,7 @@ namespace Service
         public IQueryable<RateListViewModel> GetWeavingRateListForIndex()
         {
             var ProcessId = new ProcessService(_unitOfWork).Find(ProcessConstants.Weaving).ProcessId.ToString();
-            int ProductTypeId = new ProductTypeService(_unitOfWork).Find(ProductTypeConstants.Rug).ProductTypeId;
+            int ProductTypeId = new ProductTypeService(_unitOfWork).Find(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
 
            //var temp=(from p in db.ProductGroups                     
            //         join t in db.PersonRateGroup
@@ -139,7 +139,7 @@ namespace Service
         {
 
             var ProcessId = new ProcessService(_unitOfWork).Find(ProcessConstants.Weaving).ProcessId.ToString();
-            int ProductTypeId = new ProductTypeService(_unitOfWork).Find(ProductTypeConstants.Rug).ProductTypeId;
+            int ProductTypeId = new ProductTypeService(_unitOfWork).Find(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
 
             var temp = (from p in db.ProductGroups
                         from t in db.PersonRateGroup.Where(m => m.Processes.IndexOf(ProcessId)!=-1)

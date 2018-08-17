@@ -58,7 +58,7 @@ namespace Model.Models
 
         public int? Priority { get; set; }
 
-        [ForeignKey("ShipMethod"),Display(Name="Ship Method"),Required]
+        [ForeignKey("ShipMethod"),Display(Name="Ship Method")]
         public int ? ShipMethodId { get; set; }
         public virtual ShipMethod ShipMethod { get; set; }
 
@@ -70,7 +70,7 @@ namespace Model.Models
         [Display(Name = "Ship Address"), MaxLength(250)]
         public string ShipAddress { get; set; }
 
-        [ForeignKey("DeliveryTerms"),Display(Name="Delivery Terms"),Required]
+        [ForeignKey("DeliveryTerms"),Display(Name="Delivery Terms")]
         public int ? DeliveryTermsId { get; set; }
         public virtual DeliveryTerms DeliveryTerms { get; set; }
 

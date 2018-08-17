@@ -320,22 +320,20 @@ namespace Service
             string SiteId = "|" + CurrentSiteId.ToString() + "|";
 
 
-            var list = (from b in db.JobWorker
+            var list = (from b in db.Persons
                         join bus in db.BusinessEntity on b.PersonID equals bus.PersonID into BusinessEntityTable
                         from BusinessEntityTab in BusinessEntityTable.DefaultIfEmpty()
-                        join p in db.Persons on b.PersonID equals p.PersonID into PersonTable
-                        from PersonTab in PersonTable.DefaultIfEmpty()
                         join pp in db.PersonProcess on b.PersonID equals pp.PersonId into PersonProcessTable
                         from PersonProcessTab in PersonProcessTable.DefaultIfEmpty()
                         where PersonProcessTab.ProcessId == Processid
-                        && (string.IsNullOrEmpty(term) ? 1 == 1 : PersonTab.Name.ToLower().Contains(term.ToLower()))
+                        && (string.IsNullOrEmpty(term) ? 1 == 1 : b.Name.ToLower().Contains(term.ToLower()))
                         && BusinessEntityTab.DivisionIds.IndexOf(DivId) != -1
                         && BusinessEntityTab.SiteIds.IndexOf(SiteId) != -1
-                        orderby PersonTab.Name
+                        orderby b.Name
                         select new ComboBoxList
                         {
                             Id = b.PersonID,
-                            PropFirst = PersonTab.Name
+                            PropFirst = b.Name
                             //PropSecond  = BusinessEntityTab.SiteIds.IndexOf(SiteId).ToString() 
                         }
               ).Take(20);
@@ -364,7 +362,7 @@ namespace Service
             SqlParameter SqlParameterDivisionId = new SqlParameter("@DivisionId", DivisionId);
             SqlParameter SqlParameterSiteId = new SqlParameter("@SiteId", SiteId);
 
-            NewDocNoViewModel NewDocNoViewModel = db.Database.SqlQuery<NewDocNoViewModel>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".GetJobOrderCostCenter @DocTypeId , @DocDate , @DivisionId , @SiteId ", SqlParameterDocTypeId, SqlParameterDocDate, SqlParameterDivisionId, SqlParameterSiteId).FirstOrDefault();
+            NewDocNoViewModel NewDocNoViewModel = db.Database.SqlQuery<NewDocNoViewModel>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spJobOrderHeaderService_FGetJobOrderCostCenter_GetJobOrderCostCenter @DocTypeId , @DocDate , @DivisionId , @SiteId ", SqlParameterDocTypeId, SqlParameterDocDate, SqlParameterDivisionId, SqlParameterSiteId).FirstOrDefault();
 
             if (NewDocNoViewModel != null)
             {
@@ -392,7 +390,7 @@ namespace Service
             SqlParameter SqlParameterDivisionId = new SqlParameter("@DivisionId", DivisionId);
             SqlParameter SqlParameterDocTypeId = new SqlParameter("@DocumentTypeId", DocTypeId);
 
-            IEnumerable<WeavingOrderWizardViewModel> PendingProdOrderList = db.Database.SqlQuery<WeavingOrderWizardViewModel>("Web.ProcWeavingOrderWizard @SiteId, @DivisionId, @DocumentTypeId", SqlParameterSiteId, SqlParameterDivisionId, SqlParameterDocTypeId).ToList();
+            IEnumerable<WeavingOrderWizardViewModel> PendingProdOrderList = db.Database.SqlQuery<WeavingOrderWizardViewModel>("Web.spJobOrderHeaderSevice_GetProdOrdersForWeavingWizard_WeavingOrderWizard @SiteId, @DivisionId, @DocumentTypeId", SqlParameterSiteId, SqlParameterDivisionId, SqlParameterDocTypeId).ToList();
 
             IEnumerable<WeavingOrderWizardViewModel> temp = (from p in PendingProdOrderList
                                                              where (string.IsNullOrEmpty(settings.filterProductCategories) ? 1 == 1 : ProductCategories.Contains(p.ProductCategoryId.ToString()))
@@ -422,7 +420,7 @@ namespace Service
             //           && (string.IsNullOrEmpty(settings.filterContraDocTypes) ? 1 == 1 : ContraDocTypes.Contains(p.DocTypeId.ToString()))
             //           join t in db.FinishedProduct on p.ProductId equals t.ProductId into table
             //           from tab in table.DefaultIfEmpty()
-            //           join t2 in db.ViewRugSize on p.ProductId equals t2.ProductId into table2
+            //           join t2 in db.ViewProductSize on p.ProductId equals t2.ProductId into table2
             //           from tab2 in table2.DefaultIfEmpty()
             //           join t3 in db.ProdOrderHeader on p.ProdOrderHeaderId equals t3.ProdOrderHeaderId into table3
             //           from tab3 in table3.DefaultIfEmpty()

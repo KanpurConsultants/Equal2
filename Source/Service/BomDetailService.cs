@@ -3,14 +3,16 @@ using System.Linq;
 using Data;
 using Data.Infrastructure;
 using Model.Models;
-
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using System;
 using Model;
 using System.Threading.Tasks;
 using Data.Models;
 using Model.ViewModels;
-
+using Jobs.Constants.ProductType;
+using Jobs.Constants.ProductNature;
+using Jobs.Constants.RugProductType;
 namespace Service
 {
     public interface IBomDetailService : IDisposable
@@ -168,7 +170,7 @@ namespace Service
                         from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
                         join pn in db.ProductNature on ProductTypeTab.ProductNatureId equals pn.ProductNatureId into ProductNatureTable
                         from ProductNatureTab in ProductNatureTable.DefaultIfEmpty()
-                        where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom && p.ReferenceDocTypeId == RefId
+                        where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom.ProductNatureName && p.ReferenceDocTypeId == RefId
                         orderby p.ProductName
                         select p.ProductId).AsEnumerable().SkipWhile(p => p != id).Skip(1).FirstOrDefault();
             }
@@ -182,7 +184,7 @@ namespace Service
                         from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
                         join pn in db.ProductNature on ProductTypeTab.ProductNatureId equals pn.ProductNatureId into ProductNatureTable
                         from ProductNatureTab in ProductNatureTable.DefaultIfEmpty()
-                        where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom && p.ReferenceDocTypeId == RefId
+                        where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom.ProductNatureName && p.ReferenceDocTypeId == RefId
                         orderby p.ProductName
                         select p.ProductId).FirstOrDefault();
             }
@@ -207,7 +209,7 @@ namespace Service
                         from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
                         join pn in db.ProductNature on ProductTypeTab.ProductNatureId equals pn.ProductNatureId into ProductNatureTable
                         from ProductNatureTab in ProductNatureTable.DefaultIfEmpty()
-                        where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom && p.ReferenceDocTypeId == RefId
+                        where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom.ProductNatureName && p.ReferenceDocTypeId == RefId
                         orderby p.ProductName
                         select p.ProductId).AsEnumerable().TakeWhile(p => p != id).LastOrDefault();
             }
@@ -221,7 +223,7 @@ namespace Service
                         from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
                         join pn in db.ProductNature on ProductTypeTab.ProductNatureId equals pn.ProductNatureId into ProductNatureTable
                         from ProductNatureTab in ProductNatureTable.DefaultIfEmpty()
-                        where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom && p.ReferenceDocTypeId == RefId
+                        where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom.ProductNatureName && p.ReferenceDocTypeId == RefId
                         orderby p.ProductName
                         select p.ProductId).AsEnumerable().LastOrDefault();
             }
@@ -927,7 +929,7 @@ namespace Service
         public IQueryable<DesignConsumptionHeaderViewModel> GetDesignConsumptionHeaderViewModelForIndex()
         {
 
-            var RefDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductGroup).DocumentTypeId;
+            var RefDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductGroup.DocumentTypeName).DocumentTypeId;
 
             IQueryable<DesignConsumptionHeaderViewModel> svm = from p in db.Product
                                                                join pc in db.ProductGroups on p.ProductGroupId equals pc.ProductGroupId into ProductGroupTable
@@ -936,7 +938,7 @@ namespace Service
                                                                from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
                                                                join pn in db.ProductNature on ProductTypeTab.ProductNatureId equals pn.ProductNatureId into ProductNatureTable
                                                                from ProductNatureTab in ProductNatureTable.DefaultIfEmpty()
-                                                               where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom && p.ReferenceDocTypeId == RefDocTypeId
+                                                               where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom.ProductNatureName && p.ReferenceDocTypeId == RefDocTypeId
                                                                orderby p.ProductName
                                                                select new DesignConsumptionHeaderViewModel
                                                                {
@@ -950,7 +952,7 @@ namespace Service
         public IQueryable<DesignColourConsumptionHeaderViewModel> GetDesignColourConsumptionHeaderViewModelForIndex()
         {
 
-            var RefDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductGroup).DocumentTypeId;
+            var RefDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductGroup.DocumentTypeName).DocumentTypeId;
 
             IQueryable<DesignColourConsumptionHeaderViewModel> svm = from p in db.ViewDesignColourConsumption
                                                                orderby p.ProductGroupName
@@ -972,7 +974,7 @@ namespace Service
         public IQueryable<ProductConsumptionHeaderViewModel> GetDesignConsumptionHeaderViewModelForIndexForProduct()
         {
 
-            var RefDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId;
+            var RefDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId;
 
             IQueryable<ProductConsumptionHeaderViewModel> svm = from p in db.Product
                                                                 join pc in db.ProductGroups on p.ProductGroupId equals pc.ProductGroupId into ProductGroupTable
@@ -982,7 +984,7 @@ namespace Service
                                                                 from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
                                                                 join pn in db.ProductNature on ProductTypeTab.ProductNatureId equals pn.ProductNatureId into ProductNatureTable
                                                                 from ProductNatureTab in ProductNatureTable.DefaultIfEmpty()
-                                                                where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom && p.ReferenceDocTypeId == RefDocTypeId
+                                                                where ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom.ProductNatureName && p.ReferenceDocTypeId == RefDocTypeId
                                                                 orderby p.ProductName
                                                                 select new ProductConsumptionHeaderViewModel
                                                                {
@@ -1101,9 +1103,10 @@ namespace Service
                             DesignName = ProductGroupTab.ProductGroupName,
                             DesignId = ProductGroupTab.ProductGroupId,
                             QualityName = QualityTab.ProductQualityName,
-                            //Weight = (QualityTab.Weight > 0 ? QualityTab.Weight : (p.StandardWeight ?? 0))
-                            Weight = ((p.StandardWeight ?? 0) > 0 ? (p.StandardWeight ?? 0) : QualityTab.Weight)
-                        };
+                           //Weight = (QualityTab.Weight > 0 ? QualityTab.Weight : (p.StandardWeight ?? 0))
+                           //Weight = ((p.StandardWeight ?? 0) > 0 ? (p.StandardWeight ?? 0) : p.StandardWeight)
+                           Weight =  (decimal)p.StandardWeight
+                       };
 
 
             return temp.FirstOrDefault();
@@ -1122,7 +1125,7 @@ namespace Service
                            BaseProductId = p.ProductId,
                            ProductName = tab.ProductName,
                            QualityName = QualityTab.ProductQualityName,
-                           Weight = QualityTab.Weight
+                           Weight = (decimal)tab.StandardWeight
                        };
 
 
@@ -1194,11 +1197,11 @@ namespace Service
                     from ProductNatureTab in ProductNatureTable.DefaultIfEmpty()
                     where ((int?)ContentTab.ProductGroupId ?? 0) == 0
                      && (string.IsNullOrEmpty(term) ? 1 == 1 : p.ProductName.ToLower().Contains(term.ToLower()))
-                     && ProductNatureTab.ProductNatureName == ProductNatureConstants.Rawmaterial
-                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.Trace 
-                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.Map
-                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.OtherMaterial
-                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.Bom
+                     && ProductNatureTab.ProductNatureName == ProductNatureConstants.RawMaterial.ProductNatureName
+                     && ProductTypeTab.ProductTypeName != RugProductTypeConstants.Trace.ProductTypeName 
+                     && ProductTypeTab.ProductTypeName != RugProductTypeConstants.Map.ProductTypeName
+                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.OtherMaterial.ProductTypeName
+                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.Bom.ProductTypeName
                      && p.IsActive == true
                     orderby p.ProductName ascending
                     select new ComboBoxResult
@@ -1222,11 +1225,11 @@ namespace Service
                     from ProductNatureTab in ProductNatureTable.DefaultIfEmpty()
                     where 1 == 1
                      && (string.IsNullOrEmpty(term) ? 1 == 1 : p.ProductName.ToLower().Contains(term.ToLower()))
-                     && ProductNatureTab.ProductNatureName == ProductNatureConstants.Rawmaterial
-                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.Trace
-                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.Map
-                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.OtherMaterial
-                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.Bom
+                     && ProductNatureTab.ProductNatureName == ProductNatureConstants.RawMaterial.ProductNatureName
+                     && ProductTypeTab.ProductTypeName != RugProductTypeConstants.Trace.ProductTypeName
+                     && ProductTypeTab.ProductTypeName != RugProductTypeConstants.Map.ProductTypeName
+                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.OtherMaterial.ProductTypeName
+                     && ProductTypeTab.ProductTypeName != ProductTypeConstants.Bom.ProductTypeName
                      && p.IsActive == true
                     orderby p.ProductName ascending
                     select new ComboBoxResult

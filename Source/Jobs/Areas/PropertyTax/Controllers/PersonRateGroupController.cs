@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using AutoMapper;
-using System.Configuration;
+using Jobs.Constants.DocumentType;
 using Presentation;
 using Components.ExceptionHandlers;
 using Components.Logging;
@@ -124,7 +124,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.PersonRateGroup,
+                        DocTypeId = DocumentTypeConstants.PersonRateGroup.DocumentTypeId,
                         DocId = pt.PersonRateGroupId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -171,7 +171,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.PersonRateGroup,
+                        DocTypeId = DocumentTypeConstants.PersonRateGroup.DocumentTypeId,
                         DocId = temp.PersonRateGroupId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -273,7 +273,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.PersonRateGroup,
+                        DocTypeId = DocumentTypeConstants.PersonRateGroup.DocumentTypeId,
                         DocId = temp.PersonRateGroupId,
                         ActivityType = (int)ActivityTypeContants.Deleted,
                         UserRemark = vm.Reason,
@@ -347,7 +347,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         [HttpGet]
         public ActionResult Report()
         {
-            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeIdConstants.PersonRateGroup);
+            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeConstants.PersonRateGroup.DocumentTypeName);
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["CustomizeDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
         }
     }

@@ -37,10 +37,9 @@
             </h4>*@
             <div class="btn-group">
                 @Html.ActionLink(" ", "Create", "SaleOrderCancelHeader", new { @id = ViewBag.id }, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip" })
-                @if (ViewBag.SqlProcDocumentPrint !=null)
-                {
+
                 @Html.ActionLink(" ", "GeneratePrints", "SaleOrderCancelHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-print toolbar", @title = "Print", @data_toggle = "tooltip", @id = "PrintRecordI", target = "_blank" })
-                }
+      
                 @Html.ActionLink(" ", "Remove", "SaleOrderCancelHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-trash toolbar", @title = "Delete", @data_toggle = "tooltip", @id = "DeleteRecord", @data_modalDelete = "" })
                 @*@Html.ActionLink(" ", "Index", "SaleOrderCancelExcelImport", null, new { @class = "cbtn btn-circle glyphicon glyphicon-import", @title = "Import", @data_toggle = "tooltip" })*@
              </div>

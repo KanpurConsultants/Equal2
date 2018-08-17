@@ -180,6 +180,31 @@ namespace Jobs.Controllers
                 }
                 else
                 {
+                    var summary1 = (from p in db.Product.Where(p => ProductIds.Contains(p.ProductId)).AsEnumerable()
+                                   join t in vm.MaterialPlanLineViewModel on p.ProductId equals t.ProductId
+                                   where t.Qty > 0
+                                   group t by new { t.ProductId, p.ProductName, t.Dimension1Id, t.Dimension2Id, t.Dimension3Id, t.Dimension4Id, t.Specification } into g
+                                   join p1 in db.Product.Where(p => ProductIds.Contains(p.ProductId)).AsEnumerable() on g.Key.ProductId equals p1.ProductId
+                                   join u1 in db.Units on p1.UnitId equals u1.UnitId
+                                   select new
+                                   {
+                                       id = g.Key.ProductId,
+                                       QtySum = g.Sum(m => m.Qty),
+                                       GroupedItems = g,
+                                       name = g.Key.ProductName,
+                                       unitname = u1.UnitName,
+                                       Dimension1Id = g.Key.Dimension1Id,
+                                       Dimension1Name = g.Max(i => i.Dimension1Name),
+                                       Dimension2Id = g.Key.Dimension2Id,
+                                       Dimension2Name = g.Max(i => i.Dimension2Name),
+                                       Dimension3Id = g.Key.Dimension3Id,
+                                       Dimension3Name = g.Max(i => i.Dimension3Name),
+                                       Dimension4Id = g.Key.Dimension4Id,
+                                       Dimension4Name = g.Max(i => i.Dimension4Name),
+                                       Specification = g.Key.Specification,
+                                       Fractionunits = u1.DecimalPlaces
+                                   });
+
                     var summary = (from p in db.Product.Where(p => ProductIds.Contains(p.ProductId)).AsEnumerable()
                                    join t in vm.MaterialPlanLineViewModel on p.ProductId equals t.ProductId
                                    where t.Qty > 0

@@ -497,7 +497,7 @@
 
             function AddCalculation(MaxLineId)
             {
-                AddCalculationFields(parseInt($('#JobInvoiceHeaderId').val()),false,'@Model.CalculationId',"Web.JobInvoiceHeaderCharges","Web.JobInvoiceLineCharges",MaxLineId,$('#DocTypeId','.modal-body').val(),$('#SiteId','.modal-body').val(),$('#DivisionId','.modal-body').val());
+                AddCalculationFields(parseInt($('#JobInvoiceHeaderId').val()),true,'@Model.CalculationId',"Web.JobInvoiceHeaderCharges","Web.JobInvoiceLineCharges",MaxLineId,$('#DocTypeId','.modal-body').val(),$('#SiteId','.modal-body').val(),$('#DivisionId','.modal-body').val());
             }
 
         })

@@ -9,7 +9,7 @@ using Model;
 using System.Threading.Tasks;
 using Data.Models;
 using Model.ViewModels;
-
+using Jobs.Constants.DocumentCategory;
 
 namespace Service
 {
@@ -54,7 +54,7 @@ namespace Service
         }
         public IEnumerable<LedgerAccountOpeningViewModel> GetLedgerAccountOpeningListForIndex(int LedgerAccountId)
         {
-            int OpeningDocCategoryId = new DocumentCategoryService(_unitOfWork).FindByName(TransactionDocCategoryConstants.Opening).DocumentCategoryId;
+            int OpeningDocCategoryId = new DocumentCategoryService(_unitOfWork).FindByName( DocumentCategoryConstants.Opening.DocumentCategoryName).DocumentCategoryId;
 
             IEnumerable<LedgerAccountOpeningViewModel> vm = (from H in db.LedgerHeader
                                                              join L in db.Ledger on H.LedgerHeaderId equals L.LedgerHeaderId into LedgerTable

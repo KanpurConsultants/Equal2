@@ -239,7 +239,7 @@ namespace Service
                 
                 if (JobReceiveQASettings != null)
                 {
-                    JobReceiveQADocTypeId = JobReceiveQASettings.DocTypeId;
+                    JobReceiveQADocTypeId = (int)JobReceiveQASettings.DocTypeId;
                 }
 
             }

@@ -11,7 +11,7 @@ using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
 using AutoMapper;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Model.ViewModel;
 using System.Xml.Linq;
 using Jobs.Helpers;
@@ -93,7 +93,7 @@ namespace Jobs.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -115,13 +115,13 @@ namespace Jobs.Controllers
 
         public ActionResult Create()
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProcessSequence + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProcessSequence.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)
             {
@@ -164,7 +164,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                         DocId = s.ProcessSequenceHeaderId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -207,7 +207,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                         DocId = temp.ProcessSequenceHeaderId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -230,13 +230,13 @@ namespace Jobs.Controllers
                 ViewBag.Redirect = PrevAction;
             }
 
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProcessSequence + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProcessSequence.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Edit") == false)
             {
@@ -255,7 +255,7 @@ namespace Jobs.Controllers
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
                     DocId = s.ProcessSequenceHeaderId,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                     ActivityType = (int)ActivityTypeContants.Detail,
                     DocNo = s.ProcessSequenceHeaderName.Length >20 ?s.ProcessSequenceHeaderName.Substring(0,20) : s.ProcessSequenceHeaderName,
                     DocStatus = s.Status,
@@ -284,7 +284,7 @@ namespace Jobs.Controllers
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
                     DocId = h.ProcessSequenceHeaderId,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                     ActivityType = (int)ActivityTypeContants.Detail,
                     DocNo = h.ProcessSequenceHeaderName.Substring(0,20),
                 }));
@@ -303,13 +303,13 @@ namespace Jobs.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProcessSequence + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProcessSequence.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Delete") == false)
             {
@@ -377,7 +377,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,

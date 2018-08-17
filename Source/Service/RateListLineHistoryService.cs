@@ -96,7 +96,7 @@ namespace Service
         //public IQueryable<RateListLineHistoryViewModel> GetWeavingRateListLineHistoryForIndex()
         //{
         //    var ProcessId = new ProcessService(_unitOfWork).Find(ProcessConstants.Weaving).ProcessId.ToString();
-        //    int ProductTypeId = new ProductTypeService(_unitOfWork).Find(ProductTypeConstants.Rug).ProductTypeId;
+        //    int ProductTypeId = new ProductTypeService(_unitOfWork).Find(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
 
 
         //   var temp = (from p in db.ProductGroups
@@ -115,7 +115,7 @@ namespace Service
         //{
 
         //    var ProcessId = new ProcessService(_unitOfWork).Find(ProcessConstants.Weaving).ProcessId.ToString();
-        //    int ProductTypeId = new ProductTypeService(_unitOfWork).Find(ProductTypeConstants.Rug).ProductTypeId;
+        //    int ProductTypeId = new ProductTypeService(_unitOfWork).Find(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
 
         //    var temp = (from p in db.ProductGroups
         //                from t in db.PersonRateGroup.Where(m => m.Processes.IndexOf(ProcessId)!=-1)

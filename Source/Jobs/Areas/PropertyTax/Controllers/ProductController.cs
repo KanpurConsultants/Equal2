@@ -15,6 +15,7 @@ using Model.Models;
 using Core.Common;
 using Presentation.ViewModels;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Areas.PropertyTax.Controllers
 {
@@ -120,7 +121,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.Product,
+                        DocTypeId = DocumentTypeConstants.Product.DocumentTypeId,
                         DocId = pt.ProductId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -167,7 +168,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.Product,
+                        DocTypeId = DocumentTypeConstants.Product.DocumentTypeId,
                         DocId = temp.ProductId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -257,7 +258,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
                     List<LogTypeViewModel> LogList = new List<LogTypeViewModel>();
 
                     Product temp = _ProductService.Find(vm.id);
-                    int DocTypeId = DocumentTypeIdConstants.Product;
+                    int DocTypeId = DocumentTypeConstants.Product.DocumentTypeId;
 
                     LogList.Add(new LogTypeViewModel
                     {
@@ -343,7 +344,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         [HttpGet]
         public ActionResult Report()
         {
-            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeIdConstants.Product);
+            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeConstants.Product.DocumentTypeId);
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["CustomizeDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
         }
     }

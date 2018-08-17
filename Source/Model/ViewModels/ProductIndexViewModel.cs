@@ -91,11 +91,11 @@ namespace Model.ViewModels
         public virtual ProductGroup ProductGroup { get; set; }
         public string ProductGroupName { get; set; }
 
-        [ForeignKey("ProductCollection")]
-        [Display(Name = "Product Collection")]
-        public int? ProductCollectionId { get; set; }
-        public virtual ProductCollection ProductCollection { get; set; }
-        public string ProductCollectionName { get; set; }
+        //[ForeignKey("ProductCollection")]
+        //[Display(Name = "Product Collection")]
+        //public int? ProductCollectionId { get; set; }
+        //public virtual ProductCollection ProductCollection { get; set; }
+        //public string ProductCollectionName { get; set; }
 
         [ForeignKey("ProductQuality")]
         [Display(Name = "Product Quality")]

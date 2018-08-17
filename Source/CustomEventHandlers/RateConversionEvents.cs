@@ -3,7 +3,7 @@ using Data.Models;
 using System;
 using RateConversionDocumentEvents;
 using System.Linq;
-using Core.Common;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Controllers
 {
@@ -39,7 +39,7 @@ namespace Jobs.Controllers
             //                ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.RateConversion
+                           where p.DocumentTypeName == DocumentTypeConstants.RateConversion.DocumentTypeName
                            select p).FirstOrDefault();
 
             var CostCenterIds = Temp.Select(m => m.CostCenterId).ToArray();
@@ -102,7 +102,7 @@ namespace Jobs.Controllers
                            select g).ToList();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.RateConversion
+                           where p.DocumentTypeName == DocumentTypeConstants.RateConversion.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();
@@ -152,7 +152,7 @@ namespace Jobs.Controllers
 
             var StockHeader = DbContext.StockHeader.Find(Temp.StockHeaderId);
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.RateConversion
+                           where p.DocumentTypeName == DocumentTypeConstants.RateConversion.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();
@@ -188,7 +188,7 @@ namespace Jobs.Controllers
                                ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.RateConversion
+                           where p.DocumentTypeName == DocumentTypeConstants.RateConversion.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();
@@ -248,7 +248,7 @@ namespace Jobs.Controllers
                             ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.RateConversion
+                           where p.DocumentTypeName == DocumentTypeConstants.RateConversion.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();

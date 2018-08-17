@@ -7,7 +7,7 @@ using Model.Models;
 using Data.Models;
 using Service;
 using Data.Infrastructure;
-using Presentation.ViewModels;
+using Jobs.Constants.DocumentType;
 using Presentation;
 using Core.Common;
 using Model.ViewModel;
@@ -42,13 +42,13 @@ namespace Jobs.Areas.Rug.Controllers
         // GET: /ProductMaster/Create
           public ActionResult Create()
           {
-              var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductManufacturingStyle);
+              var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductManufacturingStyle.DocumentTypeName);
               int DocTypeId = 0;
 
               if (DocType != null)
                   DocTypeId = DocType.DocumentTypeId;
               else
-                  return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProductManufacturingStyle + " is not defined in database.");
+                  return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProductManufacturingStyle.DocumentTypeName + " is not defined in database.");
 
               if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)
               {
@@ -84,13 +84,13 @@ namespace Jobs.Areas.Rug.Controllers
         // GET: /ProductMaster/Edit/5
         public ActionResult Edit(int id)
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductManufacturingStyle);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductManufacturingStyle.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProductManufacturingStyle + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProductManufacturingStyle.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Edit") == false)
             {
@@ -133,13 +133,13 @@ namespace Jobs.Areas.Rug.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductManufacturingStyle);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductManufacturingStyle.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProductManufacturingStyle + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProductManufacturingStyle.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Delete") == false)
             {

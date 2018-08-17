@@ -66,9 +66,7 @@ namespace Service
         public IEnumerable<GateInListViewModel> GetPendingGateIns(int id)//SupplierId
         {
 
-            var TES=from p in db.GateIn
-                    join t in db.PurchaseGoodsReceiptHeader on p.GateInId equals t.GateInId into table
-                    from tab in table.DefaultIfEmpty()                    
+            var TES=from p in db.GateIn                   
                     where p.GateInId==null
                     orderby p.DocNo
                     select new GateInListViewModel

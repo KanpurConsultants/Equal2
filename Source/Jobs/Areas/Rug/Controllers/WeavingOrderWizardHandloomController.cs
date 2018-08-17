@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using System.Configuration;
-using Presentation;
+using Jobs.Constants.RugDocumentType;
 using Model.ViewModel;
 using Reports.Controllers;
 
@@ -131,7 +131,7 @@ namespace Jobs.Areas.Rug.Controllers
             int DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
             int SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
 
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.WeavingOrder).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName).DocumentTypeId;
 
             var settings = new JobOrderSettingsService(_unitOfWork).GetJobOrderSettingsForDocument(DocTypeId, DivisionId, SiteId);
 
@@ -171,7 +171,7 @@ namespace Jobs.Areas.Rug.Controllers
             int DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
             int SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
 
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.WeavingOrder).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName).DocumentTypeId;
 
             var settings = new JobOrderSettingsService(_unitOfWork).GetJobOrderSettingsForDocument(DocTypeId, DivisionId, SiteId);
 
@@ -252,7 +252,7 @@ namespace Jobs.Areas.Rug.Controllers
             p.SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
             List<string> UserRoles = (List<string>)System.Web.HttpContext.Current.Session["Roles"];
 
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.WeavingOrder).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName).DocumentTypeId;
 
             //Getting Settings
             var settings = new JobOrderSettingsService(_unitOfWork).GetJobOrderSettingsForDocument(DocTypeId, p.DivisionId, p.SiteId);

@@ -131,7 +131,7 @@ namespace Jobs.Areas.Rug.Controllers
 
 
 
-            //int RequisitionDocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.Requisition).DocumentTypeId;
+            //int RequisitionDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Requisition).DocumentTypeId;
 
             //RequisitionHeader Header = new RequisitionHeader();
             //Header.DocTypeId = RequisitionDocTypeId;

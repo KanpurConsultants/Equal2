@@ -49,10 +49,19 @@ namespace Service
         }
         public JobConsumptionSettings GetJobConsumptionSettingsForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.JobConsumptionSettings
+            JobConsumptionSettings temp;
+            temp = (from p in db.JobConsumptionSettings
                     where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
                     select p
                         ).FirstOrDefault();
+
+            if (temp == null)
+                temp = (from p in db.JobConsumptionSettings
+                        where p.DocTypeId == null && p.DivisionId == null && p.SiteId == null
+                        select p
+            ).FirstOrDefault();
+
+            return temp;
         }
         public JobConsumptionSettings Create(JobConsumptionSettings pt)
         {

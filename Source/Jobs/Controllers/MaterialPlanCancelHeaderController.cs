@@ -498,7 +498,7 @@ namespace Jobs.Controllers
                 var MaterialPlanCancelline = new MaterialPlanCancelLineService(_unitOfWork).GetMaterialPlanCancelForDelete(vm.id).ToList();
 
                 List<ProdOrderCancelLine> ProdOrderCancelLines = new List<ProdOrderCancelLine>();
-                List<PurchaseIndentCancelLine> PurchaseIndentCancelLines = new List<PurchaseIndentCancelLine>();
+                //List<PurchaseIndentCancelLine> PurchaseIndentCancelLines = new List<PurchaseIndentCancelLine>();
 
 
                 foreach (var item in MaterialPlanCancelline)
@@ -559,19 +559,19 @@ namespace Jobs.Controllers
                         db.ProdOrderCancelLine.Remove(item2);
                     }
 
-                    PurchaseIndentCancelLines = new PurchaseIndentCancelLineService(_unitOfWork).GetPurchaseIndentCancelLineForMaterialPlanCancel(item.MaterialPlanCancelLineId).ToList();
+                    //PurchaseIndentCancelLines = new PurchaseIndentCancelLineService(_unitOfWork).GetPurchaseIndentCancelLineForMaterialPlanCancel(item.MaterialPlanCancelLineId).ToList();
 
-                    foreach (var item2 in PurchaseIndentCancelLines)
-                    {
-                        LogList.Add(new LogTypeViewModel
-                        {
-                            ExObj = item2,
-                        });
+                    //foreach (var item2 in PurchaseIndentCancelLines)
+                    //{
+                    //    LogList.Add(new LogTypeViewModel
+                    //    {
+                    //        ExObj = item2,
+                    //    });
 
-                        item2.ObjectState = Model.ObjectState.Deleted;
-                        db.PurchaseIndentCancelLine.Attach(item2);
-                        db.PurchaseIndentCancelLine.Remove(item2);
-                    }
+                    //    item2.ObjectState = Model.ObjectState.Deleted;
+                    //    db.PurchaseIndentCancelLine.Attach(item2);
+                    //    db.PurchaseIndentCancelLine.Remove(item2);
+                    //}
 
 
 

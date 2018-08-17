@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Text;
 using Data.Infrastructure;
 using Core.Common;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -160,11 +161,11 @@ namespace Jobs.Controllers
                         sh.SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
                         sh.DocDate = SaleOrderCancelRecord.CancelDate;
                         sh.DocNo = SaleOrderCancelRecord.SaleOrderCancelNo;
-                        sh.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrderCancel).DocumentTypeId;
+                        sh.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrderCancel.DocumentCategoryName).DocumentTypeId;
                         sh.ModifiedBy = User.Identity.Name;
                         sh.ModifiedDate = DateTime.Now;
                         sh.Remark = SaleOrderCancelRecord.Remark;
-                        sh.ReasonId = new ReasonService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrderCancel).ReasonId;
+                        sh.ReasonId = new ReasonService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrderCancel.DocumentCategoryName).ReasonId;
 
                         int BuyerId = (from L in db.SaleOrderLine
                                        join H in db.SaleOrderHeader on L.SaleOrderHeaderId equals H.SaleOrderHeaderId into SaleOrderHeaderTable

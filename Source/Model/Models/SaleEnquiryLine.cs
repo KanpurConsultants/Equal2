@@ -18,37 +18,31 @@ namespace Model.Models
         public int SaleEnquiryLineId { get; set; }
 
         [ForeignKey("SaleEnquiryHeader")]
-        [Index("IX_SaleEnquiryLine_LineUnique", IsUnique = true, Order = 1)]
         public int SaleEnquiryHeaderId { get; set; }
         public virtual SaleEnquiryHeader SaleEnquiryHeader { get; set; }
 
         [ForeignKey("Product"),Display(Name="Product")]
-        [Index("IX_SaleEnquiryLine_LineUnique", IsUnique = true, Order = 2)]
         public int? ProductId { get; set; }
         public virtual Product Product { get; set; }
 
         [Display(Name = "Dimension1")]
         [ForeignKey("Dimension1")]
-        [Index("IX_SaleEnquiryLine_LineUnique", IsUnique = true, Order = 3)]
         public int? Dimension1Id { get; set; }
         public virtual Dimension1 Dimension1 { get; set; }
 
         [Display(Name = "Dimension2")]
         [ForeignKey("Dimension2")]
-        [Index("IX_SaleEnquiryLine_LineUnique", IsUnique = true, Order = 4)]
         public int? Dimension2Id { get; set; }
         public virtual Dimension2 Dimension2 { get; set; }
 
 
         [Display(Name = "Dimension3")]
         [ForeignKey("Dimension3")]
-        [Index("IX_SaleEnquiryLine_LineUnique", IsUnique = true, Order = 5)]
         public int? Dimension3Id { get; set; }
         public virtual Dimension3 Dimension3 { get; set; }
 
         [Display(Name = "Dimension4")]
         [ForeignKey("Dimension4")]
-        [Index("IX_SaleEnquiryLine_LineUnique", IsUnique = true, Order = 6)]
         public int? Dimension4Id { get; set; }
         public virtual Dimension4 Dimension4 { get; set; }
 
@@ -58,7 +52,6 @@ namespace Model.Models
         public decimal Qty { get; set; }
 
         [Display (Name ="Due Date")]
-        [Index("IX_SaleEnquiryLine_LineUnique", IsUnique = true, Order = 7)]
         public DateTime ? DueDate { get; set; }
 
 

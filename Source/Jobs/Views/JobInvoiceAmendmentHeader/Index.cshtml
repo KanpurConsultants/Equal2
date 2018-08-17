@@ -31,10 +31,9 @@
                 {
                     @Html.ActionLink(" ", "GetHistory", "LogHistory", null, new { @class = "cbtn btn-circle glyphicon glyphicon-user toolbar", @title = "History", @data_toggle = "tooltip", @id = "DocHistoryI" })
                 }*@
-                @if (ViewBag.SqlProcDocumentPrint != null)
-                {
+
                 @Html.ActionLink(" ", "GeneratePrints", "JobInvoiceAmendmentHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-print", @title = "Print", @data_toggle = "tooltip", @id = "PrintRecordI", target = "_blank" })                
-                }
+
                 @Html.ActionLink(" ", "Remove", "JobInvoiceAmendmentHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-trash hidden-xs", @title = "Delete", @data_toggle = "tooltip", @id = "DeleteRecord", @data_modalDelete = ""})
             </div>
             <div class="btn-group">

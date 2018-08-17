@@ -6,7 +6,7 @@ using Core.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Jobs.Constants.ProductNature;
 using Model.ViewModels;
 using System.Data.SqlClient;
 using System.Data;
@@ -98,7 +98,7 @@ namespace Service
             var SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
 
             int AdditionalChargesProductNatureId = 0;
-            var ProductNature = (from Pt in db.ProductNature where Pt.ProductNatureName == ProductNatureConstants.AdditionalCharges select Pt).FirstOrDefault();
+            var ProductNature = (from Pt in db.ProductNature where Pt.ProductNatureName == ProductNatureConstants.AdditionalCharges.ProductNatureName select Pt).FirstOrDefault();
             if (ProductNature != null)
                 AdditionalChargesProductNatureId = ProductNature.ProductNatureId;
 

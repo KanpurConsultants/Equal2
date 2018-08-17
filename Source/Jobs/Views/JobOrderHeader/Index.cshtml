@@ -58,10 +58,9 @@
         <div class="panel-info">            
             <div class="btn-group">               
                 @Html.ActionLink(" ", "Create", "JobOrderHeader", new { @id = @ViewBag.id }, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip" })
-                @if (ViewBag.SqlProcDocumentPrint != null)
-                {
+
                 @Html.ActionLink(" ", "GeneratePrints", "JobOrderHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-print", @title = "Print", @data_toggle = "tooltip", @id = "PrintRecordI", target = "_blank" })
-                }
+
                 @if (ViewBag.SqlProcGatePass != null)
                 {
                 @Html.ActionLink(" ", "GenerateGatePass", "JobOrderHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon glyphicon-log-out ", @title = "GatePass", @data_toggle = "tooltip", @id = "GenGatePassI" })

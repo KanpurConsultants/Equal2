@@ -26,6 +26,7 @@ namespace Service
         Task<Reason> FindAsync(int id);
         int NextId(int id);
         int PrevId(int id);
+        int MaxId();
     }
 
     public class ReasonService : IReasonService
@@ -84,6 +85,21 @@ namespace Service
                 .GetPage(pageNumber, pageSize, out totalRecords);
 
             return so;
+        }
+
+        public int MaxId()
+        {
+            int temp = 0;
+            IQueryable<Reason> PC = db.Reason;
+
+            if (PC.Count() != 0)
+            {
+                temp = (from p in db.Reason
+                        select p.ReasonId).Max();
+            }
+
+            return temp;
+
         }
 
         public IEnumerable<Reason> GetReasonList()

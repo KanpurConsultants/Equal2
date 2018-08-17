@@ -618,16 +618,16 @@ namespace Service
                         else
                             return true;
                     }
-                case "ProductCollection":
-                    {
-                        var temp = (from p in db.ProductCollections
-                                    where p.ProductCollectionName == docno
-                                    select p).FirstOrDefault();
-                        if (temp == null)
-                            return false;
-                        else
-                            return true;
-                    }
+                //case "ProductCollection":
+                //    {
+                //        var temp = (from p in db.ProductCollections
+                //                    where p.ProductCollectionName == docno
+                //                    select p).FirstOrDefault();
+                //        if (temp == null)
+                //            return false;
+                //        else
+                //            return true;
+                //    }
                 case "ProductQuality":
                     {
                         var temp = (from p in db.ProductQuality
@@ -1229,16 +1229,16 @@ namespace Service
                         else
                             return true;
                     }
-                case "ProductCollection":
-                    {
-                        var temp = (from p in db.ProductCollections
-                                    where p.ProductCollectionName == docno && p.ProductCollectionId != headerid
-                                    select p).FirstOrDefault();
-                        if (temp == null)
-                            return false;
-                        else
-                            return true;
-                    }
+                //case "ProductCollection":
+                //    {
+                //        var temp = (from p in db.ProductCollections
+                //                    where p.ProductCollectionName == docno && p.ProductCollectionId != headerid
+                //                    select p).FirstOrDefault();
+                //        if (temp == null)
+                //            return false;
+                //        else
+                //            return true;
+                    //}
                 case "ProductQuality":
                     {
                         var temp = (from p in db.ProductQuality

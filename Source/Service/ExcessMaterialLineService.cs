@@ -167,7 +167,7 @@ namespace Service
                            GenDocTypeId = p.GenDocTypeId,
                            GenDocTypeName = p.GenDocType.DocumentTypeName,
                            GenPersonId = p.GenPersonId,
-                           GenPersonName = p.GenPerson.Person.Name,
+                           GenPersonName = p.GenPerson.Name,
                            IsActive = p.IsActive,
                            LastTransactionDocDate = p.LastTransactionDocDate,
                            LastTransactionDocId = p.LastTransactionDocId,

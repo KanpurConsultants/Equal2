@@ -40,7 +40,7 @@ namespace Model.Models
 
         [ForeignKey("Buyer")]
         public int BuyerId { get; set; }
-        public virtual Buyer Buyer { get; set; }
+        public virtual Person Buyer { get; set; }
 
         public int Status { get; set; }
 

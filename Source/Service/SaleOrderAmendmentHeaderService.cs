@@ -104,7 +104,7 @@ namespace Service
                     {
                         DocDate = p.DocDate,
                         DocNo = p.DocNo,
-                        BuyerName=p.Buyer.Person.Name,
+                        BuyerName=p.Buyer.Name,
                         SaleOrderAmendmentHeaderId = p.SaleOrderAmendmentHeaderId,
                         ReasonName = p.Reason.ReasonName,
                         Remark = p.Remark,

@@ -25,10 +25,10 @@ namespace Model.ViewModels
         public int ProductGroupId { get; set; }
         public virtual ProductGroup ProductGroup { get; set; }
 
-        [ForeignKey("ProductCollection")]
-        [Display(Name = "Product Collection"),Required]
-        public int? ProductCollectionId { get; set; }
-        public virtual ProductCollection ProductCollection { get; set; }
+        //[ForeignKey("ProductCollection")]
+        //[Display(Name = "Product Collection"),Required]
+        //public int? ProductCollectionId { get; set; }
+        //public virtual ProductCollection ProductCollection { get; set; }
 
         [ForeignKey("ProductQuality")]
         [Display(Name = "Product Quality"),Required]
@@ -181,8 +181,6 @@ namespace Model.ViewModels
         public string ProductGroupName { get; set; }
         public string ProductCategoryName { get; set; }
         public string ProductDesignName { get; set; }
-        public int ProductCollectionId { get; set; }
-        public string ProductCollectionName { get; set; }
         public int ProductDesignId { get; set; }        
     }
 }

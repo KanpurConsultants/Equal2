@@ -97,9 +97,9 @@ namespace Jobs.Controllers
             }
             vm.JobOrderInspectionRequestSettings = Mapper.Map<JobOrderInspectionRequestSettingsViewModel>(settings);
             ViewBag.ProcId = settings.ProcessId;
-            vm.ProcessId = settings.ProcessId;
+            vm.ProcessId = (int)settings.ProcessId;
 
-            int? JobWorkerId = new JobWorkerDbService(db).GetJobWorkerForUser(User.Identity.Name);
+            int? JobWorkerId = new PersonService(_unitOfWork).FindByName(User.Identity.Name).PersonID;
 
             if (JobWorkerId.HasValue && JobWorkerId.Value > 0)
             {
@@ -132,7 +132,8 @@ namespace Jobs.Controllers
 
             bool Success = true;
 
-            int? JId = new JobWorkerDbService(db).GetJobWorkerForUser(User.Identity.Name);
+            //int? JId = new JobWorkerDbService(db).GetJobWorkerForUser(User.Identity.Name);
+            int? JId = new PersonService(_unitOfWork).FindByName(User.Identity.Name).PersonID;
 
             if (JId.HasValue && JId.Value > 0)
             {
@@ -446,7 +447,7 @@ namespace Jobs.Controllers
                     pt.SiteId = SiteId;
                     pt.JobWorkerId = ConfirmedList.FirstOrDefault().JobWorkerId;
                     pt.DivisionId = DivisionId;
-                    pt.ProcessId = Settings.ProcessId;
+                    pt.ProcessId = (int)Settings.ProcessId;
                     pt.Remark = UserRemark;
                     pt.DocTypeId = DocTypeId;
                     pt.DocDate = DateTime.Now;

@@ -8,7 +8,7 @@ using Data.Models;
 using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using Model.ViewModel;
 using AutoMapper;
@@ -149,7 +149,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.RateListHeader).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.RateListHeader.DocumentTypeName).DocumentTypeId,
                         DocId = pt.RateListHeaderId,
                         ActivityType = (int)ActivityTypeContants.Added,
                         DocNo = pt.RateListName,
@@ -244,7 +244,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.RateListHeader).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.RateListHeader.DocumentTypeName).DocumentTypeId,
                         DocId = temp.RateListHeaderId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -382,7 +382,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.RateListHeader).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.RateListHeader.DocumentTypeName).DocumentTypeId,
                     DocId = Header.RateListHeaderId,
                     ActivityType = (int)ActivityTypeContants.Submitted,
                     DocNo = Header.RateListName,
@@ -600,7 +600,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.RateListHeader).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.RateListHeader.DocumentTypeName).DocumentTypeId,
                     DocId = pd.RateListHeaderId,
                     ActivityType = (int)ActivityTypeContants.Approved,
                     DocNo = pd.RateListName,
@@ -687,7 +687,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.RateListHeader).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.RateListHeader.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,
@@ -739,7 +739,7 @@ namespace Jobs.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.RateListHeader);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.RateListHeader.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 

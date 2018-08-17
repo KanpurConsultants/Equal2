@@ -7,7 +7,7 @@ using Model.Models;
 using Data.Models;
 using Service;
 using Data.Infrastructure;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Presentation.ViewModels;
 using Model.ViewModels;
 using Core.Common;
@@ -88,13 +88,13 @@ namespace Jobs.Controllers
 
         public ActionResult Create()
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Product + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Product.DocumentTypeName + " is not defined in database.");
 
             if (_ProductService.IsActionAllowed(UserRoles, DocTypeId, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)
             {
@@ -149,7 +149,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId,
                         DocId = pt1.ProductId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -173,7 +173,7 @@ namespace Jobs.Controllers
                     pt.SaleRate = pvm.SaleRate;
                     pt.ProductCategoryId = pvm.ProductCategoryId;
                     pt.ProductGroupId = pvm.ProductGroupId;
-                    pt.ProductCollectionId = pvm.ProductCollectionId;
+                    //pt.ProductCollectionId = pvm.ProductCollectionId;
                     pt.ProductQualityId = pvm.ProductQualityId;
                     pt.ProductDesignId = pvm.ProductDesignId;
                     pt.ProductInvoiceGroupId = pvm.ProductInvoiceGroupId;
@@ -212,7 +212,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId,
                         DocId = pt.ProductId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -230,13 +230,13 @@ namespace Jobs.Controllers
 
         public ActionResult Edit(int id)
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Product + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Product.DocumentTypeName + " is not defined in database.");
 
             if (_ProductService.IsActionAllowed(UserRoles, DocTypeId, this.ControllerContext.RouteData.Values["controller"].ToString(), "Edit") == false)
             {
@@ -311,7 +311,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,
@@ -362,7 +362,7 @@ namespace Jobs.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -831,7 +831,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId,
                         DocId = pt1.ProductId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -1093,7 +1093,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.UnitConversion).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.UnitConversion.DocumentTypeName).DocumentTypeId,
                         DocId = pt.ProductId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -1243,7 +1243,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,
@@ -1517,7 +1517,7 @@ namespace Jobs.Controllers
 
         //                LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
         //                {
-        //                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId,
+        //                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product).DocumentTypeId,
         //                    DocId = pd.ProductId,
         //                    ActivityType = (int)ActivityTypeContants.Print,
         //                }));

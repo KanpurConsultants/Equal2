@@ -42,10 +42,19 @@ namespace Service
 
         public JobOrderInspectionRequestSettings GetJobOrderInspectionRequestSettingsForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.JobOrderInspectionRequestSettings
+            JobOrderInspectionRequestSettings temp;
+            temp = (from p in db.JobOrderInspectionRequestSettings
                     where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
                     select p
                         ).FirstOrDefault();
+
+            if (temp == null)
+                temp = (from p in db.JobOrderInspectionRequestSettings
+                        where p.DocTypeId == null && p.DivisionId == null && p.SiteId == null
+                        select p
+            ).FirstOrDefault();
+
+            return temp;
         }
         public JobOrderInspectionRequestSettings Create(JobOrderInspectionRequestSettings pt,string UserName)
         {

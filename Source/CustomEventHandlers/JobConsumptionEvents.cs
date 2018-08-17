@@ -3,7 +3,7 @@ using Data.Models;
 using System;
 using JobConsumptionDocumentEvents;
 using System.Linq;
-using Core.Common;
+using Jobs.Constants.RugDocumentType;
 
 namespace Jobs.Controllers
 {
@@ -34,7 +34,7 @@ namespace Jobs.Controllers
             var StockHeader = DbContext.StockHeader.Find(EventArgs.DocId);
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingConsumptionAdjustment
+                           where p.DocumentTypeName == RugDocumentTypeConstants.WeavingConsumptionAdjustment.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();
@@ -86,7 +86,7 @@ namespace Jobs.Controllers
 
             var StockHeader = DbContext.StockHeader.Find(Temp.StockHeaderId);
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingConsumptionAdjustment
+                           where p.DocumentTypeName == RugDocumentTypeConstants.WeavingConsumptionAdjustment.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();
@@ -123,7 +123,7 @@ namespace Jobs.Controllers
                                ).FirstOrDefault();
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingConsumptionAdjustment
+                           where p.DocumentTypeName == RugDocumentTypeConstants.WeavingConsumptionAdjustment.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();
@@ -187,7 +187,7 @@ namespace Jobs.Controllers
                             ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingConsumptionAdjustment
+                           where p.DocumentTypeName == RugDocumentTypeConstants.WeavingConsumptionAdjustment.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();

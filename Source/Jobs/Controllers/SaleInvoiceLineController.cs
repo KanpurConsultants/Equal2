@@ -108,7 +108,7 @@ namespace Jobs.Controllers
             int? MaxLineId = new SaleInvoiceLineChargeService(_unitOfWork).GetMaxProductCharge(Sh.SaleInvoiceHeaderId, "Web.SaleInvoiceLines", "SaleInvoiceHeaderId", "SaleInvoiceLineId");
 
             int PersonCount = 0;
-            int CalculationId = Settings.CalculationId;
+            int CalculationId = (int)Settings.CalculationId;
 
             List<LineDetailListViewModel> LineList = new List<LineDetailListViewModel>();
 
@@ -131,7 +131,7 @@ namespace Jobs.Controllers
                         line.DealUnitId = item.DealUnitId;
                         line.DealQty = item.Qty * item.UnitConversionMultiplier ?? 0;
                         line.DiscountPer = item.DiscountPer;
-                        if (Settings.CalculateDiscountOnRate)
+                        if ((bool)Settings.CalculateDiscountOnRate)
                         {
                             var temprate = item.Rate - (item.Rate * item.DiscountPer / 100);
                             line.Amount = line.DealQty * temprate ?? 0;

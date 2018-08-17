@@ -8,7 +8,7 @@ using Data.Infrastructure;
 using Core.Common;
 using System.Xml.Linq;
 using Model.ViewModel;
-
+using Jobs.Constants.DocumentType;
 
 
 namespace Jobs.Controllers
@@ -195,7 +195,7 @@ namespace Jobs.Controllers
             {
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                    {
-                       DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.RateListHeader).DocumentTypeId,
+                       DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.RateListHeader.DocumentTypeName).DocumentTypeId,
                        ActivityType = (int)ActivityTypeContants.Modified,
                        xEModifications = Modifications,
                    }));

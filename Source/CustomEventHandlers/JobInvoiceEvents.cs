@@ -1,7 +1,7 @@
 ﻿using Core.Common;
 using CustomEventArgs;
 using Data.Models;
-using Model.Models;
+using Jobs.Constants.Charge;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using DocumentEvents;
 using JobInvoiceDocumentEvents;
 using System.Data;
-
+using Jobs.Constants.RugDocumentType;
 namespace Jobs.Controllers
 {
 
@@ -111,8 +111,8 @@ namespace Jobs.Controllers
             var LineCharges = (from p in DbContext.JobInvoiceLineCharge.AsNoTracking()
                                where InvLineIds.Contains(p.LineTableId)
                                select p).ToList();
-            var IncentiveChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Incentive).FirstOrDefault().ChargeId;
-            var PenaltyChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Penalty).FirstOrDefault().ChargeId;
+            var IncentiveChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Incentive.ChargeName).FirstOrDefault().ChargeId;
+            var PenaltyChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Penalty.ChargeName).FirstOrDefault().ChargeId;
 
             #endregion
 
@@ -122,7 +122,7 @@ namespace Jobs.Controllers
 
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobInvoiceWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             var RecDocTypes = Temp.Select(m => m.DocTypeId).ToList();
@@ -185,8 +185,8 @@ namespace Jobs.Controllers
             var LineCharges = (from p in DbContext.JobInvoiceLineCharge.AsNoTracking()
                                where p.LineTableId == EventArgs.DocLineId
                                select p).ToList();
-            var IncentiveChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Incentive).FirstOrDefault().ChargeId;
-            var PenaltyChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Penalty).FirstOrDefault().ChargeId;
+            var IncentiveChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Incentive.ChargeName).FirstOrDefault().ChargeId;
+            var PenaltyChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Penalty.ChargeName).FirstOrDefault().ChargeId;
 
             #endregion
 
@@ -195,7 +195,7 @@ namespace Jobs.Controllers
             DbContext.Dispose();
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobInvoiceWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
 
@@ -245,8 +245,8 @@ namespace Jobs.Controllers
 
             ApplicationDbContext DbContext = new ApplicationDbContext();
 
-            var IncentiveChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Incentive).FirstOrDefault().ChargeId;
-            var PenaltyChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Penalty).FirstOrDefault().ChargeId;
+            var IncentiveChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Incentive.ChargeName).FirstOrDefault().ChargeId;
+            var PenaltyChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Penalty.ChargeName).FirstOrDefault().ChargeId;
 
 
             var JobHeader = (from p in DbContext.JobOrderHeader
@@ -268,7 +268,7 @@ namespace Jobs.Controllers
             DbContext.Dispose();
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobInvoiceWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
 
@@ -356,13 +356,13 @@ namespace Jobs.Controllers
 
             var JobHeader = DbContext.JobOrderHeader.Find(JobRecLien.JobOrderHeaderId);
 
-            var IncentiveChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Incentive).FirstOrDefault().ChargeId;
-            var PenaltyChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Penalty).FirstOrDefault().ChargeId;
+            var IncentiveChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Incentive.ChargeName).FirstOrDefault().ChargeId;
+            var PenaltyChargeId = DbContext.Charge.Where(m => m.ChargeName == ChargeConstants.Penalty.ChargeName).FirstOrDefault().ChargeId;
 
             DbContext.Dispose();
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobInvoiceWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             if (DocType.Contains(JobHeader.DocTypeId) && JobRecLien.RecQty != 0)

@@ -130,9 +130,7 @@ namespace Jobs.Controllers
             if (!string.IsNullOrEmpty(settings.filterProductGroups)) { ProductGroups = settings.filterProductGroups.Split(",".ToCharArray()); }
             else { ProductGroups = new string[] { "NA" }; }
 
-            var ProductList =  (from Pt in db.FinishedProduct
-                    join Vrs in db.ViewRugSize on Pt.ProductId equals Vrs.ProductId into ViewRugSizeTable
-                    from ViewRugSizeTab in ViewRugSizeTable.DefaultIfEmpty()
+            var ProductList =  (from Pt in db.Product
                     where (string.IsNullOrEmpty(settings.filterProductTypes) ? 1 == 1 : ProductTypes.Contains(Pt.ProductGroup.ProductTypeId.ToString()))
                     && (string.IsNullOrEmpty(settings.filterProducts) ? 1 == 1 : Products.Contains(Pt.ProductId.ToString()))
                     && (string.IsNullOrEmpty(settings.filterProductGroups) ? 1 == 1 : ProductGroups.Contains(Pt.ProductGroupId.ToString()))
@@ -141,11 +139,7 @@ namespace Jobs.Controllers
                     select new ComboBoxResult
                     {
                         id = Pt.ProductName.ToString(),
-                        text = Pt.ProductName,
-                        AProp1 = "Design : " + Pt.ProductGroup.ProductGroupName,
-                        AProp2 = "Size : " + ViewRugSizeTab.StandardSizeName,
-                        TextProp1 = "Colour : " + Pt.Colour.ColourName,
-                        TextProp2 = "Quality : " + Pt.ProductQuality.ProductQualityName
+                        text = Pt.ProductName
                     }).ToList();
 
             JsonResult json = Json(new { Success = true, Data = ProductList }, JsonRequestBehavior.AllowGet);

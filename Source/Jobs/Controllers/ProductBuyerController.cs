@@ -8,7 +8,7 @@ using Data.Models;
 using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using Model.ViewModel;
 using AutoMapper;
@@ -106,7 +106,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductBuyer).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductBuyer.DocumentTypeName).DocumentTypeId,
                         DocId = pt.ProductBuyerId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -158,7 +158,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductBuyer).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductBuyer.DocumentTypeName).DocumentTypeId,
                         DocId = temp.ProductBuyerId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -242,7 +242,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductBuyer).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductBuyer.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,
@@ -293,7 +293,7 @@ namespace Jobs.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Buyer);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Customer.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 

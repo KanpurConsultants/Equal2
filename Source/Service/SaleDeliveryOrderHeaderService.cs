@@ -90,7 +90,7 @@ namespace Service
                            SaleDeliveryOrderHeaderId = p.SaleDeliveryOrderHeaderId,
                            DocNo = p.DocNo,
                            DueDate = p.DueDate,
-                           BuyerName = p.Buyer.Person.Name,
+                           BuyerName = p.Buyer.Name,
                            Status = p.Status,
                            ModifiedBy=p.ModifiedBy,
                            ReviewCount = p.ReviewCount,

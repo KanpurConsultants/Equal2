@@ -11,7 +11,7 @@ using Data.Infrastructure;
 using Service;
 using AutoMapper;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using System.Text;
 using System.IO;
@@ -112,7 +112,7 @@ namespace Jobs.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.JobWorker);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.JobWorker.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -1182,7 +1182,7 @@ namespace Jobs.Controllers
 
                 #region "For Deleting Opening"
                 int OpendingDocTypeId = 0;
-                var OpendingDocType = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.Opening);
+                var OpendingDocType = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Opening.DocumentTypeName);
                 if (OpendingDocType != null)
                     OpendingDocTypeId = OpendingDocType.DocumentTypeId;
 

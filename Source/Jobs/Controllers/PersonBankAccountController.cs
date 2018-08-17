@@ -94,7 +94,7 @@ namespace Jobs.Controllers
                             CreatedDate = DateTime.Now,
                             //Narration = logstring.ToString(),
                             CreatedBy = User.Identity.Name,
-                            //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.PersonBankAccount).DocumentTypeId,
+                            //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.PersonBankAccount).DocumentTypeId,
                         };
                         new ActivityLogService(_unitOfWork).Create(al);
                     //End of Saving the Activity Log

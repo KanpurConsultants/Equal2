@@ -107,9 +107,10 @@
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
-      <Image Name="SuryaLogo">
-        <Source>External</Source>
-        <Value>="file:"+ Fields!CompanyLogoPath.Value</Value>
+      <Image Name="Logo">
+        <Source>Database</Source>
+        <Value>=First(Fields!CompanyLogoPath.Value, "DsMain")</Value>
+        <MIMEType>image/jpeg</MIMEType>
         <Sizing>FitProportional</Sizing>
         <Top>0.04584in</Top>
         <Left>0.01605in</Left>

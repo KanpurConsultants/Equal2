@@ -6,7 +6,7 @@ using Model.Models;
 using Data.Models;
 using Service;
 using Data.Infrastructure;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Model.ViewModels;
 using Model.ViewModel;
 using System.Xml.Linq;
@@ -90,7 +90,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.Report).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Report.DocumentTypeName).DocumentTypeId,
                         DocId = pt.ReportHeaderId,
                         DocLineId = pt.ReportLineId,
                         ActivityType = (int)ActivityTypeContants.Added,                        
@@ -122,7 +122,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.Report).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Report.DocumentTypeName).DocumentTypeId,
                         DocId = pt.ReportHeaderId,
                         DocLineId = pt.ReportLineId,
                         ActivityType = (int)ActivityTypeContants.Modified,
@@ -234,7 +234,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.Report).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Report.DocumentTypeName).DocumentTypeId,
                 DocId = pt.ReportHeaderId,
                 DocLineId = pt.ReportLineId,
                 ActivityType = (int)ActivityTypeContants.Deleted,

@@ -57,7 +57,7 @@ namespace Model.Models
         [MaxLength(100)]
         public string SiteIds { get; set; }
 
-        public virtual Buyer Buyer { get; set; }
+        public virtual Person Buyer { get; set; }
 
         [MaxLength(50)]
         public string OMSId { get; set; }

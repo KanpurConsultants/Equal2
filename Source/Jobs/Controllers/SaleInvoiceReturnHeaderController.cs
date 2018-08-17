@@ -161,7 +161,7 @@ namespace Jobs.Controllers
             }
 
             vm.SaleInvoiceSettings = Mapper.Map<SaleInvoiceSetting, SaleInvoiceSettingsViewModel>(settings);
-            vm.CalculateDiscountOnRate = settings.CalculateDiscountOnRate;
+            vm.CalculateDiscountOnRate = (bool)settings.CalculateDiscountOnRate;
             vm.DocTypeId = id;
             vm.DocDate = DateTime.Now;
             vm.DocNo = new DocumentTypeService(_unitOfWork).FGetNewDocNo("DocNo", ConfigurationManager.AppSettings["DataBaseSchema"] + ".SaleInvoiceReturnHeaders", vm.DocTypeId, vm.DocDate, vm.DivisionId, vm.SiteId);

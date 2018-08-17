@@ -22,6 +22,7 @@ using JobOrderInspectionRequestCancelDocumentEvents;
 using CustomEventArgs;
 using DocumentEvents;
 using Reports.Controllers;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -81,7 +82,7 @@ namespace Jobs.Controllers
             //ReqByList.Add(new SelectListItem { Text = "JobWorker", Value = "JobWorker" });
 
             //ViewBag.ReqBList = new SelectList(ReqByList, "Value", "Text");
-            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(TransactionDocCategoryConstants.JobOrderCancel).ToList();
+            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(DocumentCategoryConstants.JobOrderCancel.DocumentCategoryName).ToList();
             ViewBag.Name = new DocumentTypeService(_unitOfWork).Find(id).DocumentTypeName;
             ViewBag.id = id;
 
@@ -173,14 +174,15 @@ namespace Jobs.Controllers
 
             vm.DocTypeId = id;
 
-            int? JwID = new JobWorkerService(_unitOfWork).GetJobWorkerForUser(User.Identity.GetUserId());
+            //int? JwID = new JobWorkerService(_unitOfWork).GetJobWorkerForUser(User.Identity.GetUserId());
 
+            int? JwID = new PersonService(_unitOfWork).FindByName(User.Identity.Name).PersonID;
             vm.RequestBy = ((JwID == null || JwID == 0) ? "Company" : "JobWorker");
 
             if (JwID != null)
                 vm.JobWorkerId = JwID.Value;
 
-            vm.ProcessId = settings.ProcessId;
+            vm.ProcessId = (int)settings.ProcessId;
             vm.DocDate = DateTime.Now;
             vm.DocNo = new DocumentTypeService(_unitOfWork).FGetNewDocNo("DocNo", ConfigurationManager.AppSettings["DataBaseSchema"] + ".JobOrderInspectionRequestCancelHeaders", vm.DocTypeId, vm.DocDate, vm.DivisionId, vm.SiteId);
             vm.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(vm.DocTypeId);

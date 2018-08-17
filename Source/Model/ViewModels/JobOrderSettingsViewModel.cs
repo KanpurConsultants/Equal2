@@ -102,7 +102,7 @@ namespace Model.ViewModel
         public string WizardMenuName { get; set; }
         public int? ImportMenuId { get; set; }
         public string ImportMenuName { get; set; }
-        public decimal NonCountedQty { get; set; }
+        public decimal? NonCountedQty { get; set; }
         public decimal? LossQty { get; set; }
         public int? DueDays { get; set; }
         public string DealUnitId { get; set; }

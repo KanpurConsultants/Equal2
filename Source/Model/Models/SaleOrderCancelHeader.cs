@@ -41,7 +41,7 @@ namespace Model.Models
         
         [ForeignKey("Buyer")]
         public int BuyerId { get; set; }
-        public virtual Buyer Buyer { get; set; }
+        public virtual Person Buyer { get; set; }
 
         [ForeignKey("Site")]
         [Index("IX_SaleOrderCancelHeader_DocID", IsUnique = true, Order = 4)]

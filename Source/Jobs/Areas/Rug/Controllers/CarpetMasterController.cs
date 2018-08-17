@@ -7,7 +7,7 @@ using Model.Models;
 using Data.Models;
 using Service;
 using Data.Infrastructure;
-using Presentation;
+using Jobs.Constants.RugProductType;
 using Presentation.ViewModels;
 using Model.ViewModels;
 using Core.Common;
@@ -18,6 +18,7 @@ using System.Data.SqlClient;
 using Model.ViewModel;
 using AutoMapper;
 using Jobs.Helpers;
+using Jobs.Constants.RugDocumentType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -125,7 +126,7 @@ namespace Jobs.Areas.Rug.Controllers
                     fp.ProductGroupId = group.ProductGroupId;
                     fp.IsActive = item.IsActive;
                     fp.ProductCategoryId = item.ProductCategoryId;
-                    fp.ProductCollectionId = item.ProductCollectionId;
+                    //fp.ProductCollectionId = item.ProductCollectionId;
                     fp.ProductQualityId = item.ProductQualityId;
                     fp.ProductDesignId = item.ProductDesignId;
                     fp.ProductDesignPatternId = item.ProductDesignPatternId;
@@ -231,7 +232,7 @@ namespace Jobs.Areas.Rug.Controllers
                     }
 
 
-                    var Prod = (from P in db.ViewRugSize where P.ProductId == item.ProductId select P).FirstOrDefault();
+                    var Prod = (from P in db.ViewProductSize where P.ProductId == item.ProductId select P).FirstOrDefault();
                     if (fp.TraceType != "N/A")
                     {
                         //int ProductDesignNAId = new ProductDesignService(_unitOfWork).Find("NA").ProductDesignId;
@@ -388,7 +389,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CarpetDesign);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(RugDocumentTypeConstants.CarpetDesign.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -406,13 +407,13 @@ namespace Jobs.Areas.Rug.Controllers
         [HttpGet]
         public ActionResult Create(bool sample)
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CarpetDesign);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(RugDocumentTypeConstants.CarpetDesign.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.CarpetDesign + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + RugDocumentTypeConstants.CarpetDesign.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)
             {
@@ -424,7 +425,7 @@ namespace Jobs.Areas.Rug.Controllers
             vm.IsSample = sample;
             ViewBag.Sample = sample;
             ViewBag.SampleId = ((sample == false) ? 0 : 1);
-            int producttypeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(ProductTypeConstants.Rug).ProductTypeId;
+            int producttypeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
             List<ProductTypeAttributeViewModel> tem = new ProductTypeAttributeService(_unitOfWork).GetAttributeVMForProductType(producttypeid).ToList();
             vm.ProductTypeAttributes = tem;
             vm.DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
@@ -458,13 +459,13 @@ namespace Jobs.Areas.Rug.Controllers
         [HttpGet]
         public ActionResult Edit(int id, bool sample)//ProductGroupId
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CarpetDesign);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(RugDocumentTypeConstants.CarpetDesign.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.CarpetDesign + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + RugDocumentTypeConstants.CarpetDesign.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Edit") == false)
             {
@@ -486,7 +487,7 @@ namespace Jobs.Areas.Rug.Controllers
                     ProcessSequenceHeaderId = productInfo.ProcessSequenceHeaderId,
                     ProductionRemark = productInfo.ProductionRemark,
                     ProductCategoryId = productInfo.ProductCategoryId ?? 0,
-                    ProductCollectionId = productInfo.ProductCollectionId,
+                    //ProductCollectionId = productInfo.ProductCollectionId,
                     ProductGroupName = productGroup.ProductGroupName,
                     ProductGroupId = id,
                     ProductInvoiceGroupId = productInfo.ProductInvoiceGroupId,
@@ -562,7 +563,7 @@ namespace Jobs.Areas.Rug.Controllers
                 vm.CarpetSkuSettings = Mapper.Map<CarpetSkuSettings, CarpetSkuSettingsViewModel>(Stng);
                 PrepareViewBag(vm);
                 PrepareDivisionViewBag();
-                int producttypeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(ProductTypeConstants.Rug).ProductTypeId;
+                int producttypeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
                 List<ProductTypeAttributeViewModel> tem = new ProductTypeAttributeService(_unitOfWork).GetAttributeVMForProductType(producttypeid).ToList();
                 vm.ProductTypeAttributes = tem;
                 return View("Create", vm);
@@ -587,7 +588,7 @@ namespace Jobs.Areas.Rug.Controllers
                     ProductGroup group = new ProductGroup();
                     group.ProductGroupId  = new ProductGroupService(_unitOfWork).MaxId() + 1;
                     group.ProductGroupName = vm.ProductGroupName;
-                    group.ProductTypeId = new ProductTypeService(_unitOfWork).GetProductTypeByName(ProductTypeConstants.Rug).ProductTypeId;
+                    group.ProductTypeId = new ProductTypeService(_unitOfWork).GetProductTypeByName(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
                     group.CreatedBy = User.Identity.Name;
                     group.CreatedDate = DateTime.Now;
                     group.ModifiedBy = User.Identity.Name;
@@ -809,7 +810,7 @@ namespace Jobs.Areas.Rug.Controllers
                             FinishedProduct prod = _FinishedProductService.Find(item.ProductId);
 
                             prod.ProductCategoryId = vm.ProductCategoryId;
-                            prod.ProductCollectionId = vm.ProductCollectionId;
+                            //prod.ProductCollectionId = vm.ProductCollectionId;
                             prod.ProductQualityId = vm.ProductQualityId;
                             prod.ProductDesignId = vm.ProductDesignId;
                             prod.DivisionId = vm.DivisionId;
@@ -920,7 +921,7 @@ namespace Jobs.Areas.Rug.Controllers
                                         new ProductAttributeService(_unitOfWork).Create(pa);
                                     }
 
-                                    var p = (from V in db.ViewRugSize
+                                    var p = (from V in db.ViewProductSize
                                              join S in db.Size on V.StandardSizeID equals S.SizeId into SizeTable
                                              from SizeTab in SizeTable.DefaultIfEmpty()
                                              where V.ProductId == item.ProductId
@@ -1422,7 +1423,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                             Product P = _FinishedProductService.Find(item.ProductId);
                             var Sizes = new ProductSizeService(_unitOfWork).GetProductSizeIndexForProduct(item.ProductId);
-                            int ProductDesignNAId = new ProductDesignService(_unitOfWork).Find("NA").ProductDesignId;
+                            int ProductDesignNAId = new ProductDesignService(_unitOfWork).Find("N/A").ProductDesignId;
                             //if (vm.ProductDesignId != null && vm.ProductDesignId != ProductDesignNAId)
                             //{
                             //    j--;
@@ -1760,7 +1761,7 @@ namespace Jobs.Areas.Rug.Controllers
             CarpetMasterViewModel vm = _ProductSizeService.GetProductSizeIndexForProduct(id);
 
             vm.ProductCategoryId = temp.ProductCategoryId;
-            vm.ProductCollectionId = temp.ProductCollectionId;
+            //vm.ProductCollectionId = temp.ProductCollectionId;
             vm.ProductQualityId = temp.ProductQualityId;
             vm.ProductDesignId = temp.ProductDesignId;
             vm.ProductInvoiceGroupId = temp.ProductInvoiceGroupId;
@@ -1862,12 +1863,12 @@ namespace Jobs.Areas.Rug.Controllers
                     pro.ProductCode = vm.ProductCode;
                     pro.ProductDescription = vm.ProductDescription;
                     pro.ProductCategoryId = vm.ProductCategoryId;
-                    pro.ProductCollectionId = vm.ProductCollectionId;
+                    //pro.ProductCollectionId = vm.ProductCollectionId;
                     pro.ProductQualityId = vm.ProductQualityId;
                     pro.ProductDesignId = vm.ProductDesignId;
                     pro.ProductInvoiceGroupId = vm.ProductInvoiceGroupId;
                     pro.ProductDesignPatternId = vm.ProductDesignPatternId;
-                    pro.ColourId = 1;
+                    pro.ColourId = vm.ColourId;
                     pro.ContentId = vm.ContentId;
                     pro.FaceContentId = vm.FaceContentId;
                     pro.ProductShapeId = vm.ProductShapeId;
@@ -2230,7 +2231,7 @@ namespace Jobs.Areas.Rug.Controllers
 
 
 
-                    int producttypeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(ProductTypeConstants.Rug).ProductTypeId;
+                    int producttypeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
                     List<ProductTypeAttributeViewModel> tem = vm.ProductTypeAttributes;
 
                     //foreach (var item in tem)
@@ -2667,7 +2668,7 @@ namespace Jobs.Areas.Rug.Controllers
                     }
                     CarpetMasterViewModel temp = new CarpetMasterViewModel();
                     temp.ProductCategoryId = vm.ProductCategoryId;
-                    temp.ProductCollectionId = vm.ProductCollectionId;
+                    //temp.ProductCollectionId = vm.ProductCollectionId;
                     temp.ProductQualityId = vm.ProductQualityId;
                     temp.ProductDesignId = vm.ProductDesignId;
                     temp.ProductInvoiceGroupId = vm.ProductInvoiceGroupId;
@@ -3038,7 +3039,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     //////////////////////For Saving Binding, Gachhai and PattiMuraiDurry Unit Conversion Detail///////////////////////////////////
 
-                    int producttypeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(ProductTypeConstants.Rug).ProductTypeId;
+                    int producttypeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
                     List<ProductTypeAttributeViewModel> tem = vm.ProductTypeAttributes;
 
 
@@ -3358,13 +3359,13 @@ namespace Jobs.Areas.Rug.Controllers
         [HttpGet]
         public ActionResult Delete(int id)//ProductGroupId
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CarpetDesign);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(RugDocumentTypeConstants.CarpetDesign.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.CarpetDesign + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + RugDocumentTypeConstants.CarpetDesign.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Delete") == false)
             {
@@ -3551,7 +3552,7 @@ namespace Jobs.Areas.Rug.Controllers
             {
                 sqlConnection.Open();
 
-                SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.FuncGetSqFeetFromCMSizes( " + SizeId + ")", sqlConnection);
+                SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.FGetSqFeetFromCMSizes( " + SizeId + ")", sqlConnection);
 
                 AreaFT2 = Convert.ToDecimal(Totalf.ExecuteScalar() == DBNull.Value ? 0 : Totalf.ExecuteScalar());
             }
@@ -3568,7 +3569,7 @@ namespace Jobs.Areas.Rug.Controllers
                     {
                         sqlConnection.Open();
 
-                        SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize( " + AreaFT2 + ")", sqlConnection);
+                        SqlCommand Totalf = new SqlCommand("SELECT  Web.FConvertSqFeetToSqYard( " + AreaFT2 + ")", sqlConnection);
 
                         SizeExist.ToQty = Convert.ToDecimal(Totalf.ExecuteScalar() == DBNull.Value ? 0 : Totalf.ExecuteScalar());
                     }
@@ -3606,7 +3607,7 @@ namespace Jobs.Areas.Rug.Controllers
                     {
                         sqlConnection.Open();
 
-                        SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize( " + AreaFT2 + ")", sqlConnection);
+                        SqlCommand Totalf = new SqlCommand("SELECT  Web.FConvertSqFeetToSqYard( " + AreaFT2 + ")", sqlConnection);
 
                         UnitConv.ToQty = Convert.ToDecimal(Totalf.ExecuteScalar() == DBNull.Value ? 0 : Totalf.ExecuteScalar());
                     }
@@ -3730,7 +3731,7 @@ namespace Jobs.Areas.Rug.Controllers
         //    if (Size.WidthFraction != 0 && Size.WidthFraction != null) SizeName = SizeName + Size.WidthFraction.ToString();
 
 
-        //    int ColourWaysDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.ProductDesign).DocumentTypeId;
+        //    int ColourWaysDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.ProductDesign.DocumentTypeName).DocumentTypeId;
 
         //    string ProductGroupName = "";
         //    if (ProductGroupId != 0 && ProductGroupId != null)
@@ -3832,7 +3833,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
             string TraceName = "";
 
-            int ColourWaysDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.ProductDesign).DocumentTypeId;
+            int ColourWaysDocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.CarpetDesign.DocumentTypeName).DocumentTypeId;
 
             SqlParameter SqlParameterColourWaysId = new SqlParameter("@ProductDesignId", ColourWaysId);
             SqlParameter SqlParameterStandardSizeId = new SqlParameter("@StandardSizeID", StandardSizeId);
@@ -3917,7 +3918,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                 if (TraceName != ProductName + "-Trace")
                 {
-                    int ProductAliasDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.ProductAlias).DocumentTypeId;
+                    int ProductAliasDocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.ProductAlias.DocumentTypeName).DocumentTypeId;
 
                     ProductAlias ProductAlias = new ProductAlias();
                     ProductAlias.DocTypeId = ProductAliasDocTypeId;
@@ -4017,7 +4018,7 @@ namespace Jobs.Areas.Rug.Controllers
             using (SqlConnection sqlConnection = new SqlConnection((string)System.Web.HttpContext.Current.Session["DefaultConnectionString"]))
             {
                 sqlConnection.Open();
-                SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize( " + SqFeet + ")", sqlConnection);
+                SqlCommand Totalf = new SqlCommand("SELECT  Web.FConvertSqFeetToSqYard( " + SqFeet + ")", sqlConnection);
                 SqYard = Convert.ToDecimal(Totalf.ExecuteScalar() == DBNull.Value ? 0 : Totalf.ExecuteScalar());
             }
             return SqYard;
@@ -4139,7 +4140,7 @@ namespace Jobs.Areas.Rug.Controllers
             SqlParameter SqlParameterAttribute = new SqlParameter("@Attribute", Attribute);
             if (Attribute != null)
             {
-                UnitConversionQty UnitConversionQty = db.Database.SqlQuery<UnitConversionQty>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_GetUnitConversionForSize @SizeId, @ToUnitId, @Attribute", SqlParameterSizeId, SqlParameterToUnitId, SqlParameterAttribute).FirstOrDefault();
+                UnitConversionQty UnitConversionQty = db.Database.SqlQuery<UnitConversionQty>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize @SizeId, @ToUnitId, @Attribute", SqlParameterSizeId, SqlParameterToUnitId, SqlParameterAttribute).FirstOrDefault();
                 if (UnitConversionQty != null)
                 {
                     return UnitConversionQty.ToQty ?? 0;
@@ -4151,7 +4152,7 @@ namespace Jobs.Areas.Rug.Controllers
             }
             else
             {
-                UnitConversionQty UnitConversionQty = db.Database.SqlQuery<UnitConversionQty>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_GetUnitConversionForSize @SizeId, @ToUnitId", SqlParameterSizeId, SqlParameterToUnitId).FirstOrDefault();
+                UnitConversionQty UnitConversionQty = db.Database.SqlQuery<UnitConversionQty>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize @SizeId, @ToUnitId", SqlParameterSizeId, SqlParameterToUnitId).FirstOrDefault();
                 if (UnitConversionQty != null)
                 {
                     return UnitConversionQty.ToQty ?? 0;
@@ -4202,7 +4203,7 @@ namespace Jobs.Areas.Rug.Controllers
             }
             CarpetMasterViewModel temp = new CarpetMasterViewModel();
             temp.ProductCategoryId = vm.ProductCategoryId;
-            temp.ProductCollectionId = vm.ProductCollectionId;
+            //temp.ProductCollectionId = vm.ProductCollectionId;
             temp.ProductQualityId = vm.ProductQualityId;
             temp.ProductDesignId = vm.ProductDesignId;
             temp.ProductInvoiceGroupId = vm.ProductInvoiceGroupId;

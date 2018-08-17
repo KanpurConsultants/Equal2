@@ -56,7 +56,7 @@ namespace Model.Models
 
         [ForeignKey("JobWorker"), Display(Name = "Job Worker")]
         public int ? JobWorkerId { get; set; }
-        public virtual JobWorker JobWorker { get; set; }
+        public virtual Person JobWorker { get; set; }
 
         [ForeignKey("Godown"), Display(Name = "Godown"), Required]
         public int GodownId { get; set; }

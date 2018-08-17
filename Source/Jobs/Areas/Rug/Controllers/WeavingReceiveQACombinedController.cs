@@ -8,7 +8,7 @@ using Data.Models;
 using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.RugDocumentType;
 using Core.Common;
 using Model.ViewModel;
 using AutoMapper;
@@ -1810,7 +1810,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
             decimal Qty = 1;
 
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.WeavingBazar).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.WeavingReceive.DocumentTypeName).DocumentTypeId;
             int DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
             int SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
 
@@ -1840,7 +1840,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
             decimal Qty = 1;
 
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.WeavingBazar).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.WeavingReceive.DocumentTypeName).DocumentTypeId;
             int DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
             int SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
 

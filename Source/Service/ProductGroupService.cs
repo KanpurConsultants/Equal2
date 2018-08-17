@@ -3,8 +3,7 @@ using System.Linq;
 using Data;
 using Data.Infrastructure;
 using Model.Models;
-
-using Core.Common;
+using Jobs.Constants.RugProductType;
 using System;
 using Model;
 using System.Threading.Tasks;
@@ -67,9 +66,13 @@ namespace Service
         public int MaxId()
         {
             int temp = 0;
-            
-            temp = (from p in db.ProductGroups
-                    select p.ProductGroupId).Max();
+            IQueryable<ProductGroup> PC = db.ProductGroups;
+
+            if (PC.Count() != 0)
+            {
+                temp = (from p in db.ProductGroups
+                        select p.ProductGroupId).Max();
+            }
 
             return temp;
 
@@ -105,7 +108,7 @@ namespace Service
             //        from tab1 in table1
             //        join t2 in db.ProductTypes on tab1.ProductTypeId equals t2.ProductTypeId into table2
             //        from tab2 in table2
-            //        where tab2.ProductTypeName==ProductTypeConstants.Rug
+            //        where tab2.ProductTypeName==RugProductTypeConstants.Rug.ProductTypeName
             //        orderby p.ProductGroupName
             //        select new CarpetIndexViewModel
             //        {
@@ -125,7 +128,7 @@ namespace Service
 
 
 
-            int typeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(ProductTypeConstants.Rug).ProductTypeId;
+            int typeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
 
 
 
@@ -155,18 +158,15 @@ namespace Service
                        from ProductCategoryTab in ProductCategoryTable.DefaultIfEmpty()
                        join Pd in db.ProductDesigns on FinishedProductTab.ProductDesignId equals Pd.ProductDesignId into ProductDesignTable
                        from ProductDesignTab in ProductDesignTable.DefaultIfEmpty()
-                       join PCol in db.ProductCollections on FinishedProductTab.ProductCollectionId equals PCol.ProductCollectionId into ProductCollectionTable
-                       from ProductCollectionTab in ProductCollectionTable.DefaultIfEmpty()
                        where Pg.ProductTypeId == typeid && (FinishedProductTab.IsSample == sample || FinishedProductTab == null) && (FinishedProductTab==null || FinishedProductTab.DivisionId==DivisionId)
-                       group new { Pg, ProductCategoryTab, ProductDesignTab, ProductCollectionTab } by new { Pg.ProductGroupId, Pg.ProductGroupName } into table
+                       group new { Pg, ProductCategoryTab, ProductDesignTab } by new { Pg.ProductGroupId, Pg.ProductGroupName } into table
                        orderby table.Key.ProductGroupName
                        select new CarpetIndexViewModel
                        {
                            ProductGroupId = table.Key.ProductGroupId,
                            ProductGroupName = table.Key.ProductGroupName,
                            ProductCategoryName = table.Max(m => m.ProductCategoryTab.ProductCategoryName),
-                           ProductDesignName = table.Max(m => m.ProductDesignTab.ProductDesignName),
-                           ProductCollectionName = table.Max(m => m.ProductCollectionTab.ProductCollectionName)
+                           ProductDesignName = table.Max(m => m.ProductDesignTab.ProductDesignName)
                        };
 
             return temp;

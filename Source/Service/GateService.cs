@@ -29,6 +29,7 @@ namespace Service
         Task<Gate> FindAsync(int id);
         int NextId(int id);
         int PrevId(int id);
+        int MaxId();
     }
 
     public class GateService : IGateService
@@ -55,6 +56,20 @@ namespace Service
             return _unitOfWork.Repository<Gate>().Find(id);
         }
 
+        public int MaxId()
+        {
+            int temp = 0;
+            IQueryable<Gate> PC = db.Gate;
+
+            if (PC.Count() != 0)
+            {
+                temp = (from p in db.Gate
+                        select p.GateId).Max();
+            }
+
+            return temp;
+
+        }
         public Gate Create(Gate pt)
         {
             pt.ObjectState = ObjectState.Added;

@@ -20,7 +20,7 @@ using EmailContents;
 using Model.ViewModel;
 using Model.ViewModels;
 using AutoMapper;
-using Presentation;
+using Jobs.Constants.RugDocumentType;
 using Jobs.Helpers;
 
 namespace Jobs.Areas.Rug.Controllers
@@ -275,7 +275,7 @@ namespace Jobs.Areas.Rug.Controllers
                 foreach (var SisterConcernJobReceiveHeader in Temp)
                 {
                     JobReceiveHeader Header = new JobReceiveHeader();
-                    Header.DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.WeavingBazar).DocumentTypeId;
+                    Header.DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.WeavingReceive.DocumentTypeName).DocumentTypeId;
                     Header.DocDate = SisterConcernJobReceiveHeader.DocDate;
                     Header.DocNo = "1";
                     Header.DivisionId = SisterConcernJobReceiveHeader.DivisionId;

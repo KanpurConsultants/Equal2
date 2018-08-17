@@ -41,9 +41,9 @@ namespace Model.ViewModels
 
         [Display(Name = "Delivery Qty"),Required]
         public decimal ? DealQty { get; set; }
-        [Required]
+
         public decimal ? Rate { get; set; }
-        [Required]
+
         public decimal ? Amount { get; set; }
 
         [Display(Name = "Remark")]

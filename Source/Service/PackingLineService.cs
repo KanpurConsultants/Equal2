@@ -298,7 +298,7 @@ namespace Service
                     {
                         MaxBaleNo = BaleNoList.Select(sx => int.TryParse(sx.BaleNo, out x) ? x : 0).Max();
 
-                        var Area = (from P in db.ViewRugSize
+                        var Area = (from P in db.ViewProductSize
                                     where P.ProductId == ProductId
                                     select new
                                     {
@@ -718,7 +718,7 @@ namespace Service
             SqlParameter SqlParameterBuyerId = new SqlParameter("@BuyerId", BuyerId);
             SqlParameter SqlParameterPackingLineId = new SqlParameter("@PackingLineId", PackingLineId);
 
-            IEnumerable<PendingOrderListForPacking> FifoSaleOrderLineList = db.Database.SqlQuery<PendingOrderListForPacking>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".ProcGetPendingOrderListForPacking @ProductId, @BuyerId, @PackingLineId", SqlParameterProductId, SqlParameterBuyerId, SqlParameterPackingLineId).ToList();
+            IEnumerable<PendingOrderListForPacking> FifoSaleOrderLineList = db.Database.SqlQuery<PendingOrderListForPacking>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spPackingLineService_FGetPendingOrderListForPacking_GetPendingOrderListForPacking @ProductId, @BuyerId, @PackingLineId", SqlParameterProductId, SqlParameterBuyerId, SqlParameterPackingLineId).ToList();
 
             return FifoSaleOrderLineList;
         }
@@ -728,7 +728,7 @@ namespace Service
             SqlParameter SqlParameterProductUidId = new SqlParameter("@ProductUidId", ProductUidId);
             SqlParameter SqlParameterBuyerId = new SqlParameter("@BuyerId", BuyerId);
 
-            IEnumerable<PendingOrderListForPacking> FifoSaleOrderLineList = db.Database.SqlQuery<PendingOrderListForPacking>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".ProcGetPendingOrderListForPackingForProductUid @ProductUidId, @BuyerId", SqlParameterProductUidId, SqlParameterBuyerId).ToList();
+            IEnumerable<PendingOrderListForPacking> FifoSaleOrderLineList = db.Database.SqlQuery<PendingOrderListForPacking>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spPackingLinrService_FGetPendingOrderListForPackingForProductUid_GetPendingOrderListForPackingForProductUid @ProductUidId, @BuyerId", SqlParameterProductUidId, SqlParameterBuyerId).ToList();
 
             return FifoSaleOrderLineList;
         }
@@ -740,7 +740,7 @@ namespace Service
             SqlParameter SqlParameterBuyerId = new SqlParameter("@BuyerId", BuyerId);
             SqlParameter SqlParameterPackingLineId = new SqlParameter("@PackingLineId", PackingLineId);
 
-            IEnumerable<PendingDeliveryOrderListForPacking> FifoDeliveryOrderLineList = db.Database.SqlQuery<PendingDeliveryOrderListForPacking>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".ProcGetPendingDeliveryOrderListForPacking @ProductId, @BuyerId, @PackingLineId", SqlParameterProductId, SqlParameterBuyerId, SqlParameterPackingLineId).ToList();
+            IEnumerable<PendingDeliveryOrderListForPacking> FifoDeliveryOrderLineList = db.Database.SqlQuery<PendingDeliveryOrderListForPacking>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spPackingLineService_FGetPendingDeliveryOrderListForPacking_GetPendingDeliveryOrderListForPacking @ProductId, @BuyerId, @PackingLineId", SqlParameterProductId, SqlParameterBuyerId, SqlParameterPackingLineId).ToList();
 
             return FifoDeliveryOrderLineList;
         }
@@ -791,7 +791,7 @@ namespace Service
             SqlParameter SqlParameterSaleOrderLineId = new SqlParameter("@SaleOrderLineId", SaleOrderilneId);
             SqlParameter SqlParameterPackingLineId = new SqlParameter("@PackingLineId", PackingLineId);
 
-            PendingOrderQtyForPacking PendingOrderQtyForPacking = db.Database.SqlQuery<PendingOrderQtyForPacking>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".ProcGetPendingOrderQtyForPacking @SaleOrderLineId, @PackingLineId", SqlParameterSaleOrderLineId, SqlParameterPackingLineId).FirstOrDefault();
+            PendingOrderQtyForPacking PendingOrderQtyForPacking = db.Database.SqlQuery<PendingOrderQtyForPacking>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spPackingLineService_FGetPendingOrderQtyForPacking_GetPendingOrderQtyForPacking @SaleOrderLineId, @PackingLineId", SqlParameterSaleOrderLineId, SqlParameterPackingLineId).FirstOrDefault();
 
             if (PendingOrderQtyForPacking != null)
             {

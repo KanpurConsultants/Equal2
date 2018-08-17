@@ -14,6 +14,7 @@ namespace Jobs.Constants.Process
             public const string ProcessCode = "Purchase";
             public const string ProcessName = "Purchase";
             public const int AccountId = LedgerAccountConstants.PurchaseAc.LedgerAccountId;
+            public const int ParentProcessId = 0;
         }
         public static class Sale
         {
@@ -21,6 +22,15 @@ namespace Jobs.Constants.Process
             public const string ProcessCode = "Sale";
             public const string ProcessName = "Sale";
             public const int AccountId = LedgerAccountConstants.SaleAc.LedgerAccountId;
+            public const int ParentProcessId = 0;
+        }
+        public static class Manufacturing
+        {
+            public const int ProcessId = 3;
+            public const string ProcessCode = "Manufacturing";
+            public const string ProcessName = "Manufacturing";
+            public const int AccountId = LedgerAccountConstants.SaleAc.LedgerAccountId;
+            public const int ParentProcessId = 0;
         }
     }
 }

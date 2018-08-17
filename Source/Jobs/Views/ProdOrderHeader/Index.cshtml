@@ -41,10 +41,9 @@
             <div class="btn-group">
                 @Html.ActionLink(" ", "Create", "ProdOrderHeader", new { @id = @ViewBag.id }, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip" })
                 @Html.ActionLink(" ", "GetHistory", "LogHistory", null, new { @class = "cbtn btn-circle glyphicon glyphicon-user toolbar", @title = "History", @data_toggle = "tooltip", @id = "DocHistoryI" })
-                @if (ViewBag.SqlProcDocumentPrint != null)
-                {
+
                 @Html.ActionLink(" ", "GeneratePrints", "ProdOrderHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-print toolbar", @title = "Print", @data_toggle = "tooltip", @id = "PrintRecordI", target = "_blank" })
-                }
+
                 @Html.ActionLink(" ", "Remove", "ProdOrderHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-trash toolbar", @title = "Delete", @data_toggle = "tooltip", @id = "DeleteRecord", @data_modal = "" })
             </div>
             <div class="btn-group">

@@ -96,7 +96,7 @@ namespace Jobs.Controllers
             DataTableData dataTableData = new DataTableData();
             dataTableData.draw = draw;
             int recordsFiltered = 0;
-            dataTableData.data = FilterData(ref recordsFiltered, ref TOTAL_ROWS, start, length, search, sortColumn, sortDirection, DueDays, ShowExpired, DocType);
+            //dataTableData.data = FilterData(ref recordsFiltered, ref TOTAL_ROWS, start, length, search, sortColumn, sortDirection, DueDays, ShowExpired, DocType);
             dataTableData.recordsTotal = TOTAL_ROWS;
             dataTableData.recordsFiltered = recordsFiltered;
 
@@ -111,7 +111,7 @@ namespace Jobs.Controllers
             public int draw { get; set; }
             public int recordsTotal { get; set; }
             public int recordsFiltered { get; set; }
-            public List<PurchaseOrderForExpiryViewModel> data { get; set; }
+            //public List<PurchaseOrderForExpiryViewModel> data { get; set; }
         }
 
         // here we simulate data from a database table.
@@ -152,87 +152,87 @@ namespace Jobs.Controllers
         }
 
         // here we simulate SQL search, sorting and paging operations
-        private List<PurchaseOrderForExpiryViewModel> FilterData(ref int recordFiltered, ref int recordTotal, int start, int length, string search, int sortColumn, string sortDirection, int DueDays,bool ShowExpired,int DocType)
-        {
-
-            //SqlParameter SqlParameterDocumentType = new SqlParameter("@DocumentType", Id);            
-            //SqlParameter SearchString = new SqlParameter { ParameterName = "@SearchString", Value = search };
-            //SqlParameter pagesize = new SqlParameter { ParameterName = "@PageSize", Value = length };
-            //SqlParameter PageNo = new SqlParameter { ParameterName = "@PageNo", Value = (start/length) };
-            //SqlParameter Site = new SqlParameter { ParameterName = "@Site", Value = (int)System.Web.HttpContext.Current.Session["SiteId"] };
-            //SqlParameter division = new SqlParameter { ParameterName = "@Division", Value = (int)System.Web.HttpContext.Current.Session["DivisionId"] };
-            //SqlParameter FilteredCount = new SqlParameter { ParameterName = "@FilterRecCount", Value = 0, Direction = ParameterDirection.Output };
-            //SqlParameter TotalCount = new SqlParameter { ParameterName = "@TotalRecCount", Value = recordTotal, Direction = ParameterDirection.Output };
-
-            //IEnumerable<ExcessPurchaseOrderReviewViewModel> PendingJOTReview = db.Database.SqlQuery<ExcessPurchaseOrderReviewViewModel>("[Web].[SpExcessQtyReviewProdOrder] @SearchString, @PageSize, @PageNo, @Site, @Division, @DocumentType, @FilterRecCount out, @TotalRecCount out", SearchString, pagesize, PageNo, Site, division, SqlParameterDocumentType, FilteredCount, TotalCount).ToList();
-
-            //recordFiltered = (int)FilteredCount.Value;
-            //recordTotal = (int)TotalCount.Value;
-            //return PendingJOTReview.ToList();
-
-            DateTime ExpiryDate = (DateTime.Now.AddDays(DueDays));
-
-            IQueryable<PurchaseOrderHeader> _data = from p in db.PurchaseOrderHeader
-                                                where p.Status != (int)StatusConstants.Complete && p.Status != (int)StatusConstants.Closed && p.DueDate <= ExpiryDate 
-                                                && ( !ShowExpired ? p.DueDate >= DateTime.Now : 1==1  ) && p.DocTypeId==DocType
-                                                select p;
-
-            recordTotal = _data.Count();
-            DateTime Date;
-            bool Success = DateTime.TryParse(search, out Date);
-
-            List<PurchaseOrderForExpiryViewModel> list = new List<PurchaseOrderForExpiryViewModel>();
-            if (string.IsNullOrEmpty(search))
-            {
-
-            }
-            else
-            {
-                // simulate search
-                _data = _data.Where(m => !Success ? ((m.DocNo.ToLower().Contains(search.ToLower())) || (m.DocType.DocumentTypeName.ToLower().Contains(search.ToLower()))) : (((m.DocDate == Date)) || ((m.DueDate == Date))));
-            }
-
-            // simulate sort
-            //if (sortColumn == 0)
-            //{// sort Name
-            _data = _data.OrderBy(m => m.DocDate).ThenBy(m => m.DocType.DocumentTypeName).ThenBy(m => m.DocNo);
-            //}
-            //else if (sortColumn == 1)
-            //{// sort Age
-            //    _data = sortDirection == "asc" ? _data.OrderBy(m => m.DocNo) : _data.OrderByDescending(m => m.DocNo);
-            //}
-            //else if (sortColumn == 2)
-            //{   // sort DoB
-            //    _data = sortDirection == "asc" ? _data.OrderBy(m => m.DocDate) : _data.OrderByDescending(m => m.DocDate);
-            //}
-            //else if (sortColumn == 3)
-            //{   // sort DoB
-            //    _data = sortDirection == "asc" ? _data.OrderBy(m => m.DueDate) : _data.OrderByDescending(m => m.DueDate);
-            //}
-
-            recordFiltered = _data.Count();
-
-            // get just one page of data
-            list = _data.Select(m => new PurchaseOrderForExpiryViewModel { DocDate = m.DocDate, DocTypeName = m.DocType.DocumentTypeName, DueDate = m.DueDate, Reason = m.Remark, Revised = (m.DueDate != m.ActualDueDate ? "Yes" : "No"), PurchaseOrderHeaderId = m.PurchaseOrderHeaderId, PurchaseOrderNo = m.DocNo })
-                .Skip(start).Take(length).ToList();
-
-            return list.Select(m => new PurchaseOrderForExpiryViewModel { SDocDate = m.DocDate.ToString("dd/MMM/yyyy"), DocTypeName = m.DocTypeName, SDueDate = m.DueDate.Value.ToString("dd/MMM/yyyy"), Reason = m.Reason, Revised = m.Revised, PurchaseOrderHeaderId = m.PurchaseOrderHeaderId, PurchaseOrderNo = m.PurchaseOrderNo }).ToList();
-
-        }
-
-        //public JsonResult PendingPurchaseOrdersToReview(int id)//DocTypeId
+        //private List<PurchaseOrderForExpiryViewModel> FilterData(ref int recordFiltered, ref int recordTotal, int start, int length, string search, int sortColumn, string sortDirection, int DueDays,bool ShowExpired,int DocType)
         //{
-        //    var temp = _PurchaseExpiryService.GetExcessPurchaseOrders(id).ToList();
-        //    return Json(new { data = temp }, JsonRequestBehavior.AllowGet);
+
+        //    //SqlParameter SqlParameterDocumentType = new SqlParameter("@DocumentType", Id);            
+        //    //SqlParameter SearchString = new SqlParameter { ParameterName = "@SearchString", Value = search };
+        //    //SqlParameter pagesize = new SqlParameter { ParameterName = "@PageSize", Value = length };
+        //    //SqlParameter PageNo = new SqlParameter { ParameterName = "@PageNo", Value = (start/length) };
+        //    //SqlParameter Site = new SqlParameter { ParameterName = "@Site", Value = (int)System.Web.HttpContext.Current.Session["SiteId"] };
+        //    //SqlParameter division = new SqlParameter { ParameterName = "@Division", Value = (int)System.Web.HttpContext.Current.Session["DivisionId"] };
+        //    //SqlParameter FilteredCount = new SqlParameter { ParameterName = "@FilterRecCount", Value = 0, Direction = ParameterDirection.Output };
+        //    //SqlParameter TotalCount = new SqlParameter { ParameterName = "@TotalRecCount", Value = recordTotal, Direction = ParameterDirection.Output };
+
+        //    //IEnumerable<ExcessPurchaseOrderReviewViewModel> PendingJOTReview = db.Database.SqlQuery<ExcessPurchaseOrderReviewViewModel>("[Web].[SpExcessQtyReviewProdOrder] @SearchString, @PageSize, @PageNo, @Site, @Division, @DocumentType, @FilterRecCount out, @TotalRecCount out", SearchString, pagesize, PageNo, Site, division, SqlParameterDocumentType, FilteredCount, TotalCount).ToList();
+
+        //    //recordFiltered = (int)FilteredCount.Value;
+        //    //recordTotal = (int)TotalCount.Value;
+        //    //return PendingJOTReview.ToList();
+
+        //    DateTime ExpiryDate = (DateTime.Now.AddDays(DueDays));
+
+        //    IQueryable<PurchaseOrderHeader> _data = from p in db.PurchaseOrderHeader
+        //                                        where p.Status != (int)StatusConstants.Complete && p.Status != (int)StatusConstants.Closed && p.DueDate <= ExpiryDate 
+        //                                        && ( !ShowExpired ? p.DueDate >= DateTime.Now : 1==1  ) && p.DocTypeId==DocType
+        //                                        select p;
+
+        //    recordTotal = _data.Count();
+        //    DateTime Date;
+        //    bool Success = DateTime.TryParse(search, out Date);
+
+        //    List<PurchaseOrderForExpiryViewModel> list = new List<PurchaseOrderForExpiryViewModel>();
+        //    if (string.IsNullOrEmpty(search))
+        //    {
+
+        //    }
+        //    else
+        //    {
+        //        // simulate search
+        //        _data = _data.Where(m => !Success ? ((m.DocNo.ToLower().Contains(search.ToLower())) || (m.DocType.DocumentTypeName.ToLower().Contains(search.ToLower()))) : (((m.DocDate == Date)) || ((m.DueDate == Date))));
+        //    }
+
+        //    // simulate sort
+        //    //if (sortColumn == 0)
+        //    //{// sort Name
+        //    _data = _data.OrderBy(m => m.DocDate).ThenBy(m => m.DocType.DocumentTypeName).ThenBy(m => m.DocNo);
+        //    //}
+        //    //else if (sortColumn == 1)
+        //    //{// sort Age
+        //    //    _data = sortDirection == "asc" ? _data.OrderBy(m => m.DocNo) : _data.OrderByDescending(m => m.DocNo);
+        //    //}
+        //    //else if (sortColumn == 2)
+        //    //{   // sort DoB
+        //    //    _data = sortDirection == "asc" ? _data.OrderBy(m => m.DocDate) : _data.OrderByDescending(m => m.DocDate);
+        //    //}
+        //    //else if (sortColumn == 3)
+        //    //{   // sort DoB
+        //    //    _data = sortDirection == "asc" ? _data.OrderBy(m => m.DueDate) : _data.OrderByDescending(m => m.DueDate);
+        //    //}
+
+        //    recordFiltered = _data.Count();
+
+        //    // get just one page of data
+        //    list = _data.Select(m => new PurchaseOrderForExpiryViewModel { DocDate = m.DocDate, DocTypeName = m.DocType.DocumentTypeName, DueDate = m.DueDate, Reason = m.Remark, Revised = (m.DueDate != m.ActualDueDate ? "Yes" : "No"), PurchaseOrderHeaderId = m.PurchaseOrderHeaderId, PurchaseOrderNo = m.DocNo })
+        //        .Skip(start).Take(length).ToList();
+
+        //    return list.Select(m => new PurchaseOrderForExpiryViewModel { SDocDate = m.DocDate.ToString("dd/MMM/yyyy"), DocTypeName = m.DocTypeName, SDueDate = m.DueDate.Value.ToString("dd/MMM/yyyy"), Reason = m.Reason, Revised = m.Revised, PurchaseOrderHeaderId = m.PurchaseOrderHeaderId, PurchaseOrderNo = m.PurchaseOrderNo }).ToList();
+
         //}
 
-        public ActionResult UpdateDueDate(int HeaderId, DateTime DueDate, string Reason)
-        {
+        ////public JsonResult PendingPurchaseOrdersToReview(int id)//DocTypeId
+        ////{
+        ////    var temp = _PurchaseExpiryService.GetExcessPurchaseOrders(id).ToList();
+        ////    return Json(new { data = temp }, JsonRequestBehavior.AllowGet);
+        ////}
 
-            bool Flag = _PurchaseExpiryService.UpdatePurchaseOrderExpiry(HeaderId, Reason, User.Identity.Name, DueDate);
+        //public ActionResult UpdateDueDate(int HeaderId, DateTime DueDate, string Reason)
+        //{
 
-            return Json(new { Success = Flag });
-        }
+        //    bool Flag = _PurchaseExpiryService.UpdatePurchaseOrderExpiry(HeaderId, Reason, User.Identity.Name, DueDate);
+
+        //    return Json(new { Success = Flag });
+        //}
 
         //public ActionResult DisApprove(int LineId)
         //{

@@ -321,7 +321,7 @@ namespace Service
                                                 select new
                                                 {
                                                     DocTypeId = H.DocTypeId,
-                                                    JobWorkerName = H.JobWorker.Person.Name,
+                                                    JobWorkerName = H.JobWorker.Name,
                                                     InvoiceNo = JobInvoiceReturnLineTab.JobInvoiceLine.JobInvoiceHeader.DocNo,
                                                     ProductName = JobInvoiceReturnLineTab.JobInvoiceLine.JobReceiveLine.Product.ProductName,
                                                     ProductGroupName = JobInvoiceReturnLineTab.JobInvoiceLine.JobReceiveLine.Product.ProductGroup.ProductGroupName,

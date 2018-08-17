@@ -2,7 +2,7 @@
 using Data.Models;
 using Model;
 using Model.Models;
-using Core.Common;
+using Jobs.Constants.DocumentType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,7 +74,7 @@ namespace Service
 
         public ProcessSequenceHeader GetProcessSequenceHeaderForProductCollection(int id)
         {
-            int RefDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.ProductCollection).DocumentTypeId;
+            int RefDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.ProductCategory.DocumentTypeName).DocumentTypeId;
 
             var temp = (from p in db.ProcessSequenceHeader
                         where p.ReferenceDocId == id && p.ReferenceDocTypeId == RefDocTypeId
@@ -178,7 +178,7 @@ namespace Service
         {
             SqlParameter SqlParameterProcessSequenceHeaderId = new SqlParameter("@ProcessSequenceHeaderId", ProcessSequenceHeaderId);
 
-            IEnumerable<ProductProcessViewModel> ProductProcessList = db.Database.SqlQuery<ProductProcessViewModel>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_GetProductProcessForProcessSequence @ProcessSequenceHeaderId", SqlParameterProcessSequenceHeaderId).ToList();
+            IEnumerable<ProductProcessViewModel> ProductProcessList = db.Database.SqlQuery<ProductProcessViewModel>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spGetProductProcessForProcessSequence @ProcessSequenceHeaderId", SqlParameterProcessSequenceHeaderId).ToList();
 
             return ProductProcessList;
         }

@@ -42,7 +42,7 @@ namespace Model.Models
 
         [ForeignKey("Consignee"), Display(Name = "Consignee"),Required]
         public int ConsigneeId { get; set; }
-        public virtual Buyer Consignee { get; set; }
+        public virtual Person Consignee { get; set; }
 
         [Display(Name = "Ship Method"),Required]
         [ForeignKey("ShipMethod")]

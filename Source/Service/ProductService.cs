@@ -3,7 +3,7 @@ using System.Linq;
 using Data;
 using Data.Infrastructure;
 using Model.Models;
-
+using Jobs.Constants.RugProductType;
 using Core.Common;
 using System;
 using Model;
@@ -170,7 +170,7 @@ namespace Service
                        select new ProductViewModel
                        {
                            ProductCategoryId = tab.ProductCategoryId ?? 0,
-                           ProductCollectionId = tab.ProductCollectionId,
+                           //ProductCollectionId = tab.ProductCollectionId,
                            ProductQualityId = tab.ProductQualityId,
                            ProductQualityName = tab.ProductQuality.ProductQualityName,
                            ProductDesignId = tab.ProductDesignId,
@@ -577,7 +577,7 @@ namespace Service
             int i = -1;
 
             var ProductList = (from P in db.FinishedProduct
-                               join Vrs in db.ViewRugSize on P.ProductId equals Vrs.ProductId into ViewRugSizeTable
+                               join Vrs in db.ViewProductSize on P.ProductId equals Vrs.ProductId into ViewRugSizeTable
                                from ViewRugSizeTab in ViewRugSizeTable.DefaultIfEmpty()
                                where P.ProductName == TraceName
                                select new
@@ -695,7 +695,7 @@ namespace Service
         public ComboBoxPagedResult GetProductHelpList(string searchTerm, int pageSize, int pageNum)
         {
 
-            var ProductTypeId = new ProductTypeService(_unitOfWork).Find(ProductTypeConstants.Rug).ProductTypeId;
+            var ProductTypeId = new ProductTypeService(_unitOfWork).Find(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
 
             var Query = (from p in db.Product
                          join t in db.ProductGroups on p.ProductGroupId equals t.ProductGroupId
@@ -731,7 +731,7 @@ namespace Service
             SqlParameter SQLToUnitId = new SqlParameter("@ToUnitId", ToUnitId);
             SqlParameter SQLDocumentTypeId = new SqlParameter("@DocumentTypeId", DocumentTypeId);
 
-            UnitConversionMultiplier Temp = db.Database.SqlQuery<UnitConversionMultiplier>("Web.sp_GetUnitConversion @FromQty, @FromUnitId, @Length,@Width, @Height, @ToUnitId, @DocumentTypeId ", SQLFromQty, SQLFromUnitId, SQLLength, SQLWidth, SQLHeight, SQLToUnitId, SQLDocumentTypeId).FirstOrDefault();
+            UnitConversionMultiplier Temp = db.Database.SqlQuery<UnitConversionMultiplier>("Web.spPrroductService_GetUnitConversionMultiplier_GetUnitConversion @FromQty, @FromUnitId, @Length,@Width, @Height, @ToUnitId, @DocumentTypeId ", SQLFromQty, SQLFromUnitId, SQLLength, SQLWidth, SQLHeight, SQLToUnitId, SQLDocumentTypeId).FirstOrDefault();
 
             if (Temp != null)
             {

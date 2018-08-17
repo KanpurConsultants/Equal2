@@ -457,26 +457,26 @@
 
 
     //For Populating Modal PopUp on DoubleClick Of Row
-    $('#gbodycharges').on("dblclick",'.grid-body',function(){
-        var text = $(this).find(".id").val();
+    //$('#gbodycharges').on("dblclick",'.grid-body',function(){
+    //    var text = $(this).find(".id").val();
 
-        var editurl="/TaxCalculation/GetJRHeaderChargeForEdit/";
-        $('#myModalContent').load(editurl,{Id:text,HeaderTable:"Web.JobReceiveHeaderCharges",LineTable:"Web.JobReceiveLineCharges"}, function ( response, status, xhr) {
-            //alert('2');
-            if ( status == "error" ) {
-                var msg = "Sorry but there was an error: ";
+    //    var editurl="/TaxCalculation/GetJRHeaderChargeForEdit/";
+    //    $('#myModalContent').load(editurl,{Id:text,HeaderTable:"Web.JobReceiveHeaderCharges",LineTable:"Web.JobReceiveLineCharges"}, function ( response, status, xhr) {
+    //        //alert('2');
+    //        if ( status == "error" ) {
+    //            var msg = "Sorry but there was an error: ";
 
-            }
-            else
-            {
-                $('#myModal').modal({
-                    backdrop: 'static',
-                    keyboard: true
-                }, 'show');
+    //        }
+    //        else
+    //        {
+    //            $('#myModal').modal({
+    //                backdrop: 'static',
+    //                keyboard: true
+    //            }, 'show');
 
-                bindForm1(this);}
-        });
-    });
+    //            bindForm1(this);}
+    //    });
+    //});
 
     //For Handling Modal PopUp on Clicking Delete Icon
     $('#gbody,#gbodybyproducts,#gbodyconsumption').on("click",'a[delete]', function (e) {
@@ -515,7 +515,6 @@
     $('#myModal').on('hidden.bs.modal', function () {
         LoadProducts();
         var id=@Model.JobReceiveHeaderId;
-        LoadCharges(id,"Web.JobReceiveHeaderCharges","Web.JobReceiveLineCharges");
     });
 
 

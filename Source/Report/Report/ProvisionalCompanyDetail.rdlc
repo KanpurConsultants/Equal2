@@ -71,21 +71,6 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Image Name="SuryaLogo">
-        <Source>Embedded</Source>
-        <Value>SuryaLogo</Value>
-        <Sizing>FitProportional</Sizing>
-        <Top>0.0625in</Top>
-        <Left>0.025in</Left>
-        <Height>0.8in</Height>
-        <Width>0.8in</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
       <Textbox Name="CompanyTinNo2">
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
@@ -114,7 +99,7 @@
         <Left>4.73375in</Left>
         <Height>0.75278in</Height>
         <Width>2.5625in</Width>
-        <ZIndex>3</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -122,6 +107,22 @@
           <VerticalAlign>Top</VerticalAlign>
         </Style>
       </Textbox>
+      <Image Name="Logo">
+        <Source>Database</Source>
+        <Value>=First(Fields!CompanyLogoPath.Value, "DsMain")</Value>
+        <MIMEType>image/jpeg</MIMEType>
+        <Sizing>FitProportional</Sizing>
+        <Top>0.04584in</Top>
+        <Left>0.01605in</Left>
+        <Height>0.8in</Height>
+        <Width>0.8in</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Image>
     </ReportItems>
     <Height>0.91667in</Height>
     <Style>
@@ -201,6 +202,14 @@
           <DataField>CompanyFaxNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CompanyCountry">
+          <DataField>CompanyCountry</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CompanyLogoPath">
+          <DataField>CompanyLogoPath</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>Purchase</rd:DataSetName>
@@ -242,6 +251,18 @@
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
       <Prompt>Division Id</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="DatabaseConnectionString">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>DatabaseConnectionString</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PrintedBy">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>PrintedBy</Prompt>
     </ReportParameter>
   </ReportParameters>
   <EmbeddedImages>

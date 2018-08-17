@@ -109,7 +109,7 @@ namespace Service
                         OrderByName=p.OrderBy.Person.Name,
                         Remark = p.Remark,
                         Status=p.Status,
-                        JobWorkerName = p.JobWorker.Person.Name,
+                        JobWorkerName = p.JobWorker.Name,
                         ModifiedBy=p.ModifiedBy,
                         Reviewed = (SqlFunctions.CharIndex(Uname, p.ReviewBy) == 1),
                         ReviewCount=p.ReviewCount,

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Data;
-using Data.Infrastructure;
+using Jobs.Constants.ProductType;
+using Jobs.Constants.ProductNature;
+using Jobs.Constants.RugProductType;
 using Model.Models;
 using Core.Common;
 using System;
@@ -13,6 +14,8 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using Jobs.Constants.DocumentType;
+using Jobs.Constants.DocumentCategory;
 namespace Service
 {
     public interface IComboHelpListService : IDisposable
@@ -40,16 +43,9 @@ namespace Service
         IEnumerable<ComboBoxList> GetJobWorkerHelpList_WithProcess(int ProcessId);
         IEnumerable<ComboBoxList> GetEmployeeHelpList();
 
-        IEnumerable<ComboBoxList> GetPurchaseIndentHelpList();
-        IEnumerable<ComboBoxList> GetPurchaseIndentCancelHelpList();
-        IEnumerable<ComboBoxList> GetPurchaseOrderHelpList();
+
         IEnumerable<ComboBoxList> GetProdOrderHelpList();
         IEnumerable<ComboBoxList> GetBalanceProdOrderHelpList();
-        IEnumerable<ComboBoxList> GetPurchaseOrderCancelHelpList();
-        IEnumerable<ComboBoxList> GetPurchaseGoodsReceiptHelpList();
-        IEnumerable<ComboBoxList> GetPurchaseGoodsReturnHelpList();
-        IEnumerable<ComboBoxList> GetPurchaseInvoiceHelpList();
-        IEnumerable<ComboBoxList> GetPurchaseInvoiceReturnHelpList();
 
         IEnumerable<ComboBoxList> GetProductNatureHelpList();
         IEnumerable<ComboBoxList> GetProductCategoryHelpList();
@@ -59,7 +55,6 @@ namespace Service
         IEnumerable<ComboBoxList> GetDimension4HelpList();
 
         IEnumerable<ComboBoxList> GetProductTypeHelpList();
-        IEnumerable<ComboBoxList> GetProductCollectionHelpList();
         IEnumerable<ComboBoxList> GetProductQualityHelpList();
         IEnumerable<ComboBoxList> GetProductGroupHelpList(int? filter);
         IEnumerable<ComboBoxList> GetProductCategoryHelpList(int? filter);
@@ -94,8 +89,6 @@ namespace Service
         IEnumerable<ComboBoxList> GetSaleInvoiceDocumentTypeHelpList();
         IEnumerable<ComboBoxList> GetSaleOrderAmendmentDocumentTypeHelpList();
         IEnumerable<ComboBoxList> GetSaleOrderCancelDocumentTypeHelpList();
-        IEnumerable<ComboBoxList> GetPurchaseOrderDocumentTypeHelpList();
-        IEnumerable<ComboBoxList> GetPurchaseIndentDocumentTypeHelpList();
         IEnumerable<ComboBoxList> GetDocumentTypeHelpList(string TransactionDocCategoryConstants);
         IEnumerable<ComboBoxList> SqlProcsHelpList();
         IEnumerable<ComboBoxList> GetProductManufacturerHelpList();
@@ -120,7 +113,6 @@ namespace Service
         IEnumerable<ComboBoxList> GetColourWaysHelpList();
         IEnumerable<ComboBoxList> GetColourWaysForStencilHelpList();
         IEnumerable<ComboBoxList> GetRugQualityHelpList();
-        IEnumerable<ComboBoxList> GetRugCollectionHelpList();
         IEnumerable<ComboBoxList> GetProductConstructionHelpList();
         IEnumerable<ComboBoxList> GetAccountHelpList();
         IEnumerable<ComboBoxList> GetCostCenterHelpList();
@@ -414,7 +406,7 @@ namespace Service
         public IEnumerable<ComboBoxList> GetProductConstructionHelpList()
         {
             int rugid = (from p in db.ProductTypes
-                         where p.ProductTypeName == ProductTypeConstants.Rug
+                         where p.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                          select p.ProductTypeId
                           ).FirstOrDefault();
             IEnumerable<ComboBoxList> ProdCategoryList = db.ProductCategory.Where(m => m.ProductTypeId == rugid).OrderBy(m => m.ProductCategoryName).Select(m => new ComboBoxList
@@ -426,24 +418,11 @@ namespace Service
             return ProdCategoryList;
 
         }
-        public IEnumerable<ComboBoxList> GetRugCollectionHelpList()
-        {
-            int rugid = (from p in db.ProductTypes
-                         where p.ProductTypeName == ProductTypeConstants.Rug
-                         select p.ProductTypeId
-                          ).FirstOrDefault();
-            IEnumerable<ComboBoxList> productcollectionlist = db.ProductCollections.Where(m => m.ProductTypeId == rugid).OrderBy(m => m.ProductCollectionName).Select(m => new ComboBoxList
-            {
-                Id = m.ProductCollectionId,
-                PropFirst = m.ProductCollectionName
-            });
-            return productcollectionlist;
 
-        }
         public IEnumerable<ComboBoxList> GetRugQualityHelpList()
         {
             int rugid = (from p in db.ProductTypes
-                         where p.ProductTypeName == ProductTypeConstants.Rug
+                         where p.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                          select p.ProductTypeId
                            ).FirstOrDefault();
             IEnumerable<ComboBoxList> ProdCategoryList = db.ProductQuality.Where(m => m.ProductTypeId == rugid).OrderBy(m => m.ProductQualityName).Select(m => new ComboBoxList
@@ -519,7 +498,7 @@ namespace Service
         public IEnumerable<ComboBoxList> GetColourWaysHelpList()
         {
             int rugid = (from p in db.ProductTypes
-                         where p.ProductTypeName == ProductTypeConstants.Rug
+                         where p.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                          select p.ProductTypeId
                            ).FirstOrDefault();
             IEnumerable<ComboBoxList> ProdCategoryList = db.ProductDesigns.Where(m => m.ProductTypeId == rugid).OrderBy(m => m.ProductDesignName).Select(m => new ComboBoxList
@@ -534,7 +513,7 @@ namespace Service
         public IEnumerable<ComboBoxList> GetColourWaysForStencilHelpList()
         {
             int stencilid = (from p in db.ProductTypes
-                             where p.ProductTypeName == ProductTypeConstants.Rug
+                             where p.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                              select p.ProductTypeId
                           ).FirstOrDefault();
             IEnumerable<ComboBoxList> ProdCategoryList = from p in db.ProductDesigns
@@ -580,7 +559,7 @@ namespace Service
 
         //public IEnumerable<ComboBoxList> GetMachineHelpList()
         //{
-        //    IEnumerable<ComboBoxList> prodList = db.Product.Where(m => m.IsActive == true && m.ProductGroup.ProductType.ProductNature.ProductNatureName == ProductNatureConstants.Machine)
+        //    IEnumerable<ComboBoxList> prodList = db.Product.Where(m => m.IsActive == true && m.ProductGroup.ProductType.ProductNature.ProductNatureName == ProductNatureConstants.Machine.ProductNatureName)
         //        .OrderBy(m => m.ProductName).Select(i => new ComboBoxList
         //    {
         //        Id = i.ProductId,
@@ -592,7 +571,7 @@ namespace Service
 
         public IEnumerable<ComboBoxList> GetMachineHelpList()
         {
-            IEnumerable<ComboBoxList> prodList = db.ProductUid.Where(m => m.IsActive == true && m.Product.ProductGroup.ProductType.ProductNature.ProductNatureName == ProductNatureConstants.Machine)
+            IEnumerable<ComboBoxList> prodList = db.ProductUid.Where(m => m.IsActive == true && m.Product.ProductGroup.ProductType.ProductNature.ProductNatureName == ProductNatureConstants.Machine.ProductNatureName)
                 .OrderBy(m => m.ProductUidName).Select(i => new ComboBoxList
                 {
                     Id = i.ProductUIDId,
@@ -659,7 +638,7 @@ namespace Service
         public IEnumerable<ComboBoxList> GetRawProductCategoryHelpList()
         {
             int rawmatid = (from p in db.ProductNature
-                            where p.ProductNatureName == ProductNatureConstants.Rawmaterial
+                            where p.ProductNatureName == ProductNatureConstants.RawMaterial.ProductNatureName
                             select p.ProductNatureId).FirstOrDefault();
 
             IEnumerable<ComboBoxList> ProdCategoryList = db.ProductCategory.Where(m => m.ProductType.ProductNatureId == rawmatid).OrderBy(m => m.ProductCategoryName).Select(m => new ComboBoxList
@@ -673,7 +652,7 @@ namespace Service
         public IEnumerable<ComboBoxList> GetOtherProductCategoryHelpList()
         {
             int rawmatid = (from p in db.ProductNature
-                            where p.ProductNatureName == ProductNatureConstants.OtherMaterial
+                            where p.ProductNatureName == ProductNatureConstants.OtherMaterial.ProductNatureName
                             select p.ProductNatureId).FirstOrDefault();
 
             IEnumerable<ComboBoxList> ProdCategoryList = db.ProductCategory.Where(m => m.ProductType.ProductNatureId == rawmatid).OrderBy(m => m.ProductCategoryName).Select(m => new ComboBoxList
@@ -873,76 +852,6 @@ namespace Service
         }
 
 
-        public IEnumerable<ComboBoxList> GetPurchaseIndentHelpList()
-        {
-            //IEnumerable<ComboBoxList> Helplist = db.PurchaseIndentHeader.OrderBy(m => m.DocNo).Select(m => new
-            //    ComboBoxList
-            //{
-            //    Id = m.PurchaseIndentHeaderId,
-            //    PropFirst = m.DocNo,
-            //});
-            //return SaleOrderlist;
-
-            IEnumerable<ComboBoxList> Helplist = (from H in db.PurchaseIndentHeader
-                                                  join DY in db.DocumentType on H.DocTypeId equals DY.DocumentTypeId into DocumentTypeTable
-                                                  from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
-                                                  where 1 == 1
-                                                  orderby H.DocDate, H.DocNo
-                                                  select new ComboBoxList
-                                                  {
-                                                      Id = H.PurchaseIndentHeaderId,
-                                                      PropFirst = DocumentTypeTab.DocumentTypeShortName + "-" + H.DocNo
-                                                  });
-
-
-
-            return Helplist;
-
-        }
-
-        public IEnumerable<ComboBoxList> GetPurchaseIndentCancelHelpList()
-        {
-            IEnumerable<ComboBoxList> Helplist = (from H in db.PurchaseIndentCancelHeader
-                                                  join DY in db.DocumentType on H.DocTypeId equals DY.DocumentTypeId into DocumentTypeTable
-                                                  from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
-                                                  where 1 == 1
-                                                  orderby H.DocDate, H.DocNo
-                                                  select new ComboBoxList
-                                                  {
-                                                      Id = H.PurchaseIndentCancelHeaderId,
-                                                      PropFirst = DocumentTypeTab.DocumentTypeShortName + "-" + H.DocNo
-                                                  });
-
-
-
-            return Helplist;
-
-        }
-
-        public IEnumerable<ComboBoxList> GetPurchaseOrderHelpList()
-        {
-            //IEnumerable<ComboBoxList> PurchaseOrderlist = db.PurchaseOrderHeader.OrderBy(m => m.DocNo).Select(m => new
-            //     ComboBoxList
-            //{
-            //    Id = m.PurchaseOrderHeaderId,
-            //    PropFirst = m.DocNo
-            //});
-            //return PurchaseOrderlist;
-            IEnumerable<ComboBoxList> Helplist = (from H in db.PurchaseOrderHeader
-                                                  join DY in db.DocumentType on H.DocTypeId equals DY.DocumentTypeId into DocumentTypeTable
-                                                  from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
-                                                  where 1 == 1
-                                                  orderby H.DocDate, H.DocNo
-                                                  select new ComboBoxList
-                                                  {
-                                                      Id = H.PurchaseOrderHeaderId,
-                                                      PropFirst = DocumentTypeTab.DocumentTypeShortName + "-" + H.DocNo
-                                                  });
-
-
-
-            return Helplist;
-        }
 
         public IEnumerable<ComboBoxList> GetProdOrderHelpList()
         {
@@ -981,117 +890,6 @@ namespace Service
 
             return Helplist;
         }
-
-        public IEnumerable<ComboBoxList> GetPurchaseOrderCancelHelpList()
-        {
-            IEnumerable<ComboBoxList> Helplist = (from H in db.PurchaseOrderCancelHeader
-                                                  join DY in db.DocumentType on H.DocTypeId equals DY.DocumentTypeId into DocumentTypeTable
-                                                  from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
-                                                  where 1 == 1
-                                                  orderby H.DocDate, H.DocNo
-                                                  select new ComboBoxList
-                                                  {
-                                                      Id = H.PurchaseOrderCancelHeaderId,
-                                                      PropFirst = DocumentTypeTab.DocumentTypeShortName + "-" + H.DocNo
-                                                  });
-
-
-
-            return Helplist;
-        }
-
-        public IEnumerable<ComboBoxList> GetPurchaseGoodsReceiptHelpList()
-        {
-            //IEnumerable<ComboBoxList> SaleOrderlist = db.PurchaseGoodsReceiptHeader.OrderBy(m => m.DocNo).Select(m => new
-            //    ComboBoxList
-            //{
-            //    Id = m.PurchaseGoodsReceiptHeaderId,
-            //    PropFirst = m.DocNo,
-            //});
-            //return SaleOrderlist;
-
-            IEnumerable<ComboBoxList> Helplist = (from H in db.PurchaseGoodsReceiptHeader
-                                                  join DY in db.DocumentType on H.DocTypeId equals DY.DocumentTypeId into DocumentTypeTable
-                                                  from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
-                                                  where 1 == 1
-                                                  orderby H.DocDate, H.DocNo
-                                                  select new ComboBoxList
-                                                  {
-                                                      Id = H.PurchaseGoodsReceiptHeaderId,
-                                                      PropFirst = DocumentTypeTab.DocumentTypeShortName + "-" + H.DocNo
-                                                  });
-
-
-
-            return Helplist;
-        }
-
-        public IEnumerable<ComboBoxList> GetPurchaseGoodsReturnHelpList()
-        {
-            IEnumerable<ComboBoxList> Helplist = (from H in db.PurchaseGoodsReturnHeader
-                                                  join DY in db.DocumentType on H.DocTypeId equals DY.DocumentTypeId into DocumentTypeTable
-                                                  from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
-                                                  where 1 == 1
-                                                  orderby H.DocDate, H.DocNo
-                                                  select new ComboBoxList
-                                                  {
-                                                      Id = H.PurchaseGoodsReturnHeaderId,
-                                                      PropFirst = DocumentTypeTab.DocumentTypeShortName + "-" + H.DocNo
-                                                  });
-
-
-
-            return Helplist;
-        }
-
-        public IEnumerable<ComboBoxList> GetPurchaseInvoiceHelpList()
-        {
-            //IEnumerable<ComboBoxList> PurchaseOrderlist = db.PurchaseInvoiceHeader.OrderBy(m => m.DocNo).Select(m => new
-            //     ComboBoxList
-            //{
-            //    Id = m.PurchaseInvoiceHeaderId,
-            //    PropFirst = m.DocNo
-            //});
-            //return PurchaseOrderlist;
-
-            IEnumerable<ComboBoxList> Helplist = (from H in db.PurchaseInvoiceHeader
-                                                  join DY in db.DocumentType on H.DocTypeId equals DY.DocumentTypeId into DocumentTypeTable
-                                                  from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
-                                                  where 1 == 1
-                                                  orderby H.DocDate, H.DocNo
-                                                  select new ComboBoxList
-                                                  {
-                                                      Id = H.PurchaseInvoiceHeaderId,
-                                                      PropFirst = DocumentTypeTab.DocumentTypeShortName + "-" + H.DocNo
-                                                  });
-
-
-
-            return Helplist;
-        }
-
-        public IEnumerable<ComboBoxList> GetPurchaseInvoiceReturnHelpList()
-        {
-            IEnumerable<ComboBoxList> Helplist = (from H in db.PurchaseInvoiceReturnHeader
-                                                  join DY in db.DocumentType on H.DocTypeId equals DY.DocumentTypeId into DocumentTypeTable
-                                                  from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
-                                                  where 1 == 1
-                                                  orderby H.DocDate, H.DocNo
-                                                  select new ComboBoxList
-                                                  {
-                                                      Id = H.PurchaseInvoiceReturnHeaderId,
-                                                      PropFirst = DocumentTypeTab.DocumentTypeShortName + "-" + H.DocNo
-                                                  });
-
-
-
-            return Helplist;
-        }
-
-
-
-
-
 
 
 
@@ -1401,7 +1199,7 @@ namespace Service
             //                                       });
 
             int ProcessId = (from P in db.Process where P.ProcessName == ProcessConstants.Sales select P).FirstOrDefault().ProcessId;
-            int BuyerDocTypeId = (from D in db.DocumentType where D.DocumentTypeName == MasterDocTypeConstants.Buyer select D).FirstOrDefault().DocumentTypeId;
+            int BuyerDocTypeId = (from D in db.DocumentType where D.DocumentTypeName == DocumentTypeConstants.Customer.DocumentTypeName select D).FirstOrDefault().DocumentTypeId;
 
             IEnumerable<ComboBoxList> buyerlist = (from p in db.Persons
                                                    join pp in db.PersonProcess on p.PersonID equals pp.PersonId into PersonProcessTable
@@ -1469,7 +1267,7 @@ namespace Service
             //                                               PropFirst = PersonTab.Name
             //                                           });
 
-            int JobWorkerDocTypeId = (from D in db.DocumentType where D.DocumentTypeName == MasterDocTypeConstants.JobWorker select D).FirstOrDefault().DocumentTypeId;
+            int JobWorkerDocTypeId = (from D in db.DocumentType where D.DocumentTypeName == DocumentTypeConstants.JobWorker.DocumentTypeName select D).FirstOrDefault().DocumentTypeId;
 
             IEnumerable<ComboBoxList> JobWorkerlist = (from p in db.Persons
                                                    join pp in db.PersonProcess on p.PersonID equals pp.PersonId into PersonProcessTable
@@ -1490,20 +1288,18 @@ namespace Service
 
         public IEnumerable<ComboBoxList> GetJobWorkerHelpList_WithProcess(int ProcessId)
         {
-            IEnumerable<ComboBoxList> JobWorkerlist = (from b in db.JobWorker
+            IEnumerable<ComboBoxList> JobWorkerlist = (from b in db.Persons
                                                        join bus in db.BusinessEntity on b.PersonID equals bus.PersonID into BusinessEntityTable
                                                        from BusinessEntityTab in BusinessEntityTable.DefaultIfEmpty()
-                                                       join p in db.Persons on b.PersonID equals p.PersonID into PersonTable
-                                                       from PersonTab in PersonTable.DefaultIfEmpty()
                                                        join pp in db.PersonProcess on b.PersonID equals pp.PersonId into PersonProcessTable
                                                        from PersonProcessTab in PersonProcessTable.DefaultIfEmpty()
                                                        where PersonProcessTab.ProcessId == ProcessId
-                                                       && (PersonTab.IsActive == null ? 1 == 1 : PersonTab.IsActive == true)
-                                                       orderby PersonTab.Name
+                                                       && (b.IsActive == null ? 1 == 1 : b.IsActive == true)
+                                                       orderby b.Name
                                                        select new ComboBoxList
                                                        {
                                                            Id = b.PersonID,
-                                                           PropFirst = PersonTab.Name
+                                                           PropFirst = b.Name
                                                        });
 
 
@@ -1548,15 +1344,6 @@ namespace Service
             });
             return producttypelist;
         }
-        public IEnumerable<ComboBoxList> GetProductCollectionHelpList()
-        {
-            IEnumerable<ComboBoxList> productcollectionlist = db.ProductCollections.OrderBy(m => m.ProductCollectionName).Select(m => new ComboBoxList
-            {
-                Id = m.ProductCollectionId,
-                PropFirst = m.ProductCollectionName
-            });
-            return productcollectionlist;
-        }
 
         public IEnumerable<ComboBoxList> GetProductGroupHelpList(int? filter)
         {
@@ -1595,7 +1382,7 @@ namespace Service
             var temp = from p in db.ProductGroups
                        join t in db.ProductTypes on p.ProductTypeId equals t.ProductTypeId into table1
                        from tab1 in table1.DefaultIfEmpty()
-                       where tab1.ProductTypeName == ProductTypeConstants.Rug
+                       where tab1.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                        orderby p.ProductGroupName, tab1.ProductTypeName
                        select new ComboBoxList
                        {
@@ -1623,7 +1410,7 @@ namespace Service
         public IEnumerable<ComboBoxList> GetRawMaterialProductGroupHelpList()
         {
             int rawmatid = (from p in db.ProductNature
-                            where p.ProductNatureName == ProductNatureConstants.Rawmaterial
+                            where p.ProductNatureName == ProductNatureConstants.RawMaterial.ProductNatureName
                             select p.ProductNatureId).FirstOrDefault();
             var temp = from p in db.ProductGroups
                        join t in db.ProductTypes on p.ProductTypeId equals t.ProductTypeId into table1
@@ -1642,7 +1429,7 @@ namespace Service
         public IEnumerable<ComboBoxList> GetOtherMaterialProductGroupHelpList()
         {
             var rawmatid = (from p in db.ProductNature
-                            where p.ProductNatureName == ProductNatureConstants.OtherMaterial
+                            where p.ProductNatureName == ProductNatureConstants.OtherMaterial.ProductNatureName
                             select p.ProductNatureId).FirstOrDefault();
             var temp = from p in db.ProductGroups
                        join t in db.ProductTypes on p.ProductTypeId equals t.ProductTypeId into table1
@@ -1774,7 +1561,7 @@ namespace Service
             {
                 Id = m.SaleInvoiceHeaderId,
                 PropFirst = m.DocNo,
-                PropSecond = m.BillToBuyer.Person.Code  
+                PropSecond = m.BillToBuyer.Code  
             });
 
             return saleInvoiceList;
@@ -1818,7 +1605,7 @@ namespace Service
 
         public IEnumerable<ComboBoxList> GetSaleOrderDocumentTypeHelpList()
         {
-            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == TransactionDocCategoryConstants.SaleOrder).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
+            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == DocumentCategoryConstants.SaleOrder.DocumentCategoryName).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
             {
                 Id = m.DocumentTypeId,
                 PropFirst = m.DocumentTypeName
@@ -1828,7 +1615,7 @@ namespace Service
 
         public IEnumerable<ComboBoxList> GetSaleOrderPlanDocumentTypeHelpList()
         {
-            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == TransactionDocCategoryConstants.SaleOrderPlan).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
+            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == DocumentCategoryConstants.Planning.DocumentCategoryName).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
             {
                 Id = m.DocumentTypeId,
                 PropFirst = m.DocumentTypeName
@@ -1838,7 +1625,7 @@ namespace Service
 
         public IEnumerable<ComboBoxList> GetDyedMaterialPlanForWeavingDocumentTypeHelpList()
         {
-            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == TransactionDocCategoryConstants.MaterialPlan).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
+            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == DocumentCategoryConstants.Planning.DocumentCategoryName).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
             {
                 Id = m.DocumentTypeId,
                 PropFirst = m.DocumentTypeName
@@ -1848,7 +1635,7 @@ namespace Service
 
         public IEnumerable<ComboBoxList> GetSaleOrderAmendmentDocumentTypeHelpList()
         {
-            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == TransactionDocCategoryConstants.SaleOrderAmendment).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
+            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == DocumentCategoryConstants.SaleOrderAmendment.DocumentCategoryName).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
             {
                 Id = m.DocumentTypeId,
                 PropFirst = m.DocumentTypeName
@@ -1857,7 +1644,7 @@ namespace Service
         }
         public IEnumerable<ComboBoxList> GetSaleOrderCancelDocumentTypeHelpList()
         {
-            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == TransactionDocCategoryConstants.SaleOrderCancel).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
+            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == DocumentCategoryConstants.SaleOrderCancel.DocumentCategoryName).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
             {
                 Id = m.DocumentTypeId,
                 PropFirst = m.DocumentTypeName
@@ -1867,7 +1654,7 @@ namespace Service
 
         public IEnumerable<ComboBoxList> GetSaleInvoiceDocumentTypeHelpList()
         {
-            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == TransactionDocCategoryConstants.SaleInvoice).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
+            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == DocumentCategoryConstants.SaleInvoice.DocumentCategoryName).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
             {
                 Id = m.DocumentTypeId,
                 PropFirst = m.DocumentTypeName
@@ -1875,25 +1662,7 @@ namespace Service
             return documentlist;
         }
 
-        public IEnumerable<ComboBoxList> GetPurchaseOrderDocumentTypeHelpList()
-        {
-            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == TransactionDocCategoryConstants.PurchaseOrder).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
-            {
-                Id = m.DocumentTypeId,
-                PropFirst = m.DocumentTypeName
-            });
-            return documentlist;
-        }
 
-        public IEnumerable<ComboBoxList> GetPurchaseIndentDocumentTypeHelpList()
-        {
-            IEnumerable<ComboBoxList> documentlist = db.DocumentType.Where(m => m.DocumentCategory.DocumentCategoryName == TransactionDocCategoryConstants.PurchaseIndent).OrderBy(m => m.DocumentTypeName).Select(m => new ComboBoxList
-            {
-                Id = m.DocumentTypeId,
-                PropFirst = m.DocumentTypeName
-            });
-            return documentlist;
-        }
 
         public IEnumerable<ComboBoxList> GetDocumentTypeHelpList(string TransactionDocCategoryConstants)
         {
@@ -2110,7 +1879,7 @@ namespace Service
                        from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
                        join pn in db.ProductNature on ProductTypeTab.ProductNatureId equals pn.ProductNatureId into ProductNatureTable
                        from ProductNatureTab in ProductNatureTable.DefaultIfEmpty()
-                       where ProductNatureTab.ProductNatureName == ProductNatureConstants.Rawmaterial
+                       where ProductNatureTab.ProductNatureName == ProductNatureConstants.RawMaterial.ProductNatureName
                        orderby p.ProductName
                        select new ComboBoxList
                        {
@@ -2194,7 +1963,7 @@ namespace Service
                        from ProductGroupTab in ProductGroupTable.DefaultIfEmpty()
                        join pt in db.ProductTypes on ProductGroupTab.ProductTypeId equals pt.ProductTypeId into ProductTypeTable
                        from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
-                       where ProductTypeTab.ProductTypeName == ProductTypeConstants.Bom
+                       where ProductTypeTab.ProductTypeName == ProductTypeConstants.Bom.ProductTypeName
                        orderby p.ProductName
                        select new ComboBoxList
                        {
@@ -2214,10 +1983,10 @@ namespace Service
                        from ProductTypeTab in ProductTypeTable.DefaultIfEmpty()
                        join pn in db.ProductNature on ProductTypeTab.ProductNatureId equals pn.ProductNatureId into ProductNatureTable
                        from ProductNatureTab in ProductNatureTable.DefaultIfEmpty()
-                       where (ProductNatureTab.ProductNatureName == ProductNatureConstants.Rawmaterial
-                       && ProductTypeTab.ProductTypeName != ProductTypeConstants.Trace && ProductTypeTab.ProductTypeName != ProductTypeConstants.Map
-                       && ProductTypeTab.ProductTypeName != ProductTypeConstants.OtherMaterial && p.IsActive == true)
-                       || (ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom && p.IsActive == true)
+                       where (ProductNatureTab.ProductNatureName == ProductNatureConstants.RawMaterial.ProductNatureName
+                       && ProductTypeTab.ProductTypeName != RugProductTypeConstants.Trace.ProductTypeName && ProductTypeTab.ProductTypeName != RugProductTypeConstants.Map.ProductTypeName
+                       && ProductTypeTab.ProductTypeName != ProductTypeConstants.OtherMaterial.ProductTypeName && p.IsActive == true)
+                       || (ProductNatureTab.ProductNatureName == ProductNatureConstants.Bom.ProductNatureName && p.IsActive == true)
                        orderby p.ProductName
                        select new ComboBoxList
                        {
@@ -2742,7 +2511,7 @@ namespace Service
         {
             var list = (from D in db.DocumentType
                         join Dc in db.DocumentCategory on D.DocumentCategoryId equals Dc.DocumentCategoryId into DocumentCategoryTable from DocumentCategoryTab in DocumentCategoryTable.DefaultIfEmpty()
-                        where DocumentCategoryTab.DocumentCategoryName == MasterDocCategoryConstants.Person
+                        where DocumentCategoryTab.DocumentCategoryName == DocumentCategoryConstants.Person.DocumentCategoryName
                         && (string.IsNullOrEmpty(term) ? 1 == 1 : (D.DocumentTypeName.ToLower().Contains(term.ToLower())))
                         orderby D.DocumentTypeName
                         select new ComboBoxResult
@@ -2923,7 +2692,7 @@ namespace Service
         public IQueryable<ComboBoxResult> GetTransporters(string term)
         {
             int TransporterDocTypeId = 0;
-            var DocumentType = (from D in db.DocumentType where D.DocumentTypeName == MasterDocTypeConstants.Transporter select D).FirstOrDefault();
+            var DocumentType = (from D in db.DocumentType where D.DocumentTypeName == DocumentTypeConstants.Transporter.DocumentTypeName select D).FirstOrDefault();
             if (DocumentType != null)
             {
                 TransporterDocTypeId = DocumentType.DocumentTypeId;
@@ -2946,7 +2715,7 @@ namespace Service
         public IQueryable<ComboBoxResult> GetAgents(string term)
         {
             int AgentDocTypeId = 0;
-            var DocumentType = (from D in db.DocumentType where D.DocumentTypeName == MasterDocTypeConstants.Agent select D).FirstOrDefault();
+            var DocumentType = (from D in db.DocumentType where D.DocumentTypeName == DocumentTypeConstants.Agent.DocumentTypeName select D).FirstOrDefault();
             if (DocumentType != null)
             {
                 AgentDocTypeId = DocumentType.DocumentTypeId;
@@ -2970,7 +2739,7 @@ namespace Service
         //public IQueryable<ComboBoxResult> GetFinanciers(string term)
         //{
         //    int FinancierDocTypeId = 0;
-        //    var DocumentType = (from D in db.DocumentType where D.DocumentTypeName == MasterDocTypeConstants.Financier select D).FirstOrDefault();
+        //    var DocumentType = (from D in db.DocumentType where D.DocumentTypeName == DocumentTypeConstants.Financier.DocumentTypeName select D).FirstOrDefault();
         //    if (DocumentType != null)
         //    {
         //        FinancierDocTypeId = DocumentType.DocumentTypeId;
@@ -2995,7 +2764,7 @@ namespace Service
         public IQueryable<ComboBoxResult> GetFinanciers(string term, int? filter)
         {
             int FinancierDocCategoryId = 0;
-            var DocumentCategory = (from D in db.DocumentCategory where D.DocumentCategoryName == TransactionDocCategoryConstants.Financier select D).FirstOrDefault();
+            var DocumentCategory = (from D in db.DocumentCategory where D.DocumentCategoryName == DocumentTypeConstants.Financier.DocumentTypeName select D).FirstOrDefault();
             if (DocumentCategory != null)
             {
                 FinancierDocCategoryId = DocumentCategory.DocumentCategoryId;
@@ -3012,8 +2781,10 @@ namespace Service
                         from BusinessEntityTab in BusinessEntityTable.DefaultIfEmpty()
                         join Pr in db.PersonRole on D.PersonID equals Pr.PersonId into PersonRoleTable
                         from PersonRoleTab in PersonRoleTable.DefaultIfEmpty()
-                        join Dt in db.DocumentType on PersonRoleTab.RoleDocTypeId equals Dt.DocumentTypeId into DocumentTypeTable from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
-                        join Pp in db.PersonProcess on D.PersonID equals Pp.PersonId into PersonProcessTable from PersonProcessTab in PersonProcessTable.DefaultIfEmpty()
+                        join Dt in db.DocumentType on PersonRoleTab.RoleDocTypeId equals Dt.DocumentTypeId into DocumentTypeTable
+                        from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
+                        join Pp in db.PersonProcess on D.PersonID equals Pp.PersonId into PersonProcessTable
+                        from PersonProcessTab in PersonProcessTable.DefaultIfEmpty()
                         where D.IsActive == true && DocumentTypeTab.DocumentCategoryId == FinancierDocCategoryId
                         && (filter == null ? 1 == 1 : PersonProcessTab.ProcessId == filter)
                         && (string.IsNullOrEmpty(BusinessEntityTab.DivisionIds) ? 1 == 1 : BusinessEntityTab.DivisionIds.IndexOf(DivIdStr) != -1)
@@ -3036,7 +2807,7 @@ namespace Service
         public IQueryable<ComboBoxResult> GetSalesExecutives(string term)
         {
             int SalesExecutiveDocTypeId = 0;
-            var DocumentType = (from D in db.DocumentType where D.DocumentTypeName == MasterDocTypeConstants.SalesExecutive select D).FirstOrDefault();
+            var DocumentType = (from D in db.DocumentType where D.DocumentTypeName == DocumentTypeConstants.SalesExecutive.DocumentTypeName select D).FirstOrDefault();
             if (DocumentType != null)
             {
                 SalesExecutiveDocTypeId = DocumentType.DocumentTypeId;
@@ -3240,7 +3011,7 @@ namespace Service
         public IQueryable<ComboBoxResult> GetAdditionalCharges(string term)
         {
             int AdditionalChargesProductNatureId = 0;
-            var ProductNature = (from Pt in db.ProductNature where Pt.ProductNatureName == ProductNatureConstants.AdditionalCharges select Pt).FirstOrDefault();
+            var ProductNature = (from Pt in db.ProductNature where Pt.ProductNatureName == ProductNatureConstants.AdditionalCharges.ProductNatureName select Pt).FirstOrDefault();
             if (ProductNature != null)
             {
                 AdditionalChargesProductNatureId = ProductNature.ProductNatureId;

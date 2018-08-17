@@ -128,7 +128,7 @@ namespace Service
                                             PG.ProductTypeId, PT.ProductTypeName, PT.ProductNatureId, PN.ProductNatureName,
                                             isnull(L.Qty,0)-isnull(LC.Qty,0)+isnull(LA.Qty,0) AS OrderQty,
                                             isnull(L.Qty,0)-isnull(LC.Qty,0)+isnull(LA.Qty,0)-isnull(PL.Qty,0) AS BalanceQty,
-                                            (isnull(L.Qty,0)-isnull(LC.Qty,0)+isnull(LA.Qty,0)-isnull(PL.Qty,0))*(SELECT SqYard FROM  Web.[FuncConvertSqFeetToSqYard] (UC.StandardSizeArea) ) AS BalanceDealQty,
+                                            (isnull(L.Qty,0)-isnull(LC.Qty,0)+isnull(LA.Qty,0)-isnull(PL.Qty,0))*(SELECT SqYard FROM  Web.[FConvertSqFeetToSqYard] (UC.StandardSizeArea) ) AS BalanceDealQty,
                                             (isnull(L.Qty,0)-isnull(LC.Qty,0)+isnull(LA.Qty,0)-isnull(PL.Qty,0))*(CASE WHEN isnull(L.Qty,0) = 0 THEN L.Rate ELSE L.Amount / isnull(L.Qty,0) END) AS BalanceAmount,
                                             C.Name AS CurrencyName,
                                             (CASE WHEN isnull(L.Qty,0) = 0 THEN L.Rate ELSE L.Amount / isnull(L.Qty,0) END) AS RatePerQty,
@@ -169,7 +169,7 @@ namespace Service
                                             LEFT JOIN web.Dimension2 D2 WITH (Nolock) ON D2.Dimension2Id=L.Dimension2Id
                                             LEFT JOIN web.Dimension3 D3 WITH (Nolock) ON D3.Dimension3Id=L.Dimension3Id
                                             LEFT JOIN web.Dimension4 D4 WITH (Nolock) ON D4.Dimension4Id=L.Dimension4Id
-                                            LEFT JOIN Web.ViewRugSize UC WITH (Nolock) ON UC.ProductId = L.ProductId
+                                            LEFT JOIN Web.ViewProductSize UC WITH (Nolock) ON UC.ProductId = L.ProductId
                                             LEFT JOIN Web.ProductCategories PC WITH (Nolock) ON PC.ProductCategoryId=P.ProductCategoryId 
                                             LEFT JOIN Web.DivisionSettings D WITH (Nolock) ON D.DivisionId=H.DivisionId
                                             WHERE 1=1 AND (isnull(L.Qty,0)-isnull(LC.Qty,0)+isnull(LA.Qty,0)-isnull(PL.Qty,0)) >0 "

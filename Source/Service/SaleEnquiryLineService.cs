@@ -24,7 +24,7 @@ namespace Service
         
         SaleEnquiryLineViewModel GetSaleEnquiryLineModel(int id);
         SaleEnquiryLine Find(int id);
-        SaleEnquiryLine Find_WithLineDetail(int SaleEnquiryHeaderId, string BuyerSpecification, string BuyerSpecification1, string BuyerSpecification2, string BuyerSpecification3);
+        SaleEnquiryLine Find_WithLineDetail(int SaleEnquiryHeaderId, string BuyerSpecification, string BuyerSpecification1, string BuyerSpecification2, string BuyerSpecification3, DateTime ? DueDate);
         void Update(SaleEnquiryLine s);
         IEnumerable<SaleEnquiryLineIndexViewModel> GetSaleEnquiryLineList(int SaleEnquiryHeaderId);
 
@@ -151,14 +151,14 @@ namespace Service
             return _unitOfWork.Repository<SaleEnquiryLine>().Find(id);
         }
 
-        public SaleEnquiryLine Find_WithLineDetail(int SaleEnquiryHeaderId, string BuyerSpecification, string BuyerSpecification1, string BuyerSpecification2, string BuyerSpecification3)
+        public SaleEnquiryLine Find_WithLineDetail(int SaleEnquiryHeaderId, string BuyerSpecification, string BuyerSpecification1, string BuyerSpecification2, string BuyerSpecification3, DateTime? DueDate)
         {
             //return _unitOfWork.Repository<SaleEnquiryLine>().Find(id);
 
             return (from p in db.SaleEnquiryLine
                     join t in db.SaleEnquiryLineExtended  on p.SaleEnquiryLineId equals t.SaleEnquiryLineId into table
                     from tab in table.DefaultIfEmpty()
-                    where (p.SaleEnquiryHeaderId == SaleEnquiryHeaderId) && (tab.BuyerSpecification == BuyerSpecification) && (tab.BuyerSpecification1 == BuyerSpecification1) && (tab.BuyerSpecification2 == BuyerSpecification2) && (tab.BuyerSpecification3 == BuyerSpecification3) 
+                    where (p.SaleEnquiryHeaderId == SaleEnquiryHeaderId) && (tab.BuyerSpecification == BuyerSpecification) && (tab.BuyerSpecification1 == BuyerSpecification1) && (tab.BuyerSpecification2 == BuyerSpecification2) && (tab.BuyerSpecification3 == BuyerSpecification3) && (p.DueDate == DueDate)
                     select p
             ).FirstOrDefault();
         }

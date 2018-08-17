@@ -113,7 +113,7 @@ namespace Service
                         ReasonName = p.Reason.ReasonName,
                         Remark = p.Remark,
                         Status = p.Status,
-                        BuyerName = p.Buyer.Person.Name,
+                        BuyerName = p.Buyer.Name,
                         ModifiedBy = p.ModifiedBy,
                         //FirstName = tab.FirstName,
                         ReviewCount = p.ReviewCount,

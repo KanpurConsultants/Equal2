@@ -39,10 +39,9 @@
             @*</h4>*@
             <div class="btn-group">
                 @Html.ActionLink(" ", "Create", "DirectSaleInvoiceHeader", new { @id = @ViewBag.id }, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip" })
-                @if (ViewBag.SqlProcDocumentPrint != null)
-                {
-                    @Html.ActionLink(" ", "GeneratePrints", "DirectSaleInvoiceHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-print toolbar", @title = "Print", @data_toggle = "tooltip", @id = "PrintRecordI", target = "_blank" })
-                }
+
+                @Html.ActionLink(" ", "GeneratePrints", "DirectSaleInvoiceHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-print toolbar", @title = "Print", @data_toggle = "tooltip", @id = "PrintRecordI", target = "_blank" })
+
                 @if (ViewBag.SqlProcGatePass != null)
                 {
                     @Html.ActionLink(" ", "GenerateGatePass", "DirectSaleInvoiceHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon glyphicon-log-out ", @title = "GatePass", @data_toggle = "tooltip", @id = "GenGatePassI" })

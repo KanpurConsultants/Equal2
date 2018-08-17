@@ -13,6 +13,8 @@ using Model.ViewModel;
 using System.Xml.Linq;
 using System.Linq;
 using Reports.Presentation.Helper;
+using Jobs.Constants.RugDocumentType;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -276,7 +278,7 @@ namespace Jobs.Areas.Rug.Controllers
                     product.ProductGroupId = new ProductGroupService(_unitOfWork).Find(ProductGroupConstants.Bom).ProductGroupId;
                     product.DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
                     product.IsActive = true;
-                    product.ReferenceDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductGroup).DocumentTypeId;
+                    product.ReferenceDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductGroup.DocumentTypeName).DocumentTypeId;
                     product.ReferenceDocId = ProductGroupId;
                     product.StandardWeight = svm.Weight;
                     product.CreatedDate = DateTime.Now;
@@ -325,7 +327,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.DesignColourConsumption).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.DesignColourConsumption.DocumentTypeName).DocumentTypeId,
                         DocId = product.ProductId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -379,7 +381,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.DesignConsumption).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(RugDocumentTypeConstants.DesignColourConsumption.DocumentTypeName).DocumentTypeId,
                         DocId = bomdetail.BomDetailId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -440,7 +442,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.DesignConsumption).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(RugDocumentTypeConstants.DesignColourConsumption.DocumentTypeName).DocumentTypeId,
                         DocId = bomdetail.BomDetailId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -584,7 +586,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.DesignConsumption).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(RugDocumentTypeConstants.DesignColourConsumption.DocumentTypeName).DocumentTypeId,
                     DocId = bomdetail.BomDetailId,
                     ActivityType = (int)ActivityTypeContants.Modified,
                     xEModifications = Modifications,
@@ -642,7 +644,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.DesignConsumption).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(RugDocumentTypeConstants.DesignColourConsumption.DocumentTypeName).DocumentTypeId,
                 DocId = BomDetail.BomDetailId,
                 ActivityType = (int)ActivityTypeContants.Deleted,
                 xEModifications = Modifications,

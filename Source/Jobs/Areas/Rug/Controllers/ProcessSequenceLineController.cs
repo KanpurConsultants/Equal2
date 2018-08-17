@@ -11,7 +11,7 @@ using Data.Infrastructure;
 using Core.Common;
 using Model.ViewModels;
 using AutoMapper;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Model.ViewModel;
 using System.Xml.Linq;
 using Jobs.Helpers;
@@ -83,7 +83,7 @@ namespace Jobs.Areas.Rug.Controllers
                                           where p.ProcessSequenceHeaderId == svm.ProcessSequenceHeaderId
                                           select p).FirstOrDefault();
 
-            ProductCollection PColl = new ProductCollectionService(_unitOfWork).Find(svm.RefDocId.Value);
+            ProductCategory PColl = new ProductCategoryService(_unitOfWork).Find(svm.RefDocId.Value);
 
 
             if (ModelState.IsValid)
@@ -93,12 +93,12 @@ namespace Jobs.Areas.Rug.Controllers
 
                     if (temp == null)
                     {
-                        int RefDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.ProductCollection).DocumentTypeId;
+                        int RefDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.ProductCategory.DocumentTypeName).DocumentTypeId;
 
                         ProcessSequenceHeader Header = new ProcessSequenceHeader();
-                        Header.ProcessSequenceHeaderName = PColl.ProductCollectionName + "-" + new DivisionService(_unitOfWork).Find((int)HttpContext.Session["DivisionId"]).DivisionName;
+                        Header.ProcessSequenceHeaderName = PColl.ProductCategoryName + "-" + new DivisionService(_unitOfWork).Find((int)HttpContext.Session["DivisionId"]).DivisionName;
                         Header.ReferenceDocTypeId = RefDocTypeId;
-                        Header.ReferenceDocId = PColl.ProductCollectionId;
+                        Header.ReferenceDocId = PColl.ProductCategoryId;
                         Header.CreatedBy = User.Identity.Name;
                         Header.CreatedDate = DateTime.Now;
                         Header.ModifiedBy = User.Identity.Name;
@@ -141,7 +141,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                         DocId = s.ProcessSequenceHeaderId,
                         DocLineId = s.ProcessSequenceLineId,
                         ActivityType = (int)ActivityTypeContants.Added,
@@ -189,7 +189,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                         DocId = temp.ProcessSequenceHeaderId,
                         DocLineId = temp1.ProcessSequenceLineId,
                         ActivityType = (int)ActivityTypeContants.Modified,
@@ -298,7 +298,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                 DocId = vm.ProcessSequenceHeaderId,
                 DocLineId = vm.ProcessSequenceLineId,
                 ActivityType = (int)ActivityTypeContants.Deleted,

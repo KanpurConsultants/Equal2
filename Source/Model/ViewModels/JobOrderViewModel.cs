@@ -191,7 +191,7 @@ namespace Model.ViewModel
         public decimal DealQty { get; set; }
 
         [Display(Name = "Non Counted Qty")]
-        public decimal NonCountedQty { get; set; }
+        public decimal ? NonCountedQty { get; set; }
 
         [Display(Name = "Loss Qty")]
         public decimal? LossQty { get; set; }

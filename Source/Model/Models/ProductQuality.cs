@@ -27,7 +27,7 @@ namespace Model.Models
         public int ProductTypeId { get; set; }
         public virtual ProductType ProductType { get; set; }
 
-        public Decimal Weight { get; set; }
+        //public Decimal Weight { get; set; }
 
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }

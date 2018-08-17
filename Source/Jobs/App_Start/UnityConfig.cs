@@ -65,6 +65,7 @@ namespace Jobs.App_Start
 
             //Property Tax
             container.RegisterType<ICollectionService, CollectionService>(new PerRequestLifetimeManager());
+            container.RegisterType<IDisplay_StockBalanceService, Display_StockBalanceService>(new PerRequestLifetimeManager());
 
             container.RegisterType<IRepository<CollectionSettings>, Repository<CollectionSettings>>();
             container.RegisterType<ICollectionSettingsService, CollectionSettingsService>(new PerRequestLifetimeManager());
@@ -271,8 +272,8 @@ namespace Jobs.App_Start
             container.RegisterType<IRepository<JobInvoiceRateAmendmentLine>, Repository<JobInvoiceRateAmendmentLine>>();
             container.RegisterType<IJobInvoiceRateAmendmentLineService, JobInvoiceRateAmendmentLineService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IRepository<JobWorker>, Repository<JobWorker>>();
-            container.RegisterType<IJobWorkerService, JobWorkerService>(new PerRequestLifetimeManager());
+            container.RegisterType<IRepository<Person>, Repository<Person>>();
+            container.RegisterType<IPersonService, PersonService>(new PerRequestLifetimeManager());
 
             container.RegisterType<IRepository<PersonAddress>, Repository<PersonAddress>>();
             container.RegisterType<IPersonAddressService, PersonAddressService>(new PerRequestLifetimeManager());
@@ -532,8 +533,8 @@ namespace Jobs.App_Start
             container.RegisterType<IRepository<Person>, Repository<Person>>();
             container.RegisterType<IPersonService, PersonService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IRepository<Buyer>, Repository<Buyer>>();
-            container.RegisterType<IBuyerService, BuyerService>(new PerRequestLifetimeManager());
+            //container.RegisterType<IRepository<Buyer>, Repository<Buyer>>();
+            //container.RegisterType<IBuyerService, BuyerService>(new PerRequestLifetimeManager());
 
             container.RegisterType<IRepository<Currency>, Repository<Currency>>();
             container.RegisterType<ICurrencyService, CurrencyService>(new PerRequestLifetimeManager());
@@ -998,61 +999,21 @@ namespace Jobs.App_Start
             ////////////////////////////////////////// End Planning Services///////////////////////////////////////////////////
 
 
-            ////////////////////////////////////////// Purchase Services///////////////////////////////////////////////////
 
-            container.RegisterType<IPurchaseOrderHeaderService, PurchaseOrderHeaderService>(new PerRequestLifetimeManager());
-            container.RegisterType<IPurchaseOrderLineService, PurchaseOrderLineService>(new PerRequestLifetimeManager());
+   
             container.RegisterType<IExceptionHandlingService, ExceptionHandlingService>(new PerRequestLifetimeManager());
             container.RegisterType<IModuleService, ModuleService>(new PerRequestLifetimeManager());
             container.RegisterType<ISubModuleService, SubModuleService>(new PerRequestLifetimeManager());
-            container.RegisterType<IPurchaseOrderSettingService, PurchaseOrderSettingService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IRepository<PurchaseIndentHeader>, Repository<PurchaseIndentHeader>>();
-            container.RegisterType<IPurchaseIndentHeaderService, PurchaseIndentHeaderService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IRepository<PurchaseIndentLine>, Repository<PurchaseIndentLine>>();
-            container.RegisterType<IPurchaseIndentLineService, PurchaseIndentLineService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IRepository<PurchaseOrderCancelHeader>, Repository<PurchaseOrderCancelHeader>>();
-            container.RegisterType<IPurchaseOrderCancelHeaderService, PurchaseOrderCancelHeaderService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseOrderCancelLine>, Repository<PurchaseOrderCancelLine>>();
-            container.RegisterType<IPurchaseOrderCancelLineService, PurchaseOrderCancelLineService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseIndentCancelHeader>, Repository<PurchaseIndentCancelHeader>>();
-            container.RegisterType<IPurchaseIndentCancelHeaderService, PurchaseIndentCancelHeaderService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseIndentCancelLine>, Repository<PurchaseIndentCancelLine>>();
-            container.RegisterType<IPurchaseIndentCancelLineService, PurchaseIndentCancelLineService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseInvoiceReturnHeader>, Repository<PurchaseInvoiceReturnHeader>>();
-            container.RegisterType<IPurchaseInvoiceReturnHeaderService, PurchaseInvoiceReturnHeaderService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseInvoiceReturnLine>, Repository<PurchaseInvoiceReturnLine>>();
-            container.RegisterType<IPurchaseInvoiceReturnLineService, PurchaseInvoiceReturnLineService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseGoodsReturnHeader>, Repository<PurchaseGoodsReturnHeader>>();
-            container.RegisterType<IPurchaseGoodsReturnHeaderService, PurchaseGoodsReturnHeaderService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseGoodsReturnLine>, Repository<PurchaseGoodsReturnLine>>();
-            container.RegisterType<IPurchaseGoodsReturnLineService, PurchaseGoodsReturnLineService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseGoodsReceiptHeader>, Repository<PurchaseGoodsReceiptHeader>>();
-            container.RegisterType<IPurchaseGoodsReceiptHeaderService, PurchaseGoodsReceiptHeaderService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseGoodsReceiptLine>, Repository<PurchaseGoodsReceiptLine>>();
-            container.RegisterType<IPurchaseGoodsReceiptLineService, PurchaseGoodsReceiptLineService>(new PerRequestLifetimeManager());
 
             container.RegisterType<IRepository<ProductUid>, Repository<ProductUid>>();
             container.RegisterType<IProductUidService, ProductUidService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IRepository<PurchaseInvoiceHeader>, Repository<PurchaseInvoiceHeader>>();
-            container.RegisterType<IPurchaseInvoiceHeaderService, PurchaseInvoiceHeaderService>(new PerRequestLifetimeManager());
 
             container.RegisterType<IDuplicateDocumentCheckService, DuplicateDocumentCheckService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IRepository<PurchaseInvoiceLine>, Repository<PurchaseInvoiceLine>>();
-            container.RegisterType<IPurchaseInvoiceLineService, PurchaseInvoiceLineService>(new PerRequestLifetimeManager());
 
             container.RegisterType<IRepository<Supplier>, Repository<Supplier>>();
             container.RegisterType<ISupplierService, SupplierService>(new PerRequestLifetimeManager());
@@ -1075,17 +1036,7 @@ namespace Jobs.App_Start
             container.RegisterType<IRepository<PersonRegistration>, Repository<PersonRegistration>>();
             container.RegisterType<IPersonRegistrationService, PersonRegistrationService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IRepository<PurchaseWaybill>, Repository<PurchaseWaybill>>();
-            container.RegisterType<IPurchaseWaybillService, PurchaseWaybillService>(new PerRequestLifetimeManager());
-
-
-            container.RegisterType<IPurchaseGoodsReceiptSettingService, PurchaseGoodsReceiptSettingService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IPurchaseInvoiceSettingService, PurchaseInvoiceSettingService>(new PerRequestLifetimeManager());
-
             container.RegisterType<IReportLineService, ReportLineService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IPurchaseIndentSettingService, PurchaseIndentSettingService>(new PerRequestLifetimeManager());
 
             container.RegisterType<IChargesCalculationService, ChargesCalculationService>(new PerRequestLifetimeManager());
 
@@ -1100,19 +1051,6 @@ namespace Jobs.App_Start
 
             container.RegisterType<IUpdatePurchaseExpiryService, UpdatePurchaseExpiryService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IPurchaseOrderRateAmendmentLineService, PurchaseOrderRateAmendmentLineService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IPurchaseQuotationHeaderService, PurchaseQuotationHeaderService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IPurchaseQuotationLineService, PurchaseQuotationLineService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IPurchaseQuotationSettingService, PurchaseQuotationSettingService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseInvoiceHeader>, Repository<PurchaseInvoiceHeader>>();
-            container.RegisterType<IPurchaseInvoiceHeaderService, PurchaseInvoiceHeaderService>(new PerRequestLifetimeManager());
-
-            container.RegisterType<IRepository<PurchaseInvoiceLine>, Repository<PurchaseInvoiceLine>>();
-            container.RegisterType<IPurchaseInvoiceLineService, PurchaseInvoiceLineService>(new PerRequestLifetimeManager());
 
             container.RegisterType<IRepository<ActivityLog>, Repository<ActivityLog>>();
             container.RegisterType<IActivityLogService, ActivityLogService>(new PerRequestLifetimeManager());
@@ -1179,8 +1117,8 @@ namespace Jobs.App_Start
             container.RegisterType<IRepository<BusinessEntity>, Repository<BusinessEntity>>();
             container.RegisterType<IBusinessEntityService, BusinessEntityService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IRepository<Buyer>, Repository<Buyer>>();
-            container.RegisterType<IBuyerService, BuyerService>(new PerRequestLifetimeManager());
+            //container.RegisterType<IRepository<Buyer>, Repository<Buyer>>();
+            //container.RegisterType<IBuyerService, BuyerService>(new PerRequestLifetimeManager());
 
             container.RegisterType<IRepository<Colour>, Repository<Colour>>();
             container.RegisterType<IColourService, ColourService>(new PerRequestLifetimeManager());
@@ -1244,8 +1182,8 @@ namespace Jobs.App_Start
             container.RegisterType<IRepository<ProductCategoryProcessSettings>, Repository<ProductCategoryProcessSettings>>();
             container.RegisterType<IProductCategoryProcessSettingsService, ProductCategoryProcessSettingsService>(new PerRequestLifetimeManager());
 
-            container.RegisterType<IRepository<ProductCollection>, Repository<ProductCollection>>();
-            container.RegisterType<IProductCollectionService, ProductCollectionService>(new PerRequestLifetimeManager());
+            //container.RegisterType<IRepository<ProductCollection>, Repository<ProductCollection>>();
+            //container.RegisterType<IProductCollectionService, ProductCollectionService>(new PerRequestLifetimeManager());
 
             container.RegisterType<IProductConstructionService, ProductConstructionService>(new PerRequestLifetimeManager());
 
@@ -1479,8 +1417,8 @@ namespace Jobs.App_Start
             Mapper.CreateMap<PersonAddress, SupplierViewModel>();
             Mapper.CreateMap<SupplierViewModel, PersonAddress>();
 
-            Mapper.CreateMap<PersonAddress, JobWorkerViewModel>();
-            Mapper.CreateMap<JobWorkerViewModel, PersonAddress>();
+            Mapper.CreateMap<PersonAddress, PersonViewModel>();
+            Mapper.CreateMap<PersonViewModel, PersonAddress>();
 
             Mapper.CreateMap<PersonAddress, ManufacturerViewModel>();
             Mapper.CreateMap<ManufacturerViewModel, PersonAddress>();
@@ -1491,8 +1429,8 @@ namespace Jobs.App_Start
             Mapper.CreateMap<PersonAddress, TransporterViewModel>();
             Mapper.CreateMap<TransporterViewModel, PersonAddress>();
 
-            Mapper.CreateMap<PersonAddress, BuyerViewModel>();
-            Mapper.CreateMap<BuyerViewModel, PersonAddress>();
+            Mapper.CreateMap<PersonAddress, PersonViewModel>();
+            Mapper.CreateMap<PersonViewModel, PersonAddress>();
 
             Mapper.CreateMap<LedgerHeader, LedgerHeaderViewModel>();
             Mapper.CreateMap<LedgerHeaderViewModel, LedgerHeader>();
@@ -1500,8 +1438,8 @@ namespace Jobs.App_Start
             Mapper.CreateMap<CityViewModel, City>();
             Mapper.CreateMap<City, CityViewModel>();
 
-            Mapper.CreateMap<LedgerAccount, BuyerViewModel>();
-            Mapper.CreateMap<BuyerViewModel, LedgerAccount>();
+            Mapper.CreateMap<LedgerAccount, PersonViewModel>();
+            Mapper.CreateMap<PersonViewModel, LedgerAccount>();
 
             Mapper.CreateMap<LedgerAccount, TransporterViewModel>();
             Mapper.CreateMap<TransporterViewModel, LedgerAccount>();
@@ -1512,8 +1450,8 @@ namespace Jobs.App_Start
             Mapper.CreateMap<LedgerAccount, ManufacturerViewModel>();
             Mapper.CreateMap<ManufacturerViewModel, LedgerAccount>();
 
-            Mapper.CreateMap<LedgerAccount, JobWorkerViewModel>();
-            Mapper.CreateMap<JobWorkerViewModel, LedgerAccount>();
+            Mapper.CreateMap<LedgerAccount, PersonViewModel>();
+            Mapper.CreateMap<PersonViewModel, LedgerAccount>();
 
             Mapper.CreateMap<LedgerAccount, SupplierViewModel>();
             Mapper.CreateMap<SupplierViewModel, LedgerAccount>();
@@ -1526,9 +1464,6 @@ namespace Jobs.App_Start
 
             Mapper.CreateMap<LedgersViewModel, Ledger>();
             Mapper.CreateMap<Ledger, LedgersViewModel>();
-
-            Mapper.CreateMap<HeaderChargeViewModel, HeaderChargeViewModel>();
-            Mapper.CreateMap<LineChargeViewModel, LineChargeViewModel>();
 
             Mapper.CreateMap<LedgerSetting, LedgerSettingViewModel>();
             Mapper.CreateMap<LedgerSettingViewModel, LedgerSetting>();
@@ -1567,27 +1502,24 @@ namespace Jobs.App_Start
             Mapper.CreateMap<ProductBuyer, ProductBuyerViewModel>();
             Mapper.CreateMap<ProductBuyerViewModel, ProductBuyer>();
 
-            Mapper.CreateMap<BuyerViewModel, Person>();
-            Mapper.CreateMap<Person, BuyerViewModel>();
+            Mapper.CreateMap<PersonViewModel, Person>();
+            Mapper.CreateMap<Person, PersonViewModel>();
 
-            Mapper.CreateMap<BuyerViewModel, BusinessEntity>();
-            Mapper.CreateMap<BusinessEntity, BuyerViewModel>();
+            Mapper.CreateMap<PersonViewModel, BusinessEntity>();
+            Mapper.CreateMap<BusinessEntity, PersonViewModel>();
 
-            Mapper.CreateMap<BuyerViewModel, Buyer>();
-            Mapper.CreateMap<Buyer, BuyerViewModel>();
+            //Mapper.CreateMap<BuyerViewModel, Buyer>();
+            //Mapper.CreateMap<Buyer, BuyerViewModel>();
 
-            Mapper.CreateMap<BuyerViewModel, PersonAddress>();
-            Mapper.CreateMap<PersonAddress, BuyerViewModel>();
+            Mapper.CreateMap<PersonViewModel, PersonAddress>();
+            Mapper.CreateMap<PersonAddress, PersonViewModel>();
 
-            Mapper.CreateMap<BuyerViewModel, LedgerAccount>();
-            Mapper.CreateMap<LedgerAccount, BuyerViewModel>();
+            Mapper.CreateMap<PersonViewModel, LedgerAccount>();
+            Mapper.CreateMap<LedgerAccount, PersonViewModel>();
 
             Mapper.CreateMap<ProductBuyerSettings, ProductBuyerSettingsViewModel>();
             Mapper.CreateMap<ProductBuyerSettingsViewModel, ProductBuyerSettings>();
 
-
-            Mapper.CreateMap<LineChargeViewModel, SaleInvoiceLineCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<SaleInvoiceLineCharge, LineChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
 
             Mapper.CreateMap<PersonViewModel, Person>();
             Mapper.CreateMap<Person, PersonViewModel>();
@@ -1595,8 +1527,8 @@ namespace Jobs.App_Start
             Mapper.CreateMap<PersonViewModel, BusinessEntity>();
             Mapper.CreateMap<BusinessEntity, PersonViewModel>();
 
-            Mapper.CreateMap<PersonViewModel, Buyer>();
-            Mapper.CreateMap<Buyer, PersonViewModel>();
+            //Mapper.CreateMap<PersonViewModel, Buyer>();
+            //Mapper.CreateMap<Buyer, PersonViewModel>();
 
             Mapper.CreateMap<PersonViewModel, PersonAddress>();
             Mapper.CreateMap<PersonAddress, PersonViewModel>();
@@ -1642,9 +1574,6 @@ namespace Jobs.App_Start
             Mapper.CreateMap<SaleDeliveryOrderLine, SaleDeliveryOrderLineViewModel>();
             Mapper.CreateMap<SaleDeliveryOrderLineViewModel, SaleDeliveryOrderLine>();
 
-
-            Mapper.CreateMap<HeaderChargeViewModel, HeaderChargeViewModel>();
-            Mapper.CreateMap<LineChargeViewModel, LineChargeViewModel>();
 
             Mapper.CreateMap<DirectSaleInvoiceHeaderViewModel, DocumentUniqueId>();
             Mapper.CreateMap<SaleInvoiceHeader, DocumentUniqueId>();
@@ -1838,6 +1767,9 @@ namespace Jobs.App_Start
             Mapper.CreateMap<SaleInvoiceHeaderDetail, SaleInvoiceHeaderIndexViewModel>();
             Mapper.CreateMap<SaleInvoiceHeaderIndexViewModel, SaleInvoiceHeaderDetail>();
 
+            Mapper.CreateMap<SaleInvoiceHeaderDetail, SaleInvoiceHeader>();
+            Mapper.CreateMap<SaleInvoiceHeader, SaleInvoiceHeaderDetail>();
+
             Mapper.CreateMap<SaleInvoiceHeaderIndexViewModelForEdit, SaleInvoiceHeaderIndexViewModel>();
             Mapper.CreateMap<SaleInvoiceHeaderIndexViewModel, SaleInvoiceHeaderIndexViewModelForEdit>();
 
@@ -2008,8 +1940,6 @@ namespace Jobs.App_Start
             Mapper.CreateMap<LedgerAccount, EmployeeViewModel>();
             Mapper.CreateMap<EmployeeViewModel, LedgerAccount>();
 
-            Mapper.CreateMap<PurchaseInvoiceHeader, PurchaseInvoiceHeaderViewModel>();
-            Mapper.CreateMap<PurchaseInvoiceHeaderViewModel, PurchaseInvoiceHeader>();
 
             Mapper.CreateMap<PersonContactViewModel, PersonContact>();
             Mapper.CreateMap<PersonContact, PersonContactViewModel>();
@@ -2317,10 +2247,8 @@ namespace Jobs.App_Start
             Mapper.CreateMap<MaterialPlanCancelHeader, MaterialPlanCancelHeader>();
             Mapper.CreateMap<MaterialPlanLine, MaterialPlanLine>();
             Mapper.CreateMap<ProdOrderLine, ProdOrderLine>();
-            Mapper.CreateMap<PurchaseIndentLine, PurchaseIndentLine>();
             Mapper.CreateMap<MaterialPlanForSaleOrder, MaterialPlanForSaleOrder>();
             Mapper.CreateMap<MaterialPlanForProdOrderLine, MaterialPlanForProdOrderLine>();
-            Mapper.CreateMap<PurchaseIndentHeader, PurchaseIndentHeader>();
             Mapper.CreateMap<MaterialPlanForProdOrder, MaterialPlanForProdOrder>();
             Mapper.CreateMap<MaterialPlanSettings, MaterialPlanSettings>();
             Mapper.CreateMap<ProdOrderSettings, ProdOrderSettings>();
@@ -2350,232 +2278,10 @@ namespace Jobs.App_Start
             Mapper.CreateMap<PersonContact, PersonContactViewModel>();
             Mapper.CreateMap<PersonContactViewModel, PersonContact>();
 
-            Mapper.CreateMap<PurchaseInvoiceHeader, PurchaseInvoiceHeaderViewModel>();
-            Mapper.CreateMap<PurchaseInvoiceHeaderViewModel, PurchaseInvoiceHeader>();
 
-            Mapper.CreateMap<PurchaseInvoiceLine, PurchaseInvoiceLineViewModel>();
-            Mapper.CreateMap<PurchaseInvoiceLineViewModel, PurchaseInvoiceLine>();
-
-            Mapper.CreateMap<PurchaseQuotationLine, PurchaseQuotationLineViewModel>();
-            Mapper.CreateMap<PurchaseQuotationLineViewModel, PurchaseQuotationLine>();
-
-            Mapper.CreateMap<PurchaseQuotationHeader, PurchaseQuotationHeaderViewModel>();
-            Mapper.CreateMap<PurchaseQuotationHeaderViewModel, PurchaseQuotationHeader>();
-
-            Mapper.CreateMap<PurchaseIndentHeader, PurchaseIndentHeaderViewModel>();
-            Mapper.CreateMap<PurchaseIndentHeaderViewModel, PurchaseIndentHeader>();
-
-            Mapper.CreateMap<PurchaseIndentLine, PurchaseIndentLineViewModel>();
-            Mapper.CreateMap<PurchaseIndentLineViewModel, PurchaseIndentLine>();
-
-            Mapper.CreateMap<PurchaseOrderHeader, PurchaseOrderHeaderViewModel>();
-            Mapper.CreateMap<PurchaseOrderHeaderViewModel, PurchaseOrderHeader>();
-
-            Mapper.CreateMap<PurchaseOrderLineViewModel, PurchaseOrderLine>();
-            Mapper.CreateMap<PurchaseOrderLine, PurchaseOrderLineViewModel>();
-
-            Mapper.CreateMap<PurchaseOrderSetting, PurchaseOrderSettingsViewModel>();
-            Mapper.CreateMap<PurchaseOrderSettingsViewModel, PurchaseOrderSetting>();
-
-            Mapper.CreateMap<LineChargeViewModel, PurchaseOrderLineCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseOrderLineCharge, LineChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<HeaderChargeViewModel, PurchaseOrderHeaderCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseOrderHeaderCharge, HeaderChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<PurchaseGoodsReceiptHeader, PurchaseGoodsReceiptHeaderViewModel>();
-            Mapper.CreateMap<PurchaseGoodsReceiptHeaderViewModel, PurchaseGoodsReceiptHeader>();
-
-            Mapper.CreateMap<PurchaseGoodsReceiptLine, PurchaseGoodsReceiptLineViewModel>();
-            Mapper.CreateMap<PurchaseGoodsReceiptLineViewModel, PurchaseGoodsReceiptLine>();
-
-            Mapper.CreateMap<PurchaseOrderCancelHeaderViewModel, PurchaseOrderCancelHeader>();
-            Mapper.CreateMap<PurchaseOrderCancelHeader, PurchaseOrderCancelHeaderViewModel>();
-
-            Mapper.CreateMap<PurchaseGoodsReceiptHeader, PurchaseGoodsReceiptHeaderViewModel>();
-            Mapper.CreateMap<PurchaseGoodsReceiptHeaderViewModel, PurchaseGoodsReceiptHeader>();
-
-            Mapper.CreateMap<PurchaseGoodsReceiptLine, PurchaseGoodsReceiptLineViewModel>();
-            Mapper.CreateMap<PurchaseGoodsReceiptLineViewModel, PurchaseGoodsReceiptLine>();
-
-            Mapper.CreateMap<PurchaseGoodsReceiptHeaderViewModel, PurchaseWaybill>();
-            Mapper.CreateMap<PurchaseWaybill, PurchaseGoodsReceiptHeaderViewModel>();
-
-            Mapper.CreateMap<PurchaseInvoiceHeader, PurchaseInvoiceHeaderViewModel>().ForMember(m => m.CreatedBy, x => x.Ignore())
-               .ForMember(m => m.CreatedDate, x => x.Ignore())
-               .ForMember(m => m.ModifiedBy, x => x.Ignore())
-               .ForMember(m => m.ModifiedDate, x => x.Ignore())
-               .ForMember(m => m.DivisionId, x => x.Ignore())
-               .ForMember(m => m.SiteId, x => x.Ignore());
-            Mapper.CreateMap<PurchaseInvoiceHeaderViewModel, PurchaseInvoiceHeader>().ForMember(m => m.CreatedBy, x => x.Ignore())
-                .ForMember(m => m.CreatedDate, x => x.Ignore())
-                .ForMember(m => m.ModifiedBy, x => x.Ignore())
-                .ForMember(m => m.ModifiedDate, x => x.Ignore())
-                .ForMember(m => m.DivisionId, x => x.Ignore())
-                .ForMember(m => m.SiteId, x => x.Ignore());
-
-            Mapper.CreateMap<PurchaseIndentCancelHeader, PurchaseIndentCancelHeaderViewModel>();
-            Mapper.CreateMap<PurchaseIndentCancelHeaderViewModel, PurchaseIndentCancelHeader>();
-
-            Mapper.CreateMap<PurchaseIndentCancelLine, PurchaseIndentCancelLineViewModel>();
-            Mapper.CreateMap<PurchaseIndentCancelLineViewModel, PurchaseIndentCancelLine>();
-
-            Mapper.CreateMap<PurchaseInvoiceReturnHeader, PurchaseInvoiceReturnHeaderViewModel>();
-            Mapper.CreateMap<PurchaseInvoiceReturnHeaderViewModel, PurchaseInvoiceReturnHeader>();
-
-            Mapper.CreateMap<PurchaseInvoiceReturnLine, PurchaseInvoiceReturnLineViewModel>();
-            Mapper.CreateMap<PurchaseInvoiceReturnLineViewModel, PurchaseInvoiceReturnLine>();
-
-            Mapper.CreateMap<PurchaseGoodsReturnHeader, PurchaseGoodsReturnHeaderViewModel>();
-            Mapper.CreateMap<PurchaseGoodsReturnHeaderViewModel, PurchaseGoodsReturnHeader>();
-
-            Mapper.CreateMap<PurchaseGoodsReturnLine, PurchaseGoodsReturnLineViewModel>();
-            Mapper.CreateMap<PurchaseGoodsReturnLineViewModel, PurchaseGoodsReturnLine>();
-
-            Mapper.CreateMap<LineChargeViewModel, PurchaseOrderLineCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseOrderLineCharge, LineChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<LineChargeViewModel, PurchaseOrderRateAmendmentLineCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseOrderRateAmendmentLineCharge, LineChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<HeaderChargeViewModel, PurchaseOrderAmendmentHeaderCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseOrderAmendmentHeaderCharge, HeaderChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<PurchaseWaybillViewModel, PurchaseWaybill>();
-            Mapper.CreateMap<PurchaseWaybill, PurchaseWaybillViewModel>();
-
-            Mapper.CreateMap<PurchaseOrderAmendmentHeader, PurchaseOrderAmendmentHeaderViewModel>();
-            Mapper.CreateMap<PurchaseOrderAmendmentHeaderViewModel, PurchaseOrderAmendmentHeader>();
-
-            Mapper.CreateMap<PurchaseOrderRateAmendmentLine, PurchaseOrderRateAmendmentLineViewModel>();
-            Mapper.CreateMap<PurchaseOrderRateAmendmentLineViewModel, PurchaseOrderRateAmendmentLine>();
-
-            Mapper.CreateMap<PurchaseGoodsReceiptSetting, PurchaseGoodsReceiptSettingsViewModel>();
-            Mapper.CreateMap<PurchaseGoodsReceiptSettingsViewModel, PurchaseGoodsReceiptSetting>();
-
-            Mapper.CreateMap<PurchaseInvoiceSetting, PurchaseInvoiceSettingsViewModel>();
-            Mapper.CreateMap<PurchaseInvoiceSettingsViewModel, PurchaseInvoiceSetting>();
-
-            Mapper.CreateMap<PurchaseQuotationSetting, PurchaseQuotationSettingsViewModel>();
-            Mapper.CreateMap<PurchaseQuotationSettingsViewModel, PurchaseQuotationSetting>();
 
             Mapper.CreateMap<CalculationFooterViewModel, HeaderChargeViewModel>();
             Mapper.CreateMap<CalculationProductViewModel, LineChargeViewModel>();
-
-            Mapper.CreateMap<HeaderChargeViewModel, PurchaseInvoiceHeaderCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseInvoiceHeaderCharge, HeaderChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<LineChargeViewModel, PurchaseInvoiceLineCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseInvoiceLineCharge, LineChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<HeaderChargeViewModel, PurchaseQuotationHeaderCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseQuotationHeaderCharge, HeaderChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<LineChargeViewModel, PurchaseQuotationLineCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseQuotationLineCharge, LineChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<LineChargeViewModel, PurchaseInvoiceReturnLineCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseInvoiceReturnLineCharge, LineChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<HeaderChargeViewModel, PurchaseInvoiceReturnHeaderCharge>().ForMember(m => m.Id, x => x.Ignore());
-            Mapper.CreateMap<PurchaseInvoiceReturnHeaderCharge, HeaderChargeViewModel>().ForMember(m => m.Id, x => x.Ignore());
-
-            Mapper.CreateMap<PurchaseIndentSetting, PurchaseIndentSettingsViewModel>();
-            Mapper.CreateMap<PurchaseIndentSettingsViewModel, PurchaseIndentSetting>();
-
-            Mapper.CreateMap<PurchaseInvoiceReturnHeaderViewModel, PurchaseGoodsReturnHeader>().ForMember(m => m.PurchaseGoodsReturnHeaderId, x => x.Ignore());
-            Mapper.CreateMap<PurchaseGoodsReturnHeader, PurchaseInvoiceReturnHeaderViewModel>();
-
-            Mapper.CreateMap<PurchaseInvoiceReturnLineViewModel, PurchaseGoodsReturnLine>();
-            Mapper.CreateMap<PurchaseGoodsReturnLine, PurchaseInvoiceReturnLineViewModel>();
-
-            Mapper.CreateMap<PurchaseInvoiceReturnHeader, PurchaseGoodsReturnHeader>().ForMember(m => m.PurchaseGoodsReturnHeaderId, x => x.Ignore());
-            Mapper.CreateMap<PurchaseGoodsReturnHeader, PurchaseInvoiceReturnHeader>();
-
-            Mapper.CreateMap<PurchaseInvoiceReturnLine, PurchaseGoodsReturnLine>();
-            Mapper.CreateMap<PurchaseGoodsReturnLine, PurchaseInvoiceReturnLine>();
-
-            Mapper.CreateMap<PurchaseInvoiceHeaderViewModel, PurchaseGoodsReceiptHeader>();
-            Mapper.CreateMap<PurchaseGoodsReceiptHeader, PurchaseInvoiceHeaderViewModel>();
-
-            Mapper.CreateMap<PurchaseInvoiceLineViewModel, PurchaseGoodsReceiptLine>();
-            Mapper.CreateMap<PurchaseGoodsReceiptLine, PurchaseInvoiceLineViewModel>();
-
-            Mapper.CreateMap<HeaderChargeViewModel, HeaderChargeViewModel>();
-            Mapper.CreateMap<LineChargeViewModel, LineChargeViewModel>();
-
-            Mapper.CreateMap<PurchaseInvoiceHeaderViewModel, DocumentUniqueId>();
-            Mapper.CreateMap<PurchaseInvoiceHeader, DocumentUniqueId>();
-
-            Mapper.CreateMap<PurchaseQuotationHeaderViewModel, DocumentUniqueId>();
-            Mapper.CreateMap<PurchaseQuotationHeader, DocumentUniqueId>();
-
-            Mapper.CreateMap<PurchaseGoodsReceiptHeaderViewModel, DocumentUniqueId>();
-            Mapper.CreateMap<PurchaseGoodsReceiptHeader, DocumentUniqueId>();
-
-            Mapper.CreateMap<PurchaseGoodsReturnHeaderViewModel, DocumentUniqueId>();
-            Mapper.CreateMap<PurchaseGoodsReturnHeader, DocumentUniqueId>();
-
-            Mapper.CreateMap<PurchaseIndentCancelHeaderViewModel, DocumentUniqueId>();
-            Mapper.CreateMap<PurchaseIndentCancelHeader, DocumentUniqueId>();
-
-            Mapper.CreateMap<PurchaseIndentHeaderViewModel, DocumentUniqueId>();
-            Mapper.CreateMap<PurchaseIndentHeader, DocumentUniqueId>();
-
-            Mapper.CreateMap<PurchaseInvoiceReturnHeaderViewModel, DocumentUniqueId>();
-            Mapper.CreateMap<PurchaseInvoiceReturnHeader, DocumentUniqueId>();
-
-            Mapper.CreateMap<PurchaseOrderCancelHeaderViewModel, DocumentUniqueId>();
-            Mapper.CreateMap<PurchaseOrderCancelHeader, DocumentUniqueId>();
-
-            Mapper.CreateMap<PurchaseOrderHeaderViewModel, DocumentUniqueId>();
-            Mapper.CreateMap<PurchaseOrderHeader, DocumentUniqueId>();
-
-            Mapper.CreateMap<PurchaseOrderAmendmentHeaderViewModel, DocumentUniqueId>();
-            Mapper.CreateMap<PurchaseOrderAmendmentHeader, DocumentUniqueId>();
-
-
-            Mapper.CreateMap<PurchaseInvoiceHeader, PurchaseInvoiceHeader>();
-            Mapper.CreateMap<PurchaseQuotationHeader, PurchaseQuotationHeader>();
-            Mapper.CreateMap<PurchaseGoodsReceiptHeader, PurchaseGoodsReceiptHeader>();
-            Mapper.CreateMap<PurchaseInvoiceLineIndexViewModel, PurchaseInvoiceLine>();
-            Mapper.CreateMap<PurchaseGoodsReceiptLineViewModel, PurchaseGoodsReceiptLine>();
-            Mapper.CreateMap<PurchaseIndentHeader, PurchaseIndentHeader>();
-            Mapper.CreateMap<PurchaseIndentLineViewModel, PurchaseIndentLine>();
-            Mapper.CreateMap<PurchaseGoodsReturnHeader, PurchaseGoodsReturnHeader>();
-            Mapper.CreateMap<PurchaseGoodsReturnLineIndexViewModel, PurchaseGoodsReturnLine>();
-            Mapper.CreateMap<PurchaseOrderCancelHeader, PurchaseOrderCancelHeader>();
-            Mapper.CreateMap<PurchaseOrderCancelLineViewModel, PurchaseOrderCancelLine>();
-            Mapper.CreateMap<PurchaseInvoiceReturnHeader, PurchaseInvoiceReturnHeader>();
-            Mapper.CreateMap<PurchaseInvoiceReturnLineIndexViewModel, PurchaseInvoiceReturnLine>();
-            Mapper.CreateMap<PurchaseIndentCancelHeader, PurchaseIndentCancelHeader>();
-            Mapper.CreateMap<PurchaseIndentCancelLineViewModel, PurchaseIndentCancelLine>();
-            Mapper.CreateMap<PurchaseOrderHeader, PurchaseOrderHeader>();
-            Mapper.CreateMap<PurchaseOrderLineViewModel, PurchaseOrderLine>();
-            Mapper.CreateMap<PurchaseIndentCancelLine, PurchaseIndentCancelLine>();
-            Mapper.CreateMap<PurchaseIndentLine, PurchaseIndentLine>();
-            Mapper.CreateMap<PurchaseOrderCancelLine, PurchaseOrderCancelLine>();
-            Mapper.CreateMap<PurchaseInvoiceLine, PurchaseInvoiceLine>();
-            Mapper.CreateMap<PurchaseInvoiceLineCharge, PurchaseInvoiceLineCharge>();
-            Mapper.CreateMap<PurchaseInvoiceHeaderCharge, PurchaseInvoiceHeaderCharge>();
-            Mapper.CreateMap<PurchaseQuotationLine, PurchaseQuotationLine>();
-            Mapper.CreateMap<PurchaseQuotationLineCharge, PurchaseQuotationLineCharge>();
-            Mapper.CreateMap<PurchaseQuotationHeaderCharge, PurchaseQuotationHeaderCharge>();
-            Mapper.CreateMap<PurchaseGoodsReceiptLine, PurchaseGoodsReceiptLine>();
-            Mapper.CreateMap<PurchaseGoodsReturnLine, PurchaseGoodsReturnLine>();
-            Mapper.CreateMap<PurchaseInvoiceReturnLine, PurchaseInvoiceReturnLine>();
-            Mapper.CreateMap<PurchaseInvoiceReturnLineCharge, PurchaseInvoiceReturnLineCharge>();
-            Mapper.CreateMap<PurchaseInvoiceReturnHeaderCharge, PurchaseInvoiceReturnHeaderCharge>();
-            Mapper.CreateMap<PurchaseOrderLine, PurchaseOrderLine>();
-            Mapper.CreateMap<PurchaseOrderLineCharge, PurchaseOrderLineCharge>();
-            Mapper.CreateMap<PurchaseOrderHeaderCharge, PurchaseOrderHeaderCharge>();
-            Mapper.CreateMap<PurchaseOrderRateAmendmentLineCharge, PurchaseOrderRateAmendmentLineCharge>();
-            Mapper.CreateMap<PurchaseOrderAmendmentHeaderCharge, PurchaseOrderAmendmentHeaderCharge>();
-            Mapper.CreateMap<PurchaseGoodsReceiptSetting, PurchaseGoodsReceiptSetting>();
-            Mapper.CreateMap<PurchaseIndentSetting, PurchaseIndentSetting>();
-            Mapper.CreateMap<PurchaseInvoiceSetting, PurchaseInvoiceSetting>();
-            Mapper.CreateMap<PurchaseQuotationSetting, PurchaseQuotationSetting>();
-            Mapper.CreateMap<PurchaseOrderSetting, PurchaseOrderSetting>();
 
             //////////////////////////////////////////End Purchase ViewModel Mapping///////////////////////////////////////////////////
 
@@ -2728,26 +2434,26 @@ namespace Jobs.App_Start
             Mapper.CreateMap<CustomDetailViewModelWithLog, CustomDetailViewModel>();
             Mapper.CreateMap<CustomDetailViewModel, CustomDetailViewModelWithLog>();
 
-            Mapper.CreateMap<Buyer, BuyerViewModel>();
-            Mapper.CreateMap<BuyerViewModel, Buyer>();
+            //Mapper.CreateMap<Buyer, BuyerViewModel>();
+            //Mapper.CreateMap<BuyerViewModel, Buyer>();
 
-            Mapper.CreateMap<Person, BuyerViewModel>();
-            Mapper.CreateMap<BuyerViewModel, Person>();
+            //Mapper.CreateMap<Person, BuyerViewModel>();
+            //Mapper.CreateMap<BuyerViewModel, Person>();
 
-            Mapper.CreateMap<PersonAddress, BuyerViewModel>();
-            Mapper.CreateMap<BuyerViewModel, PersonAddress>();
+            Mapper.CreateMap<PersonAddress, PersonViewModel>();
+            Mapper.CreateMap<PersonViewModel, PersonAddress>();
 
-            Mapper.CreateMap<LedgerAccount, BuyerViewModel>();
-            Mapper.CreateMap<BuyerViewModel, LedgerAccount>();
+            Mapper.CreateMap<LedgerAccount, PersonViewModel>();
+            Mapper.CreateMap<PersonViewModel, LedgerAccount>();
 
-            Mapper.CreateMap<BusinessEntity, BuyerViewModel>();
-            Mapper.CreateMap<BuyerViewModel, BusinessEntity>();
+            Mapper.CreateMap<BusinessEntity, PersonViewModel>();
+            Mapper.CreateMap<PersonViewModel, BusinessEntity>();
 
             Mapper.CreateMap<BusinessEntity, TransporterViewModel>();
             Mapper.CreateMap<TransporterViewModel, BusinessEntity>();
 
-            Mapper.CreateMap<BusinessEntity, JobWorkerViewModel>();
-            Mapper.CreateMap<JobWorkerViewModel, BusinessEntity>();
+            Mapper.CreateMap<BusinessEntity, PersonViewModel>();
+            Mapper.CreateMap<PersonViewModel, BusinessEntity>();
 
             Mapper.CreateMap<BusinessEntity, SupplierViewModel>();
             Mapper.CreateMap<SupplierViewModel, BusinessEntity>();
@@ -2894,7 +2600,7 @@ namespace Jobs.App_Start
             Mapper.CreateMap<BomDetail, BomDetail>();
 
             Mapper.CreateMap<ProductCategory, ProductCategory>();
-            Mapper.CreateMap<ProductCollection, ProductCollection>();
+            //Mapper.CreateMap<ProductCollection, ProductCollection>();
             Mapper.CreateMap<ProductCategory, ProductCategory>();
             Mapper.CreateMap<ProductContentHeader, ProductContentHeader>();
             Mapper.CreateMap<ProductContentLine, ProductContentLine>();
@@ -2964,23 +2670,6 @@ namespace Jobs.App_Start
             Mapper.CreateMap<BusinessEntity, SupplierViewModel>();
             Mapper.CreateMap<SupplierViewModel, BusinessEntity>();
 
-            Mapper.CreateMap<BusinessEntity, JobWorkerViewModel>();
-            Mapper.CreateMap<JobWorkerViewModel, BusinessEntity>();
-
-            Mapper.CreateMap<Person, JobWorkerViewModel>();
-            Mapper.CreateMap<JobWorkerViewModel, Person >();
-
-            Mapper.CreateMap<JobWorker, JobWorkerViewModel>();
-            Mapper.CreateMap<JobWorkerViewModel, JobWorker>();
-
-
-            Mapper.CreateMap<PersonAddress, JobWorkerViewModel>();
-            Mapper.CreateMap<JobWorkerViewModel, PersonAddress>();
-
-
-            Mapper.CreateMap<LedgerAccount, JobWorkerViewModel>();
-            Mapper.CreateMap<JobWorkerViewModel, LedgerAccount>();
-
             Mapper.CreateMap<BusinessEntity, ManufacturerViewModel>();
             Mapper.CreateMap<ManufacturerViewModel, BusinessEntity>();
 
@@ -2990,8 +2679,8 @@ namespace Jobs.App_Start
             Mapper.CreateMap<BusinessEntity, TransporterViewModel>();
             Mapper.CreateMap<TransporterViewModel, BusinessEntity>();
 
-            Mapper.CreateMap<BusinessEntity, BuyerViewModel>();
-            Mapper.CreateMap<BuyerViewModel, BusinessEntity>();
+            Mapper.CreateMap<BusinessEntity, PersonViewModel>();
+            Mapper.CreateMap<PersonViewModel, BusinessEntity>();
 
             Mapper.CreateMap<JobOrderHeader, JobOrderHeaderViewModel>();
             Mapper.CreateMap<JobOrderHeaderViewModel, JobOrderHeader>();
@@ -3148,7 +2837,7 @@ namespace Jobs.App_Start
             Mapper.CreateMap<PersonAddress, PersonAddress>();
             Mapper.CreateMap<Person, Person>();
             Mapper.CreateMap<BusinessEntity, BusinessEntity>();
-            Mapper.CreateMap<JobWorker, JobWorker>();
+            Mapper.CreateMap<Person, Person>();
             Mapper.CreateMap<StockLine, StockLine>();
             Mapper.CreateMap<JobOrderRateAmendmentLine, JobOrderRateAmendmentLine>();
             Mapper.CreateMap<JobInvoiceRateAmendmentLine, JobInvoiceRateAmendmentLine>();
@@ -3184,6 +2873,10 @@ namespace Jobs.App_Start
 
             Mapper.CreateMap<JobOrderInspectionHeaderViewModel, DocumentUniqueId>();
             Mapper.CreateMap<JobOrderInspectionHeader, DocumentUniqueId>();
+
+            Mapper.CreateMap<ProductViewModel, Product>();
+
+            
 
             Mapper.CreateMap<JobReceiveQAHeaderViewModel, DocumentUniqueId>();
             Mapper.CreateMap<JobReceiveQAHeader, DocumentUniqueId>();

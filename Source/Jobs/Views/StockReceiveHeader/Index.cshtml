@@ -38,10 +38,9 @@
             <div class="btn-group">
                 @Html.ActionLink(" ", "Create", "StockReceiveHeader", new { @id = @ViewBag.id }, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip" })
 
-                @if (ViewBag.SqlProcDocumentPrint !=null)
-                {
+
                 @Html.ActionLink(" ", "GeneratePrints", "StockReceiveHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-print toolbar", @title = "Print", @data_toggle = "tooltip", @id = "PrintRecordI", target = "_blank" })
-                }
+
                 @Html.ActionLink(" ", "Remove", "StockReceiveHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-trash toolbar", @title = "Delete", @data_toggle = "tooltip", @id = "DeleteRecord", @data_modalDelete = "" })
             </div>
             <div class="btn-group">

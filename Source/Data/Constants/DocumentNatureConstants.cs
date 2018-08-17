@@ -249,10 +249,10 @@ namespace Jobs.Constants.DocumentNature
         }
         #endregion
         #region "Planning"
-        public static class SaleOrderPlan
+        public static class Planning
         {
             public const int DocumentNatureId = 480;
-            public const string DocumentNatureName = "Sale Order Plan";
+            public const string DocumentNatureName = "Planning";
         }
 
         #endregion

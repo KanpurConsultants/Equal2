@@ -6,7 +6,7 @@ using Model.Models;
 using Data.Models;
 using Service;
 using Data.Infrastructure;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using Model.ViewModel;
 using System.Xml.Linq;
@@ -86,7 +86,7 @@ namespace Jobs.Controllers
         public ActionResult Post(ProductTypeSettingsViewModel vm)
         {
             ProductTypeSettings pt = AutoMapper.Mapper.Map<ProductTypeSettingsViewModel, ProductTypeSettings>(vm);
-            DocumentType DocType = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.ProductType);
+            DocumentType DocType = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.ProductType.DocumentTypeName);
 
             if (ModelState.IsValid)
             {

@@ -422,6 +422,7 @@ namespace Jobs.Areas.Rug.Controllers
                             else
                             {
                                 CostCenter Cs = new CostCenter();
+                                Cs.CostCenterId = 1;
                                 Cs.CostCenterName = svm.CostCenterName;
                                 Cs.DivisionId = svm.DivisionId;
                                 Cs.SiteId = svm.SiteId;

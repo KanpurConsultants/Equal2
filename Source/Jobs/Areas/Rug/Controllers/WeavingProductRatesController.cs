@@ -8,7 +8,7 @@ using Data.Infrastructure;
 using System.Xml.Linq;
 using Core.Common;
 using Model.ViewModel;
-
+using Jobs.Constants.DocumentType;
 
 
 namespace Jobs.Areas.Rug.Controllers
@@ -129,18 +129,16 @@ namespace Jobs.Areas.Rug.Controllers
             IQueryable<ProductViewModel> _data = (from p in db.ProductProcess
                                                   join rh in db.RateListHeader on p.ProcessId equals rh.ProcessId                                                  
                                                   join fp in db.FinishedProduct on p.ProductId equals fp.ProductId
-                                                  join pcol in db.ProductCollections on fp.ProductCollectionId equals pcol.ProductCollectionId
                                                   join pcat in db.ProductCategory on fp.ProductCategoryId equals pcat.ProductCategoryId
                                                   join pd in db.ProductDesigns on fp.ProductDesignId equals pd.ProductDesignId
                                                   join rll in db.RateListLine on new { x = p.ProductId, y = rh.RateListHeaderId }
                                                  equals new { x = rll.ProductId ?? 0, y = rll.RateListHeaderId } into rlltable
                                                   from rlltab in rlltable.DefaultIfEmpty()
                                                   where rh.RateListHeaderId == Fvm.RateListHeaderId && (Pending ? rlltab == null : 1 == 1) && (All ? 1 == 1 : fp.IsSample == Sample)
-                                                  && (string.IsNullOrEmpty(Fvm.ProductCollection) ? 1 == 1 : Collections.Contains(fp.ProductCollectionId.ToString()))
                                                   && (string.IsNullOrEmpty(Fvm.ProductCategory) ? 1 == 1 : Category.Contains(fp.ProductCategoryId.ToString()))
                                                   && rh.DivisionId == fp.DivisionId && fp.IsActive == true
                                                   && (Fvm.DisContinued == "All" ? 1 == 1 : fp.DiscontinuedDate == null)
-                                                  group new { fp, rlltab, pcol, pcat, pd } by fp.ProductId into g
+                                                  group new { fp, rlltab, pcat, pd } by fp.ProductId into g
                                                   select new ProductViewModel
                                                   {
                                                       ProductId = g.Key,
@@ -152,7 +150,7 @@ namespace Jobs.Areas.Rug.Controllers
                                                       Rate = g.Max(m => m.rlltab.Rate),
                                                       Loss = g.Max(m => m.rlltab.Loss),
                                                       Weight = g.Max(m => m.rlltab.UnCountedQty),
-                                                      ProductCollectionName = g.Max(m => m.pcol.ProductCollectionName),
+                                                      //ProductCollectionName = g.Max(m => m.pcol.ProductCollectionName),
                                                       ProductCategoryName = g.Max(m => m.pcat.ProductCategoryName),
                                                   });
 
@@ -169,7 +167,7 @@ namespace Jobs.Areas.Rug.Controllers
                 // simulate search
                 _data = from m in _data
                         where (m.ProductName).ToLower().Contains(search.ToLower()) || (m.ProductDesignName).ToLower().Contains(search.ToLower())
-                        || (m.SampleName).ToLower().Contains(search.ToLower()) || (m.ProductCollectionName).ToLower().Contains(search.ToLower())
+                        || (m.SampleName).ToLower().Contains(search.ToLower()) 
                         || (m.ProductCategoryName).ToLower().Contains(search.ToLower())
                         select m;
 
@@ -192,7 +190,6 @@ namespace Jobs.Areas.Rug.Controllers
                 Rate = m.Rate,
                 Loss = m.Loss,
                 Weight = m.Weight,
-                ProductCollectionName = m.ProductCollectionName,
                 ProductCategoryName = m.ProductCategoryName,
             })
             .Skip(start).Take((start == 0) ? 90 : length).ToList();
@@ -211,7 +208,7 @@ namespace Jobs.Areas.Rug.Controllers
             {
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.RateListHeader).DocumentTypeId,                    
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.RateListHeader.DocumentTypeName).DocumentTypeId,                    
                     ActivityType = (int)ActivityTypeContants.Modified,
                     xEModifications = Modifications,
                 }));

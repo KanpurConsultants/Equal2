@@ -9,7 +9,7 @@ using Data.Infrastructure;
 using Core.Common;
 using Model.ViewModels;
 using AutoMapper;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using System.Text;
 using System.Collections.Generic;
 using System.Configuration;
@@ -64,7 +64,7 @@ namespace Jobs.Controllers
             LedgerAccountOpeningViewModel s = new LedgerAccountOpeningViewModel();
             s.LedgerAccountId = Id;
 
-            s.DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.Opening).DocumentTypeId;
+            s.DocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Opening.DocumentTypeName).DocumentTypeId;
             //s.DocDate = DateTime.Now;
 
             DateTime TodayDate = DateTime.Now;

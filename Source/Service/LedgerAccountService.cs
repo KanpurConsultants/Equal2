@@ -174,9 +174,13 @@ namespace Service
         public int MaxId()
         {
             int temp = 0;
+            IQueryable<LedgerAccount> PC = db.LedgerAccount;
 
-            temp = (from p in db.LedgerAccount
+            if (PC.Count() != 0)
+            {
+                temp = (from p in db.LedgerAccount
                         select p.LedgerAccountId).Max();
+            }
 
            return temp;
 

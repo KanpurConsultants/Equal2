@@ -33,6 +33,7 @@ namespace Service
         IEnumerable<ComboBoxList> GetProductFooters(int id, string term);
         int NextId(int id);
         int PrevId(int id);
+        int MaxId();
     }
 
     public class CalculationHeaderLedgerAccountService : ICalculationHeaderLedgerAccountService
@@ -53,6 +54,21 @@ namespace Service
         public CalculationHeaderLedgerAccount Find(int id)
         {
             return _unitOfWork.Repository<CalculationHeaderLedgerAccount>().Find(id);
+        }
+
+        public int MaxId()
+        {
+            int temp = 0;
+            IQueryable<CalculationHeaderLedgerAccount> PC = db.CalculationHeaderLedgerAccount;
+
+            if (PC.Count() != 0)
+            {
+                temp = (from p in db.CalculationHeaderLedgerAccount
+                        select p.CalculationHeaderLedgerAccountId).Max();
+            }
+
+            return temp;
+
         }
         public CalculationHeaderLedgerAccountViewModel GetCalculationHeaderLedgerAccount(int id, int DocTypeId)
         {

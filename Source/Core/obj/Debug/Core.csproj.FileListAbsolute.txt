@@ -52,13 +52,6 @@ D:\Kanpur Consultants\HomeFurnishing\Source\Core\bin\Debug\log4net.dll
 D:\Kanpur Consultants\HomeFurnishing\Source\Core\bin\Debug\log4net.xml
 D:\Kanpur Consultants\HomeFurnishing\Source\Core\obj\Debug\Core.dll
 D:\Kanpur Consultants\HomeFurnishing\Source\Core\obj\Debug\Core.pdb
-D:\Active Projects\Web\Equal2\Source\Core\bin\Debug\Core.dll
-D:\Active Projects\Web\Equal2\Source\Core\bin\Debug\Core.pdb
-D:\Active Projects\Web\Equal2\Source\Core\bin\Debug\log4net.dll
-D:\Active Projects\Web\Equal2\Source\Core\bin\Debug\log4net.xml
-D:\Active Projects\Web\Equal2\Source\Core\obj\Debug\Core.csprojResolveAssemblyReference.cache
-D:\Active Projects\Web\Equal2\Source\Core\obj\Debug\Core.dll
-D:\Active Projects\Web\Equal2\Source\Core\obj\Debug\Core.pdb
 D:\Kanpur Consultants\Equal2\Source\Core\bin\Debug\Core.dll
 D:\Kanpur Consultants\Equal2\Source\Core\bin\Debug\Core.pdb
 D:\Kanpur Consultants\Equal2\Source\Core\bin\Debug\log4net.dll
@@ -66,3 +59,9 @@ D:\Kanpur Consultants\Equal2\Source\Core\bin\Debug\log4net.xml
 D:\Kanpur Consultants\Equal2\Source\Core\obj\Debug\Core.csprojResolveAssemblyReference.cache
 D:\Kanpur Consultants\Equal2\Source\Core\obj\Debug\Core.dll
 D:\Kanpur Consultants\Equal2\Source\Core\obj\Debug\Core.pdb
+D:\Active Projects\Web\Equal2\Source\Core\bin\Debug\Core.dll
+D:\Active Projects\Web\Equal2\Source\Core\bin\Debug\Core.pdb
+D:\Active Projects\Web\Equal2\Source\Core\bin\Debug\log4net.dll
+D:\Active Projects\Web\Equal2\Source\Core\bin\Debug\log4net.xml
+D:\Active Projects\Web\Equal2\Source\Core\obj\Debug\Core.dll
+D:\Active Projects\Web\Equal2\Source\Core\obj\Debug\Core.pdb

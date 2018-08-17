@@ -21,7 +21,7 @@ using MaterialRequestDocumentEvents;
 using Reports.Reports;
 using Reports.Controllers;
 using Model.ViewModels;
-
+using Jobs.Constants.DocumentCategory;
 
 
 namespace Jobs.Controllers
@@ -121,7 +121,7 @@ namespace Jobs.Controllers
         private void PrepareViewBag(int id)
         {
 
-            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(TransactionDocCategoryConstants.Requisition).ToList();
+            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(DocumentCategoryConstants.MaterialRequest.DocumentCategoryName).ToList();
             ViewBag.Name = new DocumentTypeService(_unitOfWork).Find(id).DocumentTypeName;
             ViewBag.id = id;
             var DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];

@@ -3,7 +3,7 @@ using System.Linq;
 using Data;
 using Data.Infrastructure;
 using Model.Models;
-
+using Jobs.Constants.ProductNature;
 using Core.Common;
 using System;
 using Model;
@@ -125,14 +125,14 @@ namespace Service
 
         public IEnumerable<ProductType> GetFinishiedProductTypeList()
         {
-            int x = new ProductNatureService(_unitOfWork).GetProductNatureByName(ProductTypeConstants.FinishedMaterial).ProductNatureId;
+            int x = new ProductNatureService(_unitOfWork).GetProductNatureByName(ProductNatureConstants.TradingProduct.ProductNatureName).ProductNatureId;
             var pt = _unitOfWork.Repository<ProductType>().Query().Get().Where(m=>m.ProductNatureId==x);
 
             return pt;
         }
         public IEnumerable<ProductType> GetFinishedProductTypeListWithNoCustomUI()
         {
-            int x = new ProductNatureService(_unitOfWork).GetProductNatureByName(ProductTypeConstants.FinishedMaterial).ProductNatureId;
+            int x = new ProductNatureService(_unitOfWork).GetProductNatureByName(ProductNatureConstants.TradingProduct.ProductNatureName).ProductNatureId;
             var pt = _unitOfWork.Repository<ProductType>().Query().Get().Where(m => m.ProductNatureId == x && m.IsCustomUI==null);
 
             return pt;
@@ -150,7 +150,7 @@ namespace Service
         public IEnumerable<ProductType> GetProductTypeListForCategory()
         {
             var pt = (from p in db.ProductTypes
-                      where p.IsCustomUI == null && p.ProductNature.ProductNatureName==ProductNatureConstants.FinishedMaterial
+                      where p.IsCustomUI == null && p.ProductNature.ProductNatureName==ProductNatureConstants.TradingProduct.ProductNatureName
                       select p
                           );
 
@@ -223,8 +223,8 @@ namespace Service
         public IEnumerable<ProductType> GetRawAndOtherMaterialProductTypes()
         {
 
-            string RawMaterial = ProductNatureConstants.Rawmaterial;
-            string OtherMaterial = ProductNatureConstants.OtherMaterial;
+            string RawMaterial = ProductNatureConstants.RawMaterial.ProductNatureName;
+            string OtherMaterial = ProductNatureConstants.OtherMaterial.ProductNatureName;
 
             var pt = (from p in db.ProductTypes
                       where p.ProductNature.ProductNatureName == RawMaterial || p.ProductNature.ProductNatureName == OtherMaterial

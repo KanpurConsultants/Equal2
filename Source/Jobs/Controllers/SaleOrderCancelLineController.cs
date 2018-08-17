@@ -679,7 +679,7 @@ namespace Jobs.Controllers
 
         public ActionResult GetSaleOrderForProduct(string searchTerm, int pageSize, int pageNum, int PersonId)//DocTypeId
         {
-            var Query = new SaleDispatchLineService(_unitOfWork).GetSaleOrderHelpListForProduct(PersonId, searchTerm);
+            var Query = new SaleOrderCancelLineService(_unitOfWork).GetSaleOrderHelpListForProduct(PersonId, searchTerm);
             var temp = Query.Skip(pageSize * (pageNum - 1))
                 .Take(pageSize)
                 .ToList();

@@ -1,16 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Textbox Name="CompanyName">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!CompanyName.Value, "DsMain")</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>12pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>CompanyName</rd:DefaultName>
+        <Top>0.0125in</Top>
+        <Left>0.86958in</Left>
+        <Height>0.25in</Height>
+        <Width>3.55473in</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Textbox>
+      <Textbox Name="CompanyAddress">
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!CompanyAddress.Value, "DsMain") + System.Environment.NewLine
+                  +First(Fields!CompanyCity.Value, "DsMain")  + System.Environment.NewLine
+                  +First(Fields!CompanyPhoneNo.Value, "DsMain")</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>CompanyAddress</rd:DefaultName>
+        <Top>0.20833in</Top>
+        <Left>0.86806in</Left>
+        <Height>0.57987in</Height>
+        <Width>3.59375in</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Image Name="Logo">
+        <Source>Database</Source>
+        <Value>=First(Fields!CompanyLogoPath.Value, "DsMain")</Value>
+        <MIMEType>image/jpeg</MIMEType>
+        <Sizing>FitProportional</Sizing>
+        <Top>0.0125in</Top>
+        <Left>0.0125in</Left>
+        <Height>0.7757in</Height>
+        <Width>0.81042in</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Image>
+      <Textbox Name="CompanyTinNo2">
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=iif(First(Fields!ReportHeaderTextRight1.Value, "DsMain") &lt;&gt; "",First(Fields!ReportHeaderTextRight1.Value, "DsMain"),"") +
+iif(First(Fields!ReportHeaderTextRight1.Value, "DsMain") &lt;&gt; "",System.Environment.NewLine,"") +
+iif(First(Fields!ReportHeaderTextRight2.Value, "DsMain") &lt;&gt; "",First(Fields!ReportHeaderTextRight2.Value, "DsMain"),"") +
+iif(First(Fields!ReportHeaderTextRight2.Value, "DsMain") &lt;&gt; "",System.Environment.NewLine,"") +
+iif(First(Fields!ReportHeaderTextRight3.Value, "DsMain") &lt;&gt; "",First(Fields!ReportHeaderTextRight3.Value, "DsMain"),"") +
+iif(First(Fields!ReportHeaderTextRight3.Value, "DsMain") &lt;&gt; "",System.Environment.NewLine,"") +
+iif(First(Fields!ReportHeaderTextRight4.Value, "DsMain") &lt;&gt; "",First(Fields!ReportHeaderTextRight4.Value, "DsMain"),"") +
+iif(First(Fields!ReportHeaderTextRight4.Value, "DsMain") &lt;&gt; "",System.Environment.NewLine,"") 
+                  +"DIVISION : " + First(Fields!DivisionName.Value, "DsMain") + System.Environment.NewLine
+                  +"SITE : " + First(Fields!SiteName.Value, "DsMain")</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>CompanyTinNo</rd:DefaultName>
+        <Top>0.0125in</Top>
+        <Left>4.42125in</Left>
+        <Height>0.7632in</Height>
+        <Width>2.9375in</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+        </Style>
+      </Textbox>
+    </ReportItems>
+    <Height>0.81945in</Height>
+    <Style />
+  </Body>
+  <Width>7.39459in</Width>
+  <Page>
+    <PageHeight>11.69in</PageHeight>
+    <PageWidth>8.27in</PageWidth>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="Purchase">
-      <ConnectionProperties>
-        <DataProvider>SQL</DataProvider>
-        <ConnectString>=Parameters!DatabaseConnectionString.Value</ConnectString>
-      </ConnectionProperties>
+      <DataSourceReference>DataSourceMain</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>727bb65e-cc51-4d28-a097-a8ea7d087931</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DsMain">
+      <Query>
+        <DataSourceName>Purchase</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@SiteId">
+            <Value>=Parameters!SiteId.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@DivisionId">
+            <Value>=Parameters!DivisionId.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>Web.ProcCompanyDetail</CommandText>
+      </Query>
       <Fields>
         <Field Name="SiteName">
           <DataField>SiteName</DataField>
@@ -36,10 +183,6 @@
           <DataField>CompanyPhoneNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CompanyPinNo">
-          <DataField>CompanyPinNo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="CompanyTinNo">
           <DataField>CompanyTinNo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -60,20 +203,23 @@
           <DataField>CompanyLogoPath</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="ReportHeaderTextRight1">
+          <DataField>ReportHeaderTextRight1</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="ReportHeaderTextRight2">
+          <DataField>ReportHeaderTextRight2</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="ReportHeaderTextRight3">
+          <DataField>ReportHeaderTextRight3</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="ReportHeaderTextRight4">
+          <DataField>ReportHeaderTextRight4</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
       </Fields>
-      <Query>
-        <DataSourceName>Purchase</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>Web.ProcCompanyDetail</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@SiteId">
-            <Value>=Parameters!SiteId.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="@DivisionId">
-            <Value>=Parameters!DivisionId.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
       <rd:DataSetInfo>
         <rd:DataSetName>Purchase</rd:DataSetName>
         <rd:SchemaPath>E:\Satyam\SuryaIndia\SuryaIndia\SuppliorModule_V1\Source\Surya.Planning.Reports\Reports\Purchase.xsd</rd:SchemaPath>
@@ -84,127 +230,6 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
-  <Body>
-    <ReportItems>
-      <Textbox Name="CompanyName">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!CompanyName.Value, "DsMain")</Value>
-                <Style>
-                  <FontFamily>Tahoma</FontFamily>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>CompanyName</rd:DefaultName>
-        <Top>0.0625in</Top>
-        <Left>0.89458in</Left>
-        <Height>0.25in</Height>
-        <Width>3.55473in</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Textbox>
-      <Textbox Name="CompanyAddress">
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!CompanyAddress.Value, "DsMain") + System.Environment.NewLine
-                  +First(Fields!CompanyCity.Value, "DsMain")  +"-"+ First(Fields!CompanyPinNo.Value, "DsMain") + System.Environment.NewLine
-                  +First(Fields!CompanyPhoneNo.Value, "DsMain")</Value>
-                <Style>
-                  <FontFamily>Tahoma</FontFamily>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>CompanyAddress</rd:DefaultName>
-        <Top>0.27083in</Top>
-        <Left>0.85556in</Left>
-        <Height>0.54445in</Height>
-        <Width>3.59375in</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <VerticalAlign>Top</VerticalAlign>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Image Name="SuryaLogo">
-        <Source>External</Source>
-        <Value>="file:"+ Fields!CompanyLogoPath.Value + ".jpg"</Value>
-        <Sizing>FitProportional</Sizing>
-        <Top>0.0625in</Top>
-        <Height>0.8in</Height>
-        <Width>0.8in</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
-      <Textbox Name="CompanyTinNo2">
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>="TIN No.     : " + First(Fields!CompanyTinNo.Value, "DsMain") + System.Environment.NewLine
-                  +"CST No.     : " + First(Fields!CompanyCSTNo.Value, "DsMain") + System.Environment.NewLine
-                  +"DIVISION  : " + First(Fields!DivisionName.Value, "DsMain") + System.Environment.NewLine
-                  +"SITE          : " + First(Fields!SiteName.Value, "DsMain")</Value>
-                <Style>
-                  <FontFamily>Tahoma</FontFamily>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>CompanyTinNo</rd:DefaultName>
-        <Top>0.0625in</Top>
-        <Left>4.73375in</Left>
-        <Height>0.75278in</Height>
-        <Width>2.5625in</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <VerticalAlign>Top</VerticalAlign>
-        </Style>
-      </Textbox>
-    </ReportItems>
-    <Height>0.96542in</Height>
-    <Style />
-  </Body>
   <ReportParameters>
     <ReportParameter Name="ReportTitle">
       <DataType>String</DataType>
@@ -249,12 +274,6 @@
       <Prompt>PrintedBy</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.41542in</Width>
-  <Page>
-    <PageHeight>11.69in</PageHeight>
-    <PageWidth>8.27in</PageWidth>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="SuryaLogo">
       <MIMEType>image/jpeg</MIMEType>
@@ -265,6 +284,6 @@ LbCmyUOMiWE6UFOSkkc6hfclBAb2cTTx0a9cqPWZpNR2WQoNNIQFnUrSkDJ6mmVVXwMThJPmcNvRW3vC
 PtQeVUENmewh02zjEWZuZuLElNvBS6gDSXQMHP8A5UE5f6lWFPkR2q6ZG8HZI8xgvruK93SMJUsHJ61zg03qGN3uFzocawHaqxS70mIIc9UTuHNSgM/Nw32PEcvWvTrcL5EwcilrcatjE0Y1yYdnu25KlmQwkFeU7Hhz9xWZb0aw1jyJtNLrWHPgx+rSclEINTLSnEuKbQVo/CojcehrhUE5InQSBgQcyWxCZL0p1LTYIGpVLZYta7McCdRGc4UZmL2f7PG2XOdcPHLkIlnUEkcATnJOd+lWNgdRiZKuOanYk+ZL5erazdolnmxnHVyCkpUBsgqOBzzx6VJ+Kt6fIZAjtyhVYE9mP3NiA1a1JllLEVoaioHGjzqL8Wu2vpY7TR1jWeoTKs7Nudtg8EtMiM7klZ31ct/pRXxEpQ14nOv1fmDELRercb7JskOK404zkqXj5VEYz58+dXTjLSmUGAZAcsW2ms+RO+0fZtN6lwpK5jjHhFasJGc7g5HQ7caotmgMW7j9Vgc4xNaBNjT2S7EdDiAopJHWoV2paNkOZretqzhhGA2gKKwkBR4nG5p8DOYk6rsJKISUQgZcViY0WpLSXWyQSlQyKR0VxhhkRlZlOVhEpCEBKQAAMADlTDsIvmZjKzKu7yJFtCRGA7mSsA5zx0nG3tUq7XNjIRgD3HepNVfOTD3lmG/bJDdyTmLoy5x4DflVTYKxufUmaur8D7g7AxBYtMdFrSRFwSjVnPHfOeea4louUWDwYCjof4/pOZi3ItxjmLbg6ZB0vPpABQBwyf1wqdtrqyqBkH+pSupCGYnB/wDZpAZG9ViQcaMxFR3cZlDSMk6UJwMmuKiqMKMRmZmOWMNTRZKISUQkohJRCSiE4HEV2cgbl/kZH9M/lUb/ANtvtKV/7iCsv+lxv6YpeL+yv2jX/uNG1cavIGdDhROiXROyUQkohP/Z</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportID>f1b70379-da78-4ea9-bab5-cbb93d10df58</rd:ReportID>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>f1b70379-da78-4ea9-bab5-cbb93d10df58</rd:ReportID>
 </Report>

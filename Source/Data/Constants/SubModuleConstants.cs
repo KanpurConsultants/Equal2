@@ -29,7 +29,7 @@ namespace Jobs.Constants.SubModule
             public const int SubModuleId = 3;
             public const string SubModuleName = "Standard Reports";
             public const string IconName = "glyphicon glyphicon-file";
-            
+
         }
 
         public static class StatusReports
@@ -37,7 +37,7 @@ namespace Jobs.Constants.SubModule
             public const int SubModuleId = 4;
             public const string SubModuleName = "Status Reports";
             public const string IconName = "glyphicon glyphicon-road";
-            
+
         }
 
         public static class Tools
@@ -46,6 +46,14 @@ namespace Jobs.Constants.SubModule
             public const string SubModuleName = "Tools";
             public const string IconName = "glyphicon glyphicon-picture";
             
+        }
+
+        public static class Display
+        {
+            public const int SubModuleId = 6;
+            public const string SubModuleName = "Display";
+            public const string IconName = "glyphicon glyphicon-picture";
+
         }
     }
 

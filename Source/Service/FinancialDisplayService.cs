@@ -268,9 +268,9 @@ namespace Service
                             LEFT JOIN Web.People P On LA.PersonId = P.PersonId
                             WHERE 1 = 1 
                             AND LH.DocDate <= @ToDate " +
-                            (SiteId != null ? " AND LH.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))" : "") +
-                            (DivisionId != null ? " AND LH.DivisionId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))" : "") +
-                            (CostCenterId != null ? " AND H.CostCenterId IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))" : "") +
+                            (SiteId != null ? " AND LH.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))" : "") +
+                            (DivisionId != null ? " AND LH.DivisionId IN (SELECT Items FROM [web].[Split] (@Division, ','))" : "") +
+                            (CostCenterId != null ? " AND H.CostCenterId IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))" : "") +
                             (LedgerAccountGroup != null ? " AND LAG.LedgerAccountGroupId = @LedgerAccountGroup " : "") +
                             (IsIncludeOpening == "False" ? " AND LH.DocDate >= @FromDate" : "") +
                             @" GROUP BY LA.LedgerAccountId  " +
@@ -314,9 +314,9 @@ namespace Service
 
 
 //            string mCondStr = "";
-//            if (SiteId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))";
-//            if (DivisionId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))";
-//            if (CostCenterId != null) mCondStr = mCondStr + " AND H.CostCenter IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))";
+//            if (SiteId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))";
+//            if (DivisionId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [web].[Split] (@Division, ','))";
+//            if (CostCenterId != null) mCondStr = mCondStr + " AND H.CostCenter IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))";
 //            if (LedgerAccountGroup != null && LedgerAccountGroup != "") mCondStr = mCondStr + " AND LAG.LedgerAccountGroupId = @LedgerAccountGroup";
 
 //            string mOpeningDateCondStr = "";
@@ -347,9 +347,9 @@ namespace Service
 //                            LEFT JOIN web.LedgerAccountGroups LAG  WITH (Nolock) ON LAG.LedgerAccountGroupId = LA.LedgerAccountGroupId 
 //                            WHERE 1 = 1 
 //                            AND LH.DocDate < @ToDate " +
-//                            (SiteId != null ? " AND LH.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))" : "") +
-//                            (DivisionId != null ? " AND LH.DivisionId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))" : "") +
-//                            (CostCenterId != null ? " AND H.CostCenterId IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))" : "") +
+//                            (SiteId != null ? " AND LH.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))" : "") +
+//                            (DivisionId != null ? " AND LH.DivisionId IN (SELECT Items FROM [web].[Split] (@Division, ','))" : "") +
+//                            (CostCenterId != null ? " AND H.CostCenterId IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))" : "") +
 //                            (LedgerAccountGroup != null ? " AND LAG.LedgerAccountGroupId = @LedgerAccountGroup " : "") +
 //                            (IsIncludeOpening == "False" ? " AND LH.DocDate >= @FromDate" : "") +
 //                            @" GROUP BY H.LedgerAccountId " +
@@ -364,9 +364,9 @@ namespace Service
 //                            LEFT JOIN web.LedgerAccountGroups LAG  WITH (Nolock) ON LAG.LedgerAccountGroupId = LA.LedgerAccountGroupId 
 //                            WHERE 1 = 1 
 //                            AND LH.DocDate <= @ToDate " +
-//                            (SiteId != null ? " AND LH.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))" : "") +
-//                            (DivisionId != null ? " AND LH.DivisionId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))" : "") +
-//                            (CostCenterId != null ? " AND H.CostCenterId IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))" : "") +
+//                            (SiteId != null ? " AND LH.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))" : "") +
+//                            (DivisionId != null ? " AND LH.DivisionId IN (SELECT Items FROM [web].[Split] (@Division, ','))" : "") +
+//                            (CostCenterId != null ? " AND H.CostCenterId IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))" : "") +
 //                            (LedgerAccountGroup != null ? " AND LAG.LedgerAccountGroupId = @LedgerAccountGroup " : "") +
 //                            (IsIncludeOpening == "False" ? " AND LH.DocDate >= @FromDate" : "") +
 
@@ -395,9 +395,9 @@ namespace Service
                                                 LEFT JOIN web.LedgerAccountGroups LAG ON LA.LedgerAccountGroupId = LAG.LedgerAccountGroupId  		
                                                 LEFT JOIN Web.People P On LA.PersonId = P.PersonId
                                                 WHERE 1 = 1 " +
-                                                (SiteId != null ? " AND H.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))" : "") +
-                                                (DivisionId != null ? " AND H.DivisionId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))" : "") +
-                                                (CostCenterId != null ? " AND L.CostCenterId IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))" : "") +
+                                                (SiteId != null ? " AND H.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))" : "") +
+                                                (DivisionId != null ? " AND H.DivisionId IN (SELECT Items FROM [web].[Split] (@Division, ','))" : "") +
+                                                (CostCenterId != null ? " AND L.CostCenterId IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))" : "") +
                                                 (LedgerAccountGroup != null ? " AND LAG.LedgerAccountGroupId = @LedgerAccountGroup " : "") +
                                                 (IsIncludeOpening == "False" ? " AND H.DocDate >= @FromDate" : "") +
                                                 @" GROUP BY L.LedgerAccountId 
@@ -507,9 +507,9 @@ namespace Service
 
 
             string mCondStr = "";
-            if (SiteId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))";
-            if (DivisionId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))";
-            if (CostCenterId != null) mCondStr = mCondStr + " AND H.CostCenterId IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))";
+            if (SiteId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))";
+            if (DivisionId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [web].[Split] (@Division, ','))";
+            if (CostCenterId != null) mCondStr = mCondStr + " AND H.CostCenterId IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))";
             if (LedgerAccount != null && LedgerAccount != "") mCondStr = mCondStr + " AND LA.LedgerAccountId = @LedgerAccount";
 
             string mOpeningDateCondStr = "";
@@ -891,9 +891,9 @@ namespace Service
 
 
 //            string mCondStr = "";
-//            if (SiteId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))";
-//            if (DivisionId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))";
-//            if (CostCenterId != null) mCondStr = mCondStr + " AND H.CostCenter IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))";
+//            if (SiteId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))";
+//            if (DivisionId != null) mCondStr = mCondStr + " AND LH.SiteId IN (SELECT Items FROM [web].[Split] (@Division, ','))";
+//            if (CostCenterId != null) mCondStr = mCondStr + " AND H.CostCenter IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))";
 //            if (FromDate != null) mCondStr = mCondStr + " AND LH.DocDate >= @FromDate";
 //            if (ToDate != null) mCondStr = mCondStr + " AND LH.DocDate <= @ToDate";
 //            if (LedgerAccountGroup != null && LedgerAccountGroup != "") mCondStr = mCondStr + " AND LAG.LedgerAccountGroupId = @LedgerAccountGroup";
@@ -1011,9 +1011,9 @@ namespace Service
                                         LEFT JOIN web.LedgerAccountGroups LAG ON LA.LedgerAccountGroupId = LAG.LedgerAccountGroupId  		
                                         LEFT JOIN web.LedgerAccountGroups PLAG ON PLAG.LedgerAccountGroupId = LAG.ParentLedgerAccountGroupId  		
                                         WHERE 1=1 " +
-                            (SiteId != null ? " AND H.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))" : "") +
-                            (DivisionId != null ? " AND H.DivisionId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))" : "") +
-                            (CostCenterId != null ? " AND L.CostCenterId IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))" : "") +
+                            (SiteId != null ? " AND H.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))" : "") +
+                            (DivisionId != null ? " AND H.DivisionId IN (SELECT Items FROM [web].[Split] (@Division, ','))" : "") +
+                            (CostCenterId != null ? " AND L.CostCenterId IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))" : "") +
                             (IsIncludeOpening == "False" ? " AND H.DocDate >= @FromDate" : "") +
                             @" GROUP BY LA.LedgerAccountGroupId " +
                             //(IsIncludeZeroBalance == "False" ? " Having Sum(CASE WHEN H.DocDate <= @ToDate THEN L.AmtDr-L.AmtCr ELSE 0 END) <> 0 " : "") +
@@ -1049,18 +1049,18 @@ namespace Service
                                         LEFT JOIN web.LedgerAccountGroups LAG ON LA.LedgerAccountGroupId = LAG.LedgerAccountGroupId  		
                                         LEFT JOIN Web.People P On LA.PersonId = P.PersonId
                                         WHERE 1 = 1 " +
-                            (SiteId != null ? " AND H.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))" : "") +
-                            (DivisionId != null ? " AND H.DivisionId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))" : "") +
-                            (CostCenterId != null ? " AND L.CostCenterId IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))" : "") +
+                            (SiteId != null ? " AND H.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))" : "") +
+                            (DivisionId != null ? " AND H.DivisionId IN (SELECT Items FROM [web].[Split] (@Division, ','))" : "") +
+                            (CostCenterId != null ? " AND L.CostCenterId IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))" : "") +
                             (IsIncludeOpening == "False" ? " AND H.DocDate >= @FromDate" : "") +
-                            @" And " + (LedgerAccountGroup != null && LedgerAccountGroup != "" ? "LA.LedgerAccountGroupId IN (SELECT Items FROM [dbo].[Split] (@LedgerAccountGroup, ',')) " : "LA.LedgerAccountGroupId  Is Null ") +
+                            @" And " + (LedgerAccountGroup != null && LedgerAccountGroup != "" ? "LA.LedgerAccountGroupId IN (SELECT Items FROM [web].[Split] (@LedgerAccountGroup, ',')) " : "LA.LedgerAccountGroupId  Is Null ") +
                             @" GROUP BY L.LedgerAccountId " +
                         @"), 
                         cteAcGroup as
                                     (
                                         SELECT ag.LedgerAccountGroupId AS BaseLedgerAccountGroupId, ag.LedgerAccountGroupName AS BaseLedgerAccountGroupName, ag.LedgerAccountGroupId, ag.LedgerAccountGroupName, ag.ParentLedgerAccountGroupId, ag.ParentLedgerAccountGroupName, ag.Opening, ag.AmtDr, ag.AmtCr, ag.Balance, 0 AS Level   
                                         FROM @TempcteGroupBalance ag		
-                                        WHERE  " + (LedgerAccountGroup != null && LedgerAccountGroup != "" ? " ag.ParentLedgerAccountGroupId IN (SELECT Items FROM [dbo].[Split] (@LedgerAccountGroup, ','))  " : "ag.ParentLedgerAccountGroupId Is Null ") +
+                                        WHERE  " + (LedgerAccountGroup != null && LedgerAccountGroup != "" ? " ag.ParentLedgerAccountGroupId IN (SELECT Items FROM [web].[Split] (@LedgerAccountGroup, ','))  " : "ag.ParentLedgerAccountGroupId Is Null ") +
                             @"UNION ALL
                                         SELECT cteAcGroup.BaseLedgerAccountGroupId, cteAcGroup.BaseLedgerAccountGroupName , ag.LedgerAccountGroupId, ag.LedgerAccountGroupName, ag.ParentLedgerAccountGroupId, ag.ParentLedgerAccountGroupName, ag.Opening, ag.AmtDr, ag.AmtCr, ag.Balance, LEVEL +1     
                                         FROM @TempcteGroupBalance ag
@@ -1080,9 +1080,9 @@ namespace Service
 //                                                    LEFT JOIN web.LedgerAccounts LA ON L.LedgerAccountId = LA.LedgerAccountId
 //                                                    LEFT JOIN web.LedgerAccountGroups LAG ON LA.LedgerAccountGroupId = LAG.LedgerAccountGroupId  		
 //                                                    WHERE 1 = 1 " +
-//                                        (SiteId != null ? " AND H.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))" : "") +
-//                                        (DivisionId != null ? " AND H.DivisionId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))" : "") +
-//                                        (CostCenterId != null ? " AND L.CostCenterId IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))" : "") +
+//                                        (SiteId != null ? " AND H.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))" : "") +
+//                                        (DivisionId != null ? " AND H.DivisionId IN (SELECT Items FROM [web].[Split] (@Division, ','))" : "") +
+//                                        (CostCenterId != null ? " AND L.CostCenterId IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))" : "") +
             //                                        (IsIncludeOpening == "True" ? " AND H.DocDate >= @FromDate" : "") +
 //                                        @" And LA.LedgerAccountGroupId " + (LedgerAccountGroup != null && LedgerAccountGroup != "" ? " = @LedgerAccountGroup " : " Is Null ") +
 //                                        @" GROUP BY L.LedgerAccountId " +
@@ -1102,9 +1102,9 @@ namespace Service
 //                                                    LEFT JOIN web.LedgerAccountGroups LAG ON LA.LedgerAccountGroupId = LAG.LedgerAccountGroupId  		
 //                                                    LEFT JOIN web.LedgerAccountGroups PLAG ON PLAG.LedgerAccountGroupId = LAG.ParentLedgerAccountGroupId  		
 //                                                    WHERE 1=1 " +
-//                                        (SiteId != null ? " AND H.SiteId IN (SELECT Items FROM [dbo].[Split] (@Site, ','))" : "") +
-//                                        (DivisionId != null ? " AND H.DivisionId IN (SELECT Items FROM [dbo].[Split] (@Division, ','))" : "") +
-//                                        (CostCenterId != null ? " AND L.CostCenterId IN (SELECT Items FROM [dbo].[Split] (@CostCenter, ','))" : "") +
+//                                        (SiteId != null ? " AND H.SiteId IN (SELECT Items FROM [web].[Split] (@Site, ','))" : "") +
+//                                        (DivisionId != null ? " AND H.DivisionId IN (SELECT Items FROM [web].[Split] (@Division, ','))" : "") +
+//                                        (CostCenterId != null ? " AND L.CostCenterId IN (SELECT Items FROM [web].[Split] (@CostCenter, ','))" : "") +
             //                                        (IsIncludeOpening == "True" ? " AND H.DocDate >= @FromDate" : "") +
 //                                        @" And H.DocDate >= @FromDate
 //                                                    GROUP BY LA.LedgerAccountGroupId " +

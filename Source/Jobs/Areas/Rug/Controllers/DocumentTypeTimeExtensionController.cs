@@ -7,7 +7,7 @@ using Model.Models;
 using Data.Models;
 using Service;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using Model.ViewModel;
 using AutoMapper;
@@ -92,7 +92,7 @@ namespace Jobs.Areas.Rug.Controllers
             if (ModelState.IsValid)
             {
 
-                var DocType = db.DocumentType.Where(m => m.DocumentTypeName == MasterDocTypeConstants.DocumentTypeTimeExtension).FirstOrDefault();
+                var DocType = db.DocumentType.Where(m => m.DocumentTypeName == DocumentTypeConstants.DocumentTypeTimeExtension.DocumentTypeName).FirstOrDefault();
 
                 if (vm.DocumentTypeTimeExtensionId <= 0)
                 {
@@ -228,7 +228,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                 var temp = _DocumentTypeTimeExtensionService.Find(vm.id);
 
-                var DocType = db.DocumentType.Where(m => m.DocumentTypeName == MasterDocTypeConstants.DocumentTypeTimeExtension).FirstOrDefault();
+                var DocType = db.DocumentType.Where(m => m.DocumentTypeName == DocumentTypeConstants.DocumentTypeTimeExtension.DocumentTypeName).FirstOrDefault();
 
                 LogList.Add(new LogTypeViewModel
                 {

@@ -189,7 +189,7 @@ namespace Jobs.Controllers
         //            DocId = vm.id,
         //            UserRemark = vm.Reason,
         //            Narration = "Delivery terms is deleted with Name:" + temp.ProductUidName,
-        //            DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrder).DocumentTypeId,
+        //            DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrder).DocumentTypeId,
         //            UploadDate = DateTime.Now,
 
         //        };

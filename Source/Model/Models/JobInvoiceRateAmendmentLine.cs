@@ -18,7 +18,7 @@ namespace Model.Models
 
         [ForeignKey("JobWorker")]
         public int JobWorkerId { get; set; }
-        public virtual JobWorker JobWorker { get; set; }
+        public virtual Person JobWorker { get; set; }
         public decimal Qty { get; set; }
         public decimal JobInvoiceRate { get; set; }
         public decimal AmendedRate { get; set; }

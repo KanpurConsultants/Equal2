@@ -81,7 +81,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         public ActionResult Create(int id)//DocumentTypeId
         {
             Dimension1ViewModel vm = new Dimension1ViewModel();
-            vm.DocTypeId = DocumentTypeIdConstants.Dimension1;
+            vm.DocTypeId = DocumentTypeConstants.Dimension1.DocumentTypeId;
             vm.ProductTypeId = id;
             vm.IsActive = true;
             ViewBag.Mode = "Add";
@@ -135,7 +135,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.Dimension1,
+                        DocTypeId = DocumentTypeConstants.Dimension1.DocumentTypeId,
                         DocId = pt.Dimension1Id,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -189,7 +189,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.Dimension1,
+                        DocTypeId = DocumentTypeConstants.Dimension1.DocumentTypeId,
                         DocId = temp.Dimension1Id,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -305,7 +305,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.Dimension1,
+                        DocTypeId = DocumentTypeConstants.Dimension1.DocumentTypeId,
                         DocId = temp.Dimension1Id,
                         ActivityType = (int)ActivityTypeContants.Deleted,
                         UserRemark = vm.Reason,
@@ -378,7 +378,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         [HttpGet]
         public ActionResult Report()
         {
-            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeIdConstants.Dimension1);
+            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeConstants.Dimension1.DocumentTypeId);
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["CustomizeDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
         }
     }

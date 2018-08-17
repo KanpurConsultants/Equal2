@@ -142,7 +142,7 @@ namespace Jobs.Controllers
                             CreatedDate = DateTime.Now,
                             Narration = logstring.ToString(),
                             CreatedBy = User.Identity.Name,
-                            //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.ProductProcess).DocumentTypeId,
+                            //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.ProductProcess).DocumentTypeId,
                         };
                         new ActivityLogService(_unitOfWork).Create(al);
                     //End of Saving the Activity Log

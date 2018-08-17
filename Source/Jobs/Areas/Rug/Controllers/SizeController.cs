@@ -14,6 +14,8 @@ using Model.ViewModel;
 using AutoMapper;
 using System.Xml.Linq;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -56,7 +58,7 @@ namespace Jobs.Areas.Rug.Controllers
             ViewBag.ProductShapeList = new ProductShapeService(_unitOfWork).GetProductShapeList().ToList();
             ViewBag.UnitList = new UnitService(_unitOfWork).GetUnitListWithFractions().ToList();
             ViewBag.DocTypeList = (from Dt in db.DocumentType
-                                   where Dt.DocumentCategory.DocumentCategoryName == TransactionDocCategoryConstants.Size
+                                   where Dt.DocumentCategory.DocumentCategoryName == DocumentCategoryConstants.Size.DocumentCategoryName
                                    select Dt).ToList();
         }
 
@@ -65,13 +67,13 @@ namespace Jobs.Areas.Rug.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Size);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Size.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Size + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Size.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)
             {
@@ -171,7 +173,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Size).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Size.DocumentTypeName).DocumentTypeId,
                         DocId = pt.SizeId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -227,7 +229,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Size).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Size.DocumentTypeName).DocumentTypeId,
                         DocId = temp.SizeId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -244,13 +246,13 @@ namespace Jobs.Areas.Rug.Controllers
 
         public ActionResult Edit(int id)
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Size);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Size.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Size + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Size.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Edit") == false)
             {
@@ -289,13 +291,13 @@ namespace Jobs.Areas.Rug.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Size);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Size.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Size + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Size.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Delete") == false)
             {
@@ -351,7 +353,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Size).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Size.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,
@@ -400,7 +402,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Size);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Size.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 

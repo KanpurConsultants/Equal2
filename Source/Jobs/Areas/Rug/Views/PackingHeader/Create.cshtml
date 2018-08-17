@@ -162,7 +162,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6" style='display:@(Model.PackingSettings.isVisibleHeaderJobWorker ? "" : "none")'>
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.JobWorkerId, "Job Worker", new { @class = "control-label col-md-4 col-sm-2" })
                                     <div class="col-md-7 col-sm-10">
@@ -201,7 +201,7 @@
                         </div>
 
                         <div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style='display:@(Model.PackingSettings.isVisibleBaleNoPattern ? "" : "none")'>
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.BaleNoPattern, "Bale No Pattern", new { @class = "control-label col-md-4 col-sm-2" })
                                     <div class="col-md-7 col-sm-10">
@@ -211,7 +211,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            @*<div class="col-md-6">*@
+                            <div class="col-md-6" style='display:@(Model.PackingSettings.isVisibleShipMethod ? "" : "none")'>
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.ShipMethodId, "Ship Method", new { @class = "control-label col-md-4 col-sm-2" })
                                     <div class="col-md-7 col-sm-10">
@@ -245,23 +246,26 @@
                     </h4>
                 </div>
 
-                <div class="panel-info" style="height:40px;">
-                    <div class="btn-group" style="padding:5px 0 3px 0;margin:0px;font-weight:bold">
+                <div class="panel-info" >
+                    <h5 style="padding:5px 0 3px 0;margin:0px;font-weight:bold">
                         <span class="glyphicon glyphicon-plus-sign"></span>
                         @{string Action = "";
-                            if (Model.Status == (int)StatusConstants.Drafted)
-                            { Action = "CreateLine";
-                            }
-                            else if (Model.Status == (int)StatusConstants.Submitted || Model.Status == (int)StatusConstants.Modified || Model.Status == (int)StatusConstants.ModificationSubmitted)
-                            { Action = "CreateLineAfter_Submit";
-                            }
-                            else if (Model.Status == (int)StatusConstants.Approved)
-                            { Action = "CreateLineAfter_Approve";
-                            }
+                        if (Model.Status == (int)StatusConstants.Drafted)
+                        {
+                            Action = "CreateLine";
+                        }
+                        else if (Model.Status == (int)StatusConstants.Submitted || Model.Status == (int)StatusConstants.Modified || Model.Status == (int)StatusConstants.ModificationSubmitted)
+                        {
+                            Action = "CreateLineAfter_Submit";
+                        }
+                        else if (Model.Status == (int)StatusConstants.Approved)
+                        {
+                            Action = "CreateLineAfter_Approve";
+                        }
                         }
                         @Html.ActionLink("Add New Row ", Action, "PackingLine", new { id = @Model.PackingHeaderId }, new { data_modal = "", id = "btnCreate", @class = "toolbar", @title = "Add New", @data_toggle = "tooltip" })
-                        </div>
-                    </div>
+                    </h5>
+                </div>
                 <div style="padding-right:15px">
 
                     <table class="table table-hover ctable">
@@ -280,8 +284,7 @@
 <script>
     $(document).ready(function () {
         CustomSelectFunction($("#BuyerId"), '/ComboHelpList/GetBuyers', '/ComboHelpList/SetSingleBuyer', 'Enter Buyer Name', false, 0);
-        //CustomSelectFunction($("#JobWorkerId"), '/ComboHelpList/GetJobWorkers', '/ComboHelpList/SetSingleJobWorker', 'Enter JobWorker Name', false, 0);
-        CustomSelectFunction($("#JobWorkerId"), '/PackingHeader/GetCustomPerson', '/ComboHelpList/SetSinglePerson', ' ', false, 0,$('#DocTypeId').val());
+        CustomSelectFunction($("#JobWorkerId"), '/ComboHelpList/GetJobWorker_Packing', '/ComboHelpList/SetSingleJobWorker', 'Enter JobWorker Name', false, 0);
         CustomSelectFunction($("#GodownId"), '/ComboHelpList/GetGodown', '/ComboHelpList/SetSingleGodown', ' ', false, 0);
     });
 </script>
@@ -382,18 +385,18 @@
         }
 
 
-        var link="/Rug/PackingLine/Index/"+groupId;
+        var link="/PackingLine/Index/"+groupId;
         $.ajax({
             url: link,
             type: "GET",
             success: function (data) {
                 var row = ""
                 var srno=1;
-                var head="<tr style='background-color:#428bca'>  <th style='width:10px'><input type='hidden'  /></th> <th style='width:10px'>Sr.No</th><th class='center' style='width:50px'>Bar Code</th>   <th class='center' style='width:50px'>Product</th>   <th class='center' style='width:50px'>Qty</th> <th class='center' style='width:50px'>Deal Qty</th> <th style='width:50px'>Sale Order</th> <th style='width:50px'>Bale No</th>  <th style='width:10px'></th>       <th style='width:10px'></th>  </tr>"
+                var head="<tr style='background-color:#428bca'>  <th style='width:10px'><input type='hidden'  /></th> <th style='width:10px'>Sr.No</th><th class='center' style='width:50px'>Bar Code</th>   <th class='center' style='width:50px'>Product</th>   <th class='center' style='width:50px'>Qty</th> <th class='center' style='width:50px'>Deal Qty</th> <th style='width:50px'>Sale Order</th> <th style='width:50px'>Bale No</th>  <th style='width:50px'>Lot No</th> <th style='width:10px'></th>       <th style='width:10px'></th>  </tr>"
                 if(data.length!=0)
                 {
                     $.each(data, function (index, item) {
-                        row += "<tr><td><input type='hidden' class='id' value='" + item.PackingLineId + "'/></td> <td><a Detail='' href='/PackingLine/_Detail/"+item.PackingLineId+"'>"+srno+"</a></td> <td>" + ((item.ProductUidName==null)?" ":item.ProductUidName) + "</td> <td>" + item.ProductName + "</td> <td>" + ((item.Qty==null)?" ":item.Qty) + "</td> <td>" + ((item.DealQty==null)?" ":item.DealQty ) + "</td><td>" + ((item.SaleOrderNo==null)?" ":item.SaleOrderNo )+ "</td><td> "+((item.BaleNo==null)?" ":item.BaleNo )+"</td> <td><a class='rowEditBlue hidden' Modify href='/PackingLine/_Edit/"+item.PackingLineId+"' ></a></td>       <td style='padding-top:0px;padding-bottom:0px'><a class='glyphicon glyphicon-trash icon-Cus-Size' data-modal='' delete='' href='"+LineDeleteUrl+item.PackingLineId+"'></a><a  edit='' href='"+LineEditUrl+item.PackingLineId+"'></a></td>  </tr>";
+                        row += "<tr><td><input type='hidden' class='id' value='" + item.PackingLineId + "'/></td> <td><a Detail='' href='/PackingLine/_Detail/"+item.PackingLineId+"'>"+srno+"</a></td> <td>" + ((item.ProductUidName==null)?" ":item.ProductUidName) + "</td> <td>" + item.ProductName + "</td> <td>" + ((item.Qty==null)?" ":item.Qty) + "</td> <td>" + ((item.DealQty==null)?" ":item.DealQty ) + "</td><td>" + ((item.SaleOrderNo==null)?" ":item.SaleOrderNo )+ "</td><td> "+((item.BaleNo==null)?" ":item.BaleNo )+"</td><td> "+((item.LotNo==null)?" ":item.LotNo )+"</td> <td><a class='rowEditBlue hidden' Modify href='/PackingLine/_Edit/"+item.PackingLineId+"' ></a></td>       <td style='padding-top:0px;padding-bottom:0px'><a class='glyphicon glyphicon-trash icon-Cus-Size' data-modal='' delete='' href='"+LineDeleteUrl+item.PackingLineId+"'></a><a  edit='' href='"+LineEditUrl+item.PackingLineId+"'></a></td>  </tr>";
                         srno++;
                         QtyCount+=item.Qty;
                         DealQtyCount+=item.DealQty;
@@ -479,13 +482,11 @@
             return false;
         });
 
-
     }
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         enableModalTransitions();
     })
-
 </script>
 
 
@@ -602,31 +603,26 @@
 {
     <script type="text/javascript">
 
-        $(document).ready(function(){
-            DisablePageNavigation();
-        })
+        RemoveFields();
+
+        function RemoveFields(){
+            //Disabling input fields
+            $(':input:not(:submit)').attr('disabled','disabled');
+
+            //Removing all the events from the newly created lines
+            $('#gbody').unbind();
+
+            //Removing Add New Row ActionLink
+            $('a#btnCreate').parents('h5')[0].remove();
 
 
-        //RemoveFields();
-
-        //function RemoveFields(){
-        //    //Disabling input fields
-        //    $(':input:not(:submit)').attr('disabled','disabled');
-
-        //    //Removing all the events from the newly created lines
-        //    $('#gbody').unbind();
-
-        //    //Removing Add New Row ActionLink
-        //    $('a#btnCreate').parents('h5')[0].remove();
-
-
-        //    //Preventing the click event on newly created elements
-        //    $(document).on('click','#Result a',function(event){
-        //        event.preventDefault();
-        //    })
-        //    //Removing the action link from the form so that the request will be redirected to the Submit function in the controller instead of the hardcoded path
-        //    $('form:last').prop('action','');
-        //}
+            //Preventing the click event on newly created elements
+            $(document).on('click','#Result a',function(event){
+                event.preventDefault();
+            })
+            //Removing the action link from the form so that the request will be redirected to the Submit function in the controller instead of the hardcoded path
+            $('form:last').prop('action','');
+        }
     </script>
 }
 

@@ -44,7 +44,7 @@ namespace Model.Models
         public bool? isVisibleProductGroup_Index { get; set; }
 
 
-        public bool CalculateDiscountOnRate { get; set; }
+        public bool ? CalculateDiscountOnRate { get; set; }
         public string filterLedgerAccountGroups { get; set; }
         public string filterLedgerAccounts { get; set; }
         public string filterProductTypes { get; set; }
@@ -55,7 +55,7 @@ namespace Model.Models
         public string filterContraDivisions { get; set; }
         public string filterPersonRoles { get; set; }
 
-        public bool IsAutoDocNo { get; set; }
+        public bool ? IsAutoDocNo { get; set; }
 
         [ForeignKey("DocTypePackingHeader"), Display(Name = "Production Order Type")]
         public int? DocTypePackingHeaderId { get; set; }
@@ -76,7 +76,7 @@ namespace Model.Models
         public string SqlProcProductUidHelpList { get; set; }
 
         [ForeignKey("Calculation")]
-        public int CalculationId { get; set; }
+        public int ? CalculationId { get; set; }
         public virtual Calculation Calculation { get; set; }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Model.Models
 
 
         [ForeignKey("Currency")]
-        public int CurrencyId { get; set; }
+        public int ?  CurrencyId { get; set; }
         public virtual Currency Currency { get; set; }
 
 
@@ -152,11 +152,11 @@ namespace Model.Models
         public virtual Process Process { get; set; }
 
         [ForeignKey("DeliveryTerms")]
-        public int DeliveryTermsId { get; set; }
+        public int ? DeliveryTermsId { get; set; }
         public virtual DeliveryTerms DeliveryTerms { get; set; }
         
         [ForeignKey("ShipMethod")]
-        public int ShipMethodId { get; set; }
+        public int ? ShipMethodId { get; set; }
         public virtual ShipMethod ShipMethod { get; set; }
 
         [ForeignKey("SalesTaxGroupPerson")]
@@ -166,7 +166,7 @@ namespace Model.Models
 
 
         [ForeignKey("Godown")]
-        public int GodownId { get; set; }
+        public int ? GodownId { get; set; }
         public virtual Godown Godown { get; set; }
 
         [ForeignKey("DocumentPrintReportHeader")]

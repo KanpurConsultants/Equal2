@@ -98,6 +98,18 @@ namespace Jobs.Constants.Charge
             public const string ChargeCode = "Net Amount";
             public const string ChargeName = "Net Amount";
         }
+        public static class Incentive
+        {
+            public const int ChargeId = 16;
+            public const string ChargeCode = "Incentive";
+            public const string ChargeName = "Incentive";
+        }
+        public static class Penalty
+        {
+            public const int ChargeId = 17;
+            public const string ChargeCode = "Penalty";
+            public const string ChargeName = "Penalty";
+        }
     }
     public enum AddDeductEnum
     {

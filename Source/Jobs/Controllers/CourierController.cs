@@ -13,7 +13,7 @@ using Data.Infrastructure;
 using Service;
 using AutoMapper;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
@@ -23,6 +23,7 @@ using ImageResizer;
 using System.Configuration;
 using Model.ViewModel;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -102,7 +103,7 @@ namespace Jobs.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Courier);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Courier.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -125,13 +126,13 @@ namespace Jobs.Controllers
 
         public ActionResult Create()
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Courier);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Courier.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Courier + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Courier.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)
             {
@@ -495,7 +496,7 @@ namespace Jobs.Controllers
                         Narration = logstring.ToString(),
                         CreatedDate = DateTime.Now,
                         CreatedBy = User.Identity.Name,
-                        //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.ProcessSequence).DocumentTypeId,
+                        //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.ProcessSequence).DocumentTypeId,
 
                     };
                     new ActivityLogService(_unitOfWork).Create(al);
@@ -643,13 +644,13 @@ namespace Jobs.Controllers
 
         public ActionResult Edit(int id)
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Courier);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Courier.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Courier + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Courier.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Edit") == false)
             {
@@ -676,13 +677,13 @@ namespace Jobs.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Courier);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Courier.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Courier + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Courier.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Delete") == false)
             {
@@ -724,7 +725,7 @@ namespace Jobs.Controllers
                     DocId = vm.id,
                     UserRemark = vm.Reason,
                     Narration = "Courier is deleted with Name:" + person.Name,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrder).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrder.DocumentCategoryName).DocumentTypeId,
                     UploadDate = DateTime.Now,
 
                 };

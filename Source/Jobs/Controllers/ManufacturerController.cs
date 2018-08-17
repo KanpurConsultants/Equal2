@@ -11,13 +11,14 @@ using Data.Infrastructure;
 using Service;
 using AutoMapper;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using System.Text;
 using System.Configuration;
 using System.IO;
 using ImageResizer;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -93,7 +94,7 @@ namespace Jobs.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Manufacturer);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Manufacturer.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -300,7 +301,7 @@ namespace Jobs.Controllers
                         Narration = logstring.ToString(),
                         CreatedDate = DateTime.Now,
                         CreatedBy = User.Identity.Name,
-                        //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.ProcessSequence).DocumentTypeId,
+                        //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.ProcessSequence).DocumentTypeId,
 
                     };
                     new ActivityLogService(_unitOfWork).Create(al);
@@ -498,7 +499,7 @@ namespace Jobs.Controllers
                     DocId = vm.id,
                     UserRemark = vm.Reason,
                     Narration = "Manufacturer is deleted with Name:" + person.Name,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrder).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrder.DocumentCategoryName).DocumentTypeId,
                     UploadDate = DateTime.Now,
 
                 };

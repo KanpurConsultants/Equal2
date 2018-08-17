@@ -165,12 +165,14 @@
                                 @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
                             </div>
                             <div class="col-xs-3" style="padding-left:0px">
-                                @Html.TextBoxFor(m => m.UnitId, new { @class = "form-control col-xs-2 cusleftnormal", @readonly = "true" })
+                                @Html.DropDownListFor(model => model.DealUnitId, new SelectList(ViewBag.DeliveryUnitList as System.Collections.IEnumerable, "UnitId", "UnitName"), new { @class = "form-control height cusrightnormal required" })
+                                @Html.ValidationMessageFor(model => model.DealUnitId, "", new { @class = "text-danger" })
+                                @*@Html.TextBoxFor(m => m.UnitId, new { @class = "form-control col-xs-2 cusleftnormal", @readonly = "true" })*@
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-6" style="display:@(Model.SaleEnquirySettings.isVisibleDealUnit ? "" : "none")">
+                    @*<div class="col-md-6" style="display:@(Model.SaleEnquirySettings.isVisibleDealUnit ? "" : "none")">
                         @Html.HiddenFor(m => m.SaleEnquirySettings.isVisibleDealUnit)
                         <div class="form-group">
                             @Html.LabelFor(model => model.DealUnitId, "Deal Unit& Multiplier", new { @class = "control-label col-xs-4" })
@@ -183,9 +185,9 @@
                                 @Html.ValidationMessageFor(model => model.UnitConversionMultiplier, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                    </div>
+                    </div>*@
 
-                    <div class="col-md-6" style="display:@(Model.SaleEnquirySettings.isVisibleDealUnit ? "" : "none")">
+                    @*<div class="col-md-6" style="display:@(Model.SaleEnquirySettings.isVisibleDealUnit ? "" : "none")">
                         <div class="form-group">
                             @Html.LabelFor(model => model.DealQty, "Deal Qty", new { @class = "control-label col-xs-4" })
                             <div class="col-xs-7">
@@ -193,7 +195,7 @@
                                 @Html.ValidationMessageFor(model => model.DealQty, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                    </div>
+                    </div>*@
 
                     <div class="col-md-6">
                         <div class="form-group">
@@ -566,7 +568,7 @@
             if ($('#UnitConversionMultiplier').val() != 0) {
                 $('#DealQty').val($('#Qty').val() * $('#UnitConversionMultiplier').val())
             }
-            $('#Amount').val(($('#DealQty').val() * $('#Rate').val()).toFixed(2));
+            $('#Amount').val(($('#Qty').val() * $('#Rate').val()).toFixed(2));
         }
 
         $("#CopyLastTransaction").click(function(){

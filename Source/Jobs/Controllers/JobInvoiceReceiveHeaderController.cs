@@ -21,6 +21,7 @@ using DocumentEvents;
 using Reports.Reports;
 using Reports.Controllers;
 using Model.ViewModels;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -2264,7 +2265,7 @@ EXEC(@Qry);	";
         {
             JobInvoiceReturn JobInvoiceReturn = new JobInvoiceReturn();
             JobInvoiceReturn.JobInvoiceHeaderId = id;
-            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(TransactionDocCategoryConstants.JobInvoiceReturn).ToList();
+            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(DocumentCategoryConstants.JobReturn.DocumentCategoryName).ToList();
             JobInvoiceReturn.DocDate = DateTime.Now;
             return PartialView("_InvoiceReturn", JobInvoiceReturn);
         }
@@ -2331,7 +2332,7 @@ EXEC(@Qry);	";
                                               Amount = linetab.Amount,
                                               unitDecimalPlaces = tab2.Unit.DecimalPlaces,
                                               DealunitDecimalPlaces = linetab.DealUnit.DecimalPlaces,
-                                              DiscountPer = linetab.RateDiscountPer,
+                                              DiscountPer = linetab.DiscountPer,
                                               ProductUidName = tab1.ProductUid.ProductUidName,
                                               SalesTaxGroupProductId = linetab.SalesTaxGroupProductId
                                           }).ToList();

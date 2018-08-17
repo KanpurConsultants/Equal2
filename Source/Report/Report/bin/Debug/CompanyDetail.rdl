@@ -23,8 +23,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CompanyName</rd:DefaultName>
-        <Top>0.0625in</Top>
-        <Left>0.89458in</Left>
+        <Top>0.0125in</Top>
+        <Left>0.86958in</Left>
         <Height>0.25in</Height>
         <Width>3.55473in</Width>
         <Style>
@@ -53,9 +53,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CompanyAddress</rd:DefaultName>
-        <Top>0.27083in</Top>
-        <Left>0.85556in</Left>
-        <Height>0.54445in</Height>
+        <Top>0.20833in</Top>
+        <Left>0.86806in</Left>
+        <Height>0.57987in</Height>
         <Width>3.59375in</Width>
         <ZIndex>1</ZIndex>
         <Style>
@@ -69,13 +69,15 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Image Name="SuryaLogo">
-        <Source>External</Source>
-        <Value>="file:"+ Fields!CompanyLogoPath.Value</Value>
+      <Image Name="Logo">
+        <Source>Database</Source>
+        <Value>=First(Fields!CompanyLogoPath.Value, "DsMain")</Value>
+        <MIMEType>image/jpeg</MIMEType>
         <Sizing>FitProportional</Sizing>
-        <Top>0.0625in</Top>
-        <Height>0.8in</Height>
-        <Width>0.8in</Width>
+        <Top>0.0125in</Top>
+        <Left>0.0125in</Left>
+        <Height>0.7757in</Height>
+        <Width>0.81042in</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -89,10 +91,16 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>="TIN No.     : " + First(Fields!CompanyTinNo.Value, "DsMain") + System.Environment.NewLine
-                  +"CST No.     : " + First(Fields!CompanyCSTNo.Value, "DsMain") + System.Environment.NewLine
-                  +"DIVISION  : " + First(Fields!DivisionName.Value, "DsMain") + System.Environment.NewLine
-                  +"SITE          : " + First(Fields!SiteName.Value, "DsMain")</Value>
+                <Value>=iif(First(Fields!ReportHeaderTextRight1.Value, "DsMain") &lt;&gt; "",First(Fields!ReportHeaderTextRight1.Value, "DsMain"),"") +
+iif(First(Fields!ReportHeaderTextRight1.Value, "DsMain") &lt;&gt; "",System.Environment.NewLine,"") +
+iif(First(Fields!ReportHeaderTextRight2.Value, "DsMain") &lt;&gt; "",First(Fields!ReportHeaderTextRight2.Value, "DsMain"),"") +
+iif(First(Fields!ReportHeaderTextRight2.Value, "DsMain") &lt;&gt; "",System.Environment.NewLine,"") +
+iif(First(Fields!ReportHeaderTextRight3.Value, "DsMain") &lt;&gt; "",First(Fields!ReportHeaderTextRight3.Value, "DsMain"),"") +
+iif(First(Fields!ReportHeaderTextRight3.Value, "DsMain") &lt;&gt; "",System.Environment.NewLine,"") +
+iif(First(Fields!ReportHeaderTextRight4.Value, "DsMain") &lt;&gt; "",First(Fields!ReportHeaderTextRight4.Value, "DsMain"),"") +
+iif(First(Fields!ReportHeaderTextRight4.Value, "DsMain") &lt;&gt; "",System.Environment.NewLine,"") 
+                  +"DIVISION : " + First(Fields!DivisionName.Value, "DsMain") + System.Environment.NewLine
+                  +"SITE : " + First(Fields!SiteName.Value, "DsMain")</Value>
                 <Style>
                   <FontFamily>Tahoma</FontFamily>
                   <FontWeight>Bold</FontWeight>
@@ -100,15 +108,15 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Left</TextAlign>
+              <TextAlign>Right</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CompanyTinNo</rd:DefaultName>
-        <Top>0.0625in</Top>
-        <Left>4.73375in</Left>
-        <Height>0.75278in</Height>
-        <Width>2.5625in</Width>
+        <Top>0.0125in</Top>
+        <Left>4.42125in</Left>
+        <Height>0.7632in</Height>
+        <Width>2.9375in</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -118,10 +126,10 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>0.88542in</Height>
+    <Height>0.81945in</Height>
     <Style />
   </Body>
-  <Width>7.41542in</Width>
+  <Width>7.39459in</Width>
   <Page>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>
@@ -130,10 +138,7 @@
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="Purchase">
-      <ConnectionProperties>
-        <DataProvider>SQL</DataProvider>
-        <ConnectString>=IIF(IsNothing(Parameters!DatabaseConnectionString.Value),"Data Source=192.168.2.25;Initial Catalog=RUG;Integrated Security=False;User Id=sa; pwd=P@ssw0rd!", Parameters!DatabaseConnectionString.Value)</ConnectString>
-      </ConnectionProperties>
+      <DataSourceReference>DataSourceMain</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>727bb65e-cc51-4d28-a097-a8ea7d087931</rd:DataSourceID>
     </DataSource>
@@ -197,6 +202,22 @@
         <Field Name="CompanyLogoPath">
           <DataField>CompanyLogoPath</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ReportHeaderTextRight1">
+          <DataField>ReportHeaderTextRight1</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="ReportHeaderTextRight2">
+          <DataField>ReportHeaderTextRight2</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="ReportHeaderTextRight3">
+          <DataField>ReportHeaderTextRight3</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="ReportHeaderTextRight4">
+          <DataField>ReportHeaderTextRight4</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
         </Field>
       </Fields>
       <rd:DataSetInfo>

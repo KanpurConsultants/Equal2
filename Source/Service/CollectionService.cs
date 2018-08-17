@@ -18,6 +18,7 @@ using Presentation.ViewModels;
 using Model.ViewModels;
 using Model.PropertyTax.Models;
 using Model.DatabaseViews;
+using Jobs.Constants.DocumentType;
 
 namespace Services.PropertyTax
 {
@@ -260,7 +261,7 @@ namespace Services.PropertyTax
                                   select P).FirstOrDefault().LedgerAccountId;
 
 
-            int OtherCollection = Core.Common.DocumentTypeIdConstants.OtherCollection;
+            int OtherCollection = DocumentTypeConstants.OtherCollection.DocumentTypeId;
 
 
             int LedgerDueDrId = 0;
@@ -518,7 +519,7 @@ namespace Services.PropertyTax
             CollectionViewModel vmCollection = GetCollection(Id);
 
 
-            int DocumentTypeId = _DocumentTypeService.Find(Core.Common.DocumentTypeIdConstants.Collection).DocumentTypeId;
+            int DocumentTypeId = _DocumentTypeService.Find(DocumentTypeConstants.Collection.DocumentTypeName).DocumentTypeId;
 
             if (DocumentTypeId == vmCollection.DocTypeId)
             {

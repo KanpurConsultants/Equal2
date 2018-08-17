@@ -8,7 +8,7 @@ using Data.Models;
 using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using Model.ViewModel;
 using AutoMapper;
@@ -137,7 +137,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDoctypeConstants.SaleEnquiryProductMapping).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.SaleEnquiryProductMapping.DocumentTypeName).DocumentTypeId,
                     DocId = temp.SaleEnquiryLineId,
                     ActivityType = (int)ActivityTypeContants.Modified,
                     xEModifications = Modifications,
@@ -407,7 +407,7 @@ namespace Jobs.Controllers
             else { ProductGroups = new string[] { "NA" }; }
 
             return (from Pt in db.FinishedProduct
-                    join Vrs in db.ViewRugSize on Pt.ProductId equals Vrs.ProductId into ViewRugSizeTable from ViewRugSizeTab in ViewRugSizeTable.DefaultIfEmpty()
+                    join Vrs in db.ViewProductSize on Pt.ProductId equals Vrs.ProductId into ViewRugSizeTable from ViewRugSizeTab in ViewRugSizeTable.DefaultIfEmpty()
                     where (string.IsNullOrEmpty(settings.filterProductTypes) ? 1 == 1 : ProductTypes.Contains(Pt.ProductGroup.ProductTypeId.ToString()))
                     && (string.IsNullOrEmpty(settings.filterProducts) ? 1 == 1 : Products.Contains(Pt.ProductId.ToString()))
                     && (string.IsNullOrEmpty(settings.filterProductGroups) ? 1 == 1 : ProductGroups.Contains(Pt.ProductGroupId.ToString()))

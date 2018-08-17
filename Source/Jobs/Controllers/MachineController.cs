@@ -7,7 +7,7 @@ using Data.Models;
 using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using Model.ViewModel;
 using System.Collections.Generic;
@@ -50,13 +50,13 @@ namespace Jobs.Controllers
 
         public ActionResult Create(int id)
           {
-              var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Machine);
+              var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Machine.DocumentTypeName);
               int DocTypeId = 0;
 
               if (DocType != null)
                   DocTypeId = DocType.DocumentTypeId;
               else
-                  return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Machine + " is not defined in database.");
+                  return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Machine.DocumentTypeName + " is not defined in database.");
 
               if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)
               {
@@ -182,13 +182,13 @@ namespace Jobs.Controllers
         
         public ActionResult Edit(int id)
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Machine);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Machine.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Machine + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Machine.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Edit") == false)
             {
@@ -213,13 +213,13 @@ namespace Jobs.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Machine);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Machine.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.Machine + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.Machine.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Delete") == false)
             {
@@ -270,7 +270,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Machine).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Machine.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
 
                     ActivityType = (int)ActivityTypeContants.Deleted,

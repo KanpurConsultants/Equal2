@@ -13,14 +13,14 @@ using Jobs.Helpers;
 using Data.Infrastructure;
 using Presentation.ViewModels;
 using AutoMapper;
-using System.Configuration;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using System.Text;
-using System.Data.SqlClient;
+using Reports.Reports;
+using Reports.Controllers;
 using Model.ViewModel;
 using System.Xml.Linq;
-using Reports.Controllers;
-
+using Jobs.Constants.DocumentCategory;
+using Jobs.Controllers;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -62,8 +62,11 @@ namespace Jobs.Areas.Rug.Controllers
 
 
         public ActionResult Index(string IndexType)
-        {
-            int PackingDocumenttType = 242;
+        {           
+
+            DocumentType DT = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Packing.DocumentTypeName);
+            int PackingDocumenttType = DT.DocumentTypeId;
+
             if (IndexType == "PTS")
             {
                 return RedirectToAction("Index_PendingToSubmit");
@@ -91,7 +94,9 @@ namespace Jobs.Areas.Rug.Controllers
         {
             var PendingToSubmit = _PackingHeaderService.GetPackingHeaderListPendingToSubmit(User.Identity.Name);
 
-            int PackingDocumenttType = 242;
+            DocumentType DT = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Packing.DocumentTypeName);
+            int PackingDocumenttType = DT.DocumentTypeId;
+
             ViewBag.id = PackingDocumenttType;
             ViewBag.Name = new DocumentTypeService(_unitOfWork).Find(PackingDocumenttType).DocumentTypeName;
             ViewBag.PendingToSubmit = PendingToSubmitCount();
@@ -103,7 +108,8 @@ namespace Jobs.Areas.Rug.Controllers
         public ActionResult Index_PendingToReview(int id)
         {
             var PendingtoReview = _PackingHeaderService.GetPackingHeaderListPendingToReview(User.Identity.Name);
-            int PackingDocumenttType = 242;
+            DocumentType DT = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Packing.DocumentTypeName);
+            int PackingDocumenttType = DT.DocumentTypeId;
             ViewBag.id = PackingDocumenttType;
             ViewBag.Name = new DocumentTypeService(_unitOfWork).Find(PackingDocumenttType).DocumentTypeName;
             ViewBag.PendingToSubmit = PendingToSubmitCount();
@@ -176,21 +182,15 @@ namespace Jobs.Areas.Rug.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult Remove()
-        {
-            //To Be Implemented
-            return View("~/Views/Shared/UnderImplementation.cshtml");
-        }
 
         private void PrepareViewBag(PackingHeaderViewModel s)
         {
             //ViewBag.DocTypeList = new DocumentTypeService(_unitOfWork).GetDocumentTypeList().ToList();
             int SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
-            ViewBag.DocTypeList = new DocumentTypeService(_unitOfWork).GetDocumentTypeList(TransactionDocCategoryConstants.PackingReceive);
-            //ViewBag.BuyerList = new BuyerService(_unitOfWork).GetBuyerList().ToList();
+            ViewBag.DocTypeList = new DocumentTypeService(_unitOfWork).GetDocumentTypeList(DocumentCategoryConstants.Packing.DocumentCategoryName);
+            ViewBag.BuyerList = new PersonService(_unitOfWork).GetPersonList().ToList();
             ViewBag.GodownList = new GodownService(_unitOfWork).GetGodownList(SiteId).ToList().Where(i => i.SiteId == (int)System.Web.HttpContext.Current.Session["SiteId"] && i.IsActive == true);
-            ViewBag.DealUnitList = new UnitService(_unitOfWork).GetUnitList().ToList();
+            ViewBag.DealUnitList = new UnitService(_unitOfWork).GetUnitList().Where(m => m.DimensionUnitId != null).ToList();
             ViewBag.ShipMethodList = new ShipMethodService(_unitOfWork).GetShipMethodList().ToList();
 
             List<SelectListItem> temp = new List<SelectListItem>();
@@ -219,24 +219,13 @@ namespace Jobs.Areas.Rug.Controllers
             p.DocNo = _PackingHeaderService.GetMaxDocNo();
             p.ShipMethodId = new ShipMethodService(_unitOfWork).Find("By Sea").ShipMethodId;
 
-            int DocTypeId = 0;
-            var DocType = new DocumentTypeService(_unitOfWork).GetDocumentTypeList(TransactionDocCategoryConstants.PackingReceive).FirstOrDefault();
-            if (DocType != null)
-            {
-                DocTypeId = DocType.DocumentTypeId;
-            }
+            DocumentType DT = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Packing.DocumentTypeName);
+            PackingSetting temp = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(DT.DocumentTypeId, p.DivisionId, p.SiteId);
 
-            //Getting Settings
-            var settings = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(DocTypeId, p.DivisionId, p.SiteId);
+            p.PackingSettings = Mapper.Map<PackingSetting, PackingSettingsViewModel>(temp);
 
-            if (settings == null && UserRoles.Contains("SysAdmin"))
-            {
-                return RedirectToAction("Create", "PackingSetting", new { id = DocTypeId }).Warning("Please create Packing settings");
-            }
-            else if (settings == null && !UserRoles.Contains("SysAdmin"))
-            {
-                return View("~/Views/Shared/InValidSettings.cshtml");
-            }
+            if (System.Web.HttpContext.Current.Session["DefaultGodownId"] != null)
+                p.GodownId = (int)System.Web.HttpContext.Current.Session["DefaultGodownId"];
 
             PrepareViewBag(p);
             ViewBag.Mode = "Add";
@@ -451,21 +440,10 @@ namespace Jobs.Areas.Rug.Controllers
             PrepareViewBag(svm);
             ViewBag.Mode = "Edit";
 
-            //Getting Settings
-            var settings = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(svm.DocTypeId, svm.DivisionId, svm.SiteId);
 
-            if (settings == null && UserRoles.Contains("SysAdmin"))
-            {
-                return RedirectToAction("Create", "PackingSetting", new { id = svm.DocTypeId }).Warning("Please create Packing settings");
-            }
-            else if (settings == null && !UserRoles.Contains("SysAdmin"))
-            {
-                return View("~/Views/Shared/InValidSettings.cshtml");
-            }
+            PackingSetting temp = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(svm.DocTypeId, svm.DivisionId, svm.SiteId);
 
-            svm.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(svm.DocTypeId);
-
-
+            svm.PackingSettings = Mapper.Map<PackingSetting, PackingSettingsViewModel>(temp);
 
             if (!(System.Web.HttpContext.Current.Request.UrlReferrer.PathAndQuery).Contains("Create"))
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
@@ -604,6 +582,10 @@ namespace Jobs.Areas.Rug.Controllers
                 return HttpNotFound();
             }
 
+            PackingSetting temp = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(svm.DocTypeId, svm.DivisionId, svm.SiteId);
+
+            svm.PackingSettings = Mapper.Map<PackingSetting, PackingSettingsViewModel>(temp);
+
             if (String.IsNullOrEmpty(transactionType) || transactionType == "detail")
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
@@ -658,13 +640,17 @@ namespace Jobs.Areas.Rug.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PackingHeaderViewModel PackingHeader = _PackingHeaderService.GetPackingHeaderViewModel(id);
+            PackingHeader PackingHeader = new PackingHeaderService(_unitOfWork).Find(id);
+
             if (PackingHeader == null)
             {
                 return HttpNotFound();
             }
 
             #region DocTypeTimeLineValidation
+
+            bool TimePlanValidation = true;
+            string ExceptionMsg = "";
             try
             {
                 TimePlanValidation = DocumentValidation.ValidateDocument(Mapper.Map<DocumentUniqueId>(PackingHeader), DocumentTimePlanTypeConstants.Delete, User.Identity.Name, out ExceptionMsg, out Continue);
@@ -683,11 +669,13 @@ namespace Jobs.Areas.Rug.Controllers
             }
             #endregion
 
-            ReasonViewModel rvm = new ReasonViewModel()
+            ReasonViewModel vm = new ReasonViewModel()
             {
                 id = id,
             };
-            return PartialView("_Reason", rvm);
+
+            return PartialView("_Reason", vm);
+
         }
 
         [HttpPost]
@@ -763,13 +751,28 @@ namespace Jobs.Areas.Rug.Controllers
                         new ProductUidService(_unitOfWork).Update(ProductUid);
                     }
 
-
+                    PackingLineExtended LineExtended = new PackingLineExtendedService(_unitOfWork).Find(item.PackingLineId);
+                    if (LineExtended != null)
+                    {
+                        new PackingLineExtendedService(_unitOfWork).Delete(LineExtended);
+                    }
                     new PackingLineService(_unitOfWork).Delete(item.PackingLineId);
                 }
 
 
                 foreach (var item in StockIssueIdList)
                 {
+                    StockAdj Adj = (from L in db.StockAdj
+                                    where L.StockOutId == item
+                                    select L).FirstOrDefault();
+
+                    if (Adj != null)
+                    {
+                        //Adj.ObjectState = Model.ObjectState.Deleted;
+                        //db.StockAdj.Remove(Adj);
+                        new StockAdjService(_unitOfWork).Delete(Adj);
+                    }
+
                     new StockService(_unitOfWork).DeleteStock(item);
                 }
 
@@ -890,28 +893,30 @@ namespace Jobs.Areas.Rug.Controllers
 
 
                     pd.Status = (int)StatusConstants.Submitted;
-                    pd.ReviewBy = null;
+                    
+                    //pd.ReviewBy = User.Identity.Name;
+                    //pd.ReviewCount = 1;
 
                     _PackingHeaderService.Update(pd);
                     _unitOfWork.Save();
 
-                    string ConnectionString = (string)System.Web.HttpContext.Current.Session["DefaultConnectionString"];
+                    //string ConnectionString = (string)System.Web.HttpContext.Current.Session["DefaultConnectionString"];
 
-                    DataSet ds = new DataSet();
-                    using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-                    {
-                        sqlConnection.Open();
-                        using (SqlCommand cmd = new SqlCommand("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_UpdatePackingArea"))
-                        {
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Connection = sqlConnection;
-                            cmd.Parameters.AddWithValue("@PackingHeaderId", pd.PackingHeaderId);
-                            cmd.Parameters.AddWithValue("@DealUnitId", pd.DealUnitId);
-                            cmd.CommandTimeout = 1000;
-                            cmd.ExecuteNonQuery();
-                            cmd.Connection.Close();
-                        }
-                    }
+                    //DataSet ds = new DataSet();
+                    //using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                    //{
+                    //    sqlConnection.Open();
+                    //    using (SqlCommand cmd = new SqlCommand("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_UpdatePackingArea"))
+                    //    {
+                    //        cmd.CommandType = CommandType.StoredProcedure;
+                    //        cmd.Connection = sqlConnection;
+                    //        cmd.Parameters.AddWithValue("@PackingHeaderId", pd.PackingHeaderId);
+                    //        cmd.Parameters.AddWithValue("@DealUnitId", pd.DealUnitId);
+                    //        cmd.CommandTimeout = 1000;
+                    //        cmd.ExecuteNonQuery();
+                    //        cmd.Connection.Close();
+                    //    }
+                    //}
 
                     //SendEmail_PODrafted(Id);
 
@@ -925,6 +930,8 @@ namespace Jobs.Areas.Rug.Controllers
                         DocDate = pd.DocDate,
                         DocStatus = pd.Status,
                     }));
+
+                    Reviewed(Id, IndexType, UserRemark, IsContinue);
 
                     return RedirectToAction("Index", new { IndexType = IndexType }).Success("Record submitted successfully.");
                 }
@@ -1102,7 +1109,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
             PackingHeader header = _PackingHeaderService.Find(id);
             if (header.Status == (int)StatusConstants.Drafted)
-                return RedirectToAction("DocPrint", new { id = id, ReportFileType = ReportFileType });
+                return RedirectToAction("GeneratePrints", new { Ids = id, DocTypeId = header.DocTypeId });
             else
                 return HttpNotFound();
         }
@@ -1111,8 +1118,8 @@ namespace Jobs.Areas.Rug.Controllers
         public ActionResult PrintAfter_Submit(int id, string ReportFileType)
         {
             PackingHeader header = _PackingHeaderService.Find(id);
-            if (header.Status == (int)StatusConstants.Submitted || header.Status == (int)StatusConstants.Modified || header.Status == (int)StatusConstants.ModificationSubmitted)
-                return RedirectToAction("DocPrint", new { id = id, ReportFileType = ReportFileType });
+            if (header.Status == (int)StatusConstants.Submitted || header.Status == (int)StatusConstants.Approved  || header.Status == (int)StatusConstants.Modified || header.Status == (int)StatusConstants.ModificationSubmitted)
+                return RedirectToAction("GeneratePrints", new { Ids = id, DocTypeId = header.DocTypeId });
             else
                 return HttpNotFound();
         }
@@ -1122,27 +1129,221 @@ namespace Jobs.Areas.Rug.Controllers
         {
             PackingHeader header = _PackingHeaderService.Find(id);
             if (header.Status == (int)StatusConstants.Approved)
-                return RedirectToAction("DocPrint", new { id = id, ReportFileType = ReportFileType });
+                return RedirectToAction("GeneratePrints", new { Ids = id, DocTypeId = header.DocTypeId });
             else
                 return HttpNotFound();
         }
 
-        public ActionResult DocPrint(int id, string ReportFileType)
+        public ActionResult GeneratePrints(string Ids, int DocTypeId)
         {
-            ApplicationDbContext Db = new ApplicationDbContext();
 
-            String query = "";
-            if (ReportFileType == "Excel")
-                //query = Db.strSchemaName + ".ProcPackingPrintToExcel " + id.ToString();
-                query = Db.strSchemaName + ".ProcPackingPrintToExcel ";
-            else
-                // query = Db.strSchemaName + ".ProcPackingPrint " + id.ToString();
-                query = Db.strSchemaName + ".ProcPackingPrint ";
+            if (!string.IsNullOrEmpty(Ids))
+            {
+                int SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
+                int DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
 
-            String ReportTitle = "Carpet Receive From Packing";
-            return RedirectToAction("DocumentPrint", "Report_DocumentPrint", new { queryString = query, DocumentId = id, ReportTitle = ReportTitle, ReportFileType = ReportFileType });
+                var Settings = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(DocTypeId, DivisionId, SiteId);
+
+                if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, Settings.ProcessId, this.ControllerContext.RouteData.Values["controller"].ToString(), "GeneratePrints") == false)
+                {
+                    return View("~/Views/Shared/PermissionDenied.cshtml").Warning("You don't have permission to do this task.");
+                }
+
+                string ReportSql = "";
+
+                //if (!string.IsNullOrEmpty(Settings.DocumentPrint))
+                //    ReportSql = db.ReportHeader.Where((m) => m.ReportName == Settings.DocumentPrint).FirstOrDefault().ReportSQL;
+
+                try
+                {
+
+                    List<byte[]> PdfStream = new List<byte[]>();
+                    foreach (var item in Ids.Split(',').Select(Int32.Parse))
+                    {
+
+                        DirectReportPrint drp = new DirectReportPrint();
+
+                        var pd = db.PackingHeader.Find(item);
+
+                        LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
+                        {
+                            DocTypeId = pd.DocTypeId,
+                            DocId = pd.PackingHeaderId,
+                            ActivityType = (int)ActivityTypeContants.Print,
+                            DocNo = pd.DocNo,
+                            DocDate = pd.DocDate,
+                            DocStatus = pd.Status,
+                        }));
+
+                        byte[] Pdf;
+
+                        if (!string.IsNullOrEmpty(ReportSql))
+                        {
+                            Pdf = drp.rsDirectDocumentPrint(ReportSql, User.Identity.Name, item);
+                            PdfStream.Add(Pdf);
+                        }
+                        else
+                        {
+
+                            if (pd.Status == (int)StatusConstants.Drafted || pd.Status == (int)StatusConstants.Modified || pd.Status == (int)StatusConstants.Import)
+                            {
+
+                                if (Settings.SqlProcDocumentPrint == null || Settings.SqlProcDocumentPrint == "")
+                                {
+                                    PackingHeaderRDL cr = new PackingHeaderRDL();
+                                    drp.CreateRDLFile("Std_Packing_Print", cr.Create_Std_Packing_Print());
+                                    List<ListofQuery> QueryList = new List<ListofQuery>();
+                                    QueryList = DocumentPrintData(item);
+                                    Pdf = drp.DocumentPrint_New(QueryList, User.Identity.Name);
+                                }
+                                else
+                                    Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
+
+                                PdfStream.Add(Pdf);
+                            }
+                            else if (pd.Status == (int)StatusConstants.Submitted || pd.Status == (int)StatusConstants.ModificationSubmitted)
+                            {
+                                if (Settings.SqlProcDocumentPrint_AfterSubmit == null || Settings.SqlProcDocumentPrint_AfterSubmit == "")
+                                {
+                                    PackingHeaderRDL cr = new PackingHeaderRDL();
+                                    drp.CreateRDLFile("Std_Packing_Print", cr.Create_Std_Packing_Print());
+                                    List<ListofQuery> QueryList = new List<ListofQuery>();
+                                    QueryList = DocumentPrintData(item);
+                                    Pdf = drp.DocumentPrint_New(QueryList, User.Identity.Name);
+                                }
+                                else
+                                    Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint_AfterSubmit, User.Identity.Name, item);
+
+                                PdfStream.Add(Pdf);
+                            }
+                            else if (pd.Status == (int)StatusConstants.Approved)
+                            {
+                                if (Settings.SqlProcDocumentPrint_AfterApprove == null || Settings.SqlProcDocumentPrint_AfterApprove == "")
+                                {
+                                    PackingHeaderRDL cr = new PackingHeaderRDL();
+                                    drp.CreateRDLFile("Std_Packing_Print", cr.Create_Std_Packing_Print());
+                                    List<ListofQuery> QueryList = new List<ListofQuery>();
+                                    QueryList = DocumentPrintData(item);
+                                    Pdf = drp.DocumentPrint_New(QueryList, User.Identity.Name);
+                                }
+                                else
+                                    Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint_AfterApprove, User.Identity.Name, item);
+                                PdfStream.Add(Pdf);
+                            }
+
+                        }
+                    }
+
+                    PdfMerger pm = new PdfMerger();
+
+                    byte[] Merge = pm.MergeFiles(PdfStream);
+
+                    if (Merge != null)
+                        return File(Merge, "application/pdf");
+
+                }
+
+                catch (Exception ex)
+                {
+                    string message = _exception.HandleException(ex);
+                    return Json(new { success = "Error", data = message }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { success = "Success" }, JsonRequestBehavior.AllowGet);
+
+            }
+            return Json(new { success = "Error", data = "No Records Selected." }, JsonRequestBehavior.AllowGet);
+
         }
 
+
+        private List<ListofQuery> DocumentPrintData(int item)
+        {
+
+            List<ListofQuery> DocumentPrintData = new List<ListofQuery>();
+            String QueryMain;
+
+            QueryMain = @"	DECLARE @DocDate DATETIME
+    SET @DocDate = (SELECT DocDate FROM Web.PackingHeaders WHERE PackingHeaderId = 2) 
+  
+  
+	  
+
+    SELECT
+    --Header Table Fields
+    H.PackingHeaderId,H.DocTypeId,H.DocNo,DocIdCaption + ' No' AS DocIdCaption,
+      H.SiteId,H.DivisionId,H.DocDate,DTS.DocIdCaption + ' Date' AS DocIdCaptionDate, DocIdCaption+'Due Date' AS DocIdCaptionDueDate, Pp.Name AS OrderBy,	null AS ProcessName
+       , H.Remark,DT.DocumentTypeShortName,
+	H.ModifiedBy + ' ' + Replace(replace(convert(NVARCHAR, H.ModifiedDate, 106), ' ', '/'), '/20', '/') + substring(convert(NVARCHAR, H.ModifiedDate), 13, 7) AS ModifiedBy,
+         H.ModifiedDate,(CASE WHEN Isnull(H.Status, 0)= 0 OR Isnull(H.Status, 0)= 8 THEN 0 ELSE 1 END)  AS Status,
+             (CASE WHEN SPR.[Party GST NO] IS NULL THEN 'Yes' ELSE 'No' END ) AS ReverseCharge,
+             VDC.CompanyName,
+	--Godown Detail
+    G.GodownName,
+	--Person Detail
+    P.Name AS PartyName, DTS.PartyCaption AS  PartyCaption, P.Suffix AS PartySuffix,	
+	isnull(PA.Address, '') + ' ' + isnull(C.CityName, '') + ',' + isnull(PA.ZipCode, '') + (CASE WHEN isnull(CS.StateName, '') <> isnull(S.StateName, '') AND SPR.[Party GST NO]
+        IS NOT NULL THEN ',State : '+isnull(S.StateName,'')+(CASE WHEN S.StateCode IS NULL THEN '' ELSE ', Code : '+S.StateCode END)    ELSE '' END ) AS PartyAddress,
+isnull(S.StateName, '') AS PartyStateName, isnull(S.StateCode, '') AS PartyStateCode,
+
+P.Mobile AS PartyMobileNo,	SPR.*,
+	--Plan Detail
+    JOH.DocNo AS PlanNo,DTS.ContraDocTypeCaption,
+	--Caption Fields
+    DTS.SignatoryMiddleCaption,DTS.SignatoryRightCaption,
+	--Line Table
+    PD.ProductName,DTS.ProductCaption,U.UnitName,U.DecimalPlaces,DU.UnitName AS DealUnitName,DTS.DealQtyCaption,DU.DecimalPlaces AS DealDecimalPlaces,
+    isnull(L.Qty,0) AS Qty,
+    D1.Dimension1Name,DTS.Dimension1Caption,D2.Dimension2Name,DTS.Dimension2Caption,NULL Dimension3Name,DTS.Dimension3Caption,NULL Dimension4Name,DTS.Dimension4Caption,
+   (CASE WHEN DTS.PrintSpecification >0 THEN JOL.Specification ELSE '' END)  AS Specification, DTS.SpecificationCaption,DTS.SignatoryleftCaption,L.Remark AS LineRemark,
+	 NULL   AS SalesTaxProductCodes,
+    (SELECT TOP 1 SalesTaxProductCodeCaption FROM web.SiteDivisionSettings WHERE H.DocDate BETWEEN StartDate AND IsNull(EndDate, getdate()) AND SiteId = H.SiteId AND DivisionId = H.DivisionId)  AS SalesTaxProductCodeCaption,
+       (CASE WHEN DTS.PrintProductGroup > 0 THEN isnull(PG.ProductGroupName, '') ELSE '' END)+(CASE WHEN DTS.PrintProductdescription >0 THEN isnull(','+PD.Productdescription,'') ELSE '' END) AS ProductGroupName,
+         DTS.ProductGroupCaption,   
+	NULL AS SubReportProcList,
+	(CASE WHEN Isnull(H.Status,0)=0 OR Isnull(H.Status,0)=8 THEN 'Provisional ' +isnull(DT.PrintTitle, DT.DocumentTypeName) ELSE isnull(DT.PrintTitle, DT.DocumentTypeName) END) AS ReportTitle,
+  	'Std_Packing_Print.rdl' AS ReportName,
+      SalesTaxGroupProductCaption
+    FROM Web.PackingHeaders H WITH (Nolock)
+    LEFT JOIN web.DocumentTypes DT WITH(Nolock) ON DT.DocumentTypeId=H.DocTypeId
+   LEFT JOIN Web._DocumentTypeSettings DTS WITH (Nolock) ON DTS.DocumentTypeId=DT.DocumentTypeId
+   LEFT JOIN Web.JobOrderSettings JOS WITH (Nolock) ON JOS.DocTypeId=DT.DocumentTypeId AND H.Siteid= JOS.Siteid AND H.DivisionId= JOS.DivisionId
+    LEFT JOIN web.ViewDivisionCompany VDC WITH (Nolock) ON VDC.DivisionId=H.DivisionId
+   LEFT JOIN Web.Sites SI WITH (Nolock) ON SI.SiteId=H.SiteId
+   LEFT JOIN Web.Divisions DIV WITH (Nolock) ON DIV.DivisionId=H.DivisionId
+   LEFT JOIN Web.Companies Com ON Com.CompanyId = DIV.CompanyId
+    LEFT JOIN Web.Cities CC WITH (Nolock) ON CC.CityId=Com.CityId
+   LEFT JOIN Web.States CS WITH (Nolock) ON CS.StateId=CC.StateId
+   LEFT JOIN Web.People P WITH (Nolock) ON P.PersonID=H.BuyerId 
+   LEFT JOIN web.Godowns G WITH (Nolock) ON G.GodownId=H.GodownId
+   LEFT JOIN Web.Std_PersonRegistrations SPR WITH (Nolock) ON SPR.CustomerId=H.JobWorkerId
+   LEFT JOIN (SELECT TOP 1 * FROM web.SiteDivisionSettings WHERE @DocDate BETWEEN StartDate AND IsNull(EndDate, getdate()) ORDER BY StartDate) SDS ON H.DivisionId = SDS.DivisionId AND  H.SiteId = SDS.SiteId
+   LEFT JOIN(SELECT* FROM Web.PersonAddresses WITH (nolock) WHERE AddressType IS NULL) PA ON PA.PersonId = P.PersonID
+LEFT JOIN Web.Cities C WITH (nolock) ON C.CityId = PA.CityId
+LEFT JOIN Web.States S WITH (Nolock) ON S.StateId=C.StateId
+LEFT JOIN web.People Pp WITH (Nolock) ON Pp.PersonID=H.JobWorkerId
+LEFT JOIN Web.PackingLines L WITH (Nolock) ON H.PackingHeaderId=L.PackingHeaderId
+LEFT JOIN Web.SaleOrderLines JOL WITH (Nolock) ON JOL.SaleorderLineId=L.SaleOrderLineId
+LEFT JOIN Web.SaleOrderHeaders JOH WITH (Nolock) ON JOH.SaleorderheaderId=JOL.SaleorderheaderId
+LEFT JOIN web.Products PD WITH (Nolock) ON PD.ProductId=JOL.ProductId
+LEFT JOIN web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId=PD.ProductGroupid
+LEFT JOIN Web.SalesTaxProductCodes STC WITH (Nolock) ON STC.SalesTaxProductCodeId= IsNull(PD.SalesTaxProductCodeId, Pg.DefaultSalesTaxProductCodeId)
+    LEFT JOIN Web.Dimension1 D1 WITH(Nolock) ON D1.Dimension1Id=L.Dimension1Id
+   LEFT JOIN web.Dimension2 D2 WITH (Nolock) ON D2.Dimension2Id=L.Dimension2Id
+   LEFT JOIN web.Units U WITH (Nolock) ON U.UnitId=PD.UnitId
+   LEFT JOIN web.Units DU WITH (Nolock) ON DU.UnitId=JOL.DealUnitId
+      WHERE H.PackingHeaderId= " + item + @"
+    ORDER BY L.PackingLineId";
+
+            ListofQuery QryMain = new ListofQuery();
+            QryMain.Query = QueryMain;
+            QryMain.QueryName = nameof(QueryMain);
+            DocumentPrintData.Add(QryMain);
+
+
+            return DocumentPrintData;
+
+        }
 
         public ActionResult Import(int id)//Document Type Id
         {
@@ -1176,26 +1377,6 @@ namespace Jobs.Areas.Rug.Controllers
                 }
             }
             return RedirectToAction("Index", new { id = id });
-        }
-
-        public ActionResult GetCustomPerson(string searchTerm, int pageSize, int pageNum, int filter)//DocTypeId
-        {
-            var Query = _PackingHeaderService.GetCustomPerson(filter, searchTerm);
-            var temp = Query.Skip(pageSize * (pageNum - 1))
-                .Take(pageSize)
-                .ToList();
-
-            var count = Query.Count();
-
-            ComboBoxPagedResult Data = new ComboBoxPagedResult();
-            Data.Results = temp;
-            Data.Total = count;
-
-            return new JsonpResult
-            {
-                Data = Data,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
         }
 
     }

@@ -28,10 +28,9 @@
         <div class="panel-info">
                    <div class="btn-group">
                 @Html.ActionLink(" ", "Create", "MaterialRequestHeader", new { @id = @ViewBag.id }, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip" })
-                @if (ViewBag.SqlProcDocumentPrint != null)
-                {
+
                 @Html.ActionLink(" ", "GeneratePrints", "MaterialRequestHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-print toolbar", @title = "Print", @data_toggle = "tooltip", @id = "PrintRecordI", target = "_blank" })
-                }
+
                 @Html.ActionLink(" ", "Remove", "MaterialRequestHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-trash toolbar", @title = "Delete", @data_toggle = "tooltip", @id = "DeleteRecord", @data_modalDelete = "" })
                 </div>
             <div class="btn-group">

@@ -71,7 +71,7 @@ namespace Service
         }
         public IEnumerable<ProductTypeAttributeViewModel> GetAttributeForProduct(int id)
         {
-            //int Typeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(ProductTypeConstants.Rug).ProductTypeId;
+            //int Typeid = new ProductTypeService(_unitOfWork).GetProductTypeByName(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
             int Typeid = (from P in db.Product
                           join Pg in db.ProductGroups on P.ProductGroupId equals Pg.ProductGroupId into ProductGroupTable
                           from ProductGroupTab in ProductGroupTable.DefaultIfEmpty()

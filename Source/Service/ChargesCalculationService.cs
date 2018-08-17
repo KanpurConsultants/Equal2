@@ -328,12 +328,12 @@ namespace Service
 
             List<HeaderChargeViewModel> TempHeaderCharges = new List<HeaderChargeViewModel>();
             HeaderChargeEdit = false;
-            var count = new PurchaseOrderHeaderChargeService(_unitOfWork).GetCalculationFooterListSProc(HeaderTableId, HeaderChargesTable, LineChargesTable).Count();
+            var count = new JobOrderHeaderChargeService(_unitOfWork).GetCalculationFooterListSProc(HeaderTableId, HeaderChargesTable, LineChargesTable).Count();
 
             if (count > 0)
             {
 
-                TempHeaderCharges = new PurchaseOrderHeaderChargeService(_unitOfWork).GetCalculationFooterListSProc(HeaderTableId, HeaderChargesTable, LineChargesTable).ToList();
+                TempHeaderCharges = new JobOrderHeaderChargeService(_unitOfWork).GetCalculationFooterListSProc(HeaderTableId, HeaderChargesTable, LineChargesTable).ToList();
                 HeaderChargeEdit = true;
 
             }
@@ -353,7 +353,7 @@ namespace Service
 
             if (MaxLineId.HasValue && MaxLineId.Value > 0)
             {
-                TempLineCharges = new PurchaseOrderLineChargeService(_unitOfWork).GetCalculationProductListSProc(MaxLineId ?? 0, LineChargeTable).ToList();
+                TempLineCharges = new JobOrderLineChargeService(_unitOfWork).GetCalculationProductListSProc(MaxLineId ?? 0, LineChargeTable).ToList();
 
                 foreach (var Titem in TempLineCharges)
                 {

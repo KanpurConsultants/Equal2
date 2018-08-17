@@ -8,12 +8,13 @@ using Data.Models;
 using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using Model.ViewModel;
 using AutoMapper;
 using System.Xml.Linq;
 using Jobs.Helpers;
+using Jobs.Constants.RugProductType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -54,13 +55,13 @@ namespace Jobs.Areas.Rug.Controllers
         
           public ActionResult Create()
           {
-              var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConstruction);
+              var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConstruction.DocumentTypeName);
               int DocTypeId = 0;
 
               if (DocType != null)
                   DocTypeId = DocType.DocumentTypeId;
               else
-                  return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProductConstruction + " is not defined in database.");
+                  return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProductConstruction.DocumentTypeName + " is not defined in database.");
 
               if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)
               {
@@ -81,7 +82,7 @@ namespace Jobs.Areas.Rug.Controllers
             {
                 if (vm.ProductCategoryId <= 0)
                 {
-                    pt.ProductTypeId = new ProductTypeService(_unitOfWork).Find(ProductTypeConstants.Rug).ProductTypeId;
+                    pt.ProductTypeId = new ProductTypeService(_unitOfWork).Find(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
                     pt.CreatedDate = DateTime.Now;
                     pt.ModifiedDate = DateTime.Now;
                     pt.CreatedBy = User.Identity.Name;
@@ -103,7 +104,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConstruction).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConstruction.DocumentTypeName).DocumentTypeId,
                         DocId = pt.ProductCategoryId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -145,7 +146,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConstruction).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConstruction.DocumentTypeName).DocumentTypeId,
                         DocId = temp.ProductCategoryId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -164,13 +165,13 @@ namespace Jobs.Areas.Rug.Controllers
         
         public ActionResult Edit(int id)
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConstruction);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConstruction.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProductConstruction + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProductConstruction.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Edit") == false)
             {
@@ -195,13 +196,13 @@ namespace Jobs.Areas.Rug.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConstruction);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConstruction.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProductConstruction + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProductConstruction.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Delete") == false)
             {
@@ -257,7 +258,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConstruction).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConstruction.DocumentTypeName).DocumentTypeId,
                 DocId = vm.id,
                 ActivityType = (int)ActivityTypeContants.Deleted,
                 UserRemark = vm.Reason,
@@ -308,7 +309,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Construction );
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Construction.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 

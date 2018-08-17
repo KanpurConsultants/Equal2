@@ -13,7 +13,7 @@ using Data.Infrastructure;
 using Presentation.ViewModels;
 using AutoMapper;
 using System.Configuration;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Microsoft.Reporting.WebForms;
 using System.Text;
 using Model.ViewModel;
@@ -307,7 +307,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             ViewBag.ShipMethodList = new ShipMethodService(_unitOfWork).GetShipMethodList().ToList();
             ViewBag.DeliveryTermsList = new DeliveryTermsService(_unitOfWork).GetDeliveryTermsList().ToList();
-            ViewBag.BuyerList = new BuyerService(_unitOfWork).GetBuyerList().ToList();
+            ViewBag.BuyerList = new PersonService(_unitOfWork).GetPersonList().ToList();
             ViewBag.CurrencyList = new CurrencyService(_unitOfWork).GetCurrencyList().ToList();
 
 
@@ -381,7 +381,7 @@ namespace Jobs.Areas.Rug.Controllers
                     _SaleInvoiceHeaderService.Create(saleinvoiceheaderdetail);
 
 
-                    saledispatchheader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDoctypeConstants.SaleChallan).DocumentTypeId;
+                    saledispatchheader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.SaleChallan.DocumentTypeName).DocumentTypeId;
                     saledispatchheader.CreatedDate = DateTime.Now;
                     saledispatchheader.ModifiedDate = DateTime.Now;
                     saledispatchheader.CreatedBy = User.Identity.Name;

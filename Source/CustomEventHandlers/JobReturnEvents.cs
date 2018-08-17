@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DocumentEvents;
+using Jobs.Constants.RugDocumentType;
 using JobReturnDocumentEvents;
 
 namespace Jobs.Controllers
@@ -48,7 +48,7 @@ namespace Jobs.Controllers
             var CostCenterIds = Temp.Select(m => m.CostCenterId).ToArray();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             DbContext.Dispose();
@@ -86,7 +86,7 @@ namespace Jobs.Controllers
             var Temp = (DbContext.JobReturnLine.AsNoTracking().Where(m => m.JobReturnLineId == EventArgs.DocLineId).FirstOrDefault());
 
             var DocType = (from p in DbContext.DocumentType.AsNoTracking()
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             var JOH = (from p in DbContext.JobReceiveLine.AsNoTracking()
@@ -155,7 +155,7 @@ namespace Jobs.Controllers
             var CostCenterIds = JobHeader.Select(m => m.CostCenterId).ToArray();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             DbContext.Dispose();
@@ -201,7 +201,7 @@ namespace Jobs.Controllers
                        select t).FirstOrDefault();
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             DbContext.Dispose();

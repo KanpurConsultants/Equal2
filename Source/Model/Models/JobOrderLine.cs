@@ -97,7 +97,7 @@ namespace Model.Models
         public virtual UnitConversionFor UnitConversionFor { get; set; }
 
         [Display(Name = "Non Counted Qty")]
-        public decimal NonCountedQty { get; set; }
+        public decimal? NonCountedQty { get; set; }
 
         [Display(Name = "Loss Qty")]
         public decimal? LossQty { get; set; }

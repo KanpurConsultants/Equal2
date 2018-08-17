@@ -15,7 +15,7 @@ using Services.PropertyTax;
 using Core.Common;
 using Model.Models;
 using Presentation.ViewModels;
-using Jobs.Helpers;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Areas.PropertyTax.Controllers
 {
@@ -77,7 +77,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         public ActionResult Create()//DocumentTypeId
         {
             Religion vm = new Religion();
-            vm.DocTypeId = DocumentTypeIdConstants.Religion;
+            vm.DocTypeId = DocumentTypeConstants.Religion.DocumentTypeId;
             vm.IsActive = true;
             ViewBag.Mode = "Add";
             return View("Create", vm);
@@ -119,13 +119,14 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.Religion,
+                        DocTypeId = DocumentTypeConstants.Religion.DocumentTypeId,
                         DocId = pt.ReligionId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
 
 
-                    return RedirectToAction("Create").Success("Data saved successfully");
+                    return RedirectToAction("Create");
+                    //.Success("Data saved successfully");
                 }
 
                 else
@@ -166,13 +167,14 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.Religion,
+                        DocTypeId = DocumentTypeConstants.Religion.DocumentTypeId,
                         DocId = temp.ReligionId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
                     }));
 
-                    return RedirectToAction("Index").Success("Data saved successfully");
+                    return RedirectToAction("Index");
+                        //.Success("Data saved successfully");
 
                 }
 
@@ -343,7 +345,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         [HttpGet]
         public ActionResult Report()
         {
-            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeIdConstants.Religion);
+            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeConstants.Religion.DocumentTypeId);
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["CustomizeDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
         }
     }

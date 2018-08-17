@@ -21,10 +21,10 @@ namespace Model.Models
         //public int? ProductCategoryId { get; set; }
         //public virtual ProductCategory ProductCategory { get; set; }
 
-        [ForeignKey("ProductCollection")]
-        [Display(Name = "Product Collection")]
-        public int? ProductCollectionId { get; set; }
-        public virtual ProductCollection ProductCollection { get; set; }
+        //[ForeignKey("ProductCollection")]
+        //[Display(Name = "Product Collection")]
+        //public int? ProductCollectionId { get; set; }
+        //public virtual ProductCollection ProductCollection { get; set; }
 
         [ForeignKey("ProductQuality")]
         [Display(Name = "Product Quality")]

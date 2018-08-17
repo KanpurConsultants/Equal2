@@ -21,7 +21,8 @@ using Reports.Reports;
 using System.Data;
 using SaleInvoiceDocumentEvents;
 using CustomEventArgs;
-
+using Jobs.Constants.DocumentCategory;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Controllers
 {
@@ -281,24 +282,24 @@ namespace Jobs.Controllers
                 }
             }
 
-            vm.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(vm.DocTypeId);
+            vm.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument((int)vm.DocTypeId);
 
 
             int CustomerDoctypeId = 0;
             int? FinancierDocTypeId = null;
 
-            if (new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Customer) != null)
+            if (new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Customer.DocumentTypeName) != null)
             {
-                CustomerDoctypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Customer).DocumentTypeId;
+                CustomerDoctypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Customer.DocumentTypeName).DocumentTypeId;
             }
-            else if (new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Customer) != null)
+            else if (new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Customer.DocumentTypeName) != null)
             {
-                CustomerDoctypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Buyer).DocumentTypeId;
+                CustomerDoctypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Customer.DocumentTypeName).DocumentTypeId;
             }
 
-            if (new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Financier) != null)
+            if (new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Financier.DocumentTypeName) != null)
             {
-                FinancierDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Financier).DocumentTypeId;
+                FinancierDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Financier.DocumentTypeName).DocumentTypeId;
             }
 
             vm.BuyerDocTypeId = CustomerDoctypeId;
@@ -511,7 +512,7 @@ namespace Jobs.Controllers
 
                     saleinvoiceheaderdetail.BillToBuyerId = vm.BillToBuyerId;
                     saleinvoiceheaderdetail.SaleToBuyerId = vm.SaleToBuyerId;
-                    saleinvoiceheaderdetail.CurrencyId = vm.CurrencyId;
+                    saleinvoiceheaderdetail.CurrencyId = (int) vm.CurrencyId;
                     saleinvoiceheaderdetail.DocDate = vm.DocDate;
                     saleinvoiceheaderdetail.DocNo = vm.DocNo;
                     saleinvoiceheaderdetail.FinancierId = vm.FinancierId;
@@ -581,7 +582,7 @@ namespace Jobs.Controllers
                     packingHeader.BuyerId = vm.SaleToBuyerId;
                     packingHeader.DocDate = vm.DocDate;
                     packingHeader.DocNo = vm.DocNo;
-                    packingHeader.GodownId = vm.GodownId;
+                    packingHeader.GodownId = (int)vm.GodownId;
                     packingHeader.Remark = vm.Remark;
                     packingHeader.ObjectState = Model.ObjectState.Modified;
                     packingHeader.ModifiedDate = DateTime.Now;
@@ -794,18 +795,18 @@ namespace Jobs.Controllers
             int CustomerDoctypeId = 0;
             int? FinancierDocTypeId = null;
 
-            if (new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Customer) != null)
+            if (new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Customer.DocumentTypeName) != null)
             {
-                CustomerDoctypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Customer).DocumentTypeId;
+                CustomerDoctypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Customer.DocumentTypeName).DocumentTypeId;
             }
-            else if (new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Customer) != null)
+            else if (new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Customer.DocumentTypeName) != null)
             {
-                CustomerDoctypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Buyer).DocumentTypeId;
+                CustomerDoctypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Customer.DocumentTypeName).DocumentTypeId;
             }
 
-            if (new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Financier) != null)
+            if (new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Financier.DocumentTypeName) != null)
             {
-                FinancierDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Financier).DocumentTypeId;
+                FinancierDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Financier.DocumentTypeName).DocumentTypeId;
             }
 
             vm.BuyerDocTypeId = CustomerDoctypeId;
@@ -1306,14 +1307,14 @@ namespace Jobs.Controllers
                                 SqlParameter DocDate = new SqlParameter("@DocDate", DateTime.Now.Date);
                                 DocDate.SqlDbType = SqlDbType.DateTime;
                                 SqlParameter Godown = new SqlParameter("@GodownId", Ph.GodownId);
-                                SqlParameter DocType = new SqlParameter("@DocTypeId", new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.GatePass).DocumentTypeId);
+                                SqlParameter DocType = new SqlParameter("@DocTypeId", new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.GatePass.DocumentTypeName).DocumentTypeId);
                                 GatePassHeader GPHeader = new GatePassHeader();
                                 GPHeader.CreatedBy = User.Identity.Name;
                                 GPHeader.CreatedDate = DateTime.Now;
                                 GPHeader.DivisionId = pd.DivisionId;
                                 GPHeader.DocDate = DateTime.Now.Date;
                                 GPHeader.DocNo = db.Database.SqlQuery<string>("Web.GetNewDocNoGatePass @DocTypeId, @DocDate, @GodownId ", DocType, DocDate, Godown).FirstOrDefault();
-                                GPHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.GatePass).DocumentTypeId;
+                                GPHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.GatePass.DocumentTypeName).DocumentTypeId;
                                 GPHeader.ModifiedBy = User.Identity.Name;
                                 GPHeader.ModifiedDate = DateTime.Now;
                                 GPHeader.Remark = pd.Remark;
@@ -1490,7 +1491,7 @@ namespace Jobs.Controllers
                 int DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
                 int PK = 0;
                 var Settings = new SaleInvoiceSettingService(_unitOfWork).GetSaleInvoiceSettingForDocument(DocTypeId, DivisionId, SiteId);
-                var GatePassDocTypeID = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.GatePass).DocumentTypeId;
+                var GatePassDocTypeID = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.GatePass.DocumentCategoryName).DocumentTypeId;
                 string SaleinvoiceIds = "";
                 try
                 {
@@ -2479,7 +2480,7 @@ EXEC(@Qry);	";
         {
             InvoiceReturn InvoiceReturn = new InvoiceReturn();
             InvoiceReturn.SaleInvoiceHeaderId = id;
-            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(TransactionDocCategoryConstants.SaleInvoiceReturn).ToList();
+            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(DocumentCategoryConstants.SaleReturn.DocumentCategoryName).ToList();
             InvoiceReturn.DocDate = DateTime.Now;
             return PartialView("_InvoiceReturn", InvoiceReturn);
         }
@@ -2604,7 +2605,7 @@ EXEC(@Qry);	";
                     InvoiceRetHeader.ObjectState = Model.ObjectState.Added;
                     new SaleInvoiceReturnHeaderService(_unitOfWork).Create(InvoiceRetHeader);
 
-                    int CalculationId = Settings.CalculationId;
+                    int CalculationId = (int)Settings.CalculationId;
 
                     //IEnumerable<SaleInvoiceLine> SaleInvoiceLineList = new SaleInvoiceLineService(_unitOfWork).GetSaleInvoiceLineList(Sh.SaleInvoiceHeaderId);
 

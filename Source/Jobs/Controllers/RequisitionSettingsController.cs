@@ -12,6 +12,7 @@ using Model.ViewModel;
 using System.Xml.Linq;
 using AutoMapper;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -108,7 +109,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = pt.DocTypeId,
+                        DocTypeId = (int)pt.DocTypeId,
                         DocId = pt.RequisitionSettingId,
                         ActivityType = (int)ActivityTypeContants.SettingsAdded,
                     }));
@@ -171,7 +172,7 @@ namespace Jobs.Controllers
                     }
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = temp.DocTypeId,
+                        DocTypeId = (int)temp.DocTypeId,
                         DocId = temp.RequisitionSettingId,
                         ActivityType = (int)ActivityTypeContants.SettingsModified,
                         xEModifications = Modifications,
@@ -197,7 +198,7 @@ namespace Jobs.Controllers
             }
             var DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
             var SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
-            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(TransactionDocCategoryConstants.RequisitionCancel).ToList();
+            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(DocumentCategoryConstants.MaterialRequestCancel.DocumentCategoryName).ToList();
             //PrepareViewBag();
             var settings = new RequisitionSettingService(_unitOfWork).GetRequisitionSettingForDocument(id, DivisionId, SiteId);
 
@@ -254,7 +255,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = pt.DocTypeId,
+                        DocTypeId = (int)pt.DocTypeId,
                         DocId = pt.RequisitionSettingId,
                         ActivityType = (int)ActivityTypeContants.SettingsAdded,
                     }));
@@ -319,7 +320,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = temp.DocTypeId,
+                        DocTypeId = (int)temp.DocTypeId,
                         DocId = temp.RequisitionSettingId,
                         ActivityType = (int)ActivityTypeContants.SettingsModified,
                         xEModifications = Modifications,

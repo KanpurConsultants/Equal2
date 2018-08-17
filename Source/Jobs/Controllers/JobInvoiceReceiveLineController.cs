@@ -16,6 +16,9 @@ using CustomEventArgs;
 using DocumentEvents;
 using Reports.Controllers;
 using Jobs.Helpers;
+using Jobs.Constants.LedgerAccount;
+using Jobs.Constants.ProductNature;
+using Jobs.Constants.Charge;
 
 namespace Jobs.Controllers
 {
@@ -119,8 +122,8 @@ namespace Jobs.Controllers
             Dictionary<int, decimal> LineStatus = new Dictionary<int, decimal>();
 
 
-            int IncentiveId = new ChargeService(_unitOfWork).GetChargeByName(ChargeConstants.Incentive).ChargeId;
-            int PenaltyId = new ChargeService(_unitOfWork).GetChargeByName(ChargeConstants.Penalty).ChargeId;
+            int IncentiveId = new ChargeService(_unitOfWork).GetChargeByName(ChargeConstants.Incentive.ChargeName).ChargeId;
+            int PenaltyId = new ChargeService(_unitOfWork).GetChargeByName(ChargeConstants.Penalty.ChargeName).ChargeId;
 
             #region BeforeSave
             bool BeforeSave = true;
@@ -240,7 +243,7 @@ namespace Jobs.Controllers
                                                 throw new Exception("Charge Group Setting is not defined for " + ChargeRateSettings.ChargeName + " for product " + ProductName);
                                             }
 
-                                            if (ChargeRateSettings.LedgerAccountCrName == LedgerAccountConstants.Charge || ChargeRateSettings.LedgerAccountDrName == LedgerAccountConstants.Charge)
+                                            if (ChargeRateSettings.LedgerAccountCrName == LedgerAccountConstants.CHARGE.LedgerAccountName || ChargeRateSettings.LedgerAccountDrName == LedgerAccountConstants.CHARGE.LedgerAccountName)
                                             {
                                                 if (ChargeRateSettings.ChargeGroupSettingId != null && ChargeRateSettings.ChargePer != 0 && ChargeRateSettings.ChargePer != null && ChargeRateSettings.ChargeLedgerAccountId == null)
                                                 {
@@ -1051,7 +1054,7 @@ namespace Jobs.Controllers
                                 ModelState.AddModelError("", "Charge Group Setting is not defined for " + item.ChargeName + ".");
                             }
 
-                            if (item.LedgerAccountCrName == LedgerAccountConstants.Charge || item.LedgerAccountDrName == LedgerAccountConstants.Charge)
+                            if (item.LedgerAccountCrName == LedgerAccountConstants.CHARGE.LedgerAccountName || item.LedgerAccountDrName == LedgerAccountConstants.CHARGE.LedgerAccountName)
                             {
                                 if (item.ChargeGroupSettingId != null && item.ChargePer != 0 && item.ChargePer != null && item.ChargeLedgerAccountId == null)
                                 {
@@ -1937,8 +1940,8 @@ namespace Jobs.Controllers
                     InvoiceLine_Modify.Rate = svm.Rate;
                     InvoiceLine_Modify.IncentiveRate = svm.IncentiveRate;
                     InvoiceLine_Modify.IncentiveAmt = svm.IncentiveAmt;
-                    InvoiceLine_Modify.RateDiscountPer = svm.RateDiscountPer;
-                    InvoiceLine_Modify.RateDiscountAmt = svm.RateDiscountAmt;
+                    InvoiceLine_Modify.DiscountPer = svm.RateDiscountPer;
+                    InvoiceLine_Modify.DiscountAmount = svm.RateDiscountAmt;
 
                     InvoiceLine_Modify.ModifiedDate = DateTime.Now;
                     InvoiceLine_Modify.ModifiedBy = User.Identity.Name;
@@ -2166,7 +2169,7 @@ namespace Jobs.Controllers
             PrepareViewBag(temp);
 
 
-            if (temp.ProductNatureName == ProductNatureConstants.AdditionalCharges)
+            if (temp.ProductNatureName == ProductNatureConstants.AdditionalCharges.ProductNatureName)
                 temp.LineNature = LineNatureConstants.AdditionalCharges;
             else if (H.JobReceiveHeaderId != temp.JobReceiveHeaderId)
                 temp.LineNature = LineNatureConstants.ForReceive;
@@ -2242,7 +2245,7 @@ namespace Jobs.Controllers
 
             PrepareViewBag(temp);
 
-            if (temp.ProductNatureName == ProductNatureConstants.AdditionalCharges)
+            if (temp.ProductNatureName == ProductNatureConstants.AdditionalCharges.ProductNatureName)
                 temp.LineNature = LineNatureConstants.AdditionalCharges;
             else if (H.JobReceiveHeaderId != temp.JobReceiveHeaderId)
                 temp.LineNature = LineNatureConstants.ForReceive;
@@ -2931,7 +2934,7 @@ namespace Jobs.Controllers
 
         //    var Header = db.JobInvoiceHeader.Find(id);
 
-        //    var DocType = db.DocumentType.Where(m => m.DocumentTypeName == TransactionDoctypeConstants.TraceMapInvoice).FirstOrDefault();
+        //    var DocType = db.DocumentType.Where(m => m.DocumentTypeName == DocumentTypeConstants.TraceMapInvoice).FirstOrDefault();
 
         //    if (DocType != null)
         //    {

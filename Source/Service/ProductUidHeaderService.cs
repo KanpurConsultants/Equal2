@@ -9,7 +9,7 @@ using System;
 using Model;
 using System.Threading.Tasks;
 using Data.Models;
-
+using Jobs.Constants.DocumentType;
 using Model.ViewModels;
 using Model.ViewModel;
 using System.Data.SqlClient;
@@ -107,7 +107,7 @@ namespace Service
             //var p = _unitOfWork.Repository<ProductUidHeader>().Query().Get().OrderBy(m => m.ProductUidHeaderId) ;
             var p = from H in db.ProductUidHeader
                     join D in db.DocumentType on H.GenDocTypeId  equals D.DocumentTypeId into DocumentTypeTable from DocumentTypeTab in DocumentTypeTable.DefaultIfEmpty()
-                    where DocumentTypeTab.DocumentTypeName == MasterDocTypeConstants.ProductUid
+                    where DocumentTypeTab.DocumentTypeName == DocumentTypeConstants.ProductUid.DocumentTypeName
                     orderby H.GenDocDate descending, H.ProductUidHeaderId descending
                     select H;
 

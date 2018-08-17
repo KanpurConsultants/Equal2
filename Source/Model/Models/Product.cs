@@ -16,10 +16,7 @@ namespace Model.Models
             ProductBuyers = new List<ProductBuyer>();
             ProductIncludedAccessories = new List<ProductIncludedAccessories>();
             ProductRelatedAccessories = new List<ProductRelatedAccessories>();
-            PurchaseOrderLines = new List<PurchaseOrderLine>();
-            PurchaseGoodsReceiptLines = new List<PurchaseGoodsReceiptLine>();
             ProductAttributes = new List<ProductAttributes>();
-            PurchaseIndentLines = new List<PurchaseIndentLine>();
             JobOrderLine  = new List<JobOrderLine>();
             JobOrderBom = new List<JobOrderBom>();
             MaterialPlanLine = new List<MaterialPlanLine>();
@@ -172,10 +169,7 @@ namespace Model.Models
         public ICollection<ProductBuyer> ProductBuyers { get; set; }
         public ICollection<ProductRelatedAccessories> ProductRelatedAccessories { get; set; }
         public ICollection<ProductIncludedAccessories> ProductIncludedAccessories { get; set; }
-        public ICollection<PurchaseOrderLine> PurchaseOrderLines { get; set; }
-        public ICollection<PurchaseGoodsReceiptLine> PurchaseGoodsReceiptLines { get; set; }
         public ICollection<ProductAttributes> ProductAttributes { get; set; }
-        public ICollection<PurchaseIndentLine> PurchaseIndentLines { get; set; }
         public ICollection<JobOrderLine> JobOrderLine { get; set; }
         public ICollection<JobOrderBom> JobOrderBom { get; set; }
         public ICollection<MaterialPlanLine> MaterialPlanLine { get; set; }

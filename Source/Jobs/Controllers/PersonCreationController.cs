@@ -12,7 +12,7 @@ using AutoMapper;
 using Model.ViewModel;
 using System.Xml.Linq;
 using Reports.Controllers;
-using Model.ViewModels;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Controllers
 {
@@ -229,10 +229,10 @@ namespace Jobs.Controllers
                     personrole.ObjectState = Model.ObjectState.Added;
                     new PersonRoleService(_unitOfWork).Create(personrole);
 
-                    int ProspectDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Prospect).DocumentTypeId;
+                    int ProspectDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Prospect.DocumentTypeName).DocumentTypeId;
                     if (person.DocTypeId == ProspectDocTypeId)
                     {
-                        int CustomerDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Customer).DocumentTypeId;
+                        int CustomerDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Customer.DocumentTypeName).DocumentTypeId;
 
                         PersonRole personrole1 = new PersonRole();
                         personrole.PersonRoleId = -2;

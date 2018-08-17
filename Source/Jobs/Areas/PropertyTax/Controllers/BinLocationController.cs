@@ -11,6 +11,7 @@ using Model.ViewModel;
 using Model.Models;
 using Core.Common;
 using Services.PropertyTax;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Areas.PropertyTax.Controllers
 {
@@ -127,7 +128,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                         _logger.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                         {
-                            DocTypeId = DocumentTypeIdConstants.BinLocation,
+                            DocTypeId = DocumentTypeConstants.BinLocation.DocumentTypeId,
                             DocId = temp.GodownId,
                             DocLineId = svm.BinLocationId,
                             ActivityType = (int)ActivityTypeContants.Added,
@@ -180,7 +181,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                         _logger.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                         {
-                            DocTypeId = DocumentTypeIdConstants.BinLocation,
+                            DocTypeId = DocumentTypeConstants.BinLocation.DocumentTypeId,
                             DocId = temp.GodownId,
                             DocLineId = binlocation.BinLocationId,
                             ActivityType = (int)ActivityTypeContants.Modified,
@@ -285,7 +286,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.BinLocation,
+                        DocTypeId = DocumentTypeConstants.BinLocation.DocumentTypeId,
                         DocId = temp.GodownId,
                         DocLineId = BinLocation.BinLocationId,
                         ActivityType = (int)ActivityTypeContants.Deleted,
@@ -313,7 +314,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         [HttpGet]
         public ActionResult Report()
         {
-            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeIdConstants.BinLocation);
+            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeConstants.BinLocation.DocumentTypeId);
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["CustomizeDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
         }
 

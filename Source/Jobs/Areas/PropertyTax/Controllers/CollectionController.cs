@@ -18,6 +18,8 @@ using Reports.Controllers;
 using Model.ViewModel;
 using Jobs.Helpers;
 using Reports.Reports;
+using Jobs.Constants.DocumentType;
+using Jobs.Constants.PropertyDocumentType;
 
 namespace Jobs.Areas.PropertyTax.Controllers
 {
@@ -71,7 +73,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
         public ActionResult PropertyIndex(int id)//DocumentTypeId 
         {
-            int PersonId = DocumentTypeIdConstants.Property;
+            int PersonId =  PropertyDocumentTypeConstants.Property.DocumentCategoryId;
             IQueryable<PropertyHeaderViewModel> p = _PropertyHeaderService.GetPropertyHeaderList(PersonId, User.Identity.Name);
             ViewBag.Name = _documentTypeService.Find(id).DocumentTypeName;
             ViewBag.IndexStatus = "All";
@@ -153,7 +155,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
             p.DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
             p.SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
             p.DocTypeId = id;
-            p.AgentDocTypeId = DocumentTypeIdConstants.Agent;
+            p.AgentDocTypeId = DocumentTypeConstants.Agent.DocumentTypeId;
             PrepareViewBag(id);
 
             var settings = _CollectionSettingsService.GetCollectionSettingsForDocument(id);
@@ -746,7 +748,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         //[HttpGet]
         //public ActionResult Report()
         //{
-        //    DocumentType Dt = _documentTypeService.Find(Constants.DocumentTypeIdConstants.Collection);
+        //    DocumentType Dt = _documentTypeService.Find(Constants.DocumentTypeConstants.Collection);
         //    return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["CustomizeDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
         //}
 

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="DSLOC">
+  <ConnectionProperties>
+    <Extension>SQL</Extension>
+    <ConnectString>Data Source=ADMIN-PC\SERVER;Initial Catalog=Orient</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>dcc7f1ce-1635-4efc-8c68-9fb660b0e1a9</DataSourceID>
+</RptDataSource>

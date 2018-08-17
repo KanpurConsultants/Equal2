@@ -16,7 +16,7 @@ using Jobs.Helpers;
 using System.Xml.Linq;
 using Model.ViewModel;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using Jobs.Constants.DocumentType;
 
 /* All Details Reports Will Be Created From Table 
  * Summary, Status, Balance  will be from View
@@ -263,7 +263,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.Report).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Report.DocumentTypeName).DocumentTypeId,
                         DocId = header.ReportHeaderId,
                         ActivityType = (int)ActivityTypeContants.Report,
                         xEModifications = s,
@@ -509,7 +509,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.Report).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Report.DocumentTypeName).DocumentTypeId,
                     DocId = header.ReportHeaderId,
                     ActivityType = (int)ActivityTypeContants.Report,
                     xEModifications = s,

@@ -24,7 +24,7 @@ namespace Model.ViewModels
         public string DocNo { get; set; }
 
         [Display(Name = "Division")]
-        public int DivisionId { get; set; }
+        public int  DivisionId { get; set; }
         public string DivisionName { get; set; }
         [Display(Name = "Site")]
         public int SiteId { get; set; }
@@ -48,17 +48,17 @@ namespace Model.ViewModels
 
         [Display(Name = "Remark")]
         public string Remark { get; set; }
-        public int GodownId { get; set; }
+        public int ? GodownId { get; set; }
         public string GodownName { get; set; }
 
         public int? ProcessId { get; set; }
         public string ProcessName { get; set; }
 
-        public int CurrencyId { get; set; }
+        public int ? CurrencyId { get; set; }
         public string CurrencyName { get; set; }        
 
         [Display(Name = "Delivery Terms")]
-        public int DeliveryTermsId { get; set; }
+        public int ? DeliveryTermsId { get; set; }
         public string DeliveryTermsName { get; set; }       
         public int Status { get; set; }
         public string TermsAndConditions { get; set; }
@@ -91,7 +91,7 @@ namespace Model.ViewModels
         public string SalesExecutiveName { get; set; }
 
         [Display(Name = "Ship Method"), Required]
-        public int ShipMethodId { get; set; }
+        public int ? ShipMethodId { get; set; }
         public string ShipMethodName { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

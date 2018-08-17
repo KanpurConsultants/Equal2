@@ -50,10 +50,19 @@ namespace Service
 
         public SaleDeliverySetting GetSaleDeliverySettingForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.SaleDeliverySettings
+            SaleDeliverySetting temp;
+            temp = (from p in db.SaleDeliverySettings
                     where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
                     select p
                         ).FirstOrDefault();
+
+            if (temp == null)
+                temp = (from p in db.SaleDeliverySettings
+                        where p.DocTypeId == null && p.DivisionId == null && p.SiteId == null
+                        select p
+            ).FirstOrDefault();
+
+            return temp;
         }
         public SaleDeliverySetting Create(SaleDeliverySetting pt)
         {

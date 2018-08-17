@@ -6,12 +6,12 @@ using Core.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Jobs.Constants.ProductNature;
 using Model.ViewModels;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
-using System.Data.Common;
+using Jobs.Constants.DocumentType;
 using Model.ViewModel;
 using System.Data.Entity.SqlServer;
 
@@ -184,7 +184,7 @@ namespace Service
             var SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
 
             int AdditionalChargesProductNatureId = 0;
-            var ProductNature = (from Pt in db.ProductNature where Pt.ProductNatureName == ProductNatureConstants.AdditionalCharges select Pt).FirstOrDefault();
+            var ProductNature = (from Pt in db.ProductNature where Pt.ProductNatureName == ProductNatureConstants.AdditionalCharges.ProductNatureName select Pt).FirstOrDefault();
             if (ProductNature != null)
                 AdditionalChargesProductNatureId = ProductNature.ProductNatureId;
 
@@ -448,7 +448,7 @@ namespace Service
                         from PersonProcessTab in PersonProcessTable.DefaultIfEmpty()
                         join pr in db.PersonRole on p.PersonID equals pr.PersonId into PersonRoleTable
                         from PersonRoleTab in PersonRoleTable.DefaultIfEmpty()
-                        where (DocTypeName == TransactionDoctypeConstants.IncomeVoucher ? 1 == 1 : PersonProcessTab.ProcessId == settings.ProcessId)
+                        where (DocTypeName == DocumentTypeConstants.SaleInvoice.DocumentTypeName ? 1 == 1 : PersonProcessTab.ProcessId == settings.ProcessId)
                         && (string.IsNullOrEmpty(term) ? 1 == 1 : (p.Name.ToLower().Contains(term.ToLower()) || p.Code.ToLower().Contains(term.ToLower()) || p.Suffix.ToLower().Contains(term.ToLower())))
                         && (string.IsNullOrEmpty(settings.filterPersonRoles) ? 1 == 1 : PersonRoles.Contains(PersonRoleTab.RoleDocTypeId.ToString()))
                         && BusinessEntityTab.DivisionIds.IndexOf(DivIdStr) != -1

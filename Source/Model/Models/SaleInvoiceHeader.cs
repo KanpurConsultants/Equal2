@@ -55,7 +55,7 @@ namespace Model.Models
 
         [ForeignKey("BillToBuyer"), Display(Name = "Bill To Buyer")]
         public int BillToBuyerId { get; set; }
-        public virtual Buyer BillToBuyer { get; set; }
+        public virtual Person BillToBuyer { get; set; }
 
 
         [ForeignKey("Agent"), Display(Name = "Agent")]

@@ -45,7 +45,23 @@ namespace Model.Models
         public int? DocumentPrintReportHeaderId { get; set; }
         public virtual ReportHeader DocumentPrintReportHeader { get; set; }
 
-        
+        [MaxLength(100)]
+        public string SqlProcDocumentPrint { get; set; }
+
+        /// <summary>
+        /// DocId will be passed as a parameter in specified procedure.
+        /// Procedure should have only one parameter of type int.
+        /// </summary>
+        [MaxLength(100)]
+        public string SqlProcDocumentPrint_AfterSubmit { get; set; }
+
+        /// <summary>
+        /// DocId will be passed as a parameter in specified procedure.
+        /// Procedure should have only one parameter of type int.
+        /// </summary>
+        [MaxLength(100)]
+        public string SqlProcDocumentPrint_AfterApprove { get; set; }
+
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
 

@@ -18,7 +18,7 @@ using DocumentEvents;
 using CustomEventArgs;
 using JobReceiveDocumentEvents;
 using Reports.Controllers;
-using System.Reflection;
+using Jobs.Constants.RugDocumentType;
 
 namespace Jobs.Controllers
 {
@@ -1679,7 +1679,7 @@ namespace Jobs.Controllers
                                     var MainJobRec = (from p in db.JobReceiveLine
                                                       join t in db.JobReceiveHeader on p.JobReceiveHeaderId equals t.JobReceiveHeaderId
                                                       join d in db.DocumentType on t.DocTypeId equals d.DocumentTypeId
-                                                      where p.ProductUidId == BarCodes && t.SiteId != Header.SiteId && d.DocumentTypeName == TransactionDoctypeConstants.WeavingBazar
+                                                      where p.ProductUidId == BarCodes && t.SiteId != Header.SiteId && d.DocumentTypeName == RugDocumentTypeConstants.WeavingReceive.DocumentTypeName
                                                       select p).ToList().LastOrDefault();
 
                                     if (MainJobRec != null)
@@ -1736,7 +1736,7 @@ namespace Jobs.Controllers
                                     var MainJobRec = (from p in db.JobReceiveLine
                                                       join t in db.JobReceiveHeader on p.JobReceiveHeaderId equals t.JobReceiveHeaderId
                                                       join d in db.DocumentType on t.DocTypeId equals d.DocumentTypeId
-                                                      where p.ProductUidId == BarCodes && t.SiteId != Header.SiteId && d.DocumentTypeName == TransactionDoctypeConstants.WeavingBazar
+                                                      where p.ProductUidId == BarCodes && t.SiteId != Header.SiteId && d.DocumentTypeName == RugDocumentTypeConstants.WeavingReceive.DocumentTypeName
                                                       select p).ToList().LastOrDefault();
 
                                     if (MainJobRec != null)
@@ -3315,7 +3315,7 @@ namespace Jobs.Controllers
                         var MainJobRec = (from p in db.JobReceiveLine
                                           join t in db.JobReceiveHeader on p.JobReceiveHeaderId equals t.JobReceiveHeaderId
                                           join d in db.DocumentType on t.DocTypeId equals d.DocumentTypeId
-                                          where p.ProductUidId == vm.ProductUidId && t.SiteId != header.SiteId && d.DocumentTypeName == TransactionDoctypeConstants.WeavingBazar
+                                          where p.ProductUidId == vm.ProductUidId && t.SiteId != header.SiteId && d.DocumentTypeName == RugDocumentTypeConstants.WeavingReceive.DocumentTypeName
                                           && p.LockReason != null
                                           select p).ToList().LastOrDefault();
 
@@ -3451,7 +3451,7 @@ namespace Jobs.Controllers
 
             var Header = db.JobReceiveHeader.Find(HeaderId);
 
-            var DocType = db.DocumentType.Where(m => m.DocumentTypeName == TransactionDoctypeConstants.TraceMapReceive).FirstOrDefault();
+            var DocType = db.DocumentType.Where(m => m.DocumentTypeName == RugDocumentTypeConstants.TraceMapReceive.DocumentTypeName).FirstOrDefault();
 
             if (DocType != null)
             {

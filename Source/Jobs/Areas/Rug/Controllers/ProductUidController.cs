@@ -16,6 +16,7 @@ using Core.Common;
 using System.Data.Entity.Validation;
 using System.Data.Entity.Infrastructure;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -188,7 +189,7 @@ namespace Jobs.Areas.Rug.Controllers
                     DocId = vm.id,
                     UserRemark = vm.Reason,
                     Narration = "Delivery terms is deleted with Name:" + temp.ProductUidName,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrder).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrder.DocumentCategoryName).DocumentTypeId,
                     UploadDate = DateTime.Now,
 
                 };

@@ -49,7 +49,7 @@ namespace Model.Models
         [ForeignKey("Buyer")]
         [Display(Name = "Buyer Name")]
         public int BuyerId { get; set; }
-        public virtual Buyer Buyer { get; set; }
+        public virtual Person Buyer { get; set; }
 
         [Display(Name = "Remark"),Required]
         public string Remark { get; set; }

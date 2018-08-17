@@ -9,7 +9,7 @@ using Core.Common;
 using AutoMapper;
 using Model.ViewModel;
 using System.Xml.Linq;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Controllers
 {
@@ -89,7 +89,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.User).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.User.DocumentTypeName).DocumentTypeId,
                         DocId = svm.UserRoleId,
                         DocLineId = svm.UserRoleId,
                         ActivityType = (int)ActivityTypeContants.Added,
@@ -135,7 +135,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.User).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.User.DocumentTypeName).DocumentTypeId,
                         DocId = temp1.UserRoleId,
                         DocLineId = temp1.UserRoleId,
                         ActivityType = (int)ActivityTypeContants.Modified,
@@ -191,7 +191,7 @@ namespace Jobs.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.User).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.User.DocumentTypeName).DocumentTypeId,
                 DocId = vm.UserRoleId,
                 DocLineId = vm.UserRoleId,
                 ActivityType = (int)ActivityTypeContants.Deleted,                

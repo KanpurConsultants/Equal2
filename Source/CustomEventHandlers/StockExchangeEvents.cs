@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using StockExchangeDocumentEvents;
 using Core.Common;
+using Jobs.Constants.RugDocumentType;
 
 namespace Jobs.Controllers
 {
@@ -37,7 +38,7 @@ namespace Jobs.Controllers
                                ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingExchange
+                           where p.DocumentTypeName == RugDocumentTypeConstants.WeavingExchange.DocumentTypeName
                            select p).FirstOrDefault();
 
             if (DocType != null)
@@ -103,7 +104,7 @@ namespace Jobs.Controllers
                                ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingExchange
+                           where p.DocumentTypeName == RugDocumentTypeConstants.WeavingExchange.DocumentTypeName
                            select p).FirstOrDefault();
 
 
@@ -182,7 +183,7 @@ namespace Jobs.Controllers
 
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingExchange
+                           where p.DocumentTypeName == RugDocumentTypeConstants.WeavingExchange.DocumentTypeName
                            select p).FirstOrDefault();
 
 

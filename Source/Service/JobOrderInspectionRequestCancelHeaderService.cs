@@ -95,7 +95,7 @@ namespace Service
                         JobOrderInspectionRequestCancelHeaderId = p.JobOrderInspectionRequestCancelHeaderId,
                         Remark = p.Remark,
                         Status = p.Status,
-                        JobWorkerName = p.JobWorker.Person.Name,
+                        JobWorkerName = p.JobWorker.Name,
                         ModifiedBy = p.ModifiedBy,
                         ReviewCount = p.ReviewCount,
                         ReviewBy = p.ReviewBy,

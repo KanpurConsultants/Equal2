@@ -56,6 +56,7 @@ namespace Model.Models
         public int? ReportMenuId { get; set; }
         public virtual Menu ReportMenu { get; set; }
 
+
         [MaxLength(10)]
         public string Nature { get; set; }
         public string IconDisplayName { get; set; }
@@ -75,8 +76,11 @@ namespace Model.Models
 
         [MaxLength(50)]
         public string ActionName { get; set; }
-        
-        
+
+        [MaxLength(50)]
+        public string AreaName { get; set; }
+
+
         [MaxLength(50)]
         public string ActionNamePendingToSubmit { get; set; }
 

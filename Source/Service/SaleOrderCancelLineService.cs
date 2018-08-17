@@ -31,7 +31,7 @@ namespace Service
         IEnumerable<SaleOrderCancelLineViewModel> GetSaleOrderLineForMultiSelect(SaleOrderCancelFilterViewModel svm);
         decimal GetBalanceQuantity(int SaleOrderLineId);
         IQueryable<ComboBoxResult> GetPendingSaleOrderHelpList(int Id, string term);
-
+        IQueryable<ComboBoxResult> GetSaleOrderHelpListForProduct(int PersonId, string term);
         SaleOrderCancelLineViewModel GetSaleOrderCancelLineForEdit(int id);
     }
 
@@ -125,6 +125,57 @@ namespace Service
 
                 ).FirstOrDefault();
         }
+
+        public IQueryable<ComboBoxResult> GetSaleOrderHelpListForProduct(int filter, string term)
+        {
+            //var SaleOrderHeader = new SaleOrderHeaderService(_unitOfWork).Find(filter);
+
+            //var settings = new SaleOrderSettingsService(_unitOfWork).GetSaleOrderSettingsForDocument(SaleOrderHeader.DocTypeId, SaleOrderHeader.DivisionId, SaleOrderHeader.SiteId);
+
+            //string[] contraSites = null;
+            //if (!string.IsNullOrEmpty(settings.filterContraSites)) { contraSites = settings.filterContraSites.Split(",".ToCharArray()); }
+            //else { contraSites = new string[] { "NA" }; }
+
+            //string[] contraDivisions = null;
+            //if (!string.IsNullOrEmpty(settings.filterContraDivisions)) { contraDivisions = settings.filterContraDivisions.Split(",".ToCharArray()); }
+            //else { contraDivisions = new string[] { "NA" }; }
+
+            //string[] contraDocTypes = null;
+            //if (!string.IsNullOrEmpty(settings.filterContraDocTypes)) { contraDocTypes = settings.filterContraDocTypes.Split(",".ToCharArray()); }
+            //else { contraDocTypes = new string[] { "NA" }; }
+
+            int CurrentSiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
+            int CurrentDivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
+
+
+            var list = (from p in db.ViewSaleOrderBalance
+                        join t in db.SaleOrderHeader on p.SaleOrderHeaderId equals t.SaleOrderHeaderId
+                        join t2 in db.SaleOrderLine on p.SaleOrderLineId equals t2.SaleOrderLineId
+                        join pt in db.Product on p.ProductId equals pt.ProductId into ProductTable
+                        from ProductTab in ProductTable.DefaultIfEmpty()
+                        join D1 in db.Dimension1 on p.Dimension1Id equals D1.Dimension1Id into Dimension1Table
+                        from Dimension1Tab in Dimension1Table.DefaultIfEmpty()
+                        join D2 in db.Dimension2 on p.Dimension2Id equals D2.Dimension2Id into Dimension2Table
+                        from Dimension2Tab in Dimension2Table.DefaultIfEmpty()
+                        where p.BuyerId == filter
+                        && ((string.IsNullOrEmpty(term) ? 1 == 1 : p.SaleOrderNo.ToLower().Contains(term.ToLower()))
+                        || (string.IsNullOrEmpty(term) ? 1 == 1 : ProductTab.ProductName.ToLower().Contains(term.ToLower()))
+                        || (string.IsNullOrEmpty(term) ? 1 == 1 : Dimension1Tab.Dimension1Name.ToLower().Contains(term.ToLower()))
+                        || (string.IsNullOrEmpty(term) ? 1 == 1 : Dimension2Tab.Dimension2Name.ToLower().Contains(term.ToLower())))
+                        orderby t.DocDate, t.DocNo
+                        select new ComboBoxResult
+                        {
+                            text = ProductTab.ProductName,
+                            id = p.SaleOrderLineId.ToString(),
+                            TextProp1 = "Order No: " + p.SaleOrderNo.ToString(),
+                            TextProp2 = "BalQty: " + p.BalanceQty.ToString(),
+                            AProp1 = Dimension1Tab.Dimension1Name,
+                            AProp2 = Dimension2Tab.Dimension2Name
+                        });
+
+            return list;
+        }
+
         public SaleOrderCancelLineViewModel GetSaleOrderCancelLine(int pId)
         {
             //return SaleOrderCancelLineRepository

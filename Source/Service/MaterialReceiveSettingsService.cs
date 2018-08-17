@@ -49,10 +49,19 @@ namespace Service
         }
         public MaterialReceiveSettings GetMaterialReceiveSettingsForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.MaterialReceiveSettings
+            MaterialReceiveSettings temp;
+            temp = (from p in db.MaterialReceiveSettings
                     where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
                     select p
                         ).FirstOrDefault();
+
+            if (temp == null)
+                temp = (from p in db.MaterialReceiveSettings
+                        where p.DocTypeId == null && p.DivisionId == null && p.SiteId == null
+                        select p
+            ).FirstOrDefault();
+
+            return temp;
         }
         public MaterialReceiveSettings Create(MaterialReceiveSettings pt)
         {

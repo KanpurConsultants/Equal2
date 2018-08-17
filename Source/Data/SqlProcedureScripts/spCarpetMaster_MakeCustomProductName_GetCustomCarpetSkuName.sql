@@ -4,3 +4,6 @@ AS
 SELECT Replace(@ProductGroupName,'-','') + '-' + @StandardSizeName + '-' + @ColourName AS ProductName
 
 
+
+
+

@@ -13,6 +13,7 @@ using Data.Infrastructure;
 using Model.ViewModel;
 using Data.Models;
 using Core.Common;
+using Jobs.Constants.DocumentType;
 
 namespace Service
 {
@@ -174,7 +175,7 @@ namespace Service
 
             ((ApplicationDbContext)_context).SaveChanges();
 
-            var DocTypeId = ((ApplicationDbContext)_context).DocumentType.Where(m => m.DocumentTypeName == MasterDocTypeConstants.UserRoles).FirstOrDefault().DocumentTypeId;
+            var DocTypeId = ((ApplicationDbContext)_context).DocumentType.Where(m => m.DocumentTypeName == DocumentTypeConstants.UserRoles.DocumentTypeName).FirstOrDefault().DocumentTypeId;
 
             //_logger.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             //    {
@@ -212,7 +213,7 @@ namespace Service
 
             (_context).SaveChanges();
 
-            var DocTypeId = ((ApplicationDbContext)_context).DocumentType.Where(m => m.DocumentTypeName == MasterDocTypeConstants.UserRoles).FirstOrDefault().DocumentTypeId;
+            var DocTypeId = ((ApplicationDbContext)_context).DocumentType.Where(m => m.DocumentTypeName == DocumentTypeConstants.UserRoles.DocumentTypeName).FirstOrDefault().DocumentTypeId;
 
             //_logger.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             //{
@@ -282,7 +283,7 @@ namespace Service
 
             (_context).SaveChanges();
 
-            var DocTypeId = ((ApplicationDbContext)_context).DocumentType.Where(m => m.DocumentTypeName == MasterDocTypeConstants.UserRoles).FirstOrDefault().DocumentTypeId;
+            var DocTypeId = ((ApplicationDbContext)_context).DocumentType.Where(m => m.DocumentTypeName == DocumentTypeConstants.UserRoles.DocumentTypeName).FirstOrDefault().DocumentTypeId;
 
             //_logger.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             //{

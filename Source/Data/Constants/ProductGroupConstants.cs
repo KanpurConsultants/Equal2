@@ -33,5 +33,12 @@ namespace Jobs.Constants.ProductGroup
             public const string ProductGroupName = "Bom";
             public const int ProductTypeId = ProductTypeConstants.Bom.ProductTypeId;
         }
+
+        public static class LedgerAccount
+        {
+            public const int ProductGroupId = 5;
+            public const string ProductGroupName = "Ledger Account";
+            public const int ProductTypeId = ProductTypeConstants.LedgerAccount.ProductTypeId;
+        }
     }
 }

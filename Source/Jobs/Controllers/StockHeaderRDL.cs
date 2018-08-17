@@ -12943,7 +12943,7 @@ PtQeVUENmewh02zjEWZuZuLElNvBS6gDSXQMHP8A5UE5f6lWFPkR2q6ZG8HZI8xgvruK93SMJUsHJ61z
         <Top>3.09055in</Top>
         <Left>0.05377in</Left>
         <Height>0.75in</Height>
-        <Width>5.4125in</Width>
+        <Width>5.41249in</Width>
         <ZIndex>13</ZIndex>
         <Visibility>
           <Hidden>=Microsoft.VisualBasic.Interaction.IIF(Max(Fields!CostCenterCnt.Value) &gt; 0, False, True)</Hidden>
@@ -13317,7 +13317,7 @@ PtQeVUENmewh02zjEWZuZuLElNvBS6gDSXQMHP8A5UE5f6lWFPkR2q6ZG8HZI8xgvruK93SMJUsHJ61z
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name=""Textbox342"">
+                    <Textbox Name=""ProductName5"">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -13325,7 +13325,9 @@ PtQeVUENmewh02zjEWZuZuLElNvBS6gDSXQMHP8A5UE5f6lWFPkR2q6ZG8HZI8xgvruK93SMJUsHJ61z
                           <TextRuns>
                             <TextRun>
                               <Value>=Code.PrintProduct(Fields!ProductName.Value,Fields!ProductGroupCaption.Value,fields!ProductGroupName.Value,Fields!SpecificationCaption.Value,fields!Specification.Value,fields!Dimension1Caption.Value,fields!Dimension1Name.Value,fields!Dimension2Caption.Value,fields!Dimension2Name.Value,fields!Dimension3Caption.Value,fields!Dimension3Name.Value,fields!Dimension4Caption.Value,fields!Dimension4Name.Value,Fields!ProductUidCaption.Value,fields!ProductUidName.Value)</Value>
+                              <MarkupType>HTML</MarkupType>
                               <Style>
+                                <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -13333,18 +13335,20 @@ PtQeVUENmewh02zjEWZuZuLElNvBS6gDSXQMHP8A5UE5f6lWFPkR2q6ZG8HZI8xgvruK93SMJUsHJ61z
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox342</rd:DefaultName>
+                      <rd:DefaultName>ProductName</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <BackgroundColor>=iif(RowNumber(nothing) Mod 2 , ""White"",""WhiteSmoke"")</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -13814,7 +13818,7 @@ PtQeVUENmewh02zjEWZuZuLElNvBS6gDSXQMHP8A5UE5f6lWFPkR2q6ZG8HZI8xgvruK93SMJUsHJ61z
         <Top>3.09055in</Top>
         <Left>5.66034in</Left>
         <Height>0.75in</Height>
-        <Width>5.42802in</Width>
+        <Width>5.42801in</Width>
         <ZIndex>14</ZIndex>
         <Visibility>
           <Hidden>=Microsoft.VisualBasic.Interaction.IIF(Max(Fields!CostCenterCnt.Value) &gt; 0, False, True)</Hidden>
@@ -16182,7 +16186,7 @@ PtQeVUENmewh02zjEWZuZuLElNvBS6gDSXQMHP8A5UE5f6lWFPkR2q6ZG8HZI8xgvruK93SMJUsHJ61z
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name=""Purchase"">
-      <DataSourceReference>DSOCL</DataSourceReference>
+      <DataSourceReference>DSLOC</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>727bb65e-cc51-4d28-a097-a8ea7d087931</rd:DataSourceID>
     </DataSource>

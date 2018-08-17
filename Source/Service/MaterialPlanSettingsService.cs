@@ -55,10 +55,11 @@ namespace Service
         }
         public MaterialPlanSettings GetMaterialPlanSettingsForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.MaterialPlanSettings
-                    where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
-                    select p
-                        ).FirstOrDefault();
+            MaterialPlanSettings temp;
+            temp = _unitOfWork.Repository<MaterialPlanSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId && m.DocTypeId == DocTypeId).FirstOrDefault();
+            if (temp == null)
+                temp = _unitOfWork.Repository<MaterialPlanSettings>().Query().Get().Where(m => m.DivisionId == null && m.SiteId == null && m.DocTypeId == null).FirstOrDefault();
+            return temp;
         }
         public MaterialPlanSettings Create(MaterialPlanSettings pt)
         {

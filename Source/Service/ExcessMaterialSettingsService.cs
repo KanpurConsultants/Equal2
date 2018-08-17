@@ -47,10 +47,20 @@ namespace Service
         }
         public ExcessMaterialSettings GetExcessMaterialSettingsForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.ExcessMaterialSettings
+
+            ExcessMaterialSettings temp;
+            temp = (from p in db.ExcessMaterialSettings
                     where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
                     select p
                         ).FirstOrDefault();
+
+            if (temp == null)
+                temp = (from p in db.ExcessMaterialSettings
+                        where p.DocTypeId == null && p.DivisionId == null && p.SiteId == null
+                        select p
+            ).FirstOrDefault();
+
+            return temp;
         }
         public ExcessMaterialSettings Create(ExcessMaterialSettings pt)
         {

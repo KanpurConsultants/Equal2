@@ -9,7 +9,7 @@ using Data.Infrastructure;
 using Core.Common;
 using Model.ViewModels;
 using AutoMapper;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Model.ViewModel;
 using System.Xml.Linq;
 using Jobs.Helpers;
@@ -181,7 +181,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                         DocId = s.ProcessSequenceHeaderId,
                         DocLineId = s.ProcessSequenceLineId,
                         ActivityType = (int)ActivityTypeContants.Added,
@@ -227,7 +227,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                         DocId = temp1.ProcessSequenceHeaderId,
                         DocLineId = temp1.ProcessSequenceLineId,
                         ActivityType = (int)ActivityTypeContants.Modified,
@@ -332,7 +332,7 @@ namespace Jobs.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProcessSequence).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProcessSequence.DocumentTypeName).DocumentTypeId,
                 DocId = vm.ProcessSequenceHeaderId,
                 DocLineId = vm.ProcessSequenceLineId,
                 ActivityType = (int)ActivityTypeContants.Deleted,

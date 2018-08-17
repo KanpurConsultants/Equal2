@@ -773,8 +773,8 @@ namespace Service
                         IncentiveAmt = L.JobReceiveLine.IncentiveAmt ?? 0,
                         IncentiveRate = L.JobReceiveLine.IncentiveRate,
                         PenaltyRate = L.JobReceiveLine.PenaltyRate,
-                        RateDiscountPer = L.RateDiscountPer,
-                        RateDiscountAmt = L.RateDiscountAmt,
+                        RateDiscountPer = L.DiscountPer,
+                        RateDiscountAmt = L.DiscountAmount,
                         MfgDate = L.JobReceiveLine.MfgDate,
                         LockReason = L.LockReason,
                         SalesTaxGroupPersonId = L.JobInvoiceHeader.SalesTaxGroupPersonId,
@@ -994,14 +994,13 @@ namespace Service
             else { ContraDocTypes = new string[] { "NA" }; }
 
             var query = (from p in db.ViewJobReceiveBalanceForInvoice
-                         join t in db.JobWorker on p.JobWorkerId equals t.PersonID into table
+                         join t in db.Persons on p.JobWorkerId equals t.PersonID into table
                          from tab in table.DefaultIfEmpty()
-                         join per in db.Persons on tab.PersonID equals per.PersonID
                          where p.BalanceQty > 0
                          select new
                          {
                              JobWorkerId = p.JobWorkerId,
-                             JobWorkerName = per.Name,
+                             JobWorkerName = tab.Name,
                              SiteId = p.SiteId,
                              DivisionId = p.DivisionId,
                              DocTypeId = p.DocTypeId,
@@ -1560,7 +1559,7 @@ namespace Service
                     from Dimension3Tab in Dimension3Table.DefaultIfEmpty()
                     join D4 in db.Dimension4 on JO.Dimension4Id equals D4.Dimension4Id into Dimension4Table
                     from Dimension4Tab in Dimension4Table.DefaultIfEmpty()
-                    join t5 in db.JobWorker on p.JobWorkerId equals t5.PersonID
+                    join t5 in db.Persons on p.JobWorkerId equals t5.PersonID
                     where p.JobInvoiceLineId == id
                     select new JobInvoiceRateAmendmentLineViewModel
                     {
@@ -1582,7 +1581,7 @@ namespace Service
                         unitDecimalPlaces = t2.Unit.DecimalPlaces,
                         DealunitDecimalPlaces = p.DealUnit.DecimalPlaces,
                         JobWorkerId = p.JobWorkerId,
-                        JobWorkerName = t5.Person.Name,
+                        JobWorkerName = t5.Name,
                         Rate = p.Rate,
                     }).FirstOrDefault();
 

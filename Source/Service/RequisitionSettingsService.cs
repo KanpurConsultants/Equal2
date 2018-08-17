@@ -50,10 +50,19 @@ namespace Service
 
         public RequisitionSetting GetRequisitionSettingForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.RequisitionSetting
+            RequisitionSetting temp;
+            temp = (from p in db.RequisitionSetting
                     where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
                     select p
                         ).FirstOrDefault();
+
+            if (temp == null)
+                temp = (from p in db.RequisitionSetting
+                        where p.DocTypeId == null && p.DivisionId == null && p.SiteId == null
+                        select p
+            ).FirstOrDefault();
+
+            return temp;
         }
         public RequisitionSetting Create(RequisitionSetting pt)
         {

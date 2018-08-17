@@ -79,11 +79,11 @@ namespace Model.Models
         public DateTime ModifiedDate { get; set; }
 
         [Display(Name = "IsNumberingDocCategoryWise")]
-        public Boolean IsNumberingDocCategoryWise { get; set; }
+        public Boolean ? IsNumberingDocCategoryWise { get; set; }
         [Display(Name = "IsNumberingSiteWise")]
-        public Boolean IsNumberingSiteWise { get; set; }
+        public Boolean ?  IsNumberingSiteWise { get; set; }
         [Display(Name = "IsNumberingDivisionWise")]
-        public Boolean IsNumberingDivisionWise { get; set; }
+        public Boolean ? IsNumberingDivisionWise { get; set; }
         [MaxLength(50)]
         public string OMSId { get; set; }
     }

@@ -49,10 +49,20 @@ namespace Service
         }
         public RateConversionSettings GetRateConversionSettingsForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.RateConversionSettings
+
+            RateConversionSettings temp;
+            temp = (from p in db.RateConversionSettings
                     where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
                     select p
                         ).FirstOrDefault();
+
+            if (temp == null)
+                temp = (from p in db.RateConversionSettings
+                        where p.DocTypeId == null && p.DivisionId == null && p.SiteId == null
+                        select p
+            ).FirstOrDefault();
+
+            return temp;
         }
         public RateConversionSettings Create(RateConversionSettings pt)
         {

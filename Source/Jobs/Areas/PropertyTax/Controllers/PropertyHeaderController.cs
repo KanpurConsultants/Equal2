@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Model.Models;
 using Data.Models;
 using Service;
-using Data.Infrastructure;
+using Jobs.Constants.DocumentType;
 using Presentation;
 using Presentation.ViewModels;
 using Model.ViewModels;
@@ -391,7 +391,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
             ViewBag.id = s.DocTypeId;
 
 
-            ViewBag.CollectionDocTypeId = DocumentTypeIdConstants.Collection;
+            ViewBag.CollectionDocTypeId = DocumentTypeConstants.Collection.DocumentTypeId;
 
             //var AttachmentList = (from p in db.DocumentAttachment.AsNoTracking()
             //                      where p.DocId == id && p.DocTypeId == s.DocTypeId
@@ -794,7 +794,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         //[HttpGet]
         //public ActionResult Report()
         //{
-        //    DocumentType Dt = _documentTypeService.Find(Constants.DocumentTypeIdConstants.Godown);
+        //    DocumentType Dt = _documentTypeService.Find(Constants.DocumentTypeConstants.Godown.DocumentTypeName);
         //    return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["CustomizeDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
         //}
 

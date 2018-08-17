@@ -64,7 +64,7 @@ namespace Service
         }
         public ProductSizeIndexViewModel GetCommanSizes(int id,int productcategoryId)
         {
-            var temp1 = (from p in db.ViewRugSize
+            var temp1 = (from p in db.ViewProductSize
                          join t in db.FinishedProduct on p.ProductId equals t.ProductId
                          where p.StandardSizeID == id && t.ProductCategoryId == productcategoryId
                          group p by new { p.ManufaturingSizeID, p.StandardSizeID, p.FinishingSizeID, p.StencilSizeId, p.MapSizeId } into ta
@@ -85,7 +85,7 @@ namespace Service
 
 
 
-            //var temp1 = (from p in db.ViewRugSize
+            //var temp1 = (from p in db.ViewProductSize
             //             join t in db.FinishedProduct on p.ProductId equals t.ProductId
             //             join SS in db.Size on p.StandardSizeID equals SS.SizeId into StandardSizeTable
             //             from StandardSizeTab in StandardSizeTable.DefaultIfEmpty()
@@ -132,7 +132,7 @@ namespace Service
         }
         public IQueryable<ProductSizeIndexViewModel> GetProductSizeListForProductGroup(int id)
         {
-            //return ( from p in db.ViewRugSize
+            //return ( from p in db.ViewProductSize
             //         join t in db.Products on p.ProductId equals t.ProductId into table from tab in table.DefaultIfEmpty()
             //         where tab.ProductCategoryId==id
             //         select new ProductSizeIndexViewModel
@@ -154,7 +154,7 @@ namespace Service
 
           
 
-            return (from p in db.ViewRugSize
+            return (from p in db.ViewProductSize
                     join t in db.Product on p.ProductId equals t.ProductId into tabl
                     from tab in tabl.DefaultIfEmpty()
                     join temp in db.Size on p.StandardSizeID equals temp.SizeId into temptable from temptab in temptable
@@ -199,7 +199,7 @@ namespace Service
 
         public CarpetMasterViewModel GetProductSizeIndexForProduct(int id)
         {
-            return (from p in db.ViewRugSize
+            return (from p in db.ViewProductSize
                     where p.ProductId == id
                     select new CarpetMasterViewModel
                     {

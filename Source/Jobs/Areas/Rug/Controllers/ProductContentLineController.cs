@@ -9,6 +9,7 @@ using Model.ViewModel;
 using System.Collections.Generic;
 using AutoMapper;
 using System.Xml.Linq;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -89,7 +90,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductContent).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductContent.DocumentTypeName).DocumentTypeId,
                         DocId = svm.ProductContentHeaderId,
                         DocLineId=svm.ProductContentLineId,
                         ActivityType = (int)ActivityTypeContants.Added,
@@ -134,7 +135,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductContent).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductContent.DocumentTypeName).DocumentTypeId,
                         DocId = temp1.ProductContentHeaderId,
                         DocLineId=temp1.ProductContentLineId,
                         ActivityType = (int)ActivityTypeContants.Modified,
@@ -190,7 +191,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductContent).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductContent.DocumentTypeName).DocumentTypeId,
                 DocId = vm.ProductContentHeaderId,
                 DocLineId=vm.ProductContentLineId,
                 ActivityType = (int)ActivityTypeContants.Deleted,                

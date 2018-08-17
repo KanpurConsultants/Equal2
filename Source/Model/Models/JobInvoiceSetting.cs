@@ -66,8 +66,8 @@ namespace Model.Models
         public bool? IsVisibleDocQty { get; set; }
         public bool? isVisibleLoss { get; set; }
         public bool? IsVisibleReceiveQty { get; set; }
-        public bool IsVisiblePassQty { get; set; }
-        public bool IsVisibleRate { get; set; }
+        public bool? IsVisiblePassQty { get; set; }
+        public bool? IsVisibleRate { get; set; }
 
         public bool? IsVisibleAdditionalCharges { get; set; }
 

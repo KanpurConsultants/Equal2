@@ -10,6 +10,7 @@ using Core.Common;
 using AutoMapper;
 using Model.ViewModel;
 using System.Xml.Linq;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Controllers
 {
@@ -172,7 +173,7 @@ namespace Jobs.Controllers
                         return PartialView("_Create", svm);
                     }
 
-                    //LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Calculation).DocumentTypeId,
+                    //LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Calculation).DocumentTypeId,
                     //temp1.CalculationProductId,
                     //null,
                     //(int)ActivityTypeContants.Modified,
@@ -181,7 +182,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Calculation).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Calculation.DocumentTypeName).DocumentTypeId,
                         DocId = temp1.CalculationProductId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -239,7 +240,7 @@ namespace Jobs.Controllers
                 ModelState.AddModelError("", message);
                 return PartialView("_Create", vm);
             }
-           // LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Calculation).DocumentTypeId,
+           // LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Calculation).DocumentTypeId,
            //CalculationProduct.CalculationProductId,
            //null,
            //(int)ActivityTypeContants.Deleted,
@@ -249,7 +250,7 @@ namespace Jobs.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Calculation).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Calculation.DocumentTypeName).DocumentTypeId,
                 DocId = CalculationProduct.CalculationProductId,
                 ActivityType = (int)ActivityTypeContants.Deleted,
                 UserRemark = "",

@@ -3,7 +3,7 @@ using Data.Models;
 using System;
 using StockProcessTransferDocumentEvents;
 using System.Linq;
-using Core.Common;
+using Jobs.Constants.RugDocumentType;
 
 namespace Jobs.Controllers
 {
@@ -39,7 +39,7 @@ namespace Jobs.Controllers
             //               select g).ToList();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.PurjaTransfer
+                           where p.DocumentTypeName == RugDocumentTypeConstants.PurjaTransfer.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();
@@ -89,7 +89,7 @@ namespace Jobs.Controllers
 
             var StockHeader = DbContext.StockHeader.Find(Temp.StockHeaderId);
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.PurjaTransfer
+                           where p.DocumentTypeName == RugDocumentTypeConstants.PurjaTransfer.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();
@@ -124,7 +124,7 @@ namespace Jobs.Controllers
                                ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.PurjaTransfer
+                           where p.DocumentTypeName == RugDocumentTypeConstants.PurjaTransfer.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();
@@ -187,7 +187,7 @@ namespace Jobs.Controllers
                             ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.PurjaTransfer
+                           where p.DocumentTypeName == RugDocumentTypeConstants.PurjaTransfer.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();

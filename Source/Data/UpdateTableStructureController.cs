@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web.Mvc;
 using System.IO;
 using System.Data.SqlClient;
-using System.Data;
+using Model.Models;
 using System;
 using Jobs.Constants.ProductSizeTypes;
 using Jobs.Constants.Country;
@@ -15,71 +15,84 @@ using Jobs.Constants.City;
 using Jobs.Constants.LedgerAccountGroup;
 using Jobs.Constants.ProductType;
 using Jobs.Constants.RugProductType;
-using System.Reflection;
-using System.Configuration;
-
+using Jobs.Constants.IndustryType;
+using Jobs.Constants.RugDocumentType;
+using Jobs.Constants.RugProcess;
+using Jobs.Constants.Calculation;
+using Jobs.Constants.RugMenu;
+using Jobs.Constants.Currency;
 
 namespace Data.Models
 {
     [Authorize]
     public class UpdateTableStructure
     {
+        ApplicationDbContext db = new ApplicationDbContext();
         string mQry = "";
         string path = @"D:\Active Projects\Web\Equal2\Source\Data\";
         //path = ConfigurationManager.AppSettings["ScriptFilePath"];
         public void UpdateTables()
         {
 
-                //AddFields("LedgerAccountGroups", "ParentLedgerAccountGroupId", "INT", "LedgerAccountGroups");
-                //AddFields("LedgerAccountGroups", "BSNature", "NVARCHAR (20)");
+            //AddFields("LedgerAccountGroups", "ParentLedgerAccountGroupId", "INT", "LedgerAccountGroups");
+            //AddFields("LedgerAccountGroups", "BSNature", "NVARCHAR (20)");
 
-                //try
-                //{
-                //    if ((int)ExecuteScaler("SELECT Count(*) AS Cnt FROM INFORMATION_SCHEMA.Tables WHERE TABLE_NAME = 'SalaryLineReferences'") == 0)
-                //    {
-                //        mQry = @"
-                //            CREATE TABLE Web.SalaryLineReferences
-                //         (
-                //         SalaryLineId                   INT NOT NULL,
-                //         ReferenceDocTypeId             INT,
-                //            ReferenceDocId                 INT NOT NULL,
-                //         ReferenceDocLineId             INT NOT NULL,                  
-                //            CONSTRAINT [PK_Web.SalaryLineReferences] PRIMARY KEY (SalaryLineId,ReferenceDocTypeId,ReferenceDocId,ReferenceDocLineId),
-                //         CONSTRAINT [FK_Web.SalaryLineReferences_Web.SalaryLines_SalaryLineIdId] FOREIGN KEY (SalaryLineId) REFERENCES Web.SalaryLines (SalaryLineId),
-                //         CONSTRAINT [FK_Web.SalaryLineReferences_Web.DocumentType_ReferenceDocTypeId] FOREIGN KEY (ReferenceDocTypeId) REFERENCES Web.DocumentTypes (DocumentTypeId)
-                //         )
+            //try
+            //{
+            //    if ((int)ExecuteScaler("SELECT Count(*) AS Cnt FROM INFORMATION_SCHEMA.Tables WHERE TABLE_NAME = 'SalaryLineReferences'") == 0)
+            //    {
+            //        mQry = @"
+            //            CREATE TABLE Web.SalaryLineReferences
+            //         (
+            //         SalaryLineId                   INT NOT NULL,
+            //         ReferenceDocTypeId             INT,
+            //            ReferenceDocId                 INT NOT NULL,
+            //         ReferenceDocLineId             INT NOT NULL,                  
+            //            CONSTRAINT [PK_Web.SalaryLineReferences] PRIMARY KEY (SalaryLineId,ReferenceDocTypeId,ReferenceDocId,ReferenceDocLineId),
+            //         CONSTRAINT [FK_Web.SalaryLineReferences_Web.SalaryLines_SalaryLineIdId] FOREIGN KEY (SalaryLineId) REFERENCES Web.SalaryLines (SalaryLineId),
+            //         CONSTRAINT [FK_Web.SalaryLineReferences_Web.DocumentType_ReferenceDocTypeId] FOREIGN KEY (ReferenceDocTypeId) REFERENCES Web.DocumentTypes (DocumentTypeId)
+            //         )
 
-                //        CREATE INDEX [IX_SalaryLineId]
-                //         ON Web.SalaryLineReferences (SalaryLineId)
-
-
-                //        CREATE INDEX [IX_ReferenceDocTypeId]
-                //         ON Web.SalaryLineReferences (ReferenceDocTypeId)
+            //        CREATE INDEX [IX_SalaryLineId]
+            //         ON Web.SalaryLineReferences (SalaryLineId)
 
 
-                //        CREATE INDEX [IX_ReferenceDocId]
-                //         ON Web.SalaryLineReferences (ReferenceDocId)
+            //        CREATE INDEX [IX_ReferenceDocTypeId]
+            //         ON Web.SalaryLineReferences (ReferenceDocTypeId)
 
-                //        CREATE INDEX [IX_ReferenceDocLineId]
-                //         ON Web.SalaryLineReferences (ReferenceDocLineId)
 
-                //            ";
-                //        ExecuteQuery(mQry);
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    RecordError(ex);
-                //}
-              
-            
+            //        CREATE INDEX [IX_ReferenceDocId]
+            //         ON Web.SalaryLineReferences (ReferenceDocId)
+
+            //        CREATE INDEX [IX_ReferenceDocLineId]
+            //         ON Web.SalaryLineReferences (ReferenceDocLineId)
+
+            //            ";
+            //        ExecuteQuery(mQry);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    RecordError(ex);
+            //}
+
+
             //DataCorrection();
+            InitializeSqlTypeScripts();
             InitializeUserTables();
             InitializePersonTables();
             InitializeSettingsTables();
+            InitializeSqlViewScripts();
             InitializeSqlProcedureScripts();
             InitializeSqlFunctionScripts();
-            InitializeSqlViewScripts();
+
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                InitializeSqlViewScripts_Rug();
+                InitializeSqlProcedureScripts_Rug();
+                InitializeSqlFunctionScripts_Rug();
+            }
 
         }
         public void AddFields(string TableName, string FieldName, string DataType, string ForeignKeyTable = null)
@@ -583,7 +596,43 @@ namespace Data.Models
                 RecordError(ex);
             }
         }
+        public void InsertQuery(string TableName, string UniqueIdFieldName, int UniqueId, int ? DocTypeId)
+        {
+            string Query = "SELECT Count(*)  FROM Web." + TableName + " WHERE DocTypeId ";
+            if (DocTypeId == null )
+                Query = Query + " is Null";
+            else
+                Query = Query + " = " + DocTypeId.ToString() ;
 
+
+            if ((int)ExecuteScaler(Query) == 0)
+            {
+                if (DocTypeId == null)
+                    mQry = @"INSERT INTO Web." + TableName + @"(" + UniqueIdFieldName + @", CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
+                        VALUES(" + UniqueId  + ", 'System', 'System',getdate(), getdate())";
+                else
+                    mQry = @"INSERT INTO Web." + TableName + @"(" + UniqueIdFieldName + @", DocTypeId, SiteId, DivisionId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
+                        VALUES( " + UniqueId  + ", " + DocTypeId + @",  " + SiteConstants.MainSite.SiteId + @",  " + DivisionConstants.MainDivision.DivisionId + @", 'System', 'System',getdate(), getdate())";
+                
+                ExecuteQuery(mQry);
+            }
+        }
+        public void UpdateQuery(string TableName, int? DocTypeId, string FeildName, string FeildValue)
+        {
+
+
+            if (DocTypeId == null)
+                mQry = @"UPDATE Web." + TableName + @"
+                        SET " + FeildName + @" = " + FeildValue + @"
+                        WHERE " + FeildName + @" IS NULL AND DocTypeId is null";
+            else
+                mQry = @"UPDATE Web." + TableName + @"
+                        SET " + FeildName + @" = " + FeildValue + @"
+                        WHERE " + FeildName + @" IS NULL AND DocTypeId = " + DocTypeId + @"";
+
+            ExecuteQuery(mQry);
+
+        }
 
         private void InitializeUserTables()
         {
@@ -604,7 +653,7 @@ namespace Data.Models
             ExecuteQuery(mQry);
 
 
-            mQry = " INSERT INTO Web.AspNetRoles (Id, Name) VALUES ('"+ RollId + "', 'Admin') ";
+            mQry = " INSERT INTO Web.AspNetRoles (Id, Name) VALUES ('" + RollId + "', 'Admin') ";
             ExecuteQuery(mQry);
 
             mQry = " INSERT INTO Web.Users (Id, Email, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, UserName, FirstName, LastName, Discriminator) " +
@@ -670,7 +719,7 @@ namespace Data.Models
                         " SELECT (SELECT Max(G.LedgerAccountId) FROM web.LedgerAccounts G WITH (Nolock) ) +1 AS LedgerAccountId, P.Name AS LedgerAccountName, P.Suffix AS LedgerAccountSuffix, P.PersonID, " + LedgerAccountGroupConstants.SundryDebtors.LedgerAccountGroupId + ", 1, 1, 'System', 'System', getdate(), getdate() " +
                         " FROM web.People P WITH(nolock) " +
                         " WHERE P.Name = 'Customer' AND P.DocTypeId =  " + DocumentTypeConstants.Customer.DocumentTypeId + "";
-                         ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
 
                 mQry = "INSERT INTO Web.PersonAddresses (PersonId, CityId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
                         "SELECT P.PersonID, " + CityConstants.Kanpur.CityId + ", 'System', 'System', getdate(), getdate() " +
@@ -699,315 +748,243 @@ namespace Data.Models
                 string message = ex.Message;
             }
 
-           
+
 
         }
-
-
-        private void InitializeSqlProcedureScripts()
+        private void SqlProcedureExecute(string ProcedureName)
         {
             string script = "";
-                        
+
             try
             {
-                script = @"IF OBJECT_ID ('Web.spCarpetMaster_CreateTrace_GetFirstProductForColourWayAndSize') IS NOT NULL
-                           DROP PROCEDURE Web.spCarpetMaster_CreateTrace_GetFirstProductForColourWayAndSize";
+                script = @"IF OBJECT_ID ('Web.[" + ProcedureName + @"]') IS NOT NULL
+	                        DROP PROCEDURE Web.[" + ProcedureName + @"] ";
                 ExecuteQuery(script);
-                script = File.ReadAllText(path + @"SqlProcedureScripts\spCarpetMaster_CreateTrace_GetFirstProductForColourWayAndSize.sql");
+                script = File.ReadAllText(path + @"SqlProcedureScripts\" + ProcedureName + @".sql");
                 ExecuteQuery(script);
             }
             catch (Exception ex)
             {
                 string message = ex.Message;
             }
-
+        }
+        private void SqlFunctionExecute(string ProcedureName)
+        {
+            string script = "";
             try
             {
-                script = @"IF OBJECT_ID ('Web.spCarpetMaster_MakeCustomProductName_GetCustomCarpetSkuName') IS NOT NULL
-                            DROP PROCEDURE Web.spCarpetMaster_MakeCustomProductName_GetCustomCarpetSkuName";
+                script = @"IF OBJECT_ID ('Web." + ProcedureName + @"') IS NOT NULL
+	                        DROP Function Web." + ProcedureName + @"";
                 ExecuteQuery(script);
-                script = File.ReadAllText(path + @"SqlProcedureScripts\spCarpetMaster_MakeCustomProductName_GetCustomCarpetSkuName.sql");
+                script = File.ReadAllText(path + @"SqlFunctionScripts\" + ProcedureName + @".sql");
                 ExecuteQuery(script);
             }
             catch (Exception ex)
             {
                 string message = ex.Message;
             }
-
+        }
+        private void SqlViewExecute(string ProcedureName)
+        {
+            string script = "";
             try
             {
-                script = @"IF OBJECT_ID ('Web.[spDocumentTypeService_FGetNewDocNo_GetNewDocNo]') IS NOT NULL
-	                        DROP PROCEDURE Web.[spDocumentTypeService_FGetNewDocNo_GetNewDocNo] ";
+                script = @"IF OBJECT_ID ('Web." + ProcedureName + @"') IS NOT NULL
+	                    DROP VIEW [Web].[" + ProcedureName + @"]";
                 ExecuteQuery(script);
-                script = File.ReadAllText(path + @"SqlProcedureScripts\spDocumentTypeService_FGetNewDocNo_GetNewDocNo.sql");
+                script = File.ReadAllText(path + @"SqlViewScripts\" + ProcedureName + @".sql");
                 ExecuteQuery(script);
             }
             catch (Exception ex)
             {
                 string message = ex.Message;
             }
+        }
+        private void InitializeSqlTypeScripts()
+        {
+            string script = "";
 
             try
             {
-                script = @"IF OBJECT_ID ('Web.[spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize]') IS NOT NULL
-	                        DROP PROCEDURE Web.[spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize] ";
+                script = @"IF OBJECT_ID ('Web.[TypeParameter]') IS NOT NULL
+	                        DROP PROCEDURE Web.[TypeParameter] ";
                 ExecuteQuery(script);
-                script = File.ReadAllText(path + @"SqlProcedureScripts\spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize.sql");
+                script = @"CREATE TYPE Web.TypeParameter AS TABLE
+                            (ProdOrderLineId INT,
+                              Qty DECIMAL
+                            )
+                            ; ";
                 ExecuteQuery(script);
             }
             catch (Exception ex)
             {
                 string message = ex.Message;
-            }
+            }            
 
+        }
+        private void InitializeSqlProcedureScripts()
+        {
+           
+            SqlProcedureExecute("CalculationHeaderCharge");
+            SqlProcedureExecute("CalculationLineCharge");
+            SqlProcedureExecute("FGetDocNo");            
+            SqlProcedureExecute("GetNewDocNoGatePass");
+            SqlProcedureExecute("GetPersonLedgerBalance");
+            SqlProcedureExecute("ProcCompanyDetail");
+            SqlProcedureExecute("sp_GetProductStandardWeight");
+            SqlProcedureExecute("procGetCalculationMaxLineId");
+            SqlProcedureExecute("ProcGetProductUidLastValues");            
+            SqlProcedureExecute("ProcGetQCStockForPacking");
+            SqlProcedureExecute("ProcGetStockForPacking");            
+            SqlProcedureExecute("spDisplayStockInHandAndStockProcessDisplay");
+            SqlProcedureExecute("spDocumentTypeService_FGetNewDocNo_GetNewDocNo");
+            SqlProcedureExecute("spGatePassStockIssue");
+            SqlProcedureExecute("spGetHelpListProcessWithChildProcess");
+            SqlProcedureExecute("spGetProductProcessForProcessSequence");
+            SqlProcedureExecute("SpJobOrderEvents__onHeaderSubmit_UpdateCostCenterStatusExtendedFromOrder");
+            SqlProcedureExecute("spJobOrderHeaderService_FGetJobOrderCostCenter_GetJobOrderCostCenter");
+            SqlProcedureExecute("spJobOrderLineService_GetJobRate_GetJobOrderRate");     
+            SqlProcedureExecute("spMaterialPlanHeaderNewController_Submitted_UpdateMaterialPlanForSaleOrder");
+            SqlProcedureExecute("spMaterialPlanLineNewController_GetProdOrders_ListProdOrderBalanceForMPlan");           
+            SqlProcedureExecute("spPackingLineService_FGetPendingDeliveryOrderListForPacking_GetPendingDeliveryOrderListForPacking");
+            SqlProcedureExecute("spPackingLineService_FGetPendingOrderListForPacking_GetPendingOrderListForPacking");
+            SqlProcedureExecute("spPackingLineService_FGetPendingOrderQtyForPacking_GetPendingOrderQtyForPacking");            
+            SqlProcedureExecute("spPrroductService_GetUnitConversionMultiplier_GetUnitConversion");        
+            SqlProcedureExecute("spRep_TransactionCharges");
+            SqlProcedureExecute("spSaleOrderHeaderService_SaleOrdersForDocumentType_SaleOrderBalanceForPlanning");
+            SqlProcedureExecute("spUnitConversionFor_GetUnitConversion_GetUnitConversionForSize");
+            SqlProcedureExecute("spStockProcessBalance");
+            SqlProcedureExecute("sp_GetPrevProcess");
 
+        }
+        private void InitializeSqlProcedureScripts_Rug()
+        {
+            SqlProcedureExecute("ProcGetBomForWeaving");
+            SqlProcedureExecute("ProcWeavingOrderPrint1");
+            SqlProcedureExecute("ProcWeavingOrderPrint3");
+            SqlProcedureExecute("sp_GetProductDimensions");
+            SqlProcedureExecute("sp_PostBomForWeavingOrder");
+            SqlProcedureExecute("sp_UpdateProductUidValuesForJobOrder");
+            SqlProcedureExecute("sp_PostRequisitionForWeavingOrder");
+            SqlProcedureExecute("spCarpetMaster_CreateTrace_GetFirstProductForColourWayAndSize");
+            SqlProcedureExecute("spCarpetMaster_MakeCustomProductName_GetCustomCarpetSkuName");
+            SqlProcedureExecute("spDyeingOrderPrint");
+            SqlProcedureExecute("spDyeingOrderWizardController_PendingProdOrders_DyeingOrderWizard_Step1");
+            SqlProcedureExecute("spDyeingOrderWizardController_SelectedProdOrderList_DyeingOrderWizard_Step2");
+            SqlProcedureExecute("spGatePassRugFinishingOrder");
+            SqlProcedureExecute("spJobOrderHeaderSevice_GetProdOrdersForWeavingWizard_WeavingOrderWizard");
+            SqlProcedureExecute("spMaterialPlanSetting_GetBomProcedureForDocType_BomProcedure");
+            SqlProcedureExecute("spMaterialPlanSetting_GetBomProcedureForDocType_BomProcedure_UndyedYarn");
+            SqlProcedureExecute("spPackingLinrService_FGetPendingOrderListForPackingForProductUid_GetPendingOrderListForPackingForProductUid");
+            SqlProcedureExecute("spRep_DyeingOrdershadePrint");
+            SqlProcedureExecute("spWeavingOrderPrint");
+            SqlProcedureExecute("spWeavingReceiveQACombined_Submitted_PostBomForWeavingReceive");
+            SqlProcedureExecute("sp_PostProdOrderAtBranch");
+            SqlProcedureExecute("sp_UpdateSaleOrderLine_inProductUid_FromWeavingOrder");
+            SqlProcedureExecute("sp_PostProdOrderAtBranch");
+            SqlProcedureExecute("sp_PostBomForWeavingOrderCancel");
+            SqlProcedureExecute("sp_PostRequisitionCancelForWeavingOrderCancel");
+            SqlProcedureExecute("sp_PostProdOrderCancelAtBranch");            
+                
         }
         private void InitializeSqlFunctionScripts()
         {
-            string script = "";
-            try
-            {
-                script = @"IF OBJECT_ID ('Web.fProductMap_Edit_ConvertSqFeetToSqYard') IS NOT NULL
-	                        DROP Function Web.fProductMap_Edit_ConvertSqFeetToSqYard";
-                ExecuteQuery(script);
-                script = File.ReadAllText(path + @"SqlFunctionScripts\fProductMap_Edit_ConvertSqFeetToSqYard.sql");
-                ExecuteQuery(script);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
+            SqlFunctionExecute("FConvertSqFeetToSqYard");
+            SqlFunctionExecute("FGenerateBarcodeList");
+            SqlFunctionExecute("FGetExcessStock");
+            SqlFunctionExecute("FGetExcessStock_WithDimension");
+            SqlFunctionExecute("FGetSizeinFeet");
+            SqlFunctionExecute("FGetSqFeetFromCMSizes");
+            SqlFunctionExecute("FStockBalance");
+            SqlFunctionExecute("RoundToNearestHundredDecimals");
+            SqlFunctionExecute("Split");
 
+            
+        }
+        private void InitializeSqlFunctionScripts_Rug()
+        {
+            SqlFunctionExecute("FConvertSqFeetToSqYard");
+            SqlFunctionExecute("FGenerateBarcodeList");
+            SqlFunctionExecute("FGetSizeinFeet");
+            SqlFunctionExecute("FGetSqFeetFromCMSizes");
         }
         private void InitializeSqlViewScripts()
         {
-            string script = "";
+            SqlViewExecute("_DocumentTypeSettings");
+            SqlViewExecute("_JobOrderHeaders");
+            SqlViewExecute("_JobOrderLines");
+            SqlViewExecute("_People");
+            SqlViewExecute("ViewSaleOrderLine");
+            SqlViewExecute("ViewJobOrderLine");
+            SqlViewExecute("ViewSaleInvoiceLine");
+            
+            SqlViewExecute("Std_PersonRegistrations");
+            SqlViewExecute("ViewDivisionCompany");
+            SqlViewExecute("ViewJobOrderBalance");         
+            SqlViewExecute("ViewJobReceiveBalance");
+            SqlViewExecute("ViewProdOrderBalance");
+            SqlViewExecute("ViewProductBuyer");
+            SqlViewExecute("ViewProdOrderBalance");
+            SqlViewExecute("ViewRequisitionBalance");
+            SqlViewExecute("ViewSaleDeliveryOrderLine");
+            SqlViewExecute("ViewSaleDeliveryOrderBalanceForPacking");           
+            SqlViewExecute("ViewSaleEnquiryBalance");
+            SqlViewExecute("ViewSaleOrderBalance");
+            SqlViewExecute("ViewSaleOrderBalanceForCancellation");
+            SqlViewExecute("ViewSaleOrderBalanceForPlanning");
+            SqlViewExecute("ViewSizeinCms");
+            SqlViewExecute("ViewStockInBalance");
 
-            try
-            {
-                script = @"IF OBJECT_ID ('Web.ViewSaleOrderLine') IS NOT NULL
-                            DROP VIEW[Web].[ViewSaleOrderLine]";
-                ExecuteQuery(script);
-                script = File.ReadAllText(path + @"SqlViewScripts\ViewSaleOrderLine.sql");
-                ExecuteQuery(script);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                script = @"IF OBJECT_ID ('Web.ViewJobOrderLine') IS NOT NULL
-                            DROP VIEW[Web].[ViewJobOrderLine]";
-                ExecuteQuery(script);
-                script = File.ReadAllText(path + @"SqlViewScripts\ViewJobOrderLine.sql");
-                ExecuteQuery(script);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                script = @"IF OBJECT_ID ('Web.ViewPackingLineService_FGetPendingOrderQtyForDispatch_SaleOrderBalance') IS NOT NULL
-	                    DROP VIEW [Web].[ViewPackingLineService_FGetPendingOrderQtyForDispatch_SaleOrderBalance]";
-                ExecuteQuery(script);
-                script = File.ReadAllText(path + @"SqlViewScripts\ViewPackingLineService_FGetPendingOrderQtyForDispatch_SaleOrderBalance.sql");
-                ExecuteQuery(script);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-
-
-            try
-            {
-                script = @"IF OBJECT_ID ('Web.ViewCarpetMaster_Edit_RugSize') IS NOT NULL
-	                        DROP VIEW [Web].[ViewCarpetMaster_Edit_RugSize]";
-                ExecuteQuery(script);
-                script = File.ReadAllText(path + @"SqlViewScripts\ViewCarpetMaster_Edit_RugSize.sql");
-                ExecuteQuery(script);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
+        }
+        private void InitializeSqlViewScripts_Rug()
+        {
+            SqlViewExecute("ViewBomDetailsForWeavingReceivePosting");
+            SqlViewExecute("ViewDesignColourConsumption");
+            SqlViewExecute("ViewProductGroupContents");
+            SqlViewExecute("ViewProductSize");
 
         }
 
         private void InitializeSettingsTables()
         {
-            string mQry = "";
-            mQry = "DELETE FROM web.ProductTypeSettings WHERE CreatedBy ='System'";
-            ExecuteQuery(mQry);
-
-            mQry = "INSERT INTO Web.ProductTypeSettings (ProductTypeSettingsId, ProductTypeId, UnitId, isShowMappedDimension1, isShowUnMappedDimension1, isApplicableDimension1, Dimension1Caption, isShowMappedDimension2, isShowUnMappedDimension2, isApplicableDimension2, Dimension2Caption, isShowMappedDimension3, isShowUnMappedDimension3, isApplicableDimension3, Dimension3Caption, isShowMappedDimension4, isShowUnMappedDimension4, isApplicableDimension4, Dimension4Caption, isVisibleProductDescription, isVisibleProductSpecification, isVisibleProductCategory, isVisibleSalesTaxGroup, isVisibleSaleRate, isVisibleStandardCost, isVisibleTags, isVisibleMinimumOrderQty, isVisibleReOrderLevel, isVisibleGodownId, isVisibleBinLocationId, isVisibleProfitMargin, isVisibleCarryingCost, isVisibleLotManagement, isVisibleConsumptionDetail, isVisibleProductProcessDetail, isVisibleDefaultDimension1, isVisibleDefaultDimension2, isVisibleDefaultDimension3, isVisibleDefaultDimension4, isVisibleDiscontinueDate, isVisibleSalesTaxProductCode, IndexFilterParameter, ProductNameCaption, ProductCodeCaption, ProductDescriptionCaption, ProductSpecificationCaption, ProductGroupCaption, ProductCategoryCaption, SalesTaxProductCodeCaption, SqlProcProductCode, ImportMenuId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
-                    " VALUES(1, " + RugProductTypeConstants.Rug.ProductTypeId + ", 'Pcs', 0, 0, 1, 'Colour', 0, 0, 0, NULL, 0, 0, 0, NULL, 0, 0, 0, NULL, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'System', 'System', Getdate(), Getdate())";
-            ExecuteQuery(mQry);
-
-            mQry = "INSERT INTO Web.ProductTypeSettings (ProductTypeSettingsId, ProductTypeId, UnitId, isShowMappedDimension1, isShowUnMappedDimension1, isApplicableDimension1, Dimension1Caption, isShowMappedDimension2, isShowUnMappedDimension2, isApplicableDimension2, Dimension2Caption, isShowMappedDimension3, isShowUnMappedDimension3, isApplicableDimension3, Dimension3Caption, isShowMappedDimension4, isShowUnMappedDimension4, isApplicableDimension4, Dimension4Caption, isVisibleProductDescription, isVisibleProductSpecification, isVisibleProductCategory, isVisibleSalesTaxGroup, isVisibleSaleRate, isVisibleStandardCost, isVisibleTags, isVisibleMinimumOrderQty, isVisibleReOrderLevel, isVisibleGodownId, isVisibleBinLocationId, isVisibleProfitMargin, isVisibleCarryingCost, isVisibleLotManagement, isVisibleConsumptionDetail, isVisibleProductProcessDetail, isVisibleDefaultDimension1, isVisibleDefaultDimension2, isVisibleDefaultDimension3, isVisibleDefaultDimension4, isVisibleDiscontinueDate, isVisibleSalesTaxProductCode, IndexFilterParameter, ProductNameCaption, ProductCodeCaption, ProductDescriptionCaption, ProductSpecificationCaption, ProductGroupCaption, ProductCategoryCaption, SalesTaxProductCodeCaption, SqlProcProductCode, ImportMenuId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate) " +
-                    " VALUES(2, " + RugProductTypeConstants.Yarn.ProductTypeId + ", 'KG', 0, 0, 1, 'Shade', 0, 0, 0, NULL, 0, 0, 0, NULL, 0, 0, 0, NULL, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'System', 'System', Getdate(), Getdate())";
-            ExecuteQuery(mQry);
-
-            InitializeSaleEnquirySettings();
-            InitializeSaleOrderSettings();
+            InitializeProductTypeSettings();
             InitializeProductBuyerSettings();
             InitializeCarpetSkuSettings();
 
+            InitializeSaleEnquirySettings();
+            InitializeSaleOrderSettings();
+            InitializeSaleDeliveryOrderSettings();
+            InitializeMaterialPlanSettings();
+            InitializeProdOrderSettings();
+            InitializeJobOrderSettings();
+            InitializeJobReceiveSettings();
+            InitializeJobReceiveQASettings();
+            InitializeJobInvoiceSettings();
+            InitializeLedgerSettings();
+            InitializeStockHeaderSettings();
+            InitializePackingSettings();
+            InitializeSaleInvoiceSettings();
         }
 
-        private void InitializeSaleOrderSettings()
-        {
-            string mQry = "";
-            try
-            {
-                mQry = @"INSERT INTO Web.SaleOrderSettings(SaleOrderSettingsId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
-                        VALUES(1, 'System', 'System',getdate(), getdate())";
-                ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                mQry = @"UPDATE Web.SaleOrderSettings 
-                        SET UnitConversionForId = 1
-                        WHERE UnitConversionForId IS NULL ";
-                ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                mQry = @"UPDATE Web.SaleOrderSettings 
-                        SET isVisibleDealUnit = 1
-                        WHERE isVisibleDealUnit IS NULL ";
-                ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                mQry = @"UPDATE Web.SaleOrderSettings 
-                        SET filterPersonRoles = '" + DocumentTypeConstants.Customer.DocumentTypeId.ToString() + @"'
-                        WHERE filterPersonRoles IS NULL ";
-                ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                mQry = @"UPDATE Web.SaleOrderSettings 
-                        SET ProcessId = " + ProcessConstants.Sale.ProcessId + @"
-                        WHERE ProcessId IS NULL ";
-                ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-
-        }
-
-        private void InitializeSaleEnquirySettings()
-        {
-            string mQry = "";
-            try
-            {
-                mQry = @"INSERT INTO Web.SaleEnquirySettings(SaleEnquirySettingsId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
-                        VALUES(1, 'System', 'System',getdate(), getdate())";
-                ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                mQry = @"UPDATE Web.SaleEnquirySettings 
-                        SET UnitConversionForId = 1
-                        WHERE UnitConversionForId IS NULL ";
-                 ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                mQry = @"UPDATE Web.SaleEnquirySettings 
-                        SET isVisibleDealUnit = 1
-                        WHERE isVisibleDealUnit IS NULL ";
-                 ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                mQry = @"UPDATE Web.SaleEnquirySettings 
-                        SET filterPersonRoles = '" + DocumentTypeConstants.Customer.DocumentTypeId.ToString() + @"'
-                        WHERE filterPersonRoles IS NULL ";
-                 ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                mQry = @"UPDATE Web.SaleEnquirySettings 
-                        SET ProcessId = " + ProcessConstants.Sale.ProcessId + @"
-                        WHERE ProcessId IS NULL ";
-                 ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-            try
-            {
-                mQry = @"UPDATE Web.SaleEnquirySettings 
-                        SET SaleOrderDocTypeId = " + DocumentTypeConstants.SaleOrder.DocumentTypeId + @"
-                        WHERE SaleOrderDocTypeId IS NULL ";
-                 ExecuteQuery(mQry);
-            }
-            catch (Exception ex)
-            {
-                string message = ex.Message;
-            }
-
-        }
         private void InitializeProductBuyerSettings()
         {
             string mQry = "";
+
+            try
+            {
+                mQry = "DELETE FROM web.ProductBuyerSettings WHERE CreatedBy ='System'";
+                ExecuteQuery(mQry);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
             try
             {
                 mQry = @"INSERT INTO Web.ProductBuyerSettings (ProductBuyerSettingsId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
                         VALUES (1, 'System', 'System',getdate(), getdate())";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
@@ -1019,7 +996,7 @@ namespace Data.Models
                 mQry = @"UPDATE Web.ProductBuyerSettings
                         SET BuyerSpecificationDisplayName = 'BuyerSpecification'
                         WHERE BuyerSpecificationDisplayName IS NULL ";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
@@ -1031,7 +1008,7 @@ namespace Data.Models
                 mQry = @"UPDATE Web.ProductBuyerSettings
                         SET BuyerSpecification1DisplayName = 'BuyerSpecification1'
                         WHERE BuyerSpecification1DisplayName IS NULL ";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
@@ -1043,7 +1020,7 @@ namespace Data.Models
                 mQry = @"UPDATE Web.ProductBuyerSettings
                         SET BuyerSpecification2DisplayName = 'BuyerSpecification2'
                         WHERE BuyerSpecification2DisplayName IS NULL ";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
@@ -1055,22 +1032,97 @@ namespace Data.Models
                 mQry = @"UPDATE Web.ProductBuyerSettings
                         SET BuyerSpecification3DisplayName = 'BuyerSpecification3'
                         WHERE BuyerSpecification3DisplayName IS NULL ";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
                 string message = ex.Message;
             }
 
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+
+                try
+                {
+                    mQry = @"INSERT INTO Web.ProductBuyerSettings (ProductBuyerSettingsId, SiteId, DivisionId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
+                        VALUES (2, " + SiteConstants.MainSite.SiteId + @",  " + DivisionConstants.MainDivision.DivisionId + @", 'System', 'System',getdate(), getdate())";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductBuyerSettings
+                        SET BuyerSpecificationDisplayName = 'Design'
+                        WHERE BuyerSpecificationDisplayName IS NULL AND DivisionId = " + DivisionConstants.MainDivision.DivisionId + @"";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductBuyerSettings
+                        SET BuyerSpecification1DisplayName = 'Size'
+                        WHERE BuyerSpecification1DisplayName IS NULL ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductBuyerSettings
+                        SET BuyerSpecification2DisplayName = 'Colour'
+                        WHERE BuyerSpecification2DisplayName IS NULL ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductBuyerSettings
+                        SET BuyerSpecification3DisplayName = 'Quality'
+                        WHERE BuyerSpecification3DisplayName IS NULL ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+
         }
         private void InitializeCarpetSkuSettings()
         {
             string mQry = "";
+
+            try
+            {
+                mQry = "DELETE FROM web.CarpetSkuSettings WHERE CreatedBy ='System'";
+                ExecuteQuery(mQry);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
             try
             {
                 mQry = @"INSERT INTO Web.CarpetSkuSettings (CarpetSkuSettingsId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
                          VALUES (1, 'System', 'System', getdate(), getdate())";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
@@ -1082,7 +1134,7 @@ namespace Data.Models
                 mQry = @"UPDATE Web.CarpetSkuSettings
                         SET AddColourInProductName = 1
                         WHERE AddColourInProductName IS NULL ";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
@@ -1094,7 +1146,7 @@ namespace Data.Models
                 mQry = @"UPDATE Web.CarpetSkuSettings
                          SET ProductDesignId = " + ProductDesignConstants.NA.ProductDesignId + @" 
                          WHERE ProductDesignId IS NULL ";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
@@ -1106,7 +1158,7 @@ namespace Data.Models
                 mQry = @"UPDATE Web.CarpetSkuSettings
                          SET OriginCountryId = " + CountryConstants.India.CountryId + @" 
                          WHERE OriginCountryId IS NULL ";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
@@ -1118,7 +1170,7 @@ namespace Data.Models
                 mQry = @"UPDATE Web.CarpetSkuSettings
                          SET PerimeterSizeTypeId =  " + ProductSizeTypesConstants.Standard.ProductSizeTypeId + @" 
                          WHERE PerimeterSizeTypeId IS NULL ";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
@@ -1130,7 +1182,7 @@ namespace Data.Models
                 mQry = @"UPDATE Web.CarpetSkuSettings
                          SET UnitConversions = 'MT2' 
                          WHERE UnitConversions IS NULL ";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
@@ -1142,14 +1194,756 @@ namespace Data.Models
                 mQry = @"UPDATE Web.CarpetSkuSettings
                          SET ManufacturingSizeName = 'ManufacturingSizeName' 
                          WHERE ManufacturingSizeName IS NULL ";
-                 ExecuteQuery(mQry);
+                ExecuteQuery(mQry);
             }
             catch (Exception ex)
             {
                 string message = ex.Message;
             }
         }
+        private void InitializeProductTypeSettings()
+        {
+            string mQry = "";
+            try
+            {
+                mQry = "DELETE FROM web.ProductTypeSettings WHERE CreatedBy ='System'";
+                ExecuteQuery(mQry);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
 
+            try
+            {
+                mQry = @"INSERT INTO Web.ProductTypeSettings(ProductTypeSettingsId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
+                        VALUES(1, 'System', 'System',getdate(), getdate())";
+                ExecuteQuery(mQry);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                try
+                {
+                    mQry = @"INSERT INTO Web.ProductTypeSettings(ProductTypeSettingsId, ProductTypeId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
+                        VALUES(2, " + RugProductTypeConstants.Rug.ProductTypeId + @", 'System', 'System',getdate(), getdate())";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET isApplicableDimension1 = 1
+                        WHERE isApplicableDimension1 IS NULL AND ProductTypeId =" + RugProductTypeConstants.Rug.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET isVisibleSalesTaxGroup = 1
+                        WHERE isVisibleSalesTaxGroup IS NULL AND ProductTypeId =" + RugProductTypeConstants.Rug.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET isVisibleLotManagement = 1
+                        WHERE isVisibleLotManagement IS NULL AND ProductTypeId =" + RugProductTypeConstants.Rug.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET isVisibleSalesTaxProductCode = 1
+                        WHERE isVisibleSalesTaxProductCode IS NULL AND ProductTypeId =" + RugProductTypeConstants.Rug.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET UnitId = 'Pcs'
+                        WHERE UnitId IS NULL AND ProductTypeId =" + RugProductTypeConstants.Rug.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET Dimension1Caption = 'Colour'
+                        WHERE Dimension1Caption IS NULL AND ProductTypeId =" + RugProductTypeConstants.Rug.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+
+                try
+                {
+                    mQry = @"INSERT INTO Web.ProductTypeSettings(ProductTypeSettingsId, ProductTypeId, CreatedBy, ModifiedBy, CreatedDate, ModifiedDate)
+                        VALUES(3, " + RugProductTypeConstants.Yarn.ProductTypeId + @", 'System', 'System',getdate(), getdate())";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET isApplicableDimension1 = 1
+                        WHERE isApplicableDimension1 IS NULL AND ProductTypeId =" + RugProductTypeConstants.Yarn.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET isVisibleSalesTaxGroup = 1
+                        WHERE isVisibleSalesTaxGroup IS NULL AND ProductTypeId =" + RugProductTypeConstants.Yarn.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET isVisibleSalesTaxProductCode = 1
+                        WHERE isVisibleSalesTaxProductCode IS NULL AND ProductTypeId =" + RugProductTypeConstants.Yarn.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET UnitId = 'KG'
+                        WHERE UnitId IS NULL AND ProductTypeId =" + RugProductTypeConstants.Yarn.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+
+                try
+                {
+                    mQry = @"UPDATE Web.ProductTypeSettings 
+                        SET Dimension1Caption = 'Shade'
+                        WHERE Dimension1Caption IS NULL AND ProductTypeId =" + RugProductTypeConstants.Yarn.ProductTypeId + @" ";
+                    ExecuteQuery(mQry);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+
+
+        }
+
+
+        private void InitializeSaleEnquirySettings()
+        {
+            try
+            {                
+                InsertQuery("SaleEnquirySettings", "SaleEnquirySettingsId", 1, null);
+                UpdateQuery("SaleEnquirySettings", null, "UnitConversionForId", "1");
+                UpdateQuery("SaleEnquirySettings", null, "filterPersonRoles", DocumentTypeConstants.Customer.DocumentTypeId.ToString());
+                UpdateQuery("SaleEnquirySettings", null, "ProcessId", ProcessConstants.Sale.ProcessId.ToString());
+                UpdateQuery("SaleEnquirySettings", null, "SaleOrderDocTypeId", DocumentTypeConstants.SaleOrder.DocumentTypeId.ToString());
+                UpdateQuery("SaleEnquirySettings", null, "filterProductTypes", ProductTypeConstants.TradingProduct.ProductTypeId.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+            
+        }
+        private void InitializeSaleOrderSettings()
+        {
+
+            try
+            {
+                InsertQuery("SaleOrderSettings", "SaleOrderSettingsId", 1, null);
+                UpdateQuery("SaleOrderSettings", null, "UnitConversionForId", "1");
+                UpdateQuery("SaleOrderSettings", null, "isVisibleDealUnit", "1");
+                UpdateQuery("SaleOrderSettings", null, "filterPersonRoles", DocumentTypeConstants.Customer.DocumentTypeId.ToString());
+                UpdateQuery("SaleOrderSettings", null, "ProcessId", ProcessConstants.Sale.ProcessId.ToString());
+                UpdateQuery("SaleOrderSettings", null, "filterProductTypes", ProductTypeConstants.TradingProduct.ProductTypeId.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+        }
+        private void InitializeSaleDeliveryOrderSettings()
+        {
+
+            try
+            {
+                InsertQuery("SaleDeliveryOrderSettings", "SaleDeliveryOrderSettingsId", 1, null);
+                UpdateQuery("SaleDeliveryOrderSettings", null, "filterPersonRoles", DocumentTypeConstants.Customer.DocumentTypeId.ToString());
+                UpdateQuery("SaleDeliveryOrderSettings", null, "ProcessId", ProcessConstants.Sale.ProcessId.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+        }
+        private void InitializeMaterialPlanSettings()
+        {
+
+            InsertQuery("MaterialPlanSettings", "MaterialPlanSettingsId", 1, null);
+            UpdateQuery("MaterialPlanSettings", null, "PlanType", "'SaleOrder'");
+
+            InsertQuery("MaterialPlanSettings", "MaterialPlanSettingsId", 2, null);
+            UpdateQuery("MaterialPlanSettings", null, "PlanType", "'ProdOrder'");
+
+            UpdateQuery("MaterialPlanSettings", null, "isVisibleProdPlanQty", "1");
+            UpdateQuery("MaterialPlanSettings", null, "PendingProdOrderList", "'Web.spSaleOrderHeaderService_SaleOrdersForDocumentType_SaleOrderBalanceForPlanning'");
+            UpdateQuery("MaterialPlanSettings", null, "DocTypeProductionOrderId", DocumentTypeConstants.ManufacturingPlan.DocumentTypeId.ToString());
+
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                // Dyeing Plan
+                try
+                {
+                    InsertQuery("MaterialPlanSettings", "MaterialPlanSettingsId", 3, RugDocumentTypeConstants.DyeingPlan.DocumentTypeId);
+                    UpdateQuery("MaterialPlanSettings", RugDocumentTypeConstants.DyeingPlan.DocumentTypeId, "PlanType", "'ProdOrder'");
+                    UpdateQuery("MaterialPlanSettings", RugDocumentTypeConstants.DyeingPlan.DocumentTypeId, "isVisibleProdPlanQty", "1");
+                    UpdateQuery("MaterialPlanSettings", RugDocumentTypeConstants.DyeingPlan.DocumentTypeId, "SqlProcConsumption", "'Web.spMaterialPlanSetting_GetBomProcedureForDocType_BomProcedure'");
+                    UpdateQuery("MaterialPlanSettings", RugDocumentTypeConstants.DyeingPlan.DocumentTypeId, "PendingProdOrderList", "'Web.spMaterialPlanLineNewController_GetProdOrders_ListProdOrderBalanceForMPlan'");
+                    UpdateQuery("MaterialPlanSettings", RugDocumentTypeConstants.DyeingPlan.DocumentTypeId, "DocTypeProductionOrderId", DocumentTypeConstants.ManufacturingPlan.DocumentTypeId.ToString());
+                    
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                // Material Plan
+                try
+                {
+                    InsertQuery("MaterialPlanSettings", "MaterialPlanSettingsId", 4, DocumentTypeConstants.MaterialPlan.DocumentTypeId);
+                    UpdateQuery("MaterialPlanSettings", DocumentTypeConstants.MaterialPlan.DocumentTypeId, "PlanType", "'ProdOrder'");
+                    UpdateQuery("MaterialPlanSettings", DocumentTypeConstants.MaterialPlan.DocumentTypeId, "isVisiblePurchPlanQty", "1");
+                    UpdateQuery("MaterialPlanSettings", DocumentTypeConstants.MaterialPlan.DocumentTypeId, "isVisibleProdPlanQty", "1");
+                    UpdateQuery("MaterialPlanSettings", DocumentTypeConstants.MaterialPlan.DocumentTypeId, "SqlProcConsumption", "'Web.spMaterialPlanSetting_GetBomProcedureForDocType_BomProcedure_UndyedYarn'");
+                    UpdateQuery("MaterialPlanSettings", DocumentTypeConstants.MaterialPlan.DocumentTypeId, "PendingProdOrderList", "'Web.spMaterialPlanLineNewController_GetProdOrders_ListProdOrderBalanceForMPlan'");
+                    UpdateQuery("MaterialPlanSettings", DocumentTypeConstants.MaterialPlan.DocumentTypeId, "DocTypePurchaseIndentId", DocumentTypeConstants.PurchasePlan.DocumentTypeId.ToString());
+                    UpdateQuery("MaterialPlanSettings", DocumentTypeConstants.MaterialPlan.DocumentTypeId, "DocTypeProductionOrderId", DocumentTypeConstants.ManufacturingPlan.DocumentTypeId.ToString());
+
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+
+        }
+        private void InitializeProdOrderSettings()
+        {
+
+            InsertQuery("ProdOrderSettings", "ProdOrderSettingsId", 1, null);
+        }
+
+        private void InitializeJobOrderSettings()
+        {
+            try
+            {
+                InsertQuery("JobOrderSettings", "JobOrderSettingsId", 1, null);
+                UpdateQuery("JobOrderSettings", null, "filterPersonRoles", DocumentTypeConstants.JobWorker.DocumentTypeId.ToString());
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            try
+            {
+                InsertQuery("JobOrderSettings", "JobOrderSettingsId", 2, DocumentTypeConstants.PurchaseOrder.DocumentTypeId);
+                UpdateQuery("JobOrderSettings", DocumentTypeConstants.PurchaseOrder.DocumentTypeId, "isVisibleRate", "1");
+                UpdateQuery("JobOrderSettings", DocumentTypeConstants.PurchaseOrder.DocumentTypeId, "isVisibleLotNo", "1");
+                UpdateQuery("JobOrderSettings", DocumentTypeConstants.PurchaseOrder.DocumentTypeId, "isVisibleFromProdOrder", "1");
+                UpdateQuery("JobOrderSettings", DocumentTypeConstants.PurchaseOrder.DocumentTypeId, "filterPersonRoles", DocumentTypeConstants.Supplier.DocumentTypeId.ToString());
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            try
+            {
+                InsertQuery("JobOrderSettings", "JobOrderSettingsId", 3, DocumentTypeConstants.PurchaseOrderCancel.DocumentTypeId);
+                UpdateQuery("JobOrderSettings", DocumentTypeConstants.PurchaseOrderCancel.DocumentTypeId, "isVisibleLotNo", "1");
+                UpdateQuery("JobOrderSettings", DocumentTypeConstants.PurchaseOrder.DocumentTypeId, "filterPersonRoles", DocumentTypeConstants.Supplier.DocumentTypeId.ToString());
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            try
+            {
+                InsertQuery("JobOrderSettings", "JobOrderSettingsId", 4, DocumentTypeConstants.JobOrderCancel.DocumentTypeId);
+                UpdateQuery("JobOrderSettings", DocumentTypeConstants.JobOrderCancel.DocumentTypeId, "isVisibleDimension1", "1");
+                UpdateQuery("JobOrderSettings", DocumentTypeConstants.JobOrderCancel.DocumentTypeId, "isVisibleDimension2", "1");
+                UpdateQuery("JobOrderSettings", DocumentTypeConstants.JobOrderCancel.DocumentTypeId, "isVisibleProcessHeader", "1");
+                UpdateQuery("JobOrderSettings", DocumentTypeConstants.JobOrderCancel.DocumentTypeId, "filterPersonRoles", DocumentTypeConstants.Supplier.DocumentTypeId.ToString());
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                // Weaving Order
+                try
+                {
+                    InsertQuery("JobOrderSettings", "JobOrderSettingsId", 101, RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId);
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "isVisibleCostCenter","1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "isVisibleRate", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "isVisibleDealUnit", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "isVisibleUnitConversionFor", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "isVisibleFromProdOrder", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "ProcessId", RugProcessConstants.Weaving.ProcessId.ToString());
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "filterProductTypes", RugProductTypeConstants.Rug.ProductTypeId.ToString());
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "WizardMenuId", RugMenuConstants.WeavingOrderWizard.MenuId.ToString());
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "SqlProcDocumentPrint", "'Web.spWeavingOrderPrint'");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "SqlProcDocumentPrint_AfterSubmit", "'Web.spWeavingOrderPrint'");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "SqlProcDocumentPrint_AfterApprove", "'Web.spWeavingOrderPrint'");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "SqlProcConsumption", "'Web.ProcGetBomForWeaving'");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "SqlProcGenProductUID", "'Web.FGenerateBarcodeList'");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "filterPersonRoles", DocumentTypeConstants.JobWorker.DocumentTypeId.ToString());
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeId, "OnSubmitMenuId", RugMenuConstants.JobOrderSubmit.MenuId.ToString());
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+
+                // Dyeing Order
+                try
+                {
+                    InsertQuery("JobOrderSettings", "JobOrderSettingsId", 102, RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeId);
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeId, "isVisibleRate", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeId, "isVisibleDimension1", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeId, "isVisibleDimension2", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeId, "isVisibleFromProdOrder", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeId, "ProcessId", RugProcessConstants.Dyeing.ProcessId.ToString());
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeId, "filterProductTypes", RugProductTypeConstants.Yarn.ProductTypeId.ToString());
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeId, "WizardMenuId", RugMenuConstants.DyeingOrderWizard.MenuId.ToString());
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeId, "filterPersonRoles", DocumentTypeConstants.JobWorker.DocumentTypeId.ToString());
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                
+                // Finishing Order
+                try
+                {
+                    InsertQuery("JobOrderSettings", "JobOrderSettingsId", 103, RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId);
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "isVisibleRate", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "isVisibleProductUID", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "isVisibleGodown", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "isMandatoryGodown", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "isVisibleDealUnit", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "isVisibleUnitConversionFor", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "isVisibleProcessHeader", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "isPostedInStock", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "isPostedInStockProcess", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "isVisibleStockIn", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "IsMandatoryStockIn", "1");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "ProcessId", RugProcessConstants.Finishing.ProcessId.ToString());
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "SqlProcGatePass", "'Web.spGatePassRugFinishingOrder'");
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "filterProductTypes", RugProductTypeConstants.Rug.ProductTypeId.ToString());
+                    UpdateQuery("JobOrderSettings", RugDocumentTypeConstants.JobOrderFinishing.DocumentTypeId, "filterPersonRoles", DocumentTypeConstants.JobWorker.DocumentTypeId.ToString());
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                
+            }
+
+        }
+        private void InitializeJobReceiveSettings()
+        {
+
+            try
+            {
+                InsertQuery("JobReceiveSettings", "JobReceiveSettingsId", 1, null);
+                UpdateQuery("JobReceiveSettings", null, "filterPersonRoles", DocumentTypeConstants.JobWorker.DocumentTypeId.ToString());
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            try
+            {
+                InsertQuery("JobReceiveSettings", "JobReceiveSettingsId", 2, DocumentTypeConstants.GoodsReceipt.DocumentTypeId);
+                UpdateQuery("JobReceiveSettings", DocumentTypeConstants.GoodsReceipt.DocumentTypeId, "IsVisibleForOrderMultiple", "1");
+                UpdateQuery("JobReceiveSettings", DocumentTypeConstants.GoodsReceipt.DocumentTypeId, "isVisibleLotNo", "1");
+                UpdateQuery("JobReceiveSettings", DocumentTypeConstants.GoodsReceipt.DocumentTypeId, "isPostedInStock", "1");
+                UpdateQuery("JobReceiveSettings", DocumentTypeConstants.GoodsReceipt.DocumentTypeId, "isPostedInStockProcess", "1");
+                UpdateQuery("JobReceiveSettings", DocumentTypeConstants.GoodsReceipt.DocumentTypeId, "filterPersonRoles", DocumentTypeConstants.Supplier.DocumentTypeId.ToString());
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+
+                // Weaving Receive
+                try
+                {
+                    InsertQuery("JobReceiveSettings", "JobReceiveSettingsId", 101, RugDocumentTypeConstants.WeavingReceive.DocumentTypeId);
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "isVisibleProductUID", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "isVisibleDealUnit", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "IsVisibleWeight", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "IsVisibleForOrderMultiple", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "isPostedInStock", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "isPostedInStockProcess", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "ProcessId", RugProcessConstants.Weaving.ProcessId.ToString());
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "filterProductTypes", RugProductTypeConstants.Rug.ProductTypeId.ToString());
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "SqlProcConsumption", "'Web.spWeavingReceiveQACombined_Submitted_PostBomForWeavingReceive'");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "filterPersonRoles", DocumentTypeConstants.JobWorker.DocumentTypeId.ToString());
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                // Dyeing Receive
+                try
+                {
+                    InsertQuery("JobReceiveSettings", "JobReceiveSettingsId", 102, RugDocumentTypeConstants.DyeingReceive.DocumentTypeId);
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.DyeingReceive.DocumentTypeId, "IsVisibleForOrderMultiple", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.DyeingReceive.DocumentTypeId, "isPostedInStock", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.DyeingReceive.DocumentTypeId, "isPostedInStockProcess", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.DyeingReceive.DocumentTypeId, "ProcessId", RugProcessConstants.Dyeing.ProcessId.ToString());
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.DyeingReceive.DocumentTypeId, "filterProductTypes", RugProductTypeConstants.Yarn.ProductTypeId.ToString());
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.DyeingReceive.DocumentTypeId, "SqlProcConsumption", "'Web.spWeavingReceiveQACombined_Submitted_PostBomForWeavingReceive'");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.DyeingReceive.DocumentTypeId, "filterPersonRoles", DocumentTypeConstants.JobWorker.DocumentTypeId.ToString());
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                
+
+                // Finishing Receive
+                try
+                {
+                    InsertQuery("JobReceiveSettings", "JobReceiveSettingsId", 103, RugDocumentTypeConstants.FinishingReceive.DocumentTypeId);
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.FinishingReceive.DocumentTypeId, "isVisibleProductUID", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.FinishingReceive.DocumentTypeId, "isVisibleDealUnit", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.FinishingReceive.DocumentTypeId, "isVisibleProcessHeader", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.FinishingReceive.DocumentTypeId, "IsVisibleForOrderMultiple", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.FinishingReceive.DocumentTypeId, "isPostedInStock", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.FinishingReceive.DocumentTypeId, "isPostedInStockProcess", "1");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.FinishingReceive.DocumentTypeId, "ProcessId", RugProcessConstants.Finishing.ProcessId.ToString());
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.FinishingReceive.DocumentTypeId, "filterProductTypes", RugProductTypeConstants.Rug.ProductTypeId.ToString());
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.FinishingReceive.DocumentTypeId, "SqlProcConsumption", "'Web.spWeavingReceiveQACombined_Submitted_PostBomForWeavingReceive'");
+                    UpdateQuery("JobReceiveSettings", RugDocumentTypeConstants.FinishingReceive.DocumentTypeId, "filterPersonRoles", DocumentTypeConstants.JobWorker.DocumentTypeId.ToString());
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+        }
+        private void InitializeJobReceiveQASettings()
+        {
+            try
+            {
+                InsertQuery("JobReceiveQASettings", "JobReceiveQASettingsId", 1, null);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+
+
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+
+                try
+                {
+                    InsertQuery("JobReceiveQASettings", "JobReceiveQASettingsId", 2, RugDocumentTypeConstants.WeavingReceive.DocumentTypeId);
+                    UpdateQuery("JobReceiveQASettings", RugDocumentTypeConstants.WeavingReceive.DocumentTypeId, "ProcessId", RugProcessConstants.Weaving.ProcessId.ToString());
+
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+
+
+
+
+                
+            }
+        }
+        private void InitializeJobInvoiceSettings()
+        {
+            try
+            {
+                InsertQuery("JobInvoiceSettings", "JobInvoiceSettingsId", 1, null);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+            try
+            {
+                InsertQuery("JobInvoiceSettings", "JobInvoiceSettingsId", 2, DocumentTypeConstants.PurchaseInvoice.DocumentTypeId);
+                UpdateQuery("JobInvoiceSettings", DocumentTypeConstants.PurchaseInvoice.DocumentTypeId, "isVisibleLotNo", "1");
+                UpdateQuery("JobInvoiceSettings", DocumentTypeConstants.PurchaseInvoice.DocumentTypeId, "isVisibleDealUnit", "1");
+                UpdateQuery("JobInvoiceSettings", DocumentTypeConstants.PurchaseInvoice.DocumentTypeId, "isVisibleHeaderJobWorker", "1");
+                UpdateQuery("JobInvoiceSettings", DocumentTypeConstants.PurchaseInvoice.DocumentTypeId, "isVisibleJobReceive", "1");
+                UpdateQuery("JobInvoiceSettings", DocumentTypeConstants.PurchaseInvoice.DocumentTypeId, "IsVisiblePassQty", "1");
+                UpdateQuery("JobInvoiceSettings", DocumentTypeConstants.PurchaseInvoice.DocumentTypeId, "IsVisibleRate", "1");
+                UpdateQuery("JobInvoiceSettings", DocumentTypeConstants.PurchaseInvoice.DocumentTypeId, "ProcessId", ProcessConstants.Purchase.ProcessId.ToString());
+                UpdateQuery("JobInvoiceSettings", DocumentTypeConstants.PurchaseInvoice.DocumentTypeId, "CalculationId", CalculationConstants.Calculation.CalculationId.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+
+                // Dyeing Invoice
+                try
+                {
+                    InsertQuery("JobInvoiceSettings", "JobInvoiceSettingsId", 101, RugDocumentTypeConstants.JobInvoiceDyeing.DocumentTypeId);
+                    UpdateQuery("JobInvoiceSettings", RugDocumentTypeConstants.JobInvoiceDyeing.DocumentTypeId, "isVisibleJobReceive", "1");
+                    UpdateQuery("JobInvoiceSettings", RugDocumentTypeConstants.JobInvoiceDyeing.DocumentTypeId, "ProcessId", RugProcessConstants.Dyeing.ProcessId.ToString());
+                    UpdateQuery("JobInvoiceSettings", RugDocumentTypeConstants.JobInvoiceDyeing.DocumentTypeId, "CalculationId", CalculationConstants.Calculation.CalculationId.ToString());
+                    UpdateQuery("JobInvoiceSettings", RugDocumentTypeConstants.JobInvoiceDyeing.DocumentTypeId, "IsVisiblePassQty", "1");
+                    UpdateQuery("JobInvoiceSettings", RugDocumentTypeConstants.JobInvoiceDyeing.DocumentTypeId, "IsVisibleRate", "1");
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                // Weaving Invoice
+                try
+                {
+                    InsertQuery("JobInvoiceSettings", "JobInvoiceSettingsId", 102, RugDocumentTypeConstants.JobInvoiceWeaving.DocumentTypeId);
+                    UpdateQuery("JobInvoiceSettings", RugDocumentTypeConstants.JobInvoiceWeaving.DocumentTypeId, "isVisibleJobReceive", "1");
+                    UpdateQuery("JobInvoiceSettings", RugDocumentTypeConstants.JobInvoiceWeaving.DocumentTypeId, "ProcessId", RugProcessConstants.Weaving.ProcessId.ToString());
+                    UpdateQuery("JobInvoiceSettings", RugDocumentTypeConstants.JobInvoiceWeaving.DocumentTypeId, "CalculationId", CalculationConstants.Calculation.CalculationId.ToString());
+                    UpdateQuery("JobInvoiceSettings", RugDocumentTypeConstants.JobInvoiceWeaving.DocumentTypeId, "IsVisiblePassQty", "1");
+                    UpdateQuery("JobInvoiceSettings", RugDocumentTypeConstants.JobInvoiceWeaving.DocumentTypeId, "IsVisibleRate", "1");
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+
+        }
+        private void InitializeLedgerSettings()
+        {
+
+            try
+            {
+                InsertQuery("LedgerSettings", "LedgerSettingId", 1, null);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+
+
+
+
+
+
+        }
+        private void InitializeStockHeaderSettings()
+        {
+            try
+            {
+                InsertQuery("StockHeaderSettings", "StockHeaderSettingsId", 1, null);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+
+
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+
+
+                try
+                {
+                    InsertQuery("StockHeaderSettings", "StockHeaderSettingsId", 2, RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId);
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "isVisibleLineCostCenter", "1");
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "isMandatoryLineCostCenter", "1");
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "isVisibleDimension1", "1");
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "isVisibleDimension2", "1");
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "isPostedInStock", "1");
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "isPostedInStockProcess", "1");
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "isVisibleMaterialRequest", "1");                            
+
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "ProcessId", RugProcessConstants.Weaving.ProcessId.ToString());
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "filterProductTypes", RugProductTypeConstants.Yarn.ProductTypeId.ToString());
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "PersonFieldHeading", "'Job Worker'");
+                    UpdateQuery("StockHeaderSettings", RugDocumentTypeConstants.MaterialIssueForWeaving.DocumentTypeId, "SqlProcGatePass", "'Web.spGatePassStockIssue'");
+
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+                
+            }
+        }
+        private void InitializePackingSettings()
+        {
+            
+
+
+            try
+            {
+               // InsertQuery("PackingSettings", "PackingSettingId", 1, null);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+
+
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                try
+                {
+                    InsertQuery("PackingSettings", "PackingSettingId", 2, RugDocumentTypeConstants.CarpetPacking.DocumentTypeId);
+                    UpdateQuery("PackingSettings", RugDocumentTypeConstants.CarpetPacking.DocumentTypeId, "isVisibleProductUID", "1");
+                    UpdateQuery("PackingSettings", RugDocumentTypeConstants.CarpetPacking.DocumentTypeId, "isVisibleShipMethod", "1");
+                    UpdateQuery("PackingSettings", RugDocumentTypeConstants.CarpetPacking.DocumentTypeId, "isVisibleStockIn", "1");
+                    UpdateQuery("PackingSettings", RugDocumentTypeConstants.CarpetPacking.DocumentTypeId, "isVisibleBaleNo", "1");
+                    UpdateQuery("PackingSettings", RugDocumentTypeConstants.CarpetPacking.DocumentTypeId, "isVisibleDealUnit", "1");
+                    UpdateQuery("PackingSettings", RugDocumentTypeConstants.CarpetPacking.DocumentTypeId, "IsMandatoryStockIn", "1");
+                    UpdateQuery("PackingSettings", RugDocumentTypeConstants.CarpetPacking.DocumentTypeId, "isVisibleBaleNo", "1");
+                    UpdateQuery("PackingSettings", RugDocumentTypeConstants.CarpetPacking.DocumentTypeId, "filterProductTypes", RugProductTypeConstants.Rug.ProductTypeId.ToString());
+
+           
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+
+
+      
+
+
+
+
+            }
+        }
+        private void InitializeSaleInvoiceSettings()
+        {
+            
+            try
+            {
+                 InsertQuery("SaleInvoiceSettings", "SaleInvoiceSettingId", 1, null);
+                 UpdateQuery("SaleInvoiceSettings", null, "IsAutoDocNo", "1");
+                 UpdateQuery("SaleInvoiceSettings", null, "CalculationId", CalculationConstants.Calculation.CalculationId.ToString());
+                 UpdateQuery("SaleInvoiceSettings", null, "CurrencyId", CurrencyConstants.INR.ID.ToString());
+                 UpdateQuery("SaleInvoiceSettings", null, "ProcessId", ProcessConstants.Sale.ProcessId.ToString());
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+
+
+
+        }
     }
 }
 

@@ -6,7 +6,7 @@ using System.Linq;
 using Core.Common;
 using System.Data;
 using System.Data.SqlClient;
-
+using Jobs.Constants.RugDocumentType;
 namespace Jobs.Controllers
 {
 
@@ -121,7 +121,7 @@ namespace Jobs.Controllers
             DbContext.Dispose();
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName ==  RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             if (Temp.Select(m => m.DocTypeId).Intersect(DocType).Any())
@@ -185,7 +185,7 @@ namespace Jobs.Controllers
             DbContext.Dispose();
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
 
@@ -237,7 +237,7 @@ namespace Jobs.Controllers
                                ).ToList();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             DbContext.Dispose();
@@ -305,7 +305,7 @@ namespace Jobs.Controllers
         {
             var JobReceiveHeaders = db.JobReceiveHeader.AsNoTracking().Where(m => m.JobReceiveHeaderId == EventArgs.DocId).FirstOrDefault();
             int WeavingReceiveDocTypeId = 0;
-            var temp = db.DocumentType.AsNoTracking().Where(m => m.DocumentTypeName == TransactionDoctypeConstants.WeavingBazar).FirstOrDefault();
+            var temp = db.DocumentType.AsNoTracking().Where(m => m.DocumentTypeName == RugDocumentTypeConstants.WeavingReceive.DocumentTypeName).FirstOrDefault();
             if (temp != null)
             {
                 WeavingReceiveDocTypeId = temp.DocumentTypeId;
@@ -376,7 +376,7 @@ namespace Jobs.Controllers
             DbContext.Dispose();           
 
             var DocType = (from p in db.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingFinishOrder || p.DocumentTypeName == TransactionDoctypeConstants.WeavingOrder
+                           where p.DocumentTypeName == RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName
                            select p.DocumentTypeId).ToList();
 
             if (DocType.Contains(JobHeader.DocTypeId) && Temp.Qty != 0)

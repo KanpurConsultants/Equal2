@@ -89,8 +89,6 @@ namespace Service
         public IEnumerable<ProductUidViewModel> GetPendingRoadPermitForms(int id)//SupplierId
         {
             return (from p in db.ProductUid
-                    join t in db.PurchaseGoodsReceiptHeader on p.ProductUIDId equals t.RoadPermitFormId into table
-                    from tab in table.Where(m => m.RoadPermitFormId == null).DefaultIfEmpty()
                     orderby p.ProductUidName
                     select new ProductUidViewModel
                     {
@@ -282,7 +280,7 @@ namespace Service
                            GenDocTypeId = p.GenDocTypeId,
                            GenDocTypeName = p.GenDocType.DocumentTypeName,
                            GenPersonId = p.GenPersonId,
-                           GenPersonName = p.GenPerson.Person.Name,
+                           GenPersonName = p.GenPerson.Name,
                            IsActive = p.IsActive,
                            LastTransactionDocDate = p.LastTransactionDocDate,
                            LastTransactionDocId = p.LastTransactionDocId,
@@ -355,7 +353,7 @@ namespace Service
                            GenDocTypeId = p.GenDocTypeId,
                            GenDocTypeName = p.GenDocType.DocumentTypeName,
                            GenPersonId = p.GenPersonId,
-                           GenPersonName = p.GenPerson.Person.Name,
+                           GenPersonName = p.GenPerson.Name,
                            IsActive = p.IsActive,
                            LastTransactionDocDate = p.LastTransactionDocDate,
                            LastTransactionDocId = p.LastTransactionDocId,
@@ -439,7 +437,7 @@ namespace Service
                            GenDocTypeId = p.GenDocTypeId,
                            GenDocTypeName = p.GenDocType.DocumentTypeName,
                            GenPersonId = p.GenPersonId,
-                           GenPersonName = p.GenPerson.Person.Name,
+                           GenPersonName = p.GenPerson.Name,
                            IsActive = p.IsActive,
                            LastTransactionDocDate = p.LastTransactionDocDate,
                            LastTransactionDocId = p.LastTransactionDocId,
@@ -515,7 +513,7 @@ namespace Service
                            GenDocTypeId = p.GenDocTypeId,
                            GenDocTypeName = p.GenDocType.DocumentTypeName,
                            GenPersonId = p.GenPersonId,
-                           GenPersonName = p.GenPerson.Person.Name,
+                           GenPersonName = p.GenPerson.Name,
                            IsActive = p.IsActive,
                            LastTransactionDocDate = p.LastTransactionDocDate,
                            LastTransactionDocId = p.LastTransactionDocId,
@@ -711,7 +709,7 @@ namespace Service
                                 GenDocTypeId = p.GenDocTypeId,
                                 GenDocTypeName = p.GenDocType.DocumentTypeName,
                                 GenPersonId = p.GenPersonId,
-                                GenPersonName = p.GenPerson.Person.Name,
+                                GenPersonName = p.GenPerson.Name,
                                 IsActive = p.IsActive,
                                 LastTransactionDocDate = p.LastTransactionDocDate,
                                 LastTransactionDocId = p.LastTransactionDocId,
@@ -863,7 +861,7 @@ namespace Service
                            GenDocTypeId = g.Max(m => m.p.GenDocTypeId),
                            GenDocTypeName = g.Max(m => m.p.GenDocType.DocumentTypeName),
                            GenPersonId = g.Max(m => m.p.GenPersonId),
-                           GenPersonName = g.Max(m => m.p.GenPerson.Person.Name),
+                           GenPersonName = g.Max(m => m.p.GenPerson.Name),
                            LastTransactionDocDate = g.Max(m => m.p.LastTransactionDocDate),
                            LastTransactionDocId = g.Max(m => m.p.LastTransactionDocId),
                            LastTransactionDocNo = g.Max(m => m.p.LastTransactionDocNo),
@@ -912,7 +910,7 @@ namespace Service
                             GenDocTypeId = g.Max(m => m.p.GenDocTypeId),
                             GenDocTypeName = g.Max(m => m.p.GenDocType.DocumentTypeName),
                             GenPersonId = g.Max(m => m.p.GenPersonId),
-                            GenPersonName = g.Max(m => m.p.GenPerson.Person.Name),
+                            GenPersonName = g.Max(m => m.p.GenPerson.Name),
                             LastTransactionDocDate = g.Max(m => m.p.LastTransactionDocDate),
                             LastTransactionDocId = g.Max(m => m.p.LastTransactionDocId),
                             LastTransactionDocNo = g.Max(m => m.jh.DocNo),

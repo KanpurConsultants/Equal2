@@ -11,7 +11,6 @@ namespace Model.Models
     {
         public Location()
         {
-            PurchaseGoodsReceiptHeaders = new List<PurchaseGoodsReceiptHeader>();
         }
 
         [Key]
@@ -21,8 +20,6 @@ namespace Model.Models
         [MaxLength(50), Required]
         [Display(Name = "Location Name")]
         public string LocationName { get; set; }        
-
-        public ICollection<PurchaseGoodsReceiptHeader> PurchaseGoodsReceiptHeaders { get; set; }
 
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }

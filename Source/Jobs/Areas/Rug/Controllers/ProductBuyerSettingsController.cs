@@ -12,6 +12,8 @@ using Model.ViewModel;
 using System.Xml.Linq;
 using AutoMapper;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentType;
+using Jobs.Constants.RugDocumentType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -59,7 +61,7 @@ namespace Jobs.Areas.Rug.Controllers
             var DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
             var SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
             var settings = new ProductBuyerSettingsService(_unitOfWork).GetProductBuyerSettings(DivisionId, SiteId);
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Carpet).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.Carpet.DocumentTypeName).DocumentTypeId;
 
 
 
@@ -119,7 +121,7 @@ namespace Jobs.Areas.Rug.Controllers
                         return View("Create", vm);
                     }
 
-                    int DocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Carpet).DocumentTypeId;
+                    int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.Carpet.DocumentTypeName).DocumentTypeId;
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
@@ -173,7 +175,7 @@ namespace Jobs.Areas.Rug.Controllers
                         return View("Create", pt);
                     }
 
-                    int DocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Carpet).DocumentTypeId;
+                    int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.Carpet.DocumentTypeName).DocumentTypeId;
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {

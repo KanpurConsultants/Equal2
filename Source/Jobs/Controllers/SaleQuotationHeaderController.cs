@@ -14,7 +14,7 @@ using Presentation.ViewModels;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using System.Configuration;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Model.ViewModel;
 using System.Data.SqlClient;
 using System.Xml.Linq;
@@ -211,7 +211,7 @@ namespace Jobs.Controllers
             p.DocTypeId = id;
             p.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(p.DocTypeId);
 
-            p.BuyerDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Prospect).DocumentTypeId;
+            p.BuyerDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Prospect.DocumentTypeId).DocumentTypeId;
             
 
             if (p.SaleQuotationSettings.isVisibleCostCenter)

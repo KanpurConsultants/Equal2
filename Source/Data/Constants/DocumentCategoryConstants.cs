@@ -321,10 +321,10 @@ namespace Jobs.Constants.DocumentCategory
         }
         #endregion
         #region "Planning"
-        public static class SaleOrderPlan
+        public static class Planning
         {
             public const int DocumentCategoryId = 660;
-            public const string DocumentCategoryName = "Sale Order Plan";
+            public const string DocumentCategoryName = "Planning";
         }
         #endregion
         #region "Accounts"
@@ -492,5 +492,81 @@ namespace Jobs.Constants.DocumentCategory
             public const int DocumentCategoryId = 768;
             public const string DocumentCategoryName = "Master";
         }
+
+        public static class Opening
+        {
+            public const int DocumentCategoryId = 769;
+            public const string DocumentCategoryName = "Opening";
+        }
+
+        public static class CustomDetail
+        {
+            public const int DocumentCategoryId = 770;
+            public const string DocumentCategoryName = "Custom Detail";
+        }
+
+        public static class Dimension1
+        {
+            public const int DocumentCategoryId = 771;
+            public const string DocumentCategoryName = "Dimension1";
+        }
+        public static class Dimension2
+        {
+            public const int DocumentCategoryId = 772;
+            public const string DocumentCategoryName = "Dimension2";
+        }
+        public static class Dimension3
+        {
+            public const int DocumentCategoryId = 773;
+            public const string DocumentCategoryName = "Dimension3";
+        }
+        public static class Dimension4
+        {
+            public const int DocumentCategoryId = 774;
+            public const string DocumentCategoryName = "Dimension4";
+        }
+
+        public static class UserRoles
+        {
+            public const int DocumentCategoryId = 775;
+            public const string DocumentCategoryName = "User Roles";
+        }
+
+        public static class RateConversion
+        {
+            public const int DocumentCategoryId = 776;
+            public const string DocumentCategoryName = "Rate Conversion";
+        }
+
+
+        public static class StoreRequisition
+        {
+            public const int DocumentCategoryId = 777;
+            public const string DocumentCategoryName = "Store Requisition";
+        }
+
+        public static class UnUsedDocumentType
+        {
+            public const int DocumentCategoryId = 1000;
+            public const string DocumentCategoryName = "Un-Used Document Type";
+        }
+
+        //public static class UserRoles
+        //{
+        //    public const int DocumentCategoryId = 774;
+        //    public const string DocumentCategoryName = "User Roles";
+        //}
+
+        //public static class UserRoles
+        //{
+        //    public const int DocumentCategoryId = 774;
+        //    public const string DocumentCategoryName = "User Roles";
+        //}
+
+        //public static class UserRoles
+        //{
+        //    public const int DocumentCategoryId = 774;
+        //    public const string DocumentCategoryName = "User Roles";
+        //}
     }
 }

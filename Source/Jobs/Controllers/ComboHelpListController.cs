@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
+using Jobs.Constants.RugProductType;
 using System.Web.Mvc;
 using Model.Models;
 using Data.Models;
@@ -2650,66 +2650,7 @@ namespace Jobs.Controllers
             return Json(ProductJson);
         }
 
-        public ActionResult GetProductCollection(string searchTerm, int pageSize, int pageNum)
-        {
-            //Get the paged results and the total count of the results for this query. ProductCacheKeyHint
-            var productCacheKeyHint = ConfigurationManager.AppSettings["ProductCollectionCacheKeyHint"];
 
-            //THis statement has been changed because GetProductHelpList was calling again and again. 
-
-            AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(cbl.GetProductCollectionHelpList(), productCacheKeyHint, RefreshData.RefreshProductData);
-            //AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(null, productCacheKeyHint);
-
-            if (RefreshData.RefreshProductData == true) { RefreshData.RefreshProductData = false; }
-
-
-            List<ComboBoxList> prodLst = ar.GetListForComboBox(searchTerm, pageSize, pageNum);
-            int prodCount = ar.GetCountForComboBox(searchTerm, pageSize, pageNum);
-
-            //Translate the attendees into a format the select2 dropdown expects
-            ComboBoxPagedResult pagedAttendees = ar.TranslateToComboBoxFormat(prodLst, prodCount);
-
-            //Return the data as a jsonp result
-            return new JsonpResult
-            {
-                Data = pagedAttendees,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
-        public JsonResult SetProductCollection(string Ids)
-        {
-            string[] subStr = Ids.Split(',');
-            List<ComboBoxResult> ProductJson = new List<ComboBoxResult>();
-            for (int i = 0; i < subStr.Length; i++)
-            {
-                int temp = Convert.ToInt32(subStr[i]);
-                //IEnumerable<Product> products = db.Products.Take(3);                        
-                IEnumerable<ProductCollection> prod = from p in db.ProductCollections
-                                                      where p.ProductCollectionId == temp
-                                                      select p;
-                ProductJson.Add(new ComboBoxResult()
-                {
-                    id = prod.FirstOrDefault().ProductCollectionId.ToString(),
-                    text = prod.FirstOrDefault().ProductCollectionName
-                });
-            }
-            return Json(ProductJson);
-        }
-
-        public JsonResult SetSingleProductCollection(int Ids)
-        {
-            ComboBoxResult ProductJson = new ComboBoxResult();
-
-            IEnumerable<ProductCollection> prod = from p in db.ProductCollections
-                                                  where p.ProductCollectionId == Ids
-                                                  select p;
-
-            ProductJson.id = prod.FirstOrDefault().ProductCollectionId.ToString();
-            ProductJson.text = prod.FirstOrDefault().ProductCollectionName;
-
-            return Json(ProductJson);
-        }
 
         public ActionResult GetProductNature(string searchTerm, int pageSize, int pageNum)
           {
@@ -3374,66 +3315,6 @@ namespace Jobs.Controllers
               return Json(ProductJson);
           }
 
-          public ActionResult GetRugCollection(string searchTerm, int pageSize, int pageNum)
-          {
-              //Get the paged results and the total count of the results for this query. ProductCacheKeyHint
-              //var productCacheKeyHint = ConfigurationManager.AppSettings["ProductCollectionCacheKeyHint"];
-
-              //THis statement has been changed because GetProductHelpList was calling again and again. 
-
-              AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(cbl.GetRugCollectionHelpList());
-              //AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(null, productCacheKeyHint);
-
-              if (RefreshData.RefreshProductData == true) { RefreshData.RefreshProductData = false; }
-
-
-              List<ComboBoxList> prodLst = ar.GetListForComboBox(searchTerm, pageSize, pageNum);
-              int prodCount = ar.GetCountForComboBox(searchTerm, pageSize, pageNum);
-
-              //Translate the attendees into a format the select2 dropdown expects
-              ComboBoxPagedResult pagedAttendees = ar.TranslateToComboBoxFormat(prodLst, prodCount);
-
-              //Return the data as a jsonp result
-              return new JsonpResult
-              {
-                  Data = pagedAttendees,
-                  JsonRequestBehavior = JsonRequestBehavior.AllowGet
-              };
-          }
-
-          public JsonResult SetRugCollection(string Ids)
-          {
-              string[] subStr = Ids.Split(',');
-              List<ComboBoxResult> ProductJson = new List<ComboBoxResult>();
-              for (int i = 0; i < subStr.Length; i++)
-              {
-                  int temp = Convert.ToInt32(subStr[i]);
-                  //IEnumerable<Product> products = db.Products.Take(3);                        
-                  IEnumerable<ProductCollection> prod = from p in db.ProductCollections
-                                                        where p.ProductCollectionId == temp
-                                                        select p;
-                  ProductJson.Add(new ComboBoxResult()
-                  {
-                      id = prod.FirstOrDefault().ProductCollectionId.ToString(),
-                      text = prod.FirstOrDefault().ProductCollectionName
-                  });
-              }
-              return Json(ProductJson);
-          }
-
-          public JsonResult SetSingleRugCollection(int Ids)
-          {
-              ComboBoxResult ProductJson = new ComboBoxResult();
-
-              IEnumerable<ProductCollection> prod = from p in db.ProductCollections
-                                                    where p.ProductCollectionId == Ids
-                                                    select p;
-
-              ProductJson.id = prod.FirstOrDefault().ProductCollectionId.ToString();
-              ProductJson.text = prod.FirstOrDefault().ProductCollectionName;
-
-              return Json(ProductJson);
-          }
 
           public ActionResult GetRugQuality(string searchTerm, int pageSize, int pageNum)
           {
@@ -4922,7 +4803,7 @@ namespace Jobs.Controllers
         public JsonResult SetColourWays(string Ids)
         {
             int rugid = (from p in db.ProductTypes
-                         where p.ProductTypeName == ProductTypeConstants.Rug
+                         where p.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                          select p.ProductTypeId
                           ).FirstOrDefault();
 
@@ -4947,7 +4828,7 @@ namespace Jobs.Controllers
         public JsonResult SetSingleColourWays(int Ids)
         {
             int rugid = (from p in db.ProductTypes
-                         where p.ProductTypeName == ProductTypeConstants.Rug
+                         where p.ProductTypeName == RugProductTypeConstants.Rug.ProductTypeName
                          select p.ProductTypeId
                          ).FirstOrDefault();
 
@@ -4963,284 +4844,6 @@ namespace Jobs.Controllers
             return Json(ProductJson);
         }
 
-
-
-        // Purchase Help 
-        public ActionResult GetPurchaseIndentDocumentType(string searchTerm, int pageSize, int pageNum)
-        {
-            //Get the paged results and the total count of the results for this query. ProductCacheKeyHint
-            var productCacheKeyHint = "CachePurchaseIndentDocumentType";
-
-            //THis statement has been changed because GetProductHelpList was calling again and again. 
-
-            AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(cbl.GetPurchaseIndentDocumentTypeHelpList(), productCacheKeyHint, RefreshData.RefreshProductData);
-            //AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(null, productCacheKeyHint);
-
-            if (RefreshData.RefreshProductData == true) { RefreshData.RefreshProductData = false; }
-
-
-            List<ComboBoxList> prodLst = ar.GetListForComboBox(searchTerm, pageSize, pageNum);
-            int prodCount = ar.GetCountForComboBox(searchTerm, pageSize, pageNum);
-
-            //Translate the attendees into a format the select2 dropdown expects
-            ComboBoxPagedResult pagedAttendees = ar.TranslateToComboBoxFormat(prodLst, prodCount);
-
-            //Return the data as a jsonp result
-            return new JsonpResult
-            {
-                Data = pagedAttendees,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
-        public JsonResult SetPurchaseIndentDocumentType(string Ids)
-        {
-            string[] subStr = Ids.Split(',');
-            List<ComboBoxResult> ProductJson = new List<ComboBoxResult>();
-            for (int i = 0; i < subStr.Length; i++)
-            {
-                int temp = Convert.ToInt32(subStr[i]);
-                IEnumerable<DocumentType> prod = from p in db.DocumentType
-                                                 where p.DocumentTypeId == temp
-                                                 select p;
-                ProductJson.Add(new ComboBoxResult()
-                {
-                    id = prod.FirstOrDefault().DocumentTypeId.ToString(),
-                    text = prod.FirstOrDefault().DocumentTypeName
-                });
-            }
-            return Json(ProductJson);
-        }
-
-        public ActionResult GetPurchaseOrderDocumentType(string searchTerm, int pageSize, int pageNum)
-        {
-            //Get the paged results and the total count of the results for this query. ProductCacheKeyHint
-            var productCacheKeyHint = "CachePurchaseOrderDocumentType";
-
-            //THis statement has been changed because GetProductHelpList was calling again and again. 
-
-            AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(cbl.GetPurchaseOrderDocumentTypeHelpList(), productCacheKeyHint, RefreshData.RefreshProductData);
-            //AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(null, productCacheKeyHint);
-
-            if (RefreshData.RefreshProductData == true) { RefreshData.RefreshProductData = false; }
-
-
-            List<ComboBoxList> prodLst = ar.GetListForComboBox(searchTerm, pageSize, pageNum);
-            int prodCount = ar.GetCountForComboBox(searchTerm, pageSize, pageNum);
-
-            //Translate the attendees into a format the select2 dropdown expects
-            ComboBoxPagedResult pagedAttendees = ar.TranslateToComboBoxFormat(prodLst, prodCount);
-
-            //Return the data as a jsonp result
-            return new JsonpResult
-            {
-                Data = pagedAttendees,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
-        public JsonResult SetPurchaseOrderDocumentType(string Ids)
-        {
-            string[] subStr = Ids.Split(',');
-            List<ComboBoxResult> ProductJson = new List<ComboBoxResult>();
-            for (int i = 0; i < subStr.Length; i++)
-            {
-                int temp = Convert.ToInt32(subStr[i]);
-                //IEnumerable<Product> products = db.Products.Take(3);
-                IEnumerable<DocumentType> prod = from p in db.DocumentType
-                                                 where p.DocumentTypeId == temp
-                                                 select p;
-                ProductJson.Add(new ComboBoxResult()
-                {
-                    id = prod.FirstOrDefault().DocumentTypeId.ToString(),
-                    text = prod.FirstOrDefault().DocumentTypeName
-                });
-            }
-            return Json(ProductJson);
-        }
-
-        public ActionResult GetPurchaseIndents(string searchTerm, int pageSize, int pageNum)
-        {
-            //Get the paged results and the total count of the results for this query. ProductCacheKeyHint
-            var productCacheKeyHint = "PurchaseIndentCache";
-
-            //THis statement has been changed because GetProductHelpList was calling again and again. 
-
-            AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(cbl.GetPurchaseIndentHelpList(), productCacheKeyHint, RefreshData.RefreshProductData);
-            //AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(null, productCacheKeyHint);
-
-            if (RefreshData.RefreshProductData == true) { RefreshData.RefreshProductData = false; }
-
-
-            List<ComboBoxList> prodLst = ar.GetListForComboBox(searchTerm, pageSize, pageNum);
-            int prodCount = ar.GetCountForComboBox(searchTerm, pageSize, pageNum);
-
-            //Translate the attendees into a format the select2 dropdown expects
-            ComboBoxPagedResult pagedAttendees = ar.TranslateToComboBoxFormat(prodLst, prodCount);
-
-            //Return the data as a jsonp result
-            return new JsonpResult
-            {
-                Data = pagedAttendees,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
-        public JsonResult SetSinglePurchaseIndent(int Ids)
-        {
-            ComboBoxResult PurchaseIndentJson = new ComboBoxResult();
-
-            IEnumerable<PurchaseIndentHeader> PurchaseIndentHeader = from H in db.PurchaseIndentHeader
-                                                           where H.PurchaseIndentHeaderId == Ids
-                                                           select H;
-
-            PurchaseIndentJson.id = PurchaseIndentHeader.FirstOrDefault().PurchaseIndentHeaderId.ToString();
-            PurchaseIndentJson.text = PurchaseIndentHeader.FirstOrDefault().DocNo;
-
-            return Json(PurchaseIndentJson);
-        }
-
-        public JsonResult SetPurchaseIndents(string Ids)
-        {
-            string[] subStr = Ids.Split(',');
-            List<ComboBoxResult> ProductJson = new List<ComboBoxResult>();
-            for (int i = 0; i < subStr.Length; i++)
-            {
-                int temp = Convert.ToInt32(subStr[i]);
-                //IEnumerable<Product> products = db.Products.Take(3);
-                IEnumerable<PurchaseIndentHeader> prod = from p in db.PurchaseIndentHeader
-                                                    where p.PurchaseIndentHeaderId == temp
-                                                    select p;
-                ProductJson.Add(new ComboBoxResult()
-                {
-                    id = prod.FirstOrDefault().PurchaseIndentHeaderId.ToString(),
-                    text = prod.FirstOrDefault().DocNo
-                });
-            }
-            return Json(ProductJson);
-        }
-
-        public ActionResult GetPurchaseOrders(string searchTerm, int pageSize, int pageNum)
-        {
-            //Get the paged results and the total count of the results for this query. ProductCacheKeyHint
-            var productCacheKeyHint = "PurchaseOrderCache";
-
-            //THis statement has been changed because GetProductHelpList was calling again and again. 
-
-            AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(cbl.GetPurchaseOrderHelpList(), productCacheKeyHint, RefreshData.RefreshProductData);
-            //AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(null, productCacheKeyHint);
-
-            if (RefreshData.RefreshProductData == true) { RefreshData.RefreshProductData = false; }
-
-
-            List<ComboBoxList> prodLst = ar.GetListForComboBox(searchTerm, pageSize, pageNum);
-            int prodCount = ar.GetCountForComboBox(searchTerm, pageSize, pageNum);
-
-            //Translate the attendees into a format the select2 dropdown expects
-            ComboBoxPagedResult pagedAttendees = ar.TranslateToComboBoxFormat(prodLst, prodCount);
-
-            //Return the data as a jsonp result
-            return new JsonpResult
-            {
-                Data = pagedAttendees,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
-        public JsonResult SetSinglePurchaseOrder(int Ids)
-        {
-            ComboBoxResult PurchaseOrderJson = new ComboBoxResult();
-
-            IEnumerable<PurchaseOrderHeader> PurchaseOrderHeader = from H in db.PurchaseOrderHeader
-                                                                   where H.PurchaseOrderHeaderId == Ids
-                                                                   select H;
-
-            PurchaseOrderJson.id = PurchaseOrderHeader.FirstOrDefault().PurchaseOrderHeaderId.ToString();
-            PurchaseOrderJson.text = PurchaseOrderHeader.FirstOrDefault().DocNo;
-
-            return Json(PurchaseOrderJson);
-        }
-
-        public JsonResult SetPurchaseOrders(string Ids)
-        {
-            string[] subStr = Ids.Split(',');
-            List<ComboBoxResult> ProductJson = new List<ComboBoxResult>();
-            for (int i = 0; i < subStr.Length; i++)
-            {
-                int temp = Convert.ToInt32(subStr[i]);
-                //IEnumerable<Product> products = db.Products.Take(3);
-                IEnumerable<PurchaseOrderHeader> prod = from p in db.PurchaseOrderHeader
-                                                        where p.PurchaseOrderHeaderId == temp
-                                                        select p;
-                ProductJson.Add(new ComboBoxResult()
-                {
-                    id = prod.FirstOrDefault().PurchaseOrderHeaderId.ToString(),
-                    text = prod.FirstOrDefault().DocNo
-                });
-            }
-            return Json(ProductJson);
-        }
-
-        public ActionResult GetPurchaseGoodsReceipt(string searchTerm, int pageSize, int pageNum)
-        {
-            //Get the paged results and the total count of the results for this query. ProductCacheKeyHint
-            var productCacheKeyHint = "PurchaseGoodsReceiptCacheKeyHint";
-
-            //THis statement has been changed because GetProductHelpList was calling again and again. 
-
-            AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(cbl.GetPurchaseGoodsReceiptHelpList(), productCacheKeyHint, RefreshData.RefreshProductData);
-            //AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(null, productCacheKeyHint);
-
-            if (RefreshData.RefreshProductData == true) { RefreshData.RefreshProductData = false; }
-
-
-            List<ComboBoxList> prodLst = ar.GetListForComboBox(searchTerm, pageSize, pageNum);
-            int prodCount = ar.GetCountForComboBox(searchTerm, pageSize, pageNum);
-
-            //Translate the attendees into a format the select2 dropdown expects
-            ComboBoxPagedResult pagedAttendees = ar.TranslateToComboBoxFormat(prodLst, prodCount);
-
-            //Return the data as a jsonp result
-            return new JsonpResult
-            {
-                Data = pagedAttendees,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
-        public JsonResult SetSinglePurchaseGoodsReceipt(int Ids)
-        {
-            ComboBoxResult PurchaseIndentJson = new ComboBoxResult();
-
-            IEnumerable<PurchaseGoodsReceiptHeader> PurchaseIndentHeader = from H in db.PurchaseGoodsReceiptHeader
-                                                                     where H.PurchaseGoodsReceiptHeaderId== Ids
-                                                                     select H;
-
-            PurchaseIndentJson.id = PurchaseIndentHeader.FirstOrDefault().PurchaseGoodsReceiptHeaderId.ToString();
-            PurchaseIndentJson.text = PurchaseIndentHeader.FirstOrDefault().DocNo;
-
-            return Json(PurchaseIndentJson);
-        }
-
-        public JsonResult SetPurchaseGoodsReceipts(string Ids)
-        {
-            string[] subStr = Ids.Split(',');
-            List<ComboBoxResult> ProductJson = new List<ComboBoxResult>();
-            for (int i = 0; i < subStr.Length; i++)
-            {
-                int temp = Convert.ToInt32(subStr[i]);
-                //IEnumerable<Product> products = db.Products.Take(3);
-                IEnumerable<PurchaseGoodsReceiptHeader> prod = from p in db.PurchaseGoodsReceiptHeader
-                                                         where p.PurchaseGoodsReceiptHeaderId== temp
-                                                         select p;
-                ProductJson.Add(new ComboBoxResult()
-                {
-                    id = prod.FirstOrDefault().PurchaseGoodsReceiptHeaderId.ToString(),
-                    text = prod.FirstOrDefault().DocNo
-                });
-            }
-            return Json(ProductJson);
-        }
 
 
 
@@ -5399,68 +5002,6 @@ namespace Jobs.Controllers
             }
             return Json(ProductJson);
         }
-
-        public ActionResult GetPurchaseInvoices(string searchTerm, int pageSize, int pageNum)
-        {
-            //Get the paged results and the total count of the results for this query. ProductCacheKeyHint
-            var productCacheKeyHint = "PurchaseInvoiceCacheKeyHint";
-
-            //THis statement has been changed because GetProductHelpList was calling again and again. 
-
-            AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(cbl.GetPurchaseInvoiceHelpList(), productCacheKeyHint, RefreshData.RefreshProductData);
-            //AutoCompleteComboBoxRepositoryAndHelper ar = new AutoCompleteComboBoxRepositoryAndHelper(null, productCacheKeyHint);
-
-            if (RefreshData.RefreshProductData == true) { RefreshData.RefreshProductData = false; }
-
-
-            List<ComboBoxList> prodLst = ar.GetListForComboBox(searchTerm, pageSize, pageNum);
-            int prodCount = ar.GetCountForComboBox(searchTerm, pageSize, pageNum);
-
-            //Translate the attendees into a format the select2 dropdown expects
-            ComboBoxPagedResult pagedAttendees = ar.TranslateToComboBoxFormat(prodLst, prodCount);
-
-            //Return the data as a jsonp result
-            return new JsonpResult
-            {
-                Data = pagedAttendees,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
-        public JsonResult SetSinglePurchaseInvoice(int Ids)
-        {
-            ComboBoxResult PurchaseInvoiceJson = new ComboBoxResult();
-
-            IEnumerable<PurchaseInvoiceHeader> PurchaseInvoiceHeader = from H in db.PurchaseInvoiceHeader
-                                                                   where H.PurchaseInvoiceHeaderId == Ids
-                                                                   select H;
-
-            PurchaseInvoiceJson.id = PurchaseInvoiceHeader.FirstOrDefault().PurchaseInvoiceHeaderId.ToString();
-            PurchaseInvoiceJson.text = PurchaseInvoiceHeader.FirstOrDefault().DocNo;
-
-            return Json(PurchaseInvoiceJson);
-        }
-
-        public JsonResult SetPurchaseInvoices(string Ids)
-        {
-            string[] subStr = Ids.Split(',');
-            List<ComboBoxResult> ProductJson = new List<ComboBoxResult>();
-            for (int i = 0; i < subStr.Length; i++)
-            {
-                int temp = Convert.ToInt32(subStr[i]);
-                //IEnumerable<Product> products = db.Products.Take(3);
-                IEnumerable<PurchaseInvoiceHeader> prod = from p in db.PurchaseInvoiceHeader
-                                                        where p.PurchaseInvoiceHeaderId == temp
-                                                        select p;
-                ProductJson.Add(new ComboBoxResult()
-                {
-                    id = prod.FirstOrDefault().PurchaseInvoiceHeaderId.ToString(),
-                    text = prod.FirstOrDefault().DocNo
-                });
-            }
-            return Json(ProductJson);
-        }
-
 
 
         public ActionResult GetBomMaterial(string searchTerm, int pageSize, int pageNum)

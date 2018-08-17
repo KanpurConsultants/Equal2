@@ -55,7 +55,7 @@
        columns.Add(foo => foo.ProductGroupName).Sortable(true).Titled("Design Name").Filterable(true);
        columns.Add(foo => foo.ProductCategoryName).Sortable(true).Titled("Construction Name").Filterable(true);
        columns.Add(m => m.ProductDesignName).Sortable(true).Titled("Colour Ways").Filterable(true);
-       columns.Add(m => m.ProductCollectionName).Sortable(true).Titled("Collection Name").Filterable(true);
+       //columns.Add(m => m.ProductCollectionName).Sortable(true).Titled("Collection Name").Filterable(true);
        //columns.Add().Encoded(false).Sanitized(false).RenderValueAs(d => @Html.ActionLink(" ", "Delete", "CarpetMaster", new { id = d.ProductGroupId }, new { @class = "glyphicon glyphicon-trash", @title = "Delete", @data_toggle = "tooltip" })).SetWidth(20);
        columns.Add(true).RenderValueAs(m => "<a href='/Rug/CarpetMaster/Edit/" + m.ProductGroupId + Url1 + "' hidden class='RecEditurl'></a><a href='/Rug/CarpetMaster/Delete/" + m.ProductGroupId + "' hidden class='RecDelurl'></a>");
    }).WithPaging(25).EmptyText("No records found.").Sortable().Filterable().WithMultipleFilters()

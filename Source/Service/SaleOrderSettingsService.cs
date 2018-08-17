@@ -48,7 +48,7 @@ namespace Service
             SaleOrderSettings temp;
             temp = _unitOfWork.Repository<SaleOrderSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId && m.DocTypeId == DocTypeId).FirstOrDefault();
             if (temp == null)
-                temp = _unitOfWork.Repository<SaleOrderSettings>().Query().Get().FirstOrDefault();
+                temp = _unitOfWork.Repository<SaleOrderSettings>().Query().Get().Where(m => m.DivisionId == null && m.SiteId == null && m.DocTypeId == null).FirstOrDefault();
             return temp;
 
         }

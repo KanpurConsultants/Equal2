@@ -70,7 +70,7 @@ namespace Service
                         InspectionByName= ETab.Name,
                         InspectionById=p.InspectionById,
                         JobWorkerId=p.JobWorkerId,
-                        JobWorkerName=p.JobWorker.Person.Name,
+                        JobWorkerName=p.JobWorker.Name,
                         ProcessId=p.ProcessId,
                         ProcessName=p.Process.ProcessName,
                         Status=p.Status,

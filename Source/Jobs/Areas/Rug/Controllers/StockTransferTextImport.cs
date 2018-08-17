@@ -16,6 +16,7 @@ using Core.Common;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -109,7 +110,7 @@ namespace Jobs.Areas.Rug.Controllers
 
 
 
-            int DocTypeId = (from Dt in db.DocumentType where Dt.DocumentTypeName == TransactionDoctypeConstants.CarpetTransfer select new { DocTypeId = Dt.DocumentTypeId }).FirstOrDefault().DocTypeId;
+            int DocTypeId = (from Dt in db.DocumentType where Dt.DocumentTypeName == DocumentTypeConstants.MaterialTransfer.DocumentTypeName select new { DocTypeId = Dt.DocumentTypeId }).FirstOrDefault().DocTypeId;
             string DocNo = new DocumentTypeService(_unitOfWork).FGetNewDocNo("DocNo", ConfigurationManager.AppSettings["DataBaseSchema"] + ".StockHeaders", DocTypeId, DateTime.Now.Date, (int)System.Web.HttpContext.Current.Session["DivisionId"], (int)System.Web.HttpContext.Current.Session["SiteId"]);
 
             int i = 0;

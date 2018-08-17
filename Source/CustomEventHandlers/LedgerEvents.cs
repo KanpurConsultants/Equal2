@@ -4,6 +4,8 @@ using System;
 using LedgerDocumentEvents;
 using System.Linq;
 using Core.Common;
+using Jobs.Constants.DocumentType;
+using Jobs.Constants.RugDocumentType;
 
 namespace Jobs.Controllers
 {
@@ -35,7 +37,7 @@ namespace Jobs.Controllers
             ApplicationDbContext DbContext = new ApplicationDbContext();
 
             var DocType = (from p in DbContext.DocumentType.AsNoTracking()
-                           where p.DocumentTypeName == TransactionDoctypeConstants.WeavingChequeCancel
+                           where p.DocumentTypeName == DocumentTypeConstants.ChequeCancel.DocumentTypeName
                            select p).FirstOrDefault();
 
             DbContext.Dispose();
@@ -88,15 +90,15 @@ namespace Jobs.Controllers
         //                                 select g).ToList();
 
         //    var DocType = (from p in DbContext.DocumentType
-        //                   where p.DocumentTypeName == TransactionDoctypeConstants.SchemeIncentive
-        //                   || p.DocumentTypeName == TransactionDoctypeConstants.WeavingDebitNote
-        //                   || p.DocumentTypeName == TransactionDoctypeConstants.WeavingPayment
-        //                   || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTDS
-        //                   || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTimeIncentive
-        //                   || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTimePenalty
-        //                   || p.DocumentTypeName == TransactionDoctypeConstants.WeavingCreditNote
-        //                   || p.DocumentTypeName == TransactionDoctypeConstants.SmallChunksBazarPenalty
-        //                   || p.DocumentTypeName == TransactionDoctypeConstants.PurjaAmtTransfer
+        //                   where p.DocumentTypeName == DocumentTypeConstants.SchemeIncentive
+        //                   || p.DocumentTypeName == DocumentTypeConstants.WeavingDebitNote
+        //                   || p.DocumentTypeName == DocumentTypeConstants.WeavingPayment
+        //                   || p.DocumentTypeName == DocumentTypeConstants.WeavingTDS
+        //                   || p.DocumentTypeName == DocumentTypeConstants.WeavingTimeIncentive
+        //                   || p.DocumentTypeName == DocumentTypeConstants.WeavingTimePenalty
+        //                   || p.DocumentTypeName == DocumentTypeConstants.WeavingCreditNote
+        //                   || p.DocumentTypeName == DocumentTypeConstants.SmallChunksBazarPenalty
+        //                   || p.DocumentTypeName == DocumentTypeConstants.PurjaAmtTransfer
         //                   select p).ToList();
 
 
@@ -127,47 +129,47 @@ namespace Jobs.Controllers
 
         //                switch (TempDocType.DocumentTypeName)
         //                {
-        //                    case TransactionDoctypeConstants.PurjaAmtTransfer:
+        //                    case DocumentTypeConstants.PurjaAmtTransfer:
         //                        {
         //                            CostCenterStatus.TransferAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr) - ExistingLedgers.Sum(m => m.AmtCr)) + ((item.Sum(m => m.AmtDr) - item.Sum(m => m.AmtCr)));
         //                            break;
         //                        }
-        //                    case TransactionDoctypeConstants.SchemeIncentive:
+        //                    case DocumentTypeConstants.SchemeIncentive:
         //                        {
         //                            CostCenterStatus.SchemeIncentiveAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtCr)) + item.Sum(m => m.AmtCr);
         //                            break;
         //                        }
-        //                    case TransactionDoctypeConstants.WeavingDebitNote:
+        //                    case DocumentTypeConstants.WeavingDebitNote:
         //                        {
         //                            CostCenterStatus.DebitAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr)) + item.Sum(m => m.AmtDr);
         //                            break;
         //                        }
-        //                    case TransactionDoctypeConstants.WeavingPayment:
+        //                    case DocumentTypeConstants.WeavingPayment:
         //                        {
         //                            CostCenterStatus.PaymentAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr)) + item.Sum(m => m.AmtDr);
         //                            break;
         //                        }
-        //                    case TransactionDoctypeConstants.WeavingTDS:
+        //                    case DocumentTypeConstants.WeavingTDS:
         //                        {
         //                            CostCenterStatus.TDSAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr)) + item.Sum(m => m.AmtDr);
         //                            break;
         //                        }
-        //                    case TransactionDoctypeConstants.WeavingTimeIncentive:
+        //                    case DocumentTypeConstants.WeavingTimeIncentive:
         //                        {
         //                            CostCenterStatus.TimeIncentiveAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtCr)) + item.Sum(m => m.AmtCr);
         //                            break;
         //                        }
-        //                    case TransactionDoctypeConstants.WeavingTimePenalty:
+        //                    case DocumentTypeConstants.WeavingTimePenalty:
         //                        {
         //                            CostCenterStatus.TimePenaltyAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr)) + item.Sum(m => m.AmtDr);
         //                            break;
         //                        }
-        //                    case TransactionDoctypeConstants.WeavingCreditNote:
+        //                    case DocumentTypeConstants.WeavingCreditNote:
         //                        {
         //                            CostCenterStatus.CreditAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtCr)) + item.Sum(m => m.AmtCr);
         //                            break;
         //                        }
-        //                    case TransactionDoctypeConstants.SmallChunksBazarPenalty:
+        //                    case DocumentTypeConstants.SmallChunksBazarPenalty:
         //                        {
         //                            CostCenterStatus.FragmentationPenaltyAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr)) + item.Sum(m => m.AmtDr);
         //                            break;
@@ -198,18 +200,18 @@ namespace Jobs.Controllers
                             ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType.AsNoTracking()
-                           where p.DocumentTypeName == TransactionDoctypeConstants.SchemeIncentive
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingDebitNote
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingPayment
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTDS
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTimeIncentive
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTimePenalty
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingCreditNote
-                           || p.DocumentTypeName == TransactionDoctypeConstants.SmallChunksBazarPenalty
-                           || p.DocumentTypeName == TransactionDoctypeConstants.PurjaAmtTransfer
-                           || p.DocumentTypeName == TransactionDoctypeConstants.DebitNote
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingChequeCancel
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingReceipt
+                           where p.DocumentTypeName == DocumentTypeConstants.SchemeIncentive.DocumentTypeName
+                           || p.DocumentTypeName == RugDocumentTypeConstants.WeavingDebitNote.DocumentTypeName
+                           || p.DocumentTypeName == RugDocumentTypeConstants.WeavingPayment.DocumentTypeName
+                           || p.DocumentTypeName == RugDocumentTypeConstants.WeavingTDS.DocumentTypeName
+                           || p.DocumentTypeName == RugDocumentTypeConstants.WeavingTimeIncentive.DocumentTypeName
+                           || p.DocumentTypeName == RugDocumentTypeConstants.WeavingTimePenalty.DocumentTypeName
+                           || p.DocumentTypeName == RugDocumentTypeConstants.WeavingCreditNote.DocumentTypeName
+                           || p.DocumentTypeName == RugDocumentTypeConstants.SmallChunksBazarPenalty.DocumentTypeName
+                           || p.DocumentTypeName == RugDocumentTypeConstants.PurjaAmtTransfer.DocumentTypeName
+                           || p.DocumentTypeName == DocumentTypeConstants.DebitNoteSupplier.DocumentTypeName
+                           || p.DocumentTypeName == DocumentTypeConstants.ChequeCancel.DocumentTypeName
+                           || p.DocumentTypeName == RugDocumentTypeConstants.WeavingReceipt.DocumentTypeName
                            select p).ToList();
 
             DbContext.Dispose();
@@ -241,58 +243,58 @@ namespace Jobs.Controllers
 
                         switch (TempDocType.DocumentTypeName)
                         {
-                            case TransactionDoctypeConstants.PurjaAmtTransfer:
+                            case RugDocumentTypeConstants.PurjaAmtTransfer.DocumentTypeName:
                                 {
                                     CostCenterStatus.TransferAmount = (CostCenterStatus.TransferAmount ?? 0) - ((item.Sum(m => m.AmtDr) - item.Sum(m => m.AmtCr)));
                                     break;
                                 }
-                            case TransactionDoctypeConstants.SchemeIncentive:
+                            case DocumentTypeConstants.SchemeIncentive.DocumentTypeName:
                                 {
                                     CostCenterStatus.SchemeIncentiveAmount = (CostCenterStatus.SchemeIncentiveAmount ?? 0) - item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingDebitNote:
-                            case TransactionDoctypeConstants.DebitNote:
+                            case RugDocumentTypeConstants.WeavingDebitNote.DocumentTypeName:
+                            case DocumentTypeConstants.DebitNoteSupplier.DocumentTypeName:
                                 {
                                     CostCenterStatus.DebitAmount = (CostCenterStatus.DebitAmount ?? 0) - item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingPayment:
+                            case RugDocumentTypeConstants.WeavingPayment.DocumentTypeName:
                                 {
                                     CostCenterStatus.PaymentAmount = (CostCenterStatus.PaymentAmount ?? 0) - item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingTDS:
+                            case RugDocumentTypeConstants.WeavingTDS.DocumentTypeName:
                                 {
                                     CostCenterStatus.TDSAmount = (CostCenterStatus.TDSAmount ?? 0) - item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingTimeIncentive:
+                            case RugDocumentTypeConstants.WeavingTimeIncentive.DocumentTypeName:
                                 {
                                     CostCenterStatus.TimeIncentiveAmount = (CostCenterStatus.TimeIncentiveAmount ?? 0) - item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingTimePenalty:
+                            case RugDocumentTypeConstants.WeavingTimePenalty.DocumentTypeName:
                                 {
                                     CostCenterStatus.TimePenaltyAmount = (CostCenterStatus.TimePenaltyAmount ?? 0) - item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingCreditNote:
+                            case RugDocumentTypeConstants.WeavingCreditNote.DocumentTypeName:
                                 {
                                     CostCenterStatus.CreditAmount = (CostCenterStatus.CreditAmount ?? 0) - item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.SmallChunksBazarPenalty:
+                            case RugDocumentTypeConstants.SmallChunksBazarPenalty.DocumentTypeName:
                                 {
                                     CostCenterStatus.FragmentationPenaltyAmount = (CostCenterStatus.FragmentationPenaltyAmount ?? 0) - item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingChequeCancel:
+                            case DocumentTypeConstants.ChequeCancel.DocumentTypeName:
                                 {
                                     CostCenterStatus.PaymentCancelAmount = (CostCenterStatus.PaymentCancelAmount ?? 0) - item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingReceipt:
+                            case RugDocumentTypeConstants.WeavingReceipt.DocumentTypeName:
                                 {
                                     CostCenterStatus.WeavingReceipt = (CostCenterStatus.WeavingReceipt ?? 0) - item.Sum(m => m.AmtCr);
                                     break;
@@ -326,18 +328,18 @@ namespace Jobs.Controllers
                             ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType.AsNoTracking()
-                           where p.DocumentTypeName == TransactionDoctypeConstants.SchemeIncentive
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingDebitNote
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingPayment
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTDS
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTimeIncentive
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTimePenalty
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingCreditNote
-                           || p.DocumentTypeName == TransactionDoctypeConstants.SmallChunksBazarPenalty
-                           || p.DocumentTypeName == TransactionDoctypeConstants.PurjaAmtTransfer
-                            || p.DocumentTypeName == TransactionDoctypeConstants.DebitNote
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingChequeCancel
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingReceipt
+                           where p.DocumentTypeName == DocumentTypeConstants.SchemeIncentive.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingDebitNote.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingPayment.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingTDS.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingTimeIncentive.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingTimePenalty.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingCreditNote.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.SmallChunksBazarPenalty.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.PurjaAmtTransfer.DocumentTypeName
+                               || p.DocumentTypeName == DocumentTypeConstants.DebitNoteSupplier.DocumentTypeName
+                               || p.DocumentTypeName == DocumentTypeConstants.ChequeCancel.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingReceipt.DocumentTypeName
                            select p).ToList();
 
             DbContext.Dispose();
@@ -369,58 +371,58 @@ namespace Jobs.Controllers
 
                         switch (TempDocType.DocumentTypeName)
                         {
-                            case TransactionDoctypeConstants.PurjaAmtTransfer:
+                            case RugDocumentTypeConstants.PurjaAmtTransfer.DocumentTypeName:
                                 {
                                     CostCenterStatus.TransferAmount = (CostCenterStatus.TransferAmount ?? 0) - ((item.Sum(m => m.AmtDr) - item.Sum(m => m.AmtCr)));
                                     break;
                                 }
-                            case TransactionDoctypeConstants.SchemeIncentive:
+                            case DocumentTypeConstants.SchemeIncentive.DocumentTypeName:
                                 {
                                     CostCenterStatus.SchemeIncentiveAmount = (CostCenterStatus.SchemeIncentiveAmount ?? 0) - item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingDebitNote:
-                            case TransactionDoctypeConstants.DebitNote:
+                            case RugDocumentTypeConstants.WeavingDebitNote.DocumentTypeName:
+                            case DocumentTypeConstants.DebitNoteSupplier.DocumentTypeName:
                                 {
                                     CostCenterStatus.DebitAmount = (CostCenterStatus.DebitAmount ?? 0) - item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingPayment:
+                            case RugDocumentTypeConstants.WeavingPayment.DocumentTypeName:
                                 {
                                     CostCenterStatus.PaymentAmount = (CostCenterStatus.PaymentAmount ?? 0) - item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingTDS:
+                            case RugDocumentTypeConstants.WeavingTDS.DocumentTypeName:
                                 {
                                     CostCenterStatus.TDSAmount = (CostCenterStatus.TDSAmount ?? 0) - item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingTimeIncentive:
+                            case RugDocumentTypeConstants.WeavingTimeIncentive.DocumentTypeName:
                                 {
                                     CostCenterStatus.TimeIncentiveAmount = (CostCenterStatus.TimeIncentiveAmount ?? 0) - item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingTimePenalty:
+                            case RugDocumentTypeConstants.WeavingTimePenalty.DocumentTypeName:
                                 {
                                     CostCenterStatus.TimePenaltyAmount = (CostCenterStatus.TimePenaltyAmount ?? 0) - item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingCreditNote:
+                            case RugDocumentTypeConstants.WeavingCreditNote.DocumentTypeName:
                                 {
                                     CostCenterStatus.CreditAmount = (CostCenterStatus.CreditAmount ?? 0) - item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.SmallChunksBazarPenalty:
+                            case RugDocumentTypeConstants.SmallChunksBazarPenalty.DocumentTypeName:
                                 {
                                     CostCenterStatus.FragmentationPenaltyAmount = (CostCenterStatus.FragmentationPenaltyAmount ?? 0) - item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingChequeCancel:
+                            case DocumentTypeConstants.ChequeCancel.DocumentTypeName:
                                 {
                                     CostCenterStatus.PaymentCancelAmount = (CostCenterStatus.PaymentCancelAmount ?? 0) - item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingReceipt:
+                            case RugDocumentTypeConstants.WeavingReceipt.DocumentTypeName:
                                 {
                                     CostCenterStatus.WeavingReceipt = (CostCenterStatus.WeavingReceipt ?? 0) - item.Sum(m => m.AmtCr);
                                     break;
@@ -459,18 +461,18 @@ namespace Jobs.Controllers
             ApplicationDbContext DbContext = new ApplicationDbContext();
 
             var DocType = (from p in DbContext.DocumentType.AsNoTracking()
-                           where p.DocumentTypeName == TransactionDoctypeConstants.SchemeIncentive
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingDebitNote
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingPayment
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTDS
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTimeIncentive
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingTimePenalty
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingCreditNote
-                           || p.DocumentTypeName == TransactionDoctypeConstants.SmallChunksBazarPenalty
-                           || p.DocumentTypeName == TransactionDoctypeConstants.PurjaAmtTransfer
-                           || p.DocumentTypeName == TransactionDoctypeConstants.DebitNote
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingChequeCancel
-                           || p.DocumentTypeName == TransactionDoctypeConstants.WeavingReceipt
+                           where p.DocumentTypeName == DocumentTypeConstants.SchemeIncentive.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingDebitNote.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingPayment.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingTDS.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingTimeIncentive.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingTimePenalty.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingCreditNote.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.SmallChunksBazarPenalty.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.PurjaAmtTransfer.DocumentTypeName
+                               || p.DocumentTypeName == DocumentTypeConstants.DebitNoteSupplier.DocumentTypeName
+                               || p.DocumentTypeName == DocumentTypeConstants.ChequeCancel.DocumentTypeName
+                               || p.DocumentTypeName == RugDocumentTypeConstants.WeavingReceipt.DocumentTypeName
                            select p).ToList();
 
             var LedgerHeader = (from p in DbContext.LedgerHeader.AsNoTracking()
@@ -517,59 +519,59 @@ namespace Jobs.Controllers
 
                         switch (TempDocType.DocumentTypeName)
                         {
-                            case TransactionDoctypeConstants.PurjaAmtTransfer:
+                            case RugDocumentTypeConstants.PurjaAmtTransfer.DocumentTypeName:
                                 {
                                     CostCenterStatus.TransferAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr) - ExistingLedgers.Sum(m => m.AmtCr)) + ((item.Sum(m => m.AmtDr) - item.Sum(m => m.AmtCr)));
                                     CostCenterStatus.AmountTransferDate = LedgerHeader.DocDate;
                                     break;
                                 }
-                            case TransactionDoctypeConstants.SchemeIncentive:
+                            case DocumentTypeConstants.SchemeIncentive.DocumentTypeName:
                                 {
                                     CostCenterStatus.SchemeIncentiveAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtCr)) + item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingDebitNote:
-                            case TransactionDoctypeConstants.DebitNote:
+                            case RugDocumentTypeConstants.WeavingDebitNote.DocumentTypeName:
+                            case DocumentTypeConstants.DebitNoteSupplier.DocumentTypeName:
                                 {
                                     CostCenterStatus.DebitAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr)) + item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingPayment:
+                            case RugDocumentTypeConstants.WeavingPayment.DocumentTypeName:
                                 {
                                     CostCenterStatus.PaymentAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr)) + item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingTDS:
+                            case RugDocumentTypeConstants.WeavingTDS.DocumentTypeName:
                                 {
                                     CostCenterStatus.TDSAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr)) + item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingTimeIncentive:
+                            case RugDocumentTypeConstants.WeavingTimeIncentive.DocumentTypeName:
                                 {
                                     CostCenterStatus.TimeIncentiveAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtCr)) + item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingTimePenalty:
+                            case RugDocumentTypeConstants.WeavingTimePenalty.DocumentTypeName:
                                 {
                                     CostCenterStatus.TimePenaltyAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr)) + item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingCreditNote:
+                            case RugDocumentTypeConstants.WeavingCreditNote.DocumentTypeName:
                                 {
                                     CostCenterStatus.CreditAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtCr)) + item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.SmallChunksBazarPenalty:
+                            case RugDocumentTypeConstants.SmallChunksBazarPenalty.DocumentTypeName:
                                 {
                                     CostCenterStatus.FragmentationPenaltyAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtDr)) + item.Sum(m => m.AmtDr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingChequeCancel:
+                            case DocumentTypeConstants.ChequeCancel.DocumentTypeName:
                                 {
                                     CostCenterStatus.PaymentCancelAmount = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtCr)) + item.Sum(m => m.AmtCr);
                                     break;
                                 }
-                            case TransactionDoctypeConstants.WeavingReceipt:
+                            case RugDocumentTypeConstants.WeavingReceipt.DocumentTypeName:
                                 {
                                     CostCenterStatus.WeavingReceipt = ((ExistingLedgers == null) ? 0 : ExistingLedgers.Sum(m => m.AmtCr)) + item.Sum(m => m.AmtCr);
                                     break;

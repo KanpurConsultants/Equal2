@@ -106,8 +106,8 @@ namespace Model.DatabaseViews
         public decimal? Area { get; set; }
     }
 
-    [Table("ViewRugSize")]
-    public class ViewRugSize
+    [Table("ViewProductSize")]
+    public class ViewProductSize
     {
         [Key]
         public int ProductId { get; set; }       

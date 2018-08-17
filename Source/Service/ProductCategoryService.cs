@@ -52,8 +52,13 @@ namespace Service
         {
             int temp = 0;
 
+            IQueryable<ProductCategory> PC = db.ProductCategory;
+
+            if (PC.Count() !=0)
+            { 
             temp = (from p in db.ProductCategory
                     select p.ProductCategoryId).Max();
+            }
 
             return temp;
 

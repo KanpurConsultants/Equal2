@@ -340,7 +340,7 @@ namespace Service
                     from Dimension3Tab in Dimension3Table.DefaultIfEmpty()
                     join D4 in db.Dimension4 on t1.Dimension4Id equals D4.Dimension4Id into Dimension4Table
                     from Dimension4Tab in Dimension4Table.DefaultIfEmpty()
-                    join t5 in db.JobWorker on p.JobWorkerId equals t5.PersonID
+                    join t5 in db.Persons on p.JobWorkerId equals t5.PersonID
                     where p.JobOrderLineId == id
                     select new JobOrderRateAmendmentLineViewModel
                     {
@@ -362,7 +362,7 @@ namespace Service
                         unitDecimalPlaces = t2.Unit.DecimalPlaces,
                         DealunitDecimalPlaces = t1.DealUnit.DecimalPlaces,
                         JobWorkerId = p.JobWorkerId,
-                        JobWorkerName = t5.Person.Name,
+                        JobWorkerName = t5.Name,
                         Rate = p.Rate,
                     }).FirstOrDefault();
 
@@ -1269,7 +1269,7 @@ namespace Service
             SqlParameter SQLJobOrderHeaderId = new SqlParameter("@JobOrderHeaderId", JobOrderHeaderId);
             SqlParameter SQLProductID = new SqlParameter("@ProductId", ProductId);
 
-            IEnumerable<JobRate> RateList = db.Database.SqlQuery<JobRate>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_GetJobOrderRate @JobOrderHeaderId, @ProductId ", SQLJobOrderHeaderId, SQLProductID).ToList();
+            IEnumerable<JobRate> RateList = db.Database.SqlQuery<JobRate>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spJobOrderLineService_GetJobRate_GetJobOrderRate @JobOrderHeaderId, @ProductId ", SQLJobOrderHeaderId, SQLProductID).ToList();
 
             return RateList;
         }

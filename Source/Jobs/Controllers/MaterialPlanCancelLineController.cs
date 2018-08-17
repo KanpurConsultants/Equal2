@@ -219,46 +219,46 @@ namespace Jobs.Controllers
                     }
 
 
-                    if (MaterialPlanLine.PurchPlanQty > 0)
-                    {
-                        PurchaseIndentCancelHeader ExistingPurchaseIndentCancel = new PurchaseIndentCancelHeaderService(_unitOfWork).GetPurchaseIndentCancelForMaterialPlan(header.MaterialPlanCancelHeaderId);
+                    //if (MaterialPlanLine.PurchPlanQty > 0)
+                    //{
+                    //    PurchaseIndentCancelHeader ExistingPurchaseIndentCancel = new PurchaseIndentCancelHeaderService(_unitOfWork).GetPurchaseIndentCancelForMaterialPlan(header.MaterialPlanCancelHeaderId);
 
-                        if (ExistingPurchaseIndentCancel == null)
-                        {
-                            PurchaseIndentCancelHeader PurchaseIndentCancelHeader = new PurchaseIndentCancelHeader();
+                    //    if (ExistingPurchaseIndentCancel == null)
+                    //    {
+                    //        PurchaseIndentCancelHeader PurchaseIndentCancelHeader = new PurchaseIndentCancelHeader();
 
-                            PurchaseIndentCancelHeader.CreatedBy = User.Identity.Name;
-                            PurchaseIndentCancelHeader.CreatedDate = DateTime.Now;
-                            PurchaseIndentCancelHeader.DivisionId = header.DivisionId;
-                            PurchaseIndentCancelHeader.DocDate = header.DocDate;
-                            PurchaseIndentCancelHeader.DocNo = header.DocNo;
-                            PurchaseIndentCancelHeader.DocTypeId = Setting.DocTypeProductionOrderId.Value;
-                            PurchaseIndentCancelHeader.MaterialPlanCancelHeaderId = header.MaterialPlanCancelHeaderId;
-                            PurchaseIndentCancelHeader.ModifiedBy = User.Identity.Name;
-                            PurchaseIndentCancelHeader.ModifiedDate = DateTime.Now;
-                            PurchaseIndentCancelHeader.Remark = header.Remark;
-                            PurchaseIndentCancelHeader.SiteId = header.SiteId;
-                            PurchaseIndentCancelHeader.Status = (int)StatusConstants.System;
-                            PurchaseIndentCancelHeader.ObjectState = Model.ObjectState.Added;
-                            db.PurchaseIndentCancelHeader.Add(PurchaseIndentCancelHeader);
-                        }
+                    //        PurchaseIndentCancelHeader.CreatedBy = User.Identity.Name;
+                    //        PurchaseIndentCancelHeader.CreatedDate = DateTime.Now;
+                    //        PurchaseIndentCancelHeader.DivisionId = header.DivisionId;
+                    //        PurchaseIndentCancelHeader.DocDate = header.DocDate;
+                    //        PurchaseIndentCancelHeader.DocNo = header.DocNo;
+                    //        PurchaseIndentCancelHeader.DocTypeId = Setting.DocTypeProductionOrderId.Value;
+                    //        PurchaseIndentCancelHeader.MaterialPlanCancelHeaderId = header.MaterialPlanCancelHeaderId;
+                    //        PurchaseIndentCancelHeader.ModifiedBy = User.Identity.Name;
+                    //        PurchaseIndentCancelHeader.ModifiedDate = DateTime.Now;
+                    //        PurchaseIndentCancelHeader.Remark = header.Remark;
+                    //        PurchaseIndentCancelHeader.SiteId = header.SiteId;
+                    //        PurchaseIndentCancelHeader.Status = (int)StatusConstants.System;
+                    //        PurchaseIndentCancelHeader.ObjectState = Model.ObjectState.Added;
+                    //        db.PurchaseIndentCancelHeader.Add(PurchaseIndentCancelHeader);
+                    //    }
 
 
-                        var PurchaseIndentLine = new PurchaseIndentLineService(_unitOfWork).GetPurchaseIndentLineForMaterialPlan(item.MaterialPlanLineId);
-                        int PurchaseIndentCancelLineKey = 0;
-                        PurchaseIndentCancelLine PurchaseIndentCancelLine = new PurchaseIndentCancelLine();
-                        PurchaseIndentCancelLine.CreatedBy = User.Identity.Name;
-                        PurchaseIndentCancelLine.CreatedDate = DateTime.Now;
-                        PurchaseIndentCancelLine.PurchaseIndentLineId = PurchaseIndentLine.FirstOrDefault().PurchaseIndentLineId;
-                        PurchaseIndentCancelLine.ModifiedBy = User.Identity.Name;
-                        PurchaseIndentCancelLine.ModifiedDate = DateTime.Now;
-                        PurchaseIndentCancelLine.PurchaseIndentCancelHeaderId = ExistingPurchaseIndentCancel.PurchaseIndentCancelHeaderId;
-                        PurchaseIndentCancelLine.MaterialPlanCancelLineId = cline.MaterialPlanCancelLineId;
-                        PurchaseIndentCancelLine.Qty = item.Qty;
-                        PurchaseIndentCancelLine.PurchaseIndentCancelLineId = PurchaseIndentCancelLineKey--;
-                        PurchaseIndentCancelLine.ObjectState = Model.ObjectState.Added;
-                        db.PurchaseIndentCancelLine.Add(PurchaseIndentCancelLine);
-                    }
+                    //    var PurchaseIndentLine = new PurchaseIndentLineService(_unitOfWork).GetPurchaseIndentLineForMaterialPlan(item.MaterialPlanLineId);
+                    //    int PurchaseIndentCancelLineKey = 0;
+                    //    PurchaseIndentCancelLine PurchaseIndentCancelLine = new PurchaseIndentCancelLine();
+                    //    PurchaseIndentCancelLine.CreatedBy = User.Identity.Name;
+                    //    PurchaseIndentCancelLine.CreatedDate = DateTime.Now;
+                    //    PurchaseIndentCancelLine.PurchaseIndentLineId = PurchaseIndentLine.FirstOrDefault().PurchaseIndentLineId;
+                    //    PurchaseIndentCancelLine.ModifiedBy = User.Identity.Name;
+                    //    PurchaseIndentCancelLine.ModifiedDate = DateTime.Now;
+                    //    PurchaseIndentCancelLine.PurchaseIndentCancelHeaderId = ExistingPurchaseIndentCancel.PurchaseIndentCancelHeaderId;
+                    //    PurchaseIndentCancelLine.MaterialPlanCancelLineId = cline.MaterialPlanCancelLineId;
+                    //    PurchaseIndentCancelLine.Qty = item.Qty;
+                    //    PurchaseIndentCancelLine.PurchaseIndentCancelLineId = PurchaseIndentCancelLineKey--;
+                    //    PurchaseIndentCancelLine.ObjectState = Model.ObjectState.Added;
+                    //    db.PurchaseIndentCancelLine.Add(PurchaseIndentCancelLine);
+                    //}
                 }
 
                 try
@@ -438,45 +438,45 @@ namespace Jobs.Controllers
                     }
 
 
-                    if (MaterialPlanLine.PurchPlanQty > 0)
-                    {
-                        PurchaseIndentCancelHeader ExistingPurchaseIndentCancel = new PurchaseIndentCancelHeaderService(_unitOfWork).GetPurchaseIndentCancelForMaterialPlan(header.MaterialPlanCancelHeaderId);
+                    //if (MaterialPlanLine.PurchPlanQty > 0)
+                    //{
+                    //    PurchaseIndentCancelHeader ExistingPurchaseIndentCancel = new PurchaseIndentCancelHeaderService(_unitOfWork).GetPurchaseIndentCancelForMaterialPlan(header.MaterialPlanCancelHeaderId);
 
-                        if (ExistingPurchaseIndentCancel == null)
-                        {
-                            PurchaseIndentCancelHeader PurchaseIndentCancelHeader = new PurchaseIndentCancelHeader();
+                    //    if (ExistingPurchaseIndentCancel == null)
+                    //    {
+                    //        PurchaseIndentCancelHeader PurchaseIndentCancelHeader = new PurchaseIndentCancelHeader();
 
-                            PurchaseIndentCancelHeader.CreatedBy = User.Identity.Name;
-                            PurchaseIndentCancelHeader.CreatedDate = DateTime.Now;
-                            PurchaseIndentCancelHeader.DivisionId = header.DivisionId;
-                            PurchaseIndentCancelHeader.DocDate = header.DocDate;
-                            PurchaseIndentCancelHeader.DocNo = header.DocNo;
-                            PurchaseIndentCancelHeader.DocTypeId = Setting.DocTypeProductionOrderId.Value;
-                            PurchaseIndentCancelHeader.MaterialPlanCancelHeaderId = header.MaterialPlanCancelHeaderId;
-                            PurchaseIndentCancelHeader.ModifiedBy = User.Identity.Name;
-                            PurchaseIndentCancelHeader.ModifiedDate = DateTime.Now;
-                            PurchaseIndentCancelHeader.Remark = header.Remark;
-                            PurchaseIndentCancelHeader.SiteId = header.SiteId;
-                            PurchaseIndentCancelHeader.Status = (int)StatusConstants.System;
-                            PurchaseIndentCancelHeader.ObjectState = Model.ObjectState.Added;
-                            db.PurchaseIndentCancelHeader.Add(PurchaseIndentCancelHeader);
-                        }
+                    //        PurchaseIndentCancelHeader.CreatedBy = User.Identity.Name;
+                    //        PurchaseIndentCancelHeader.CreatedDate = DateTime.Now;
+                    //        PurchaseIndentCancelHeader.DivisionId = header.DivisionId;
+                    //        PurchaseIndentCancelHeader.DocDate = header.DocDate;
+                    //        PurchaseIndentCancelHeader.DocNo = header.DocNo;
+                    //        PurchaseIndentCancelHeader.DocTypeId = Setting.DocTypeProductionOrderId.Value;
+                    //        PurchaseIndentCancelHeader.MaterialPlanCancelHeaderId = header.MaterialPlanCancelHeaderId;
+                    //        PurchaseIndentCancelHeader.ModifiedBy = User.Identity.Name;
+                    //        PurchaseIndentCancelHeader.ModifiedDate = DateTime.Now;
+                    //        PurchaseIndentCancelHeader.Remark = header.Remark;
+                    //        PurchaseIndentCancelHeader.SiteId = header.SiteId;
+                    //        PurchaseIndentCancelHeader.Status = (int)StatusConstants.System;
+                    //        PurchaseIndentCancelHeader.ObjectState = Model.ObjectState.Added;
+                    //        db.PurchaseIndentCancelHeader.Add(PurchaseIndentCancelHeader);
+                    //    }
 
 
-                        var PurchaseIndentLine = new PurchaseIndentLineService(_unitOfWork).GetPurchaseIndentLineForMaterialPlan(item.MaterialPlanLineId);
-                        int PurchaseIndentCancelLineKey = 0;
-                        PurchaseIndentCancelLine PurchaseIndentCancelLine = new PurchaseIndentCancelLine();
-                        PurchaseIndentCancelLine.CreatedBy = User.Identity.Name;
-                        PurchaseIndentCancelLine.CreatedDate = DateTime.Now;
-                        PurchaseIndentCancelLine.PurchaseIndentLineId = PurchaseIndentLine.FirstOrDefault().PurchaseIndentLineId;
-                        PurchaseIndentCancelLine.ModifiedBy = User.Identity.Name;
-                        PurchaseIndentCancelLine.ModifiedDate = DateTime.Now;
-                        PurchaseIndentCancelLine.PurchaseIndentCancelHeaderId = ExistingPurchaseIndentCancel.PurchaseIndentCancelHeaderId;
-                        PurchaseIndentCancelLine.Qty = item.Qty;
-                        PurchaseIndentCancelLine.PurchaseIndentCancelLineId = PurchaseIndentCancelLineKey--;
-                        PurchaseIndentCancelLine.ObjectState = Model.ObjectState.Added;
-                        db.PurchaseIndentCancelLine.Add(PurchaseIndentCancelLine);
-                    }
+                    //    var PurchaseIndentLine = new PurchaseIndentLineService(_unitOfWork).GetPurchaseIndentLineForMaterialPlan(item.MaterialPlanLineId);
+                    //    int PurchaseIndentCancelLineKey = 0;
+                    //    PurchaseIndentCancelLine PurchaseIndentCancelLine = new PurchaseIndentCancelLine();
+                    //    PurchaseIndentCancelLine.CreatedBy = User.Identity.Name;
+                    //    PurchaseIndentCancelLine.CreatedDate = DateTime.Now;
+                    //    PurchaseIndentCancelLine.PurchaseIndentLineId = PurchaseIndentLine.FirstOrDefault().PurchaseIndentLineId;
+                    //    PurchaseIndentCancelLine.ModifiedBy = User.Identity.Name;
+                    //    PurchaseIndentCancelLine.ModifiedDate = DateTime.Now;
+                    //    PurchaseIndentCancelLine.PurchaseIndentCancelHeaderId = ExistingPurchaseIndentCancel.PurchaseIndentCancelHeaderId;
+                    //    PurchaseIndentCancelLine.Qty = item.Qty;
+                    //    PurchaseIndentCancelLine.PurchaseIndentCancelLineId = PurchaseIndentCancelLineKey--;
+                    //    PurchaseIndentCancelLine.ObjectState = Model.ObjectState.Added;
+                    //    db.PurchaseIndentCancelLine.Add(PurchaseIndentCancelLine);
+                    //}
 
 
 

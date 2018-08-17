@@ -116,7 +116,7 @@ namespace Jobs.Controllers
             int? MaxLineId = new SaleInvoiceReturnLineChargeService(_unitOfWork).GetMaxProductCharge(Header.SaleInvoiceReturnHeaderId, "Web.SaleInvoiceReturnLines", "SaleInvoiceReturnHeaderId", "SaleInvoiceReturnLineId");
 
             int PersonCount = 0;
-            int CalculationId = Settings.CalculationId;
+            int CalculationId = (int)Settings.CalculationId;
 
             List<LineDetailListViewModel> LineList = new List<LineDetailListViewModel>();
 

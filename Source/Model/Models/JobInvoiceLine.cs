@@ -26,7 +26,7 @@ namespace Model.Models
 
         [ForeignKey("JobWorker"), Display(Name = "Job Worker")]
         public int JobWorkerId { get; set; }
-        public virtual JobWorker JobWorker { get; set; }
+        public virtual Person JobWorker { get; set; }
 
         [Display(Name = "Job Receive"), Required]
         [ForeignKey("JobReceiveLine")]
@@ -46,8 +46,8 @@ namespace Model.Models
 
         [Display(Name = "Deal Qty")]
         public decimal DealQty { get; set; }
-        public decimal? RateDiscountPer { get; set; }
-        public decimal? RateDiscountAmt { get; set; }
+        public decimal? DiscountPer { get; set; }
+        public decimal? DiscountAmount { get; set; }
         
         
         [Display(Name = "Rate")]

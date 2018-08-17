@@ -17,6 +17,8 @@ using Model.ViewModel;
 using System.Xml.Linq;
 using Reports.Controllers;
 using System.Data.SqlClient;
+using Jobs.Constants.RugDocumentType;
+using Jobs.Constants.RugProductType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -57,12 +59,8 @@ namespace Jobs.Areas.Rug.Controllers
         [HttpGet]
         public JsonResult Index(int id)
         {
-            //var p = _PackingLineService.GetPackingLineViewModelForHeaderId(id);
-            //return Json(p, JsonRequestBehavior.AllowGet);
-            var p = Json(_PackingLineService.GetPackingLineViewModelForHeaderId(id), JsonRequestBehavior.AllowGet);
-            p.MaxJsonLength = int.MaxValue;
-            return p;
-
+            var p = _PackingLineService.GetPackingLineViewModelForHeaderId(id);
+            return Json(p, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -126,6 +124,7 @@ namespace Jobs.Areas.Rug.Controllers
 
         private void PrepareViewBag(PackingLineViewModel s)
         {
+            int BuyerId = new PackingHeaderService(_unitOfWork).Find(s.PackingHeaderId).BuyerId;
             if (s==null)
             {
                 ViewBag.ProductId = new SelectList (new ProductService(_unitOfWork).GetProductList(),"ProductId","ProductName");
@@ -136,7 +135,11 @@ namespace Jobs.Areas.Rug.Controllers
             }
             
             ViewBag.DeliveryUnitList = new UnitService(_unitOfWork).GetUnitList().ToList();
-
+            ViewBag.BuyerSkuList = new SaleEnquiryLineService(_unitOfWork).GetBuyerSku(BuyerId);
+            //ViewBag.BuyerSpecificationList = new SaleEnquiryLineService(_unitOfWork).GetBuyerSpecification(BuyerId);
+            //ViewBag.BuyerSpecification1List = new SaleEnquiryLineService(_unitOfWork).GetBuyerSpecification1(BuyerId);
+            //ViewBag.BuyerSpecification2List = new SaleEnquiryLineService(_unitOfWork).GetBuyerSpecification2(BuyerId);
+            //ViewBag.BuyerSpecification3List = new SaleEnquiryLineService(_unitOfWork).GetBuyerSpecification3(BuyerId);
         }
 
 
@@ -144,10 +147,6 @@ namespace Jobs.Areas.Rug.Controllers
         {
             PackingHeader H = new PackingHeaderService(_unitOfWork).GetPackingHeader(Id);
             PackingLineViewModel s = new PackingLineViewModel();
-
-            var settings = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(H.DocTypeId, H.DivisionId, H.SiteId);
-            s.PackingSettings = Mapper.Map<PackingSetting, PackingSettingsViewModel>(settings);
-            s.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(H.DocTypeId);
 
             s.PackingHeaderId = H.PackingHeaderId;
             s.DealUnitId = H.DealUnitId;
@@ -159,11 +158,23 @@ namespace Jobs.Areas.Rug.Controllers
             s.PackingShipMethodId = H.ShipMethodId;
             s.DocTypeId = H.DocTypeId;
 
+            ProductBuyerSettings ProductBuyerSettings = new ProductBuyerSettingsService(_unitOfWork).GetProductBuyerSettings(H.DivisionId, H.SiteId);
+            s.ProductBuyerSettings = Mapper.Map<ProductBuyerSettings, ProductBuyerSettingsViewModel>(ProductBuyerSettings);
+
+            PackingSetting PackingSetting = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(H.DocTypeId, H.DivisionId, H.SiteId);
+            s.PackingSettings = Mapper.Map<PackingSetting, PackingSettingsViewModel>(PackingSetting);
+
+            s.IsShowAllProducts = false ;
+
             ViewBag.DocNo = H.DocNo;
             ViewBag.Status = H.Status;
             ViewBag.BaleNoPattern = H.BaleNoPattern;
+            if (PackingSetting.isAllowtoUpdateBuyerSpecification==true )
+                ViewBag.isAllowtoUpdateBuyerSpecification = "Yes";
+            else
+                ViewBag.isAllowtoUpdateBuyerSpecification = "No";
             ViewBag.LineMode = "Create";
-            PrepareViewBag(null);
+            PrepareViewBag(s);
             return PartialView("_Create", s);
         }
 
@@ -247,7 +258,7 @@ namespace Jobs.Areas.Rug.Controllers
                     StockViewModel_Issue.HeaderGodownId = null;
                     StockViewModel_Issue.GodownId = packingheader.GodownId;
                     StockViewModel_Issue.ProcessId = packingline.FromProcessId;
-                    StockViewModel_Issue.LotNo = null;
+                    StockViewModel_Issue.LotNo = packingline.LotNo;
                     StockViewModel_Issue.CostCenterId = null;
                     StockViewModel_Issue.Qty_Iss = packingline.Qty;
                     StockViewModel_Issue.Qty_Rec = 0;
@@ -295,7 +306,8 @@ namespace Jobs.Areas.Rug.Controllers
                     StockViewModel_Receive.HeaderGodownId = null;
                     StockViewModel_Receive.GodownId = packingheader.GodownId;
                     StockViewModel_Receive.ProcessId = new ProcessService(_unitOfWork).Find(ProcessConstants.Packing).ProcessId;
-                    StockViewModel_Receive.LotNo = packingheader.DocNo;
+                    //StockViewModel_Receive.LotNo = packingheader.DocNo;
+                    StockViewModel_Receive.LotNo = packingline.LotNo ;
                     StockViewModel_Receive.CostCenterId = null;
                     StockViewModel_Receive.Qty_Iss = 0;
                     StockViewModel_Receive.Qty_Rec = packingline.Qty;
@@ -330,13 +342,33 @@ namespace Jobs.Areas.Rug.Controllers
 
                     if ( svm.SaleOrderNo != "" && svm.SaleOrderNo != null && svm.ProductName != "" && svm.ProductName != null)
                     {
-                        packingline.PartyProductUid = svm.SaleOrderNo + "|" + svm.ProductName + "_" + _PackingLineService.FGetRandonNoForLabel();
+                        packingline.PartyProductUid = (svm.SaleOrderNo + "|" + svm.ProductName + "_" + _PackingLineService.FGetRandonNoForLabel());
+                        PersonProductUid PUU = new PersonProductUidService(_unitOfWork).FindPendingToPack((int)svm.SaleOrderLineId);
+                        if (PUU !=null )
+                        packingline.PersonProductUidId = PUU.PersonProductUidId;
                     }
+
+                    if(packingline.PartyProductUid.ToString().Length >50)
+                    packingline.PartyProductUid = packingline.PartyProductUid.ToString().Substring(0, 50);
 
                     packingline.CreatedDate = DateTime.Now;
                     packingline.ModifiedDate = DateTime.Now;
                     packingline.CreatedBy = User.Identity.Name;
                     packingline.ModifiedBy = User.Identity.Name;
+
+
+                    if (svm.StockInId != null)
+                    {
+                        StockAdj Adj_IssQty = new StockAdj();
+                        Adj_IssQty.StockInId = (int)svm.StockInId;
+                        Adj_IssQty.StockOutId = (int)StockViewModel_Issue.StockId;
+                        Adj_IssQty.DivisionId = packingheader.DivisionId;
+                        Adj_IssQty.SiteId = packingheader.SiteId;
+                        Adj_IssQty.AdjustedQty = packingline.Qty;
+                        Adj_IssQty.ObjectState = Model.ObjectState.Added;
+                        //db.StockAdj.Add(Adj_IssQty);
+                        new StockAdjService(_unitOfWork).Create(Adj_IssQty);
+                    }
 
 
 
@@ -377,11 +409,51 @@ namespace Jobs.Areas.Rug.Controllers
                     }
 
 
+                    if ( svm.LotNo  != null && svm.ProductUidId == null)
+                    {
+                        ProductUid productuid = new ProductUidService(_unitOfWork).Find(svm.LotNo);
+
+
+                        packingline.ProductUidLastTransactionDocId = productuid.LastTransactionDocId;
+                        packingline.ProductUidLastTransactionDocDate = productuid.LastTransactionDocDate;
+                        packingline.ProductUidLastTransactionDocNo = productuid.LastTransactionDocNo;
+                        packingline.ProductUidLastTransactionDocTypeId = productuid.LastTransactionDocTypeId;
+                        packingline.ProductUidLastTransactionPersonId = productuid.LastTransactionPersonId;
+                        packingline.ProductUidStatus = productuid.Status;
+                        packingline.ProductUidCurrentProcessId = productuid.CurrenctProcessId;
+                        packingline.ProductUidCurrentGodownId = productuid.CurrenctGodownId;
+
+                        productuid.LastTransactionDocId = packingheader.PackingHeaderId;
+                        productuid.LastTransactionDocNo = packingheader.DocNo;
+                        productuid.LastTransactionDocTypeId = packingheader.DocTypeId;
+                        productuid.LastTransactionDocDate = packingheader.DocDate;
+                        productuid.LastTransactionPersonId = packingheader.JobWorkerId;
+                        productuid.CurrenctGodownId = packingheader.GodownId;
+                        productuid.CurrenctProcessId = new ProcessService(_unitOfWork).Find(ProcessConstants.Packing).ProcessId;
+                        productuid.Status = ProductUidStatusConstants.Pack;
+                        if (productuid.ProcessesDone == null)
+                        {
+                            productuid.ProcessesDone = "|" + new ProcessService(_unitOfWork).Find(ProcessConstants.Packing).ProcessId.ToString() + "|";
+                        }
+                        else
+                        {
+                            productuid.ProcessesDone = productuid.ProcessesDone + ",|" + new ProcessService(_unitOfWork).Find(ProcessConstants.Packing).ProcessId.ToString() + "|";
+                        }
+
+
+                        new ProductUidService(_unitOfWork).Update(productuid);
+                    }
+
                     packingline.ObjectState = Model.ObjectState.Added;
                     _PackingLineService.Create(packingline);
 
-
-
+                    PackingLineExtended LineExtended = new PackingLineExtended();
+                    LineExtended.PackingLineId = LineExtended.PackingLineId;
+                    LineExtended.Length = svm.Length;
+                    LineExtended.Width = svm.Width;
+                    LineExtended.Height = svm.Height;
+                    new PackingLineExtendedService(_unitOfWork).Create(LineExtended);
+                    
                     
 
                     if (packingheader.Status != (int)StatusConstants.Drafted)
@@ -428,7 +500,7 @@ namespace Jobs.Areas.Rug.Controllers
                                                      ProductTypeId = ProductGroupTab.ProductTypeId
                                                  }).FirstOrDefault().ProductTypeId;
 
-                            if (ProductTypeId == new ProductTypeService(_unitOfWork).Find(ProductTypeConstants.Rug).ProductTypeId)
+                            if (ProductTypeId == new ProductTypeService(_unitOfWork).Find(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId)
                             {
                                 IEnumerable<FinishedProduct> FinishedProductList = (from P in db.FinishedProduct
                                                                              where P.ProductGroupId == FinishedProduct.ProductGroupId
@@ -485,6 +557,99 @@ namespace Jobs.Areas.Rug.Controllers
                     CurrentRollNoList = CurrentRollNoList + "," + svm.BaleNo;
                     System.Web.HttpContext.Current.Session["CurrentRollNoList"] = CurrentRollNoList;
 
+
+                    #region "Update Product Buyer"
+                    ProductBuyer productbuyer = (from p in db.ProductBuyer
+                                             where p.BuyerId  == packingheader.BuyerId && p.ProductId == svm.ProductId
+                                             select p).AsNoTracking().FirstOrDefault();
+                    if (productbuyer == null)
+                    {
+                        List<LogTypeViewModel> LogListProductBuyer = new List<LogTypeViewModel>();
+                        ProductBuyer ExRecProductBuyer = new ProductBuyer();
+
+                        ExRecProductBuyer.BuyerId = (int)packingheader.BuyerId;
+                        ExRecProductBuyer.ProductId = (int)svm.ProductId;
+                        ExRecProductBuyer.BuyerSku = svm.BuyerSku;
+                        ExRecProductBuyer.BuyerSpecification = svm.BuyerSpecification;
+                        ExRecProductBuyer.BuyerSpecification1 = svm.BuyerSpecification1;
+                        ExRecProductBuyer.BuyerSpecification2 = svm.BuyerSpecification2;
+                        ExRecProductBuyer.BuyerSpecification3 = svm.BuyerSpecification3;
+                        ExRecProductBuyer.ObjectState = Model.ObjectState.Added;
+                        ExRecProductBuyer.CreatedDate = DateTime.Now;
+                        ExRecProductBuyer.CreatedBy = User.Identity.Name;
+                        ExRecProductBuyer.ModifiedDate = DateTime.Now;
+                        ExRecProductBuyer.ModifiedBy = User.Identity.Name;
+                        new ProductBuyerService(_unitOfWork).Create(ExRecProductBuyer);
+
+                        LogListProductBuyer.Add(new LogTypeViewModel
+                        {
+                            ExObj = ExRecProductBuyer,
+                            Obj = ExRecProductBuyer,
+                        });
+                        XElement ModificationsProductBuyer = new ModificationsCheckService().CheckChanges(LogListProductBuyer);
+
+
+
+                        //Saving the Activity Log
+
+                        LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
+                        {
+                            DocTypeId = packingheader.DocTypeId,
+                            DocId = packingline.PackingHeaderId,
+                            DocLineId = packingline.PackingLineId,
+                            ActivityType = (int)ActivityTypeContants.Modified,
+                            DocNo = packingheader.DocNo,
+                            xEModifications = ModificationsProductBuyer,
+                            DocDate = packingheader.DocDate,
+                            DocStatus = (int)StatusConstants.Modified,
+                        }));
+
+
+                    }
+                    else
+                    {
+                        if (productbuyer.BuyerSku != svm.BuyerSku || productbuyer.BuyerSpecification != svm.BuyerSpecification || productbuyer.BuyerSpecification1 != svm.BuyerSpecification1 || productbuyer.BuyerSpecification2 != svm.BuyerSpecification2 || productbuyer.BuyerSpecification3 != svm.BuyerSpecification3)
+                        {
+                            List<LogTypeViewModel> LogListProductBuyer = new List<LogTypeViewModel>();
+                            ProductBuyer ExRecProductBuyer = new ProductBuyer();
+                            ExRecProductBuyer = Mapper.Map<ProductBuyer>(productbuyer);
+
+                            productbuyer.BuyerSku = svm.BuyerSku;
+                            productbuyer.BuyerSpecification = svm.BuyerSpecification;
+                            productbuyer.BuyerSpecification1 = svm.BuyerSpecification1;
+                            productbuyer.BuyerSpecification2 = svm.BuyerSpecification2;
+                            productbuyer.BuyerSpecification3 = svm.BuyerSpecification3;
+                            new ProductBuyerService(_unitOfWork).Update(productbuyer);
+
+                            LogListProductBuyer.Add(new LogTypeViewModel
+                            {
+                                ExObj = ExRecProductBuyer,
+                                Obj = productbuyer,
+                            });
+                            XElement ModificationsProductBuyer = new ModificationsCheckService().CheckChanges(LogListProductBuyer);
+
+
+
+                            //Saving the Activity Log
+
+                            LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
+                            {
+                                DocTypeId = packingheader.DocTypeId,
+                                DocId = packingline.PackingHeaderId,
+                                DocLineId = packingline.PackingLineId,
+                                ActivityType = (int)ActivityTypeContants.Modified,
+                                DocNo = packingheader.DocNo,
+                                xEModifications = ModificationsProductBuyer,
+                                DocDate = packingheader.DocDate,
+                                DocStatus = (int)StatusConstants.Modified,
+                            }));
+
+                            //End of Saving the Activity Log
+                        }
+                    }
+                    #endregion
+
+
                     try
                     {
                         _unitOfWork.Save();
@@ -534,15 +699,98 @@ namespace Jobs.Areas.Rug.Controllers
                     int status = packingheader.Status;
 
 
-                    packingline.BaleCount = svm.BaleCount;
                     packingline.BaleNo = svm.BaleNo;
                     packingline.Specification = svm.Specification;
                     packingline.GrossWeight = svm.GrossWeight;
                     packingline.NetWeight = svm.NetWeight;
                     packingline.Remark = svm.Remark;
+                    packingline.SealNo = svm.SealNo;
+                    packingline.DealQty = svm.DealQty;
+                    packingline.UnitConversionMultiplier = svm.DealQty/svm.Qty;
+                    packingline.RateRemark = svm.RateRemark;
                     packingline.ModifiedDate = DateTime.Now;
                     packingline.ModifiedBy = User.Identity.Name;
                     _PackingLineService.Update(packingline);
+
+                    StockAdj Adj = (from L in db.StockAdj
+                                    where L.StockOutId == packingline.StockIssueId
+                                    select L).FirstOrDefault();
+
+                    if (Adj != null)
+                    {
+                        Adj.ObjectState = Model.ObjectState.Deleted;
+                        db.StockAdj.Remove(Adj);
+                        //new StockAdjService(_unitOfWork).Delete(Adj);
+                    }
+
+                    if (svm.StockInId != null)
+                    {
+                        StockAdj Adj_IssQty = new StockAdj();
+                        Adj_IssQty.StockInId = (int)svm.StockInId;
+                        Adj_IssQty.StockOutId = (int)packingline.StockIssueId;
+                        Adj_IssQty.DivisionId = packingheader.DivisionId;
+                        Adj_IssQty.SiteId = packingheader.SiteId;
+                        Adj_IssQty.AdjustedQty = svm.Qty;
+                        Adj_IssQty.ObjectState = Model.ObjectState.Added;
+                        //db.StockAdj.Add(Adj_IssQty);
+                        new StockAdjService(_unitOfWork).Create(Adj_IssQty);
+                    }
+
+
+                    PackingLineExtended LineExtended = (from Ld in db.PackingLineExtended where Ld.PackingLineId == packingline.PackingLineId select Ld).FirstOrDefault();
+                    if (LineExtended != null)
+                    {
+                        LineExtended.Length = svm.Length;
+                        LineExtended.Width = svm.Width;
+                        LineExtended.Height = svm.Height;
+                        new PackingLineExtendedService(_unitOfWork).Update(LineExtended);
+                    }
+
+
+
+                    #region "Update Product Buyer"
+                    ProductBuyer productbuyer = (from p in db.ProductBuyer
+                                                 where p.BuyerId == packingheader.BuyerId && p.ProductId == svm.ProductId
+                                                 select p).AsNoTracking().FirstOrDefault();
+                    if (productbuyer.BuyerSku != svm.BuyerSku || productbuyer.BuyerSpecification != svm.BuyerSpecification || productbuyer.BuyerSpecification1 != svm.BuyerSpecification1 || productbuyer.BuyerSpecification2 != svm.BuyerSpecification2 || productbuyer.BuyerSpecification3 != svm.BuyerSpecification3)
+                    {
+                        List<LogTypeViewModel> LogListProductBuyer = new List<LogTypeViewModel>();
+                        ProductBuyer ExRecProductBuyer = new ProductBuyer();
+                        ExRecProductBuyer = Mapper.Map<ProductBuyer>(productbuyer);
+
+                        productbuyer.BuyerSku = svm.BuyerSku;
+                        productbuyer.BuyerSpecification = svm.BuyerSpecification;
+                        productbuyer.BuyerSpecification1 = svm.BuyerSpecification1;
+                        productbuyer.BuyerSpecification2 = svm.BuyerSpecification2;
+                        productbuyer.BuyerSpecification3 = svm.BuyerSpecification3;
+                        new ProductBuyerService(_unitOfWork).Update(productbuyer);
+
+                        LogListProductBuyer.Add(new LogTypeViewModel
+                        {
+                            ExObj = ExRecProductBuyer,
+                            Obj = productbuyer,
+                        });
+                        XElement ModificationsProductBuyer = new ModificationsCheckService().CheckChanges(LogListProductBuyer);
+
+
+
+                        //Saving the Activity Log
+
+                        LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
+                        {
+                            DocTypeId = packingheader.DocTypeId,
+                            DocId = packingline.PackingHeaderId,
+                            DocLineId = packingline.PackingLineId,
+                            ActivityType = (int)ActivityTypeContants.Modified,
+                            DocNo = packingheader.DocNo,
+                            xEModifications = ModificationsProductBuyer,
+                            DocDate = packingheader.DocDate,
+                            DocStatus = (int)StatusConstants.Modified,
+                        }));
+
+                        //End of Saving the Activity Log
+                    }
+                    #endregion
 
 
                     LogList.Add(new LogTypeViewModel
@@ -606,6 +854,8 @@ namespace Jobs.Areas.Rug.Controllers
             LastProduct lastproduct = new LastProduct();
             lastproduct.ProductId = svm.ProductId;
             lastproduct.ProductName = svm.ProductName;
+            lastproduct.Remark = svm.Remark;
+            lastproduct.SealNo = svm.SealNo;
             System.Web.HttpContext.Current.Session[LastProductSessionVarName] = lastproduct;
 
 
@@ -698,19 +948,34 @@ namespace Jobs.Areas.Rug.Controllers
             if ((TimePlanValidation || Continue))
                 ViewBag.LineMode = "Edit";
 
+
             PackingHeader H = new PackingHeaderService(_unitOfWork).GetPackingHeader(temp.PackingHeaderId);
+
             ViewBag.DocNo = H.DocNo;
-
-
+            ViewBag.BaleNoPattern = H.BaleNoPattern;
 
             PackingLineViewModel s = _PackingLineService.GetPackingLineViewModelForLineId(id);
             s.DocTypeId = H.DocTypeId;
 
-            //Getting Settings
-            var settings = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(H.DocTypeId, H.DivisionId, H.SiteId);
+            PackingSetting PackingSetting = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(H.DocTypeId, H.DivisionId, H.SiteId);
+            s.PackingSettings = Mapper.Map<PackingSetting, PackingSettingsViewModel>(PackingSetting);
 
-            s.PackingSettings = Mapper.Map<PackingSetting, PackingSettingsViewModel>(settings);
-            s.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(H.DocTypeId);
+            if (PackingSetting.isAllowtoUpdateBuyerSpecification == true)
+                ViewBag.isAllowtoUpdateBuyerSpecification = "Yes";
+            else
+                ViewBag.isAllowtoUpdateBuyerSpecification = "No";
+            ProductBuyerSettings ProductBuyerSettings = new ProductBuyerSettingsService(_unitOfWork).GetProductBuyerSettings(H.DivisionId, H.SiteId);
+            s.ProductBuyerSettings = Mapper.Map<ProductBuyerSettings, ProductBuyerSettingsViewModel>(ProductBuyerSettings);
+
+            ProductBuyer productbuyer = new ProductBuyerService(_unitOfWork).Find(H.BuyerId, temp.ProductId);
+            if (productbuyer != null)
+            {
+                s.BuyerSku = productbuyer.BuyerSku;
+                s.BuyerSpecification = productbuyer.BuyerSpecification;
+                s.BuyerSpecification1 = productbuyer.BuyerSpecification1;
+                s.BuyerSpecification2 = productbuyer.BuyerSpecification2;
+                s.BuyerSpecification3 = productbuyer.BuyerSpecification3;
+            }
 
             PrepareViewBag(s);           
             return PartialView("_Create", s);
@@ -785,15 +1050,31 @@ namespace Jobs.Areas.Rug.Controllers
             if ((TimePlanValidation || Continue))
                 ViewBag.LineMode = "Delete";
 
+
+
             PackingHeader H = new PackingHeaderService(_unitOfWork).GetPackingHeader(temp.PackingHeaderId);
             ViewBag.DocNo = H.DocNo;
             PackingLineViewModel s = _PackingLineService.GetPackingLineViewModelForLineId(id);
 
-            //Getting Settings
-            var settings = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(H.DocTypeId, H.DivisionId, H.SiteId);
+            ProductBuyerSettings ProductBuyerSettings = new ProductBuyerSettingsService(_unitOfWork).GetProductBuyerSettings(H.DivisionId, H.SiteId);
+            s.ProductBuyerSettings = Mapper.Map<ProductBuyerSettings, ProductBuyerSettingsViewModel>(ProductBuyerSettings);
 
-            s.PackingSettings = Mapper.Map<PackingSetting, PackingSettingsViewModel>(settings);
-            s.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(H.DocTypeId);
+            ViewBag.BaleNoPattern = H.BaleNoPattern;
+            PackingSetting PackingSetting = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(H.DocTypeId, H.DivisionId, H.SiteId);
+            s.PackingSettings = Mapper.Map<PackingSetting, PackingSettingsViewModel>(PackingSetting);
+            if (PackingSetting.isAllowtoUpdateBuyerSpecification == true)
+                ViewBag.isAllowtoUpdateBuyerSpecification = "Yes";
+            else
+                ViewBag.isAllowtoUpdateBuyerSpecification = "No";
+            ProductBuyer productbuyer = new ProductBuyerService(_unitOfWork).Find(H.BuyerId, temp.ProductId);
+            if (productbuyer != null)
+            {
+                s.BuyerSku = productbuyer.BuyerSku;
+                s.BuyerSpecification = productbuyer.BuyerSpecification;
+                s.BuyerSpecification1 = productbuyer.BuyerSpecification1;
+                s.BuyerSpecification2 = productbuyer.BuyerSpecification2;
+                s.BuyerSpecification3 = productbuyer.BuyerSpecification3;
+            }
 
             PrepareViewBag(s);            
             return PartialView("_Create", s);
@@ -824,6 +1105,8 @@ namespace Jobs.Areas.Rug.Controllers
 
             StockIssueId = PackingLine.StockIssueId;
             StockReceiveId = PackingLine.StockReceiveId;
+
+
 
            
 
@@ -887,9 +1170,42 @@ namespace Jobs.Areas.Rug.Controllers
             }
 
 
-            
+            if (PackingLine.LotNo  != null && PackingLine.ProductUidId == null )
+            {
+                //ProductUidDetail ProductUidDetail = new ProductUidService(_unitOfWork).FGetProductUidLastValues((int)PackingLine.ProductUidId, "Packing-" +  vm.PackingHeaderId.ToString());
+
+                ProductUid ProductUid = new ProductUidService(_unitOfWork).Find(PackingLine.LotNo);
 
 
+                ProductUid.LastTransactionDocDate = PackingLine.ProductUidLastTransactionDocDate;
+                ProductUid.LastTransactionDocId = PackingLine.ProductUidLastTransactionDocId;
+                ProductUid.LastTransactionDocNo = PackingLine.ProductUidLastTransactionDocNo;
+                ProductUid.LastTransactionDocTypeId = PackingLine.ProductUidLastTransactionDocTypeId;
+                ProductUid.LastTransactionPersonId = PackingLine.ProductUidLastTransactionPersonId;
+                ProductUid.CurrenctGodownId = PackingLine.ProductUidCurrentGodownId;
+                ProductUid.CurrenctProcessId = PackingLine.ProductUidCurrentProcessId;
+                ProductUid.Status = PackingLine.ProductUidStatus;
+                ProductUid.IsActive = true;
+                ProductUid.ProcessesDone = ProductUid.ProcessesDone.Replace("|" + new ProcessService(_unitOfWork).Find(ProcessConstants.Packing).ProcessId.ToString() + "|", "");
+
+                //ProductUid.LastTransactionDocDate = ProductUidDetail.LastTransactionDocDate;
+                //ProductUid.LastTransactionDocId = ProductUidDetail.LastTransactionDocId;
+                //ProductUid.LastTransactionDocNo = ProductUidDetail.LastTransactionDocNo;
+                //ProductUid.LastTransactionDocTypeId = ProductUidDetail.LastTransactionDocTypeId;
+                //ProductUid.LastTransactionPersonId = ProductUidDetail.LastTransactionPersonId;
+                //ProductUid.CurrenctGodownId = ProductUidDetail.CurrenctGodownId;
+                //ProductUid.CurrenctProcessId = ProductUidDetail.CurrenctProcessId;
+                //ProductUid.Status = ProductUidDetail.Status;
+
+
+                new ProductUidService(_unitOfWork).Update(ProductUid);
+
+                new StockUidService(_unitOfWork).DeleteStockUidForDocLine(PackingLine.PackingLineId, PackingHeader.DocTypeId, PackingHeader.SiteId, PackingHeader.DivisionId);
+            }
+
+
+
+            new PackingLineExtendedService(_unitOfWork).Delete(vm.PackingLineId);
             _PackingLineService.Delete(vm.PackingLineId);
 
 
@@ -897,6 +1213,17 @@ namespace Jobs.Areas.Rug.Controllers
 
             if (StockIssueId != null)
             {
+                StockAdj Adj = (from L in db.StockAdj
+                                where L.StockOutId == StockIssueId
+                                select L).FirstOrDefault();
+
+                if (Adj != null)
+                {
+                    new StockAdjService(_unitOfWork).Delete(Adj);
+                    //Adj.ObjectState = Model.ObjectState.Deleted;
+                    //db.StockAdj.Remove(Adj);
+                }
+
                 new StockService(_unitOfWork).DeleteStock((int)StockIssueId);
             }
 
@@ -1001,7 +1328,21 @@ namespace Jobs.Areas.Rug.Controllers
 
         public string DataValidation(PackingLineViewModel svm)
         {
+
+            PackingHeader PH = new PackingHeaderService(_unitOfWork).GetPackingHeader(svm.PackingHeaderId);
+
+            PackingSetting PS =new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(PH.DocTypeId, PH.DivisionId, PH.SiteId);
             string ValidationMsg = "";
+
+            if (PS.IsMandatoryStockIn == true  )
+            {
+                if (svm.StockInId == null)
+                {
+                    ValidationMsg = "StockIn No is required.";
+                    return ValidationMsg;
+                }
+            }
+
             if (svm.Qty <= 0)
             {
                 ValidationMsg = "Qty is required.";
@@ -1020,7 +1361,7 @@ namespace Jobs.Areas.Rug.Controllers
                 return ValidationMsg;
             }
 
-            if (svm.UnitConversionMultiplier > (Decimal)0.25 && svm.Qty > 1 && svm.DealUnitId != UnitConstants.Pieces && svm.DealUnitId != UnitConstants.Kgs)
+            if (svm.UnitConversionMultiplier > (Decimal)5.25 && svm.Qty > 1 && svm.DealUnitId != UnitConstants.Pieces && svm.DealUnitId != UnitConstants.Kgs)
             {
                 ValidationMsg = "Packed Qty can not be greater then 1.";
                 return ValidationMsg;
@@ -1148,7 +1489,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     if (ProductUidDetail.DivisionId == (int)DivisionEnum.TUFTED)
                     {
-                        if ((ProductUidDetail.GenDocTypeId ?? 0) == new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.WeavingOrder).DocumentTypeId)
+                        if ((ProductUidDetail.GenDocTypeId ?? 0) == new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName).DocumentTypeId)
                         {
                             if (new ProductUidService(_unitOfWork).IsProcessDone((int)svm.ProductUidId, new ProcessService(_unitOfWork).Find(ProcessConstants.FullFinishing).ProcessId) == false)
                             {
@@ -1389,9 +1730,7 @@ namespace Jobs.Areas.Rug.Controllers
 
         public JsonResult GetUnitConversionDetailJson(int ProductId, string UnitId, string DeliveryUnitId)
         {
-            int UnitConversionForId = (int) UnitConversionFors.Standard; 
-            //UnitConversion uc = new UnitConversionService(_unitOfWork).GetUnitConversion(ProductId, UnitId, DeliveryUnitId);
-            UnitConversion uc = new UnitConversionService(_unitOfWork).GetUnitConversion(ProductId, UnitId, UnitConversionForId, DeliveryUnitId);
+            UnitConversion uc = new UnitConversionService(_unitOfWork).GetUnitConversion(ProductId, UnitId, DeliveryUnitId);
             List<SelectListItem> UnitConversionJson = new List<SelectListItem>();
             if (uc != null)
             {
@@ -1416,25 +1755,8 @@ namespace Jobs.Areas.Rug.Controllers
 
         public JsonResult GetProductDetailJson(int ProductId, int PackingHeaderId)
         {
-            //var product = (from p in db.FinishedProduct
-            //               join Pig in db.ProductInvoiceGroup on p.ProductInvoiceGroupId equals Pig.ProductInvoiceGroupId into ProductInvoiceGroupTable
-            //               from ProductInvoiceGroupTab in ProductInvoiceGroupTable.DefaultIfEmpty()
-            //               where p.ProductId == ProductId
-            //               select new
-            //               {
-            //                   UnitId = p.UnitId,
-            //                   ImageFolderName = p.ImageFolderName,
-            //                   ImageFileName = p.ImageFileName,
-            //                   ProductInvoiceGroupId = p.ProductInvoiceGroupId,
-            //                   ProductInvoiceGroupName = ProductInvoiceGroupTab.ProductInvoiceGroupName,
-            //                   IsSample = p.IsSample
-            //               }).FirstOrDefault();
-
-
-            var product = (from p in db.Product
-                           join Fp in db.FinishedProduct on p.ProductId equals Fp.ProductId into FinishedProductTable
-                           from FinishedProductTab in FinishedProductTable.DefaultIfEmpty()
-                           join Pig in db.ProductInvoiceGroup on FinishedProductTab.ProductInvoiceGroupId equals Pig.ProductInvoiceGroupId into ProductInvoiceGroupTable
+            var product = (from p in db.FinishedProduct
+                           join Pig in db.ProductInvoiceGroup on p.ProductInvoiceGroupId equals Pig.ProductInvoiceGroupId into ProductInvoiceGroupTable
                            from ProductInvoiceGroupTab in ProductInvoiceGroupTable.DefaultIfEmpty()
                            where p.ProductId == ProductId
                            select new
@@ -1442,9 +1764,9 @@ namespace Jobs.Areas.Rug.Controllers
                                UnitId = p.UnitId,
                                ImageFolderName = p.ImageFolderName,
                                ImageFileName = p.ImageFileName,
-                               ProductInvoiceGroupId = FinishedProductTab.ProductInvoiceGroupId,
+                               ProductInvoiceGroupId = p.ProductInvoiceGroupId,
                                ProductInvoiceGroupName = ProductInvoiceGroupTab.ProductInvoiceGroupName,
-                               IsSample = (bool?)FinishedProductTab.IsSample ?? false
+                               IsSample = p.IsSample
                            }).FirstOrDefault();
 
 
@@ -1457,6 +1779,32 @@ namespace Jobs.Areas.Rug.Controllers
                                 select new { DeliveryUnitId = H.DealUnitId }).FirstOrDefault();
 
             ProductAreaDetail productarea = _PackingLineService.FGetProductArea(ProductId);
+
+            int a = (int)ProductSizeTypeConstants.StandardSize;          
+
+            ProductSize ps = new ProductSizeService(_unitOfWork).FindProductSize(a, ProductId);
+            Size s = new SizeService(_unitOfWork).Find(ps.SizeId);
+
+            decimal AreaFT2=0;
+
+            if (s.UnitId == "MET")
+            {
+                using (SqlConnection sqlConnection = new SqlConnection((string)System.Web.HttpContext.Current.Session["DefaultConnectionString"]))
+                {
+                    sqlConnection.Open();
+
+                    SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.FuncGetSqFeetFromCMSize( " + s.SizeId + ")", sqlConnection);
+
+                    AreaFT2 = Convert.ToDecimal(Totalf.ExecuteScalar() == DBNull.Value ? 0 : Totalf.ExecuteScalar());
+                }
+
+                if (productarea != null)
+                {
+                    productarea.ProductArea = AreaFT2;
+                }
+            }
+
+
 
             Decimal AreaInDeliveryUnit = 0;
 
@@ -1558,6 +1906,7 @@ namespace Jobs.Areas.Rug.Controllers
                 ProductUidDetailJson.Add(new ProductUidDetail()
                 {
                     ProductId = productuiddetail.ProductId,
+                    Status= productuiddetail.Status, 
                     ProductName = productuiddetail.ProductName,
                     ProductUidId = productuiddetail.ProductUidId,
                     PrevProcessId = productuiddetail.PrevProcessId,
@@ -1682,9 +2031,9 @@ namespace Jobs.Areas.Rug.Controllers
 
 
 
-        public JsonResult GetNewPackingBaleNoJson(int PackingHeaderId, int? ProductInvoiceGroupId, int? SaleOrderLineId, int BaleNoPatternId,decimal DealQty)
+        public JsonResult GetNewPackingBaleNoJson_WithProductId(int PackingHeaderId, int? ProductInvoiceGroupId, int? SaleOrderLineId, int BaleNoPatternId,decimal DealQty, int? ProductId)
         {
-            PackingBaleNo packingbaleno = _PackingLineService.FGetNewPackingBaleNo(PackingHeaderId, ProductInvoiceGroupId, SaleOrderLineId, BaleNoPatternId,DealQty);
+            PackingBaleNo packingbaleno = _PackingLineService.FGetNewPackingBaleNo_WithProductId(PackingHeaderId, ProductInvoiceGroupId, SaleOrderLineId, BaleNoPatternId,DealQty, ProductId);
             List<PackingBaleNo> PackingBaleNoJson = new List<PackingBaleNo>();
 
 
@@ -1697,6 +2046,21 @@ namespace Jobs.Areas.Rug.Controllers
             return Json(PackingBaleNoJson);
         }
 
+
+        public JsonResult GetNewPackingBaleNoJson(int PackingHeaderId, int? ProductInvoiceGroupId, int? SaleOrderLineId, int BaleNoPatternId, decimal DealQty)
+        {
+            PackingBaleNo packingbaleno = _PackingLineService.FGetNewPackingBaleNo(PackingHeaderId, ProductInvoiceGroupId, SaleOrderLineId, BaleNoPatternId, DealQty);
+            List<PackingBaleNo> PackingBaleNoJson = new List<PackingBaleNo>();
+
+
+            PackingBaleNoJson.Add(new PackingBaleNo()
+            {
+                PackingHeaderId = packingbaleno.PackingHeaderId,
+                NewBaleNo = packingbaleno.NewBaleNo
+
+            });
+            return Json(PackingBaleNoJson);
+        }
 
 
         public JsonResult GetSaleOrderLineIdListJson(int ProductId, int PackingHeaderId, int PackingLineId)
@@ -1728,6 +2092,20 @@ namespace Jobs.Areas.Rug.Controllers
                                                                                    SaleOrderNo = SaleOrderHeaderTab.DocNo
                                                                                }).ToList();
                 return Json(saleorderlistforproductjson);
+            }
+        }
+
+        public JsonResult GetSaleOrderLineIdListForProductUidJson(int ProductUidId, int PackingHeaderId)
+        {
+            if (ProductUidId != 0 && PackingHeaderId != 0)
+            {
+                int BuyerId = (from H in db.PackingHeader where H.PackingHeaderId == PackingHeaderId select new { BuyerId = H.BuyerId }).FirstOrDefault().BuyerId;
+                List<PendingOrderListForPacking> saleorderlistforproductjson = _PackingLineService.FGetPendingOrderListForPackingForProductUid(ProductUidId, BuyerId).ToList();
+                return Json(saleorderlistforproductjson);
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -1928,7 +2306,7 @@ namespace Jobs.Areas.Rug.Controllers
             bool IsThirdBackingDone = true;
             ProductUid ProductUid = new ProductUidService(_unitOfWork).Find(ProductUidId);
 
-            if ((ProductUid.GenDocTypeId ?? 0) == new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.WeavingOrder).DocumentTypeId)
+            if ((ProductUid.GenDocTypeId ?? 0) == new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.JobOrderWeaving.DocumentTypeName).DocumentTypeId)
             {
                 if (new ProductUidService(_unitOfWork).IsProcessDone((int)ProductUidId, new ProcessService(_unitOfWork).Find(ProcessConstants.FullFinishing).ProcessId) == false)
                 {
@@ -1963,37 +2341,39 @@ namespace Jobs.Areas.Rug.Controllers
 
             var settings = new PackingSettingService(_unitOfWork).GetPackingSettingForDocument(Header.DocTypeId, Header.DivisionId, Header.SiteId);
 
+            var Buyer = new PersonService(_unitOfWork).Find(Header.BuyerId);
+
             if (settings != null)
             {
-                if (settings.ExtraSaleOrderNo != null)
-                {
-                    SaleOrderHeader SaleOrderHeader = new SaleOrderHeaderService(_unitOfWork).FindByDocNo(settings.ExtraSaleOrderNo);
-                    if (SaleOrderHeader != null)
-                    {
-                        SaleOrderLine Line = new SaleOrderLine();
-                        Line.SaleOrderHeaderId = SaleOrderHeader.SaleOrderHeaderId;
-                        Line.ProductId = svm.ProductId;
-                        Line.Qty = svm.Qty;
-                        Line.DealUnitId = svm.DealUnitId;
-                        Line.DealQty = svm.DealQty;
-                        Line.Rate = Rate;
-                        Line.Amount = Line.Qty * Line.Rate;
-                        Line.ReferenceDocTypeId = Header.DocTypeId;
-                        Line.ReferenceDocLineId = svm.PackingLineId;
-                        Line.CreatedDate = DateTime.Now;
-                        Line.ModifiedDate = DateTime.Now;
-                        Line.CreatedBy = User.Identity.Name;
-                        Line.ModifiedBy = User.Identity.Name;
-                        Line.DueDate = DateTime.Now;
-                        Line.ObjectState = Model.ObjectState.Added;
-                        new SaleOrderLineService(_unitOfWork).Create(Line);
+                //if (Buyer.ExtraSaleOrderHeaderId != null)
+                //{
+                //    SaleOrderHeader SaleOrderHeader = new SaleOrderHeaderService(_unitOfWork).Find((int)Buyer.ExtraSaleOrderHeaderId);
+                //    if (SaleOrderHeader != null)
+                //    {
+                //        SaleOrderLine Line = new SaleOrderLine();
+                //        Line.SaleOrderHeaderId = SaleOrderHeader.SaleOrderHeaderId;
+                //        Line.ProductId = svm.ProductId;
+                //        Line.Qty = svm.Qty;
+                //        Line.DealUnitId = svm.DealUnitId;
+                //        Line.DealQty = svm.DealQty;
+                //        Line.Rate = Rate;
+                //        Line.Amount = Line.Qty * Line.Rate;
+                //        Line.ReferenceDocTypeId = Header.DocTypeId;
+                //        Line.ReferenceDocLineId = svm.PackingLineId;
+                //        Line.CreatedDate = DateTime.Now;
+                //        Line.ModifiedDate = DateTime.Now;
+                //        Line.CreatedBy = User.Identity.Name;
+                //        Line.ModifiedBy = User.Identity.Name;
+                //        Line.DueDate = DateTime.Now;
+                //        Line.ObjectState = Model.ObjectState.Added;
+                //        new SaleOrderLineService(_unitOfWork).Create(Line);
 
-                        new SaleOrderLineStatusService(_unitOfWork).CreateLineStatus(Line.SaleOrderLineId);
+                //        new SaleOrderLineStatusService(_unitOfWork).CreateLineStatus(Line.SaleOrderLineId);
 
-                        svm.SaleOrderLineId = Line.SaleOrderLineId;
-                        svm.SaleOrderNo = settings.ExtraSaleOrderNo;
-                    }
-                }
+                //        svm.SaleOrderLineId = Line.SaleOrderLineId;
+                //        svm.SaleOrderNo = settings.ExtraSaleOrderNo;
+                //    }
+                //}
             }
         }
 
@@ -2019,9 +2399,77 @@ namespace Jobs.Areas.Rug.Controllers
             }
         }
 
-        public ActionResult GetCustomProducts(string searchTerm, int pageSize, int pageNum, int filter)//DocTypeId
+        public JsonResult GetProductCustomDetailJson(int ProductId, int PackingHeaderId)
         {
-            var Query = _PackingLineService.GetCustomProducts(filter, searchTerm);
+            PackingHeader Header = new PackingHeaderService(_unitOfWork).Find(PackingHeaderId);
+
+            ProductCustomDetailViewModel ProductCustomDetail = (from P in db.ViewProductBuyer
+                                                                where P.ProductId == ProductId && P.BuyerId == Header.BuyerId
+                                                                select new ProductCustomDetailViewModel
+                                                                {
+                                                                    BuyerSku = P.BuyerSku,
+                                                                    BuyerSpecification = P.BuyerSpecification,
+                                                                    BuyerSpecification1 = P.BuyerSpecification1,
+                                                                    BuyerSpecification2 = P.BuyerSpecification2,
+                                                                    BuyerSpecification3 = P.BuyerSpecification3
+                                                                }).FirstOrDefault();
+
+
+
+            List<ProductCustomDetailViewModel> ProductCustomDetailJson = new List<ProductCustomDetailViewModel>();
+
+            if (ProductCustomDetail != null)
+            {
+                ProductCustomDetailJson.Add(new ProductCustomDetailViewModel()
+                {
+                    BuyerSku = ProductCustomDetail.BuyerSku,
+                    BuyerSpecification = ProductCustomDetail.BuyerSpecification,
+                    BuyerSpecification1 = ProductCustomDetail.BuyerSpecification1,
+                    BuyerSpecification2 = ProductCustomDetail.BuyerSpecification2,
+                    BuyerSpecification3 = ProductCustomDetail.BuyerSpecification3
+                });
+            }
+
+            return Json(ProductCustomDetailJson);
+        }
+
+        public ActionResult SetFlagForExtraSaleOrder()
+        {
+            bool CreateExtraSaleOrder = true;
+
+            return Json(CreateExtraSaleOrder);
+        }
+
+        //public ActionResult GetCustomProducts(string searchTerm, int pageSize, int pageNum, int filter )//DocTypeId
+        //{
+        //   Boolean isShowAllProducts= true;
+
+        //     var Query = _PackingLineService.GetCustomProductsWithBuyerSku_ForAllProducts(filter, searchTerm, isShowAllProducts);
+
+        //    var temp = Query.Skip(pageSize * (pageNum - 1))
+        //        .Take(pageSize)
+        //        .ToList();
+
+        //    var count = Query.Count();
+
+        //    ComboBoxPagedResult Data = new ComboBoxPagedResult();
+        //    Data.Results = temp;
+        //    Data.Total = count;
+
+        //    return new JsonpResult
+        //    {
+        //        Data = Data,
+        //        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+        //    };
+        //}
+
+
+        public ActionResult GetCustomProducts(string searchTerm, int pageSize, int pageNum, int filter, Boolean isShowAllProducts)//DocTypeId
+        {
+            //Boolean isShowAllProducts = true;
+
+            var Query = _PackingLineService.GetCustomProductsWithBuyerSku_ForAllProducts(filter, searchTerm, isShowAllProducts);
+
             var temp = Query.Skip(pageSize * (pageNum - 1))
                 .Take(pageSize)
                 .ToList();
@@ -2040,13 +2488,95 @@ namespace Jobs.Areas.Rug.Controllers
         }
 
 
-        public ActionResult SetFlagForExtraSaleOrder()
+        public JsonResult GetUnitConversionMultiplier(int DocumentTypeId, int ProductId, Decimal Length, Decimal Width, Decimal? Height, string ToUnitId)
         {
-            bool CreateExtraSaleOrder = true;
+            ProductViewModel product = new ProductService(_unitOfWork).GetProduct(ProductId);
 
-            return Json(CreateExtraSaleOrder);
+            Decimal UnitConversionMultiplier = 0;
+            UnitConversionMultiplier = new ProductService(_unitOfWork).GetUnitConversionMultiplier(1, product.UnitId, Length, Width, Height, ToUnitId,db, DocumentTypeId);
+
+            return Json(UnitConversionMultiplier);
+        }
+
+        public JsonResult GetProductDimensionsJson(int ProductId, string DealUnitId, int DocTypeId)
+        {
+            ProductDimensions ProductDimensions = new ProductService(_unitOfWork).GetProductDimensions(ProductId, DealUnitId, DocTypeId);
+            return Json(ProductDimensions);
+        }
+
+        public ActionResult GetStockInForProduct(string searchTerm, int pageSize, int pageNum, int filter, int? ProductId, int? Dimension1Id, int? Dimension2Id, int? Dimension3Id, int? Dimension4Id)//DocTypeId
+        {
+            var Query = _PackingLineService.GetPendingStockInForIssue(filter, ProductId, Dimension1Id, Dimension2Id, Dimension3Id, Dimension4Id, searchTerm);
+            var temp = Query.Skip(pageSize * (pageNum - 1))
+                .Take(pageSize)
+                .ToList();
+
+            var count = Query.Count();
+
+            ComboBoxPagedResult Data = new ComboBoxPagedResult();
+            Data.Results = temp;
+            Data.Total = count;
+
+            return new JsonpResult
+            {
+                Data = Data,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult GetStockInDetailJson(int StockInId)
+        {
+            var temp = (from p in db.ViewStockInBalance
+                        join S in db.Stock on p.StockInId equals S.StockId into StockTable
+                        from StockTab in StockTable.DefaultIfEmpty()
+                        join pt in db.Product on p.ProductId equals pt.ProductId into ProductTable
+                        from ProductTab in ProductTable.DefaultIfEmpty()
+                        join D1 in db.Dimension1 on p.Dimension1Id equals D1.Dimension1Id into Dimension1Table
+                        from Dimension1Tab in Dimension1Table.DefaultIfEmpty()
+                        join D2 in db.Dimension2 on p.Dimension2Id equals D2.Dimension2Id into Dimension2Table
+                        from Dimension2Tab in Dimension2Table.DefaultIfEmpty()
+                        join D3 in db.Dimension3 on p.Dimension3Id equals D3.Dimension3Id into Dimension3Table
+                        from Dimension3Tab in Dimension3Table.DefaultIfEmpty()
+                        join D4 in db.Dimension4 on p.Dimension4Id equals D4.Dimension4Id into Dimension4Table
+                        from Dimension4Tab in Dimension4Table.DefaultIfEmpty()
+                        join PU in db.ProductUid on StockTab.ProductUidId equals PU.ProductUIDId into PUTable
+                        from PUTab in PUTable.DefaultIfEmpty()
+                        where p.StockInId == StockInId
+                        select new
+                        {
+                            ProductUidId = StockTab.ProductUidId,
+                            ProductUidName = StockTab.ProductUid.ProductUidName,
+                            ProductId = p.ProductId,
+                            ProductName = ProductTab.ProductName,
+                            Dimension1Id = p.Dimension1Id,
+                            Dimension1Name = Dimension1Tab.Dimension1Name,
+                            Dimension2Id = p.Dimension2Id,
+                            Dimension2Name = Dimension2Tab.Dimension2Name,
+                            Dimension3Id = p.Dimension3Id,
+                            Dimension3Name = Dimension3Tab.Dimension3Name,
+                            Dimension4Id = p.Dimension4Id,
+                            Dimension4Name = Dimension4Tab.Dimension4Name,
+                            BalanceQty = p.BalanceQty,
+                            LotNo = p.LotNo,
+                            FromProcessId = StockTab.ProcessId,
+                            FromProcessName = StockTab.Process.ProcessName,
+                            CurrenctGodownId = PUTab.CurrenctGodownId,
+                            Status = PUTab.Status
+
+                        }).FirstOrDefault();
+
+            if (temp != null)
+            {
+                return Json(temp);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
+
+
 
     [Serializable]
     public class LastProduct

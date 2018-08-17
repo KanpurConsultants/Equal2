@@ -25,7 +25,7 @@ using System.Text;
 using System.Web.Script.Serialization;
 using System.Data.Entity.Validation;
 using Model.ViewModel;
-using System.Data.Entity.Infrastructure;
+using Jobs.Constants.DocumentType;
 using System.Xml.Linq;
 
 namespace Jobs.Controllers
@@ -110,6 +110,7 @@ namespace Jobs.Controllers
             {
                 if (svm.CalculationHeaderLedgerAccountId <= 0)
                 {
+                    s.CalculationHeaderLedgerAccountId = new CalculationHeaderLedgerAccountService(_unitOfWork).MaxId() + 1;
                     s.CreatedDate = DateTime.Now;
                     s.ModifiedDate = DateTime.Now;
                     s.CreatedBy = User.Identity.Name;
@@ -173,7 +174,7 @@ namespace Jobs.Controllers
                         return PartialView("_Create", svm);
                     }
 
-                   //LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.CalculationLedgerAccount).DocumentTypeId,
+                   //LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.CalculationLedgerAccount.DocumentTypeName).DocumentTypeId,
                    //temp1.CalculationHeaderLedgerAccountId,
                    //null,
                    //(int)ActivityTypeContants.Modified,
@@ -283,7 +284,7 @@ namespace Jobs.Controllers
                     return PartialView("_Reason", vm);
                 }
 
-                //LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.CalculationLedgerAccount).DocumentTypeId,
+                //LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.CalculationLedgerAccount.DocumentTypeName).DocumentTypeId,
                 // CalculationHeaderLedger.CalculationHeaderLedgerAccountId,
                 // null,
                 // (int)ActivityTypeContants.Deleted,
@@ -293,7 +294,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CalculationLedgerAccount).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.CalculationLedgerAccount.DocumentTypeName).DocumentTypeId,
                     DocId = CalculationHeaderLedger.CalculationHeaderLedgerAccountId,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = "",

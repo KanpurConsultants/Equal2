@@ -14,8 +14,9 @@ using Presentation.ViewModels;
 using Presentation;
 using Core.Common;
 using System.Data.Entity.Validation;
-using System.Data.Entity.Infrastructure;
+using Jobs.Constants.RugDocumentType;
 using Model.ViewModel;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -263,7 +264,7 @@ namespace Jobs.Areas.Rug.Controllers
                     DocId = vm.id,
                     UserRemark = vm.Reason,
                     Narration = "Stencil is deleted with Name:" + temp.StencilId,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrder).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrder.DocumentCategoryName).DocumentTypeId,
                     UploadDate = DateTime.Now,
 
                 };
@@ -329,7 +330,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.RugStencil  );
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(RugDocumentTypeConstants.RugStencil.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 

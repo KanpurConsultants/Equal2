@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using Jobs.Constants.RugDocumentType;
 using System.Web.Mvc;
 using Data;
 using Data.Models;
@@ -94,7 +94,7 @@ namespace Jobs.Areas.Rug.Controllers
             string PrevSupplierCode = "";
             string PrevDoNo = "";
 
-            int DocTypeId = (from Dt in db.DocumentType where Dt.DocumentTypeName == TransactionDoctypeConstants.WeavingBazar select new { DocTypeId = Dt.DocumentTypeId }).FirstOrDefault().DocTypeId;
+            int DocTypeId = (from Dt in db.DocumentType where Dt.DocumentTypeName == RugDocumentTypeConstants.WeavingReceive.DocumentTypeName select new { DocTypeId = Dt.DocumentTypeId }).FirstOrDefault().DocTypeId;
             
 
             int i = 0;

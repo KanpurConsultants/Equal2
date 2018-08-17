@@ -14,6 +14,7 @@ using Model.ViewModel;
 using AutoMapper;
 using System.Xml.Linq;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Controllers
 {
@@ -136,7 +137,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Calculation).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Calculation.DocumentTypeName).DocumentTypeId,
                         DocId = pt.CalculationId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -235,7 +236,7 @@ namespace Jobs.Controllers
                     return PartialView("_Reason", vm);
                 }
 
-                //LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Calculation).DocumentTypeId,
+                //LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Calculation).DocumentTypeId,
                 // temp.CalculationId,
                 // null,
                 // (int)ActivityTypeContants.Deleted,
@@ -245,7 +246,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Calculation).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Calculation.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,

@@ -245,7 +245,7 @@
 @if ((ViewBag.Mode == "Add") || (ViewBag.Mode == "Edit"))
 {
     <script type="text/javascript">
-
+        
         //For Populating Modal PopUp on DoubleClick Of Row
         $('#Result').on("dblclick",'tr',function(){
             var text = $(this).find(".id").val();
@@ -260,7 +260,7 @@
             });
         });
 
-
+       
         //For Handling Modal PopUp on Clicking Delete Icon
         $('#Result').on("click",'a[delete]', function (e) {
             $('#myModalContent').load(this.href, function () {
@@ -274,7 +274,6 @@
             });
             return false;
         });
-
 
         //For posting the data through ajax and render the contents sent back from the server
         function bindForm1(dialog) {        
@@ -310,20 +309,17 @@
             enableModalTransitions();
         })
 
-
     </script>
 
 }
 
 <script type="text/javascript">
-
-    $(document).ready(function () {
+    //$(document).ready(function () {
         //CustomSelectFunction($("#BuyerId"), '/ComboHelpList/GetBuyers', '/ComboHelpList/SetSingleBuyer', ' ', false, 1);
         CustomSelectFunction($("#BuyerId"), '/SaleOrderCancelHeader/GetCustomPerson', '/ComboHelpList/SetSinglePerson', ' ', false, 1,$('#DocTypeId').val());
         //Calling the function to load the table data/ Line information
         LoadProducts();
-    });
-
+    //});
 
     var id=@Model.SaleOrderCancelHeaderId;
     if(id==null||id==0)

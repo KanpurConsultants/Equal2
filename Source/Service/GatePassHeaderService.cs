@@ -382,13 +382,11 @@ namespace Service
 
         public IQueryable<ComboBoxResult> GetGatePassActiveJobWorkers(string term)
         {
-
-            var list = (from jw in db.JobWorker
-                        join p in db.Persons on jw.PersonID equals p.PersonID
+            var list = (from p in db.Persons 
                         join gp in db.GatePassHeader on p.PersonID equals gp.PersonId                        
                         where gp.Status == (int)StatusConstants.Drafted                        
                         && (string.IsNullOrEmpty(term) ? 1 == 1 : (p.Name.ToLower().Contains(term.ToLower())))
-                        group p by jw.PersonID into pg 
+                        group p by p.PersonID into pg 
                         orderby pg.FirstOrDefault().Name
                         select new ComboBoxResult
                         {

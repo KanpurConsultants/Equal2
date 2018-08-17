@@ -11,7 +11,7 @@ using Model.ViewModels;
 using Data.Models;
 using Data.Infrastructure;
 using Service;
-using AutoMapper;
+using Jobs.Constants.DocumentType;
 using Presentation.ViewModels;
 using Presentation;
 using Core.Common;
@@ -23,6 +23,7 @@ using System.IO;
 using ImageResizer;
 using Model.ViewModel;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -91,7 +92,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConsumption);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConsumption.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -132,13 +133,13 @@ namespace Jobs.Areas.Rug.Controllers
 
         public ActionResult Create()
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConsumption);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConsumption.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProductConsumption + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProductConsumption.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Create") == false)
             {
@@ -176,7 +177,7 @@ namespace Jobs.Areas.Rug.Controllers
                     product.ProductGroupId = new ProductGroupService(_unitOfWork).Find(ProductGroupConstants.Bom).ProductGroupId;
                     product.DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
                     product.IsActive = true;
-                    product.ReferenceDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId;
+                    product.ReferenceDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId;
                     product.ReferenceDocId = svm.ProductId;
 
 
@@ -249,7 +250,7 @@ namespace Jobs.Areas.Rug.Controllers
 
 
                     product.ProductName = SProd.ProductName + "-Bom";
-                    product.ReferenceDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId;
+                    product.ReferenceDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId;
                     product.ReferenceDocId = svm.ProductId;
                     product.ModifiedBy = User.Identity.Name;
                     product.ModifiedDate = DateTime.Now;
@@ -270,7 +271,7 @@ namespace Jobs.Areas.Rug.Controllers
                         Narration = logstring.ToString(),
                         CreatedDate = DateTime.Now,
                         CreatedBy = User.Identity.Name,
-                        //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.ProcessSequence).DocumentTypeId,
+                        //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.ProcessSequence).DocumentTypeId,
 
                     };
                     new ActivityLogService(_unitOfWork).Create(al);
@@ -297,13 +298,13 @@ namespace Jobs.Areas.Rug.Controllers
 
         public ActionResult Edit(int id)
         {
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConsumption);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConsumption.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProductConsumption + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProductConsumption.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Edit") == false)
             {
@@ -329,13 +330,13 @@ namespace Jobs.Areas.Rug.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var DocType = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConsumption);
+            var DocType = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConsumption.DocumentTypeName);
             int DocTypeId = 0;
 
             if (DocType != null)
                 DocTypeId = DocType.DocumentTypeId;
             else
-                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + MasterDocTypeConstants.ProductConsumption + " is not defined in database.");
+                return View("~/Views/Shared/InValidSettings.cshtml").Warning("Document Type named " + DocumentTypeConstants.ProductConsumption.DocumentTypeName + " is not defined in database.");
 
             if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "Delete") == false)
             {
@@ -374,7 +375,7 @@ namespace Jobs.Areas.Rug.Controllers
                     DocId = vm.id,
                     UserRemark = vm.Reason,
                     Narration = "Bom is deleted with Name:" + product.ProductName,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrder).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrder.DocumentCategoryName).DocumentTypeId,
                     UploadDate = DateTime.Now,
 
                 };
@@ -467,7 +468,7 @@ namespace Jobs.Areas.Rug.Controllers
                 NewProduct.ModifiedDate = DateTime.Now;
                 NewProduct.CreatedBy = User.Identity.Name;
                 NewProduct.ModifiedBy = User.Identity.Name;
-                NewProduct.ReferenceDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId;
+                NewProduct.ReferenceDocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId;
                 NewProduct.ReferenceDocId = prod.ProductId;
                 NewProduct.ObjectState = Model.ObjectState.Added;
                 _ProductService.Create(NewProduct);

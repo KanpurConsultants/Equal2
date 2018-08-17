@@ -3,7 +3,7 @@ using System.Linq;
 using Data;
 using Data.Infrastructure;
 using Model.Models;
-
+using Jobs.Constants.DocumentCategory;
 using Core.Common;
 using System;
 using Model;
@@ -219,7 +219,7 @@ namespace Service
                             select p.DefaultReasonId).FirstOrDefault();
 
             if (!ReasonId.HasValue)
-                ReasonId = new ReasonService(_unitOfWork).GetReasonList(TransactionDocCategoryConstants.RequisitionCancel).FirstOrDefault().ReasonId;
+                ReasonId = new ReasonService(_unitOfWork).GetReasonList(DocumentCategoryConstants.MaterialRequestCancel.DocumentCategoryName).FirstOrDefault().ReasonId;
 
             if (PendingRequisitionLines.Count() > 0)
             {

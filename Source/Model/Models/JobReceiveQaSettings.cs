@@ -16,7 +16,7 @@ namespace Model.Models
         public int JobReceiveQASettingsId { get; set; }
 
         [ForeignKey("DocType"), Display(Name = "Order Type")]
-        public int DocTypeId { get; set; }
+        public int ? DocTypeId { get; set; }
         public virtual DocumentType DocType { get; set; }
 
         [ForeignKey("ImportMenu")]
@@ -63,11 +63,11 @@ namespace Model.Models
 
 
         [ForeignKey("Process"), Display(Name = "Process")]
-        public int ProcessId { get; set; }
+        public int? ProcessId { get; set; }
         public virtual Process Process { get; set; }
-        public int SiteId { get; set; }
+        public int? SiteId { get; set; }
         public virtual Site Site { get; set; }
-        public int DivisionId { get; set; }
+        public int? DivisionId { get; set; }
         public virtual Division Division { get; set; }
 
         public bool? isPostedInStock { get; set; }

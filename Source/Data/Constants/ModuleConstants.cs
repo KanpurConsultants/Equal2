@@ -13,7 +13,7 @@ namespace Jobs.Constants.Module
             public const string ModuleName = "Sales";
             public const int Srl = 1;
             public const string IconName = "glyphicon glyphicon-globe";
-            
+            public const Boolean IsActive = true;
         }
 
         public static class Planning
@@ -22,7 +22,7 @@ namespace Jobs.Constants.Module
             public const string ModuleName = "Planning";
             public const int Srl = 2;
             public const string IconName = "glyphicon glyphicon-list-alt";
-            
+            public const Boolean IsActive = true;
         }
 
         public static class Purchase
@@ -31,7 +31,7 @@ namespace Jobs.Constants.Module
             public const string ModuleName = "Purchase";
             public const int Srl = 3;
             public const string IconName = "glyphicon glyphicon-shopping-cart";
-            
+            public const Boolean IsActive = true;
         }
 
         public static class Production
@@ -40,7 +40,7 @@ namespace Jobs.Constants.Module
             public const string ModuleName = "Production";
             public const int Srl = 4;
             public const string IconName = "glyphicon glyphicon-credit-card";
-            
+            public const Boolean IsActive = true;
         }
 
         public static class Inventory
@@ -49,7 +49,7 @@ namespace Jobs.Constants.Module
             public const string ModuleName = "Inventory";
             public const int Srl = 5;
             public const string IconName = "glyphicon glyphicon-stats";
-            
+            public const Boolean IsActive = true;
         }
 
         public static class Accounts
@@ -58,7 +58,7 @@ namespace Jobs.Constants.Module
             public const string ModuleName = "Accounts";
             public const int Srl = 6;
             public const string IconName = "glyphicon glyphicon-file";
-            
+            public const Boolean IsActive = true;
         }
 
         public static class HumanResource
@@ -67,7 +67,7 @@ namespace Jobs.Constants.Module
             public const string ModuleName = "Human Resource";
             public const int Srl = 7;
             public const string IconName = "glyphicon glyphicon-user";
-            
+            public const Boolean IsActive = true;
         }
 
         public static class AdminSetup
@@ -76,7 +76,7 @@ namespace Jobs.Constants.Module
             public const string ModuleName = "Admin Setup";
             public const int Srl = 8;
             public const string IconName = "glyphicon glyphicon-lock";
-            
+            public const Boolean IsActive = true;
         }
 
         public static class Task
@@ -85,7 +85,8 @@ namespace Jobs.Constants.Module
             public const string ModuleName = "Task";
             public const int Srl = 9;
             public const string IconName = "glyphicon glyphicon-pushpin";
-            
+            public const Boolean IsActive = false;
+
         }
     }
 

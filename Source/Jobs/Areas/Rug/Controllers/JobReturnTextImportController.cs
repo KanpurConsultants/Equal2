@@ -12,7 +12,7 @@ using Model.Models;
 using System.Configuration;
 using System.Text;
 using Data.Infrastructure;
-using Core.Common;
+using Jobs.Constants.RugDocumentType;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data;
@@ -81,7 +81,7 @@ namespace Jobs.Areas.Rug.Controllers
             string PrevSupplierCode = "";
             string PrevDoNo = "";
 
-            int DocTypeId = (from Dt in db.DocumentType where Dt.DocumentTypeName == TransactionDoctypeConstants.WeavingReturn select new { DocTypeId = Dt.DocumentTypeId }).FirstOrDefault().DocTypeId;
+            int DocTypeId = (from Dt in db.DocumentType where Dt.DocumentTypeName == RugDocumentTypeConstants.WeavingReturn.DocumentTypeName select new { DocTypeId = Dt.DocumentTypeId }).FirstOrDefault().DocTypeId;
             
 
             int i = 0;

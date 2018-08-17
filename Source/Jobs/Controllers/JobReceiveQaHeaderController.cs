@@ -158,7 +158,7 @@ namespace Jobs.Controllers
                 return View("~/Views/Shared/PermissionDenied.cshtml").Warning("You don't have permission to do this task.");
             }
 
-            vm.ProcessId = settings.ProcessId;  
+            vm.ProcessId = (int)settings.ProcessId;  
             vm.DocDate = DateTime.Now;
             vm.DocTypeId = id;
             vm.DocNo = _JobReceiveQAHeaderService.FGetNewDocNo("DocNo", ConfigurationManager.AppSettings["DataBaseSchema"] + ".JobReceiveQAHeaders", vm.DocTypeId, vm.DocDate, vm.DivisionId, vm.SiteId);

@@ -410,5 +410,13 @@ namespace Jobs.Constants.LedgerAccount
             public const int LedgerAccountGroupId = LedgerAccountGroupConstants.DutiesAndTaxes.LedgerAccountGroupId;
         }
 
+        public static class ManufacturingAc
+        {
+            public const int LedgerAccountId = 551;
+            public const string LedgerAccountName = "Manufacturing A/c";
+            public const string LedgerAccountSuffix = "Manufacturing";
+            public const int LedgerAccountGroupId = LedgerAccountGroupConstants.SundryCreditors.LedgerAccountGroupId;
+        }
+
     }
 }

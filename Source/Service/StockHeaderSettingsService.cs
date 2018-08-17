@@ -49,10 +49,11 @@ namespace Service
         }
         public StockHeaderSettings GetStockHeaderSettingsForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.MaterialIssueSettings
-                    where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
-                    select p
-                        ).FirstOrDefault();
+            StockHeaderSettings temp;
+            temp = _unitOfWork.Repository<StockHeaderSettings>().Query().Get().Where(m => m.DivisionId == DivisionId && m.SiteId == SiteId && m.DocTypeId == DocTypeId).FirstOrDefault();
+            if (temp == null)
+                temp = _unitOfWork.Repository<StockHeaderSettings>().Query().Get().FirstOrDefault();
+            return temp;
         }
         public StockHeaderSettings Create(StockHeaderSettings pt)
         {

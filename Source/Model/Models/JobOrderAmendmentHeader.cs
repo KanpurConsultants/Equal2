@@ -28,7 +28,7 @@ namespace Model.Models
 
         [ForeignKey("JobWorker")]
         public int ? JobWorkerId { get; set; }
-        public virtual JobWorker JobWorker { get; set; }
+        public virtual Person JobWorker { get; set; }
 
         [ForeignKey("OrderBy"), Display(Name = "Order By")]
         public int OrderById { get; set; }

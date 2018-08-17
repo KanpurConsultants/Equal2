@@ -7,9 +7,10 @@ using Model.Models;
 using Data.Models;
 using System.Collections;
 using System.Reflection;
-using System.IO;
+using Jobs.Constants.Reasons;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Web.Security;
+using Jobs.Constants.DocumentTypeSettings;
+using Jobs.Constants.RugDocumentTypeSettings;
 using Microsoft.AspNet.Identity;
 using Jobs.Constants.DocumentType;
 using Jobs.Constants.DocumentCategory;
@@ -64,6 +65,8 @@ using Jobs.Constants.RugDocumentType;
 using Jobs.Constants.RugProductType;
 using Jobs.Constants.RugProductGroup;
 using Jobs.Constants.IndustryType;
+using Jobs.Constants.RugProcess;
+using Jobs.Constants.RugLedgerAccount;
 
 namespace Data.Models
 {
@@ -105,10 +108,12 @@ namespace Data.Models
             InsertGodown();
             InsertLedgerAccountGroup();
             InsertLedgerAccount();
+            InsertRugLedgerAccount();
             InsertUnit();
             InsertUnitConversionFor();
             InsertCurrency();
             InsertProcess();
+            InsertRugProcess();
             InsertTdsGroup();
             InsertTdsCategory();
             InsertTdsRate();
@@ -134,6 +139,9 @@ namespace Data.Models
             InsertPersonSetting();
             InsertProductSizeTypes();
             InsertProductDesign();
+
+            InsertDocumentTypeSettings();
+            InsertRugDocumentTypeSettings();
 
 
             UpdateTableStructure D = new UpdateTableStructure();
@@ -255,6 +263,48 @@ namespace Data.Models
                         ProductDesign.ModifiedDate = System.DateTime.Now;
                         ProductDesign.ObjectState = Model.ObjectState.Modified;
                         db.ProductDesigns.Add(ProductDesign);
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+        }
+        public void InsertReason()
+        {
+            try
+            {
+                Type ReasonConstantsType = typeof(ReasonConstants);
+
+                System.Type[] ChildClassCollection = ReasonConstantsType.GetNestedTypes();
+
+                foreach (System.Type ChildClass in ChildClassCollection)
+                {
+                    int ReasonId = (int)ChildClass.GetField("ReasonId").GetRawConstantValue();
+                    if (db.Reason.Find(ReasonId) == null)
+                    {
+                        Reason Reason = new Reason();
+                        Reason.ReasonId = (int)ChildClass.GetField("ReasonId").GetRawConstantValue();
+                        Reason.DocumentCategoryId = (int)ChildClass.GetField("DocumentCategoryId").GetRawConstantValue();
+                        Reason.ReasonName = (string)ChildClass.GetField("ReasonName").GetRawConstantValue();
+                        Reason.CreatedBy = "System";
+                        Reason.ModifiedBy = "System";
+                        Reason.CreatedDate = System.DateTime.Now;
+                        Reason.ModifiedDate = System.DateTime.Now;
+                        Reason.ObjectState = Model.ObjectState.Added;
+                        db.Reason.Add(Reason);
+                    }
+                    else
+                    {
+                        Reason Reason = db.Reason.Find(ReasonId);
+                        Reason.ReasonName = (string)ChildClass.GetField("ReasonName").GetRawConstantValue();
+                        Reason.DocumentCategoryId = (int)ChildClass.GetField("DocumentCategoryId").GetRawConstantValue();
+                        Reason.ModifiedBy = "System";
+                        Reason.ModifiedDate = System.DateTime.Now;
+                        Reason.ObjectState = Model.ObjectState.Modified;
+                        db.Reason.Add(Reason);
                     }
                     db.SaveChanges();
                 }
@@ -503,6 +553,9 @@ namespace Data.Models
                             DocumentType.DocumentNatureId = (int)ChildClass.GetField("DocumentNatureId").GetRawConstantValue();
                             DocumentType.Nature = (string)ChildClass.GetField("Nature").GetRawConstantValue();
                             DocumentType.PrintTitle = (string)ChildClass.GetField("PrintTitle").GetRawConstantValue();
+                            DocumentType.ControllerName = (string)ChildClass.GetField("ControllerName").GetRawConstantValue();
+                            DocumentType.ActionName = (string)ChildClass.GetField("ActionName").GetRawConstantValue();
+                            DocumentType.AreaName = (string)ChildClass.GetField("AreaName").GetRawConstantValue();
                             DocumentType.IsActive = true;
                             DocumentType.IsSystemDefine = true;
                             DocumentType.CreatedBy = "System";
@@ -521,6 +574,9 @@ namespace Data.Models
                             DocumentType.DocumentNatureId = (int)ChildClass.GetField("DocumentNatureId").GetRawConstantValue();
                             DocumentType.Nature = (string)ChildClass.GetField("Nature").GetRawConstantValue();
                             DocumentType.PrintTitle = (string)ChildClass.GetField("PrintTitle").GetRawConstantValue();
+                            DocumentType.ControllerName = (string)ChildClass.GetField("ControllerName").GetRawConstantValue();
+                            DocumentType.ActionName = (string)ChildClass.GetField("ActionName").GetRawConstantValue();
+                            DocumentType.AreaName = (string)ChildClass.GetField("AreaName").GetRawConstantValue();
                             DocumentType.IsActive = true;
                             DocumentType.IsSystemDefine = true;
                             DocumentType.ModifiedBy = "System";
@@ -646,7 +702,7 @@ namespace Data.Models
                         Module.ModuleName = (string)ChildClass.GetField("ModuleName").GetRawConstantValue();
                         Module.Srl = (int)ChildClass.GetField("Srl").GetRawConstantValue();
                         Module.IconName = (string)ChildClass.GetField("IconName").GetRawConstantValue();
-                        Module.IsActive = true;
+                        Module.IsActive = (Boolean)ChildClass.GetField("IsActive").GetRawConstantValue();
                         Module.CreatedBy = "System";
                         Module.ModifiedBy = "System";
                         Module.CreatedDate = System.DateTime.Now;
@@ -660,7 +716,7 @@ namespace Data.Models
                         Module.ModuleName = (string)ChildClass.GetField("ModuleName").GetRawConstantValue();
                         Module.Srl = (int)ChildClass.GetField("Srl").GetRawConstantValue();
                         Module.IconName = (string)ChildClass.GetField("IconName").GetRawConstantValue();
-                        Module.IsActive = true;
+                        Module.IsActive = (Boolean)ChildClass.GetField("IsActive").GetRawConstantValue();
                         Module.ModifiedBy = "System";
                         Module.ModifiedDate = System.DateTime.Now;
                         Module.ObjectState = Model.ObjectState.Modified;
@@ -1306,6 +1362,56 @@ namespace Data.Models
                 string message = ex.Message;
             }
         }
+
+        public void InsertRugLedgerAccount()
+        {
+            try
+            {
+                Type LedgerAccountConstantsType = typeof(RugLedgerAccountConstants);
+
+                System.Type[] ChildClassCollection = LedgerAccountConstantsType.GetNestedTypes();
+
+                foreach (System.Type ChildClass in ChildClassCollection)
+                {
+                    int LedgerAccountId = (int)ChildClass.GetField("LedgerAccountId").GetRawConstantValue();
+                    if (db.LedgerAccount.Find(LedgerAccountId) == null)
+                    {
+                        LedgerAccount LedgerAccount = new LedgerAccount();
+                        LedgerAccount.LedgerAccountId = (int)ChildClass.GetField("LedgerAccountId").GetRawConstantValue();
+                        LedgerAccount.LedgerAccountName = (string)ChildClass.GetField("LedgerAccountName").GetRawConstantValue();
+                        LedgerAccount.LedgerAccountSuffix = (string)ChildClass.GetField("LedgerAccountSuffix").GetRawConstantValue();
+                        LedgerAccount.LedgerAccountGroupId = (int)ChildClass.GetField("LedgerAccountGroupId").GetRawConstantValue();
+                        LedgerAccount.IsActive = true;
+                        LedgerAccount.IsSystemDefine = true;
+                        LedgerAccount.CreatedBy = "System";
+                        LedgerAccount.ModifiedBy = "System";
+                        LedgerAccount.CreatedDate = System.DateTime.Now;
+                        LedgerAccount.ModifiedDate = System.DateTime.Now;
+                        LedgerAccount.ObjectState = Model.ObjectState.Added;
+                        db.LedgerAccount.Add(LedgerAccount);
+                    }
+                    else
+                    {
+                        LedgerAccount LedgerAccount = db.LedgerAccount.Find(LedgerAccountId);
+                        LedgerAccount.LedgerAccountName = (string)ChildClass.GetField("LedgerAccountName").GetRawConstantValue();
+                        LedgerAccount.LedgerAccountSuffix = (string)ChildClass.GetField("LedgerAccountSuffix").GetRawConstantValue();
+                        LedgerAccount.LedgerAccountGroupId = (int)ChildClass.GetField("LedgerAccountGroupId").GetRawConstantValue();
+                        LedgerAccount.IsActive = true;
+                        LedgerAccount.IsSystemDefine = true;
+                        LedgerAccount.ModifiedBy = "System";
+                        LedgerAccount.ModifiedDate = System.DateTime.Now;
+                        LedgerAccount.ObjectState = Model.ObjectState.Modified;
+                        db.LedgerAccount.Add(LedgerAccount);
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+        }
+
         public void InsertUnit()
         {
             try
@@ -1417,6 +1523,7 @@ namespace Data.Models
                     int ProcessId = (int)ChildClass.GetField("ProcessId").GetRawConstantValue();
                     if (db.Process.Find(ProcessId) == null)
                     {
+                        
                         Process Process = new Process();
                         Process.ProcessId = (int)ChildClass.GetField("ProcessId").GetRawConstantValue();
                         Process.ProcessCode = (string)ChildClass.GetField("ProcessCode").GetRawConstantValue();
@@ -1452,6 +1559,58 @@ namespace Data.Models
                 string message = ex.Message;
             }
         }
+
+        public void InsertRugProcess()
+        {
+            try
+            {
+                Type ProcessConstantsType = typeof(RugProcessConstants);
+
+                System.Type[] ChildClassCollection = ProcessConstantsType.GetNestedTypes();
+
+                foreach (System.Type ChildClass in ChildClassCollection)
+                {
+                    int ProcessId = (int)ChildClass.GetField("ProcessId").GetRawConstantValue();
+                    if (db.Process.Find(ProcessId) == null)
+                    {
+                        Process Process = new Process();
+                        Process.ProcessId = (int)ChildClass.GetField("ProcessId").GetRawConstantValue();
+                        Process.ProcessCode = (string)ChildClass.GetField("ProcessCode").GetRawConstantValue();
+                        Process.ProcessName = (string)ChildClass.GetField("ProcessName").GetRawConstantValue();
+                        Process.AccountId = (int)ChildClass.GetField("AccountId").GetRawConstantValue();
+                        //Process.ParentProcessId = (int)ChildClass.GetField("ParentProcessId").GetRawConstantValue();
+                        Process.IsActive = true;
+                        Process.IsSystemDefine = true;
+                        Process.CreatedBy = "System";
+                        Process.ModifiedBy = "System";
+                        Process.CreatedDate = System.DateTime.Now;
+                        Process.ModifiedDate = System.DateTime.Now;
+                        Process.ObjectState = Model.ObjectState.Added;
+                        db.Process.Add(Process);
+                    }
+                    else
+                    {
+                        Process Process = db.Process.Find(ProcessId);
+                        Process.ProcessCode = (string)ChildClass.GetField("ProcessCode").GetRawConstantValue();
+                        Process.ProcessName = (string)ChildClass.GetField("ProcessName").GetRawConstantValue();
+                        Process.AccountId = (int)ChildClass.GetField("AccountId").GetRawConstantValue();
+                        //Process.ParentProcessId = (int)ChildClass.GetField("ParentProcessId").GetRawConstantValue();
+                        Process.IsActive = true;
+                        Process.IsSystemDefine = true;
+                        Process.ModifiedBy = "System";
+                        Process.ModifiedDate = System.DateTime.Now;
+                        Process.ObjectState = Model.ObjectState.Modified;
+                        db.Process.Add(Process);
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+        }
+
         public void InsertTdsGroup()
         {
             try
@@ -1900,6 +2059,131 @@ namespace Data.Models
                 string message = ex.Message;
             }
         }
+
+        public void InsertDocumentTypeSettings()
+        {
+            try
+            {
+                Type DocumentTypeSettingsConstantsType = typeof(DocumentTypeSettingsConstants);
+
+                System.Type[] ChildClassCollection = DocumentTypeSettingsConstantsType.GetNestedTypes();
+
+                foreach (System.Type ChildClass in ChildClassCollection)
+                {
+                    int DocumentTypeSettingsId = (int)ChildClass.GetField("DocumentTypeSettingsId").GetRawConstantValue();
+                    if (db.DocumentTypeSettings.Find(DocumentTypeSettingsId) == null)
+                    {
+                        DocumentTypeSettings DocumentTypeSettings = new DocumentTypeSettings();
+                        DocumentTypeSettings.DocumentTypeSettingsId = (int)ChildClass.GetField("DocumentTypeSettingsId").GetRawConstantValue();
+                        DocumentTypeSettings.DocumentTypeId = (int)ChildClass.GetField("DocumentTypeId").GetRawConstantValue();
+                        DocumentTypeSettings.ProductUidCaption = (string)ChildClass.GetField("ProductUidCaption").GetRawConstantValue();
+                        DocumentTypeSettings.PartyCaption = (string)ChildClass.GetField("PartyCaption").GetRawConstantValue();
+                        DocumentTypeSettings.ProductCaption = (string)ChildClass.GetField("ProductCaption").GetRawConstantValue();
+                        DocumentTypeSettings.ProductGroupCaption = (string)ChildClass.GetField("ProductGroupCaption").GetRawConstantValue();
+                        DocumentTypeSettings.ProductCategoryCaption = (string)ChildClass.GetField("ProductCategoryCaption").GetRawConstantValue();
+                        DocumentTypeSettings.Dimension1Caption = (string)ChildClass.GetField("Dimension1Caption").GetRawConstantValue();
+                        DocumentTypeSettings.Dimension2Caption = (string)ChildClass.GetField("Dimension2Caption").GetRawConstantValue();
+                        DocumentTypeSettings.Dimension3Caption = (string)ChildClass.GetField("Dimension3Caption").GetRawConstantValue();
+                        DocumentTypeSettings.Dimension4Caption = (string)ChildClass.GetField("Dimension4Caption").GetRawConstantValue();
+                        DocumentTypeSettings.ContraDocTypeCaption = (string)ChildClass.GetField("ContraDocTypeCaption").GetRawConstantValue();
+                        DocumentTypeSettings.CreatedBy = "System";
+                        DocumentTypeSettings.ModifiedBy = "System";
+                        DocumentTypeSettings.CreatedDate = System.DateTime.Now;
+                        DocumentTypeSettings.ModifiedDate = System.DateTime.Now;
+                        DocumentTypeSettings.ObjectState = Model.ObjectState.Added;
+                        db.DocumentTypeSettings.Add(DocumentTypeSettings);
+                    }
+                    else
+                    {
+                        DocumentTypeSettings DocumentTypeSettings = db.DocumentTypeSettings.Find(DocumentTypeSettingsId);
+                        DocumentTypeSettings.DocumentTypeId = (int)ChildClass.GetField("DocumentTypeId").GetRawConstantValue();
+                        DocumentTypeSettings.ProductUidCaption = (string)ChildClass.GetField("ProductUidCaption").GetRawConstantValue();
+                        DocumentTypeSettings.PartyCaption = (string)ChildClass.GetField("PartyCaption").GetRawConstantValue();
+                        DocumentTypeSettings.ProductCaption = (string)ChildClass.GetField("ProductCaption").GetRawConstantValue();
+                        DocumentTypeSettings.ProductGroupCaption = (string)ChildClass.GetField("ProductGroupCaption").GetRawConstantValue();
+                        DocumentTypeSettings.ProductCategoryCaption = (string)ChildClass.GetField("ProductCategoryCaption").GetRawConstantValue();
+                        DocumentTypeSettings.Dimension1Caption = (string)ChildClass.GetField("Dimension1Caption").GetRawConstantValue();
+                        DocumentTypeSettings.Dimension2Caption = (string)ChildClass.GetField("Dimension2Caption").GetRawConstantValue();
+                        DocumentTypeSettings.Dimension3Caption = (string)ChildClass.GetField("Dimension3Caption").GetRawConstantValue();
+                        DocumentTypeSettings.Dimension4Caption = (string)ChildClass.GetField("Dimension4Caption").GetRawConstantValue();
+                        DocumentTypeSettings.ContraDocTypeCaption = (string)ChildClass.GetField("ContraDocTypeCaption").GetRawConstantValue();
+                        DocumentTypeSettings.ModifiedBy = "System";
+                        DocumentTypeSettings.ModifiedDate = System.DateTime.Now;
+                        DocumentTypeSettings.ObjectState = Model.ObjectState.Modified;
+                        db.DocumentTypeSettings.Add(DocumentTypeSettings);
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+            }
+        }
+        public void InsertRugDocumentTypeSettings()
+        {
+            if ((string)System.Web.HttpContext.Current.Session["IndustryType"] == IndustryTypeConstants.Rug.IndustryTypeName)
+            {
+                try
+                {
+                    Type DocumentTypeSettingsConstantsType = typeof(RugDocumentTypeSettingsConstants);
+
+                    System.Type[] ChildClassCollection = DocumentTypeSettingsConstantsType.GetNestedTypes();
+
+                    foreach (System.Type ChildClass in ChildClassCollection)
+                    {
+                        int DocumentTypeSettingsId = (int)ChildClass.GetField("DocumentTypeSettingsId").GetRawConstantValue();
+                        if (db.DocumentTypeSettings.Find(DocumentTypeSettingsId) == null)
+                        {
+                            DocumentTypeSettings DocumentTypeSettings = new DocumentTypeSettings();
+                            DocumentTypeSettings.DocumentTypeSettingsId = (int)ChildClass.GetField("DocumentTypeSettingsId").GetRawConstantValue();
+                            DocumentTypeSettings.DocumentTypeId = (int)ChildClass.GetField("DocumentTypeId").GetRawConstantValue();
+                            DocumentTypeSettings.ProductUidCaption = (string)ChildClass.GetField("ProductUidCaption").GetRawConstantValue();
+                            DocumentTypeSettings.PartyCaption = (string)ChildClass.GetField("PartyCaption").GetRawConstantValue();
+                            DocumentTypeSettings.ProductCaption = (string)ChildClass.GetField("ProductCaption").GetRawConstantValue();
+                            DocumentTypeSettings.ProductGroupCaption = (string)ChildClass.GetField("ProductGroupCaption").GetRawConstantValue();
+                            DocumentTypeSettings.ProductCategoryCaption = (string)ChildClass.GetField("ProductCategoryCaption").GetRawConstantValue();
+                            DocumentTypeSettings.Dimension1Caption = (string)ChildClass.GetField("Dimension1Caption").GetRawConstantValue();
+                            DocumentTypeSettings.Dimension2Caption = (string)ChildClass.GetField("Dimension2Caption").GetRawConstantValue();
+                            DocumentTypeSettings.Dimension3Caption = (string)ChildClass.GetField("Dimension3Caption").GetRawConstantValue();
+                            DocumentTypeSettings.Dimension4Caption = (string)ChildClass.GetField("Dimension4Caption").GetRawConstantValue();
+                            DocumentTypeSettings.ContraDocTypeCaption = (string)ChildClass.GetField("ContraDocTypeCaption").GetRawConstantValue();
+                            DocumentTypeSettings.CreatedBy = "System";
+                            DocumentTypeSettings.ModifiedBy = "System";
+                            DocumentTypeSettings.CreatedDate = System.DateTime.Now;
+                            DocumentTypeSettings.ModifiedDate = System.DateTime.Now;
+                            DocumentTypeSettings.ObjectState = Model.ObjectState.Added;
+                            db.DocumentTypeSettings.Add(DocumentTypeSettings);
+                        }
+                        else
+                        {
+                            DocumentTypeSettings DocumentTypeSettings = db.DocumentTypeSettings.Find(DocumentTypeSettingsId);
+                            DocumentTypeSettings.DocumentTypeId = (int)ChildClass.GetField("DocumentTypeId").GetRawConstantValue();
+                            DocumentTypeSettings.ProductUidCaption = (string)ChildClass.GetField("ProductUidCaption").GetRawConstantValue();
+                            DocumentTypeSettings.PartyCaption = (string)ChildClass.GetField("PartyCaption").GetRawConstantValue();
+                            DocumentTypeSettings.ProductCaption = (string)ChildClass.GetField("ProductCaption").GetRawConstantValue();
+                            DocumentTypeSettings.ProductGroupCaption = (string)ChildClass.GetField("ProductGroupCaption").GetRawConstantValue();
+                            DocumentTypeSettings.ProductCategoryCaption = (string)ChildClass.GetField("ProductCategoryCaption").GetRawConstantValue();
+                            DocumentTypeSettings.Dimension1Caption = (string)ChildClass.GetField("Dimension1Caption").GetRawConstantValue();
+                            DocumentTypeSettings.Dimension2Caption = (string)ChildClass.GetField("Dimension2Caption").GetRawConstantValue();
+                            DocumentTypeSettings.Dimension3Caption = (string)ChildClass.GetField("Dimension3Caption").GetRawConstantValue();
+                            DocumentTypeSettings.Dimension4Caption = (string)ChildClass.GetField("Dimension4Caption").GetRawConstantValue();
+                            DocumentTypeSettings.ContraDocTypeCaption = (string)ChildClass.GetField("ContraDocTypeCaption").GetRawConstantValue();
+                            DocumentTypeSettings.ModifiedBy = "System";
+                            DocumentTypeSettings.ModifiedDate = System.DateTime.Now;
+                            DocumentTypeSettings.ObjectState = Model.ObjectState.Modified;
+                            db.DocumentTypeSettings.Add(DocumentTypeSettings);
+                        }
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+        }
+
         public void InsertProductType()
         {
             try
@@ -2510,6 +2794,7 @@ namespace Data.Models
                         PersonSettings.LedgerAccountGroupId = (int)ChildClass.GetField("LedgerAccountGroupId").GetRawConstantValue();
                         PersonSettings.isVisibleAddress = (Boolean)ChildClass.GetField("isVisibleAddress").GetRawConstantValue();
                         PersonSettings.isVisibleCity = (Boolean)ChildClass.GetField("isVisibleCity").GetRawConstantValue();
+                        PersonSettings.isVisiblePersonProcessDetail = (Boolean)ChildClass.GetField("isVisiblePersonProcessDetail").GetRawConstantValue();
                         PersonSettings.CreatedBy = "System";
                         PersonSettings.ModifiedBy = "System";
                         PersonSettings.CreatedDate = System.DateTime.Now;
@@ -2525,6 +2810,7 @@ namespace Data.Models
                         PersonSettings.DefaultProcessId = (int)ChildClass.GetField("DefaultProcessId").GetRawConstantValue();
                         PersonSettings.isVisibleAddress = (Boolean)ChildClass.GetField("isVisibleAddress").GetRawConstantValue();
                         PersonSettings.isVisibleCity = (Boolean)ChildClass.GetField("isVisibleCity").GetRawConstantValue();
+                        PersonSettings.isVisiblePersonProcessDetail = (Boolean)ChildClass.GetField("isVisiblePersonProcessDetail").GetRawConstantValue();
                         PersonSettings.ModifiedBy = "System";
                         PersonSettings.ModifiedDate = System.DateTime.Now;
                         PersonSettings.ObjectState = Model.ObjectState.Modified;

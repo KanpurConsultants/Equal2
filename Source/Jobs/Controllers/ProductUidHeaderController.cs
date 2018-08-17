@@ -10,7 +10,7 @@ using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
 using System.Configuration;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Model.ViewModel;
 using System.Xml.Linq;
 using System.Data.SqlClient;
@@ -113,7 +113,7 @@ namespace Jobs.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductUid);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductUid.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -136,7 +136,7 @@ namespace Jobs.Controllers
         public ActionResult Create()
         {
             ProductUidHeaderIndexViewModel p = new ProductUidHeaderIndexViewModel();
-            p.GenDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.ProductUid).DocumentTypeId;
+            p.GenDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.ProductUid.DocumentTypeName).DocumentTypeId;
             p.GenDocDate = DateTime.Now;
             p.GenDocNo = new ProductUidHeaderService(_unitOfWork).FGetNewDocNo("GenDocNo", ConfigurationManager.AppSettings["DataBaseSchema"] + ".ProductUidHeaders", p.GenDocTypeId, p.GenDocDate);
             ViewBag.Mode = "Add";
@@ -287,7 +287,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductUid).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductUid.DocumentTypeName).DocumentTypeId,
                         DocId = ProdUidHeader.ProductUidHeaderId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -391,7 +391,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductUid).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductUid.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,
@@ -480,7 +480,7 @@ namespace Jobs.Controllers
         {
             List<ProductUidLastValues> ProductUidLastValuesJson = new List<ProductUidLastValues>();
 
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.ProductUid).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.ProductUid.DocumentTypeName).DocumentTypeId;
             string CreatedBy = User.Identity.Name.ToString();
 
             ProductUidLastValues temp = (from H in context.ProductUidHeader

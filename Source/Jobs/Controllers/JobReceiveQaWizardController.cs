@@ -420,7 +420,7 @@ namespace Jobs.Controllers
                     pt.JobWorkerId = ConfirmedList.FirstOrDefault().JobWorkerId;
                     pt.DivisionId = DivisionId;
                     pt.QAById = QAById;
-                    pt.ProcessId = Settings.ProcessId;
+                    pt.ProcessId = (int)Settings.ProcessId;
                     pt.Remark = UserRemark;
                     pt.DocTypeId = DocTypeId;
                     pt.DocDate = DateTime.Now;

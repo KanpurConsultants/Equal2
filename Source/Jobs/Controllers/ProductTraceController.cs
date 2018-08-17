@@ -7,7 +7,7 @@ using Model.Models;
 using Data.Models;
 using Service;
 using Data.Infrastructure;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Presentation.ViewModels;
 using Model.ViewModels;
 using Core.Common;
@@ -141,7 +141,7 @@ namespace Jobs.Controllers
                     pt1.CreatedBy = User.Identity.Name;
                     pt1.ModifiedBy = User.Identity.Name;
                     pt1.ReferenceDocId = pvm.ProductSKUId;
-                    pt1.ReferenceDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Product).DocumentTypeId;
+                    pt1.ReferenceDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId;
                     pt1.IsActive = true;
 
                     pt1.ObjectState = Model.ObjectState.Added;
@@ -179,7 +179,7 @@ namespace Jobs.Controllers
                     {
                         sqlConnection.Open();
 
-                        SqlCommand Totalf = new SqlCommand("SELECT * FROM Web.FuncConvertSqFeetToSqYard( " + Size.Area + ")", sqlConnection);
+                        SqlCommand Totalf = new SqlCommand("SELECT  Web.FConvertSqFeetToSqYard( " + Size.Area + ")", sqlConnection);
 
                         UnitConv.ToQty = Convert.ToDecimal(Totalf.ExecuteScalar() == DBNull.Value ? 0 : Totalf.ExecuteScalar());
                     }
@@ -206,7 +206,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId,
                         DocId = pt1.ProductId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -376,7 +376,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId,
                         DocId = pt.ProductId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -590,7 +590,7 @@ namespace Jobs.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Product).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Product.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,

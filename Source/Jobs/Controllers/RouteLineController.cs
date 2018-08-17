@@ -9,7 +9,7 @@ using Data.Infrastructure;
 using Core.Common;
 using Model.ViewModels;
 using AutoMapper;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using System.Text;
 using Model.ViewModel;
 using System.Xml.Linq;
@@ -143,7 +143,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Route).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Route.DocumentTypeName).DocumentTypeId,
                         DocId = s.RouteId,
                         DocLineId = s.RouteLineId,
                         ActivityType = (int)ActivityTypeContants.Added,
@@ -188,7 +188,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Route).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Route.DocumentTypeName).DocumentTypeId,
                         DocId = temp.RouteId,
                         DocLineId = temp1.RouteLineId,
                         ActivityType = (int)ActivityTypeContants.Modified,
@@ -262,7 +262,7 @@ namespace Jobs.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Route).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Route.DocumentTypeName).DocumentTypeId,
                 DocId = RouteLine.RouteId,
                 DocLineId = RouteLine.RouteLineId,
                 ActivityType = (int)ActivityTypeContants.Deleted,

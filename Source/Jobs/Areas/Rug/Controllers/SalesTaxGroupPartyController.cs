@@ -14,6 +14,7 @@ using Model.ViewModel;
 using AutoMapper;
 using System.Xml.Linq;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -91,7 +92,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.SalesTaxGroupParty).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.SalesTaxGroupParty.DocumentTypeName).DocumentTypeId,
                         DocId = pt.SalesTaxGroupPartyId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -136,7 +137,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.SalesTaxGroupParty).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.SalesTaxGroupParty.DocumentTypeName).DocumentTypeId,
                         DocId = temp.SalesTaxGroupPartyId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -218,7 +219,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.SalesTaxGroupParty).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.SalesTaxGroupParty.DocumentTypeName).DocumentTypeId,
                     DocId = vm.id,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,
@@ -268,7 +269,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.SalesTaxGroupParty);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.SalesTaxGroupParty.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 

@@ -118,7 +118,7 @@ namespace Model.DatabaseViews
 
         [ForeignKey("JobWorker"), Display(Name = "JobWorker")]
         public int JobWorkerId { get; set; }
-        public virtual JobWorker JobWorker { get; set; }
+        public virtual Person JobWorker { get; set; }
 
         public DateTime OrderDate { get; set; }
 
@@ -268,7 +268,7 @@ namespace Model.DatabaseViews
 
         [ForeignKey("JobWorker"), Display(Name = "JobWorker")]
         public int JobWorkerId { get; set; }
-        public virtual JobWorker JobWorker { get; set; }
+        public virtual Person JobWorker { get; set; }
         public DateTime InvoiceDate { get; set; }
 
         public int ? ProductUidId { get; set; }

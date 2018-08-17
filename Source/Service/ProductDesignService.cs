@@ -3,8 +3,8 @@ using System.Linq;
 using Data;
 using Data.Infrastructure;
 using Model.Models;
-
-using Core.Common;
+using Jobs.Constants.ProductType;
+using Jobs.Constants.RugProductType;
 using System;
 using Model;
 using System.Threading.Tasks;
@@ -55,8 +55,8 @@ namespace Service
 
         public IEnumerable<ProductType> GetProductTypeList()
         {
-            int id = new ProductTypeService(_unitOfWork).GetProductTypeByName(ProductTypeConstants.Rug).ProductTypeId;
-            int finid=new ProductNatureService(_unitOfWork).GetProductNatureByName(ProductTypeConstants.FinishedMaterial).ProductNatureId;
+            int id = new ProductTypeService(_unitOfWork).GetProductTypeByName(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
+            int finid=new ProductNatureService(_unitOfWork).GetProductNatureByName(ProductTypeConstants.TradingProduct.ProductTypeName).ProductNatureId;
             return (from p in db.ProductTypes
                         where p.ProductTypeId!=id && p.ProductNatureId==finid
                         select p
@@ -111,7 +111,7 @@ namespace Service
         public IQueryable<ProductDesign> GetProductDesignListForColourWays()
         {
 
-            int pid = new ProductTypeService(_unitOfWork).GetProductTypeByName(ProductTypeConstants.Rug).ProductTypeId;
+            int pid = new ProductTypeService(_unitOfWork).GetProductTypeByName(RugProductTypeConstants.Rug.ProductTypeName).ProductTypeId;
             var pt = _unitOfWork.Repository<ProductDesign>().Query().Get().Where(m=>m.ProductTypeId==pid).OrderBy(m => m.ProductDesignName);
 
             return pt;

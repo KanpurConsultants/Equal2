@@ -793,7 +793,7 @@ namespace Service
                         UnitName = t2.Unit.UnitName,
                         DealUnitName = ji.DealUnit.UnitName,
                         JobWorkerId = ji.JobWorkerId,
-                        JobWorkerName = ji.JobWorker.Person.Name,
+                        JobWorkerName = ji.JobWorker.Name,
                         Rate = p.Rate,
                         ProductId = JO.ProductId,
                         ProductName = JO.Product.ProductName,

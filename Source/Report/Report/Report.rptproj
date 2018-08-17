@@ -6,6 +6,10 @@
       <Name>DSBC.rds</Name>
       <FullPath>DSBC.rds</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>DSLOC.rds</Name>
+      <FullPath>DSLOC.rds</FullPath>
+    </ProjectItem>
   </DataSources>
   <DataSets>
     <ProjectItem>
@@ -3497,6 +3501,10 @@
       <FullPath>SaeOrderPlanPrint_Dyeing.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>SalaryPrint.rdl</Name>
+      <FullPath>SalaryPrint.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>SaleDispatchHeaderReport_DH.rdl</Name>
       <FullPath>SaleDispatchHeaderReport_DH.rdl</FullPath>
     </ProjectItem>
@@ -3967,6 +3975,30 @@
     <ProjectItem>
       <Name>StationaryPrintingJobReceive.rdl</Name>
       <FullPath>StationaryPrintingJobReceive.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Std_JobOrderCancel_Print.rdl</Name>
+      <FullPath>Std_JobOrderCancel_Print.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Std_ProdOrderCancel_Print.rdl</Name>
+      <FullPath>Std_ProdOrderCancel_Print.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Std_SaleEnquiry_Print.rdl</Name>
+      <FullPath>Std_SaleEnquiry_Print.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Std_SaleOrder_Print.rdl</Name>
+      <FullPath>Std_SaleOrder_Print.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Std_SaleOrderCancel_Print.rdl</Name>
+      <FullPath>Std_SaleOrderCancel_Print.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Std_StockIssue_Print.rdl</Name>
+      <FullPath>Std_StockIssue_Print.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>StdDoc_SaleDispatch.rdl</Name>
@@ -5236,8 +5268,8 @@
       <FullPath>YearlyListOfPurja.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>SalaryPrint.rdl</Name>
-      <FullPath>SalaryPrint.rdl</FullPath>
+      <Name>Std_Packing_Print.rdl</Name>
+      <FullPath>Std_Packing_Print.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

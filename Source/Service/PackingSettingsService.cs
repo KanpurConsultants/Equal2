@@ -50,10 +50,20 @@ namespace Service
 
         public PackingSetting GetPackingSettingForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.PackingSettings
+            PackingSetting temp;
+            temp = (from p in db.PackingSettings
                     where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
                     select p
                         ).FirstOrDefault();
+
+            if (temp == null)
+                temp = (from p in db.PackingSettings
+                        where p.DocTypeId == null && p.DivisionId == null && p.SiteId == null
+                        select p
+            ).FirstOrDefault();
+
+            return temp;
+
         }
         public PackingSetting Create(PackingSetting pt)
         {

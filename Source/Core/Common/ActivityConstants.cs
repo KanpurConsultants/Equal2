@@ -88,26 +88,26 @@ namespace Core.Common
     }
 
 
-    public class ProductTypeConstants
-    {
-        public const string Rug = "Rug";
-        public const string FinishedMaterial = "Finished Material";
-        public const string Bom = "Bom";
-        public const string Stencil = "Stencil";
-        public const string Trace = "Trace";
-        public const string Map = "Map";
-        public const string OtherMaterial = "Other Material";
-    }
+    //public class ProductTypeConstants
+    //{
+    //    public const string Rug = "Rug";
+    //    public const string FinishedMaterial = "Finished Material";
+    //    public const string Bom = "Bom";
+    //    public const string Stencil = "Stencil";
+    //    public const string Trace = "Trace";
+    //    public const string Map = "Map";
+    //    public const string OtherMaterial = "Other Material";
+    //}
 
-    public class ProductNatureConstants
-    {
-        public const string Bom = "Bom";
-        public const string Rawmaterial = "Raw Material";
-        public const string OtherMaterial = "Other Material";
-        public const string FinishedMaterial = "Finished Material";
-        public const string Machine = "Machine";
-        public const string AdditionalCharges = "Addition/Deduction";
-    }
+    //public class ProductNatureConstants
+    //{
+    //    public const string Bom = "Bom";
+    //    public const string Rawmaterial = "Raw Material";
+    //    public const string OtherMaterial = "Other Material";
+    //    public const string FinishedMaterial = "Finished Material";
+    //    public const string Machine = "Machine";
+    //    public const string AdditionalCharges = "Addition/Deduction";
+    //}
 
     public class UnitConstants
     {
@@ -195,13 +195,6 @@ namespace Core.Common
     public class LedgerAccountGroupConstants
     {
         public const string SundryCreditors = "Sundry Creditors";
-    }
-
-    public class LedgerAccountConstants
-    {
-        public const string Sale = "Sale";
-        public const string Party = "|PARTY|";
-        public const string Charge = "|CHARGE|";
     }
 
     public class ChargeTypeCategoryConstants

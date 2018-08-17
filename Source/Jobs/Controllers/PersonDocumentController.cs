@@ -11,7 +11,7 @@ using Data.Infrastructure;
 using Core.Common;
 using System.IO;
 using System.Configuration;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using ImageResizer;
 using Model.ViewModel;
 using System.Xml.Linq;
@@ -92,7 +92,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.PersonDocument).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.PersonDocument.DocumentTypeName).DocumentTypeId,
                         DocId = svm.PersonDocumentID,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -239,7 +239,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.PersonDocument).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.PersonDocument.DocumentTypeName).DocumentTypeId,
                         DocId = svm.PersonDocumentID,
                         ActivityType = (int)ActivityTypeContants.Modified,
                     }));
@@ -437,7 +437,7 @@ namespace Jobs.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.PersonDocument).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.PersonDocument.DocumentTypeName).DocumentTypeId,
                 DocId = vm.PersonDocumentID,
                 ActivityType = (int)ActivityTypeContants.Deleted,
                 xEModifications = Modifications,

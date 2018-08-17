@@ -23,8 +23,8 @@ using DocumentEvents;
 using System.Data.SqlClient;
 using Reports.Reports;
 using Reports.Controllers;
-
-
+using Jobs.Constants.DocumentCategory;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Controllers
 {
@@ -1040,14 +1040,14 @@ namespace Jobs.Controllers
                                 SqlParameter DocDate = new SqlParameter("@DocDate", DateTime.Now.Date);
                                 DocDate.SqlDbType = SqlDbType.DateTime;
                                 SqlParameter Godown = new SqlParameter("@GodownId", pd.FromGodownId);
-                                SqlParameter DocType = new SqlParameter("@DocTypeId", new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.GatePass).DocumentTypeId);
+                                SqlParameter DocType = new SqlParameter("@DocTypeId", new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.GatePass.DocumentTypeName).DocumentTypeId);
                                 GatePassHeader GPHeader = new GatePassHeader();
                                 GPHeader.CreatedBy = User.Identity.Name;
                                 GPHeader.CreatedDate = DateTime.Now;
                                 GPHeader.DivisionId = pd.DivisionId;
                                 GPHeader.DocDate = DateTime.Now.Date;
                                 GPHeader.DocNo = db.Database.SqlQuery<string>("Web.GetNewDocNoGatePass @DocTypeId, @DocDate, @GodownId ", DocType, DocDate, Godown).FirstOrDefault();
-                                GPHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.GatePass).DocumentTypeId;
+                                GPHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.GatePass.DocumentTypeName).DocumentTypeId;
                                 GPHeader.ModifiedBy = User.Identity.Name;
                                 GPHeader.ModifiedDate = DateTime.Now;
                                 GPHeader.Remark = ToGodown != null ? "Transfer To: " + ToGodown.GodownName : "";
@@ -1445,7 +1445,7 @@ namespace Jobs.Controllers
                 int PK = 0;
 
                 var Settings = new StockHeaderSettingsService(_unitOfWork).GetStockHeaderSettingsForDocument(DocTypeId, DivisionId, SiteId);
-                var GatePassDocTypeID = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.GatePass).DocumentTypeId;
+                var GatePassDocTypeID = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.GatePass.DocumentCategoryName).DocumentTypeId;
                 string StockHeaderIds = "";
 
                 try

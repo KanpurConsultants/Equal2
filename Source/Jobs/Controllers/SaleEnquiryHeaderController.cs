@@ -211,7 +211,7 @@ namespace Jobs.Controllers
             //ViewBag.DivisionList = new DivisionService(_unitOfWork).GetDivisionList().ToList();            
             ViewBag.ShipMethodList = new ShipMethodService(_unitOfWork).GetShipMethodList().ToList();
             ViewBag.DeliveryTermsList = new DeliveryTermsService(_unitOfWork).GetDeliveryTermsList().ToList();
-            ViewBag.BuyerList = new BuyerService(_unitOfWork).GetBuyerList().ToList();
+            ViewBag.BuyerList = new PersonService(_unitOfWork).GetPersonList().ToList();
             ViewBag.CurrencyList = new CurrencyService(_unitOfWork).GetCurrencyList().ToList();
             //ViewBag.SiteList = new SiteService(_unitOfWork).GetSiteList().ToList();
             List<SelectListItem> temp = new List<SelectListItem>();
@@ -941,20 +941,46 @@ namespace Jobs.Controllers
 
                         if (pd.Status == (int)StatusConstants.Drafted || pd.Status == (int)StatusConstants.Import || pd.Status == (int)StatusConstants.Modified)
                         {
-                            //LogAct(item.ToString());
-                            Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
+                            if (Settings.SqlProcDocumentPrint == null || Settings.SqlProcDocumentPrint == "")
+                            {
+                                SaleEnquiryHeaderRDL cr = new SaleEnquiryHeaderRDL();
+                                drp.CreateRDLFile("Std_SaleEnquiry_Print", cr.Create_Std_SaleEnquiry_Print());
+                                List<ListofQuery> QueryList = new List<ListofQuery>();
+                                QueryList = DocumentPrintData(item);
+                                Pdf = drp.DocumentPrint_New(QueryList, User.Identity.Name);
+                            }
+                            else
+                                Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
 
                             PdfStream.Add(Pdf);
                         }
                         else if (pd.Status == (int)StatusConstants.Submitted || pd.Status == (int)StatusConstants.ModificationSubmitted)
                         {
-                            Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint_AfterSubmit, User.Identity.Name, item);
+                            if (Settings.SqlProcDocumentPrint_AfterSubmit == null || Settings.SqlProcDocumentPrint_AfterSubmit == "")
+                            {
+                                SaleEnquiryHeaderRDL cr = new SaleEnquiryHeaderRDL();
+                                drp.CreateRDLFile("Std_SaleEnquiry_Print", cr.Create_Std_SaleEnquiry_Print());
+                                List<ListofQuery> QueryList = new List<ListofQuery>();
+                                QueryList = DocumentPrintData(item);
+                                Pdf = drp.DocumentPrint_New(QueryList, User.Identity.Name);
+                            }
+                            else
+                                Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint_AfterSubmit, User.Identity.Name, item);
 
                             PdfStream.Add(Pdf);
                         }
                         else
                         {
-                            Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint_AfterApprove, User.Identity.Name, item);
+                            if (Settings.SqlProcDocumentPrint_AfterApprove == null || Settings.SqlProcDocumentPrint_AfterApprove == "")
+                            {
+                                SaleEnquiryHeaderRDL cr = new SaleEnquiryHeaderRDL();
+                                drp.CreateRDLFile("Std_SaleEnquiry_Print", cr.Create_Std_SaleEnquiry_Print());
+                                List<ListofQuery> QueryList = new List<ListofQuery>();
+                                QueryList = DocumentPrintData(item);
+                                Pdf = drp.DocumentPrint_New(QueryList, User.Identity.Name);
+                            }
+                            else
+                                Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint_AfterApprove, User.Identity.Name, item);
                             PdfStream.Add(Pdf);
                         }
 
@@ -983,6 +1009,44 @@ namespace Jobs.Controllers
 
         }
 
+
+        private List<ListofQuery> DocumentPrintData(int item)
+        {
+            JobOrderHeader JOH = new JobOrderHeaderService(_unitOfWork).Find(item);
+
+            List<ListofQuery> DocumentPrintData = new List<ListofQuery>();
+            String QueryMain;
+            QueryMain = @"SELECT H.SiteId, H.DivisionId, H.SaleEnquiryHeaderId , DT.DocumentTypeName, H.DocDate, H.DocNo, H.DueDate, H.BuyerEnquiryNo, H.Remark,  P.Name AS SaleToBuyer, BP.Name AS BillToBuyer,  H.ShipAddress, 
+                     C.Name AS Currency, SM.ShipMethodName, DET.DeliveryTermsName,   CASE WHEN H.Priority = 10 THEN 'High' WHEN H.Priority = -10 THEN 'Low' ELSE 'Normal' END AS Priority, H.CreditDays, H.TermsAndConditions,     
+                     L.SaleEnquiryLineId , PD.ProductName, L.Qty, L.DueDate AS LineDueDate, L.Rate, L.Amount, L.Remark AS LineRemark,  
+                      U.UnitName, isnull(U.DecimalPlaces, 0) AS DecimalPlaces, SEL.BuyerSpecification , 
+                      SEL.BuyerSpecification1 , SEL.BuyerSpecification3 , SEL.BuyerSpecification2,
+                        H.CreatedBy, H.CreatedDate,    H.ModifiedDate,  NULL AS SubReportProcList, 'Std_SaleEnquiry_Print.rdl' AS ReportName,  'Sale Enquiry' AS ReportTitle,
+                       PBS.BuyerSpecificationDisplayName, PBS.BuyerSpecification1DisplayName, PBS.BuyerSpecification2DisplayName, PBS.BuyerSpecification3DisplayName, PBS.BuyerSpecification4DisplayName
+                     FROM  Web.SaleEnquiryHeaders H WITH(Nolock)
+                      LEFT JOIN Web.DocumentTypes DT WITH(Nolock) ON DT.DocumentTypeId = H.DocTypeId
+                      LEFT JOIN Web.SaleEnquiryLines L WITH(Nolock) ON L.SaleEnquiryHeaderId = H.SaleEnquiryHeaderId
+                      LEFT JOIN Web.SaleEnquiryLineExtendeds SEL WITH(Nolock) ON SEL.SaleEnquiryLineId = L.SaleEnquiryLineId
+                      LEFT JOIN Web.People P WITH(Nolock) ON P.PersonID = H.SaleToBuyerId
+                      LEFT JOIN Web.People BP WITH(Nolock) ON BP.PersonID = H.BillToBuyerId
+                      LEFT JOIN Web.Products PD WITH(Nolock) ON PD.ProductId = L.ProductId
+                      LEFT JOIN Web.Units U WITH(Nolock) ON U.UnitId = PD.UnitId
+                      LEFT JOIN Web.Currencies C WITH(Nolock) ON C.ID = H.CurrencyId
+                      LEFT JOIN Web.ShipMethods SM WITH(Nolock) ON SM.ShipMethodId = H.ShipMethodId
+                      LEFT JOIN Web.DeliveryTerms DET WITH(Nolock) ON DET.DeliveryTermsId = H.DeliveryTermsId
+                      LEFT JOIN web.ProductBuyerSettings PBS ON PBS.SiteId = H.SiteId  AND PBS.DivisionId = H.DivisionId
+                     WHERE H.SaleEnquiryHeaderId = " + item + @"
+                     ORDER BY L.SaleEnquiryLineId ";
+
+            ListofQuery QryMain = new ListofQuery();
+            QryMain.Query = QueryMain;
+            QryMain.QueryName = nameof(QueryMain);
+            DocumentPrintData.Add(QryMain);
+
+            
+            return DocumentPrintData;
+
+        }
 
         public ActionResult Import(int id)//Document Type Id
         {

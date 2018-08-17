@@ -32,6 +32,7 @@ namespace Service
         IEnumerable<ComboBoxList> GetCalculationProducts(int id, string term);
         int NextId(int id);
         int PrevId(int id);
+        int MaxId();
     }
 
     public class CalculationLineLedgerAccountService : ICalculationLineLedgerAccountService
@@ -52,6 +53,21 @@ namespace Service
         public CalculationLineLedgerAccount Find(int id)
         {
             return _unitOfWork.Repository<CalculationLineLedgerAccount>().Find(id);
+        }
+
+        public int MaxId()
+        {
+            int temp = 0;
+            IQueryable<CalculationLineLedgerAccount> PC = db.CalculationLineLedgerAccount;
+
+            if (PC.Count() != 0)
+            {
+                temp = (from p in db.CalculationLineLedgerAccount
+                        select p.CalculationLineLedgerAccountId).Max();
+            }
+
+            return temp;
+
         }
         public CalculationLineLedgerAccountViewModel GetCalculationLineLedgerAccount(int id)
         {

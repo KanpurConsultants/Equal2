@@ -405,7 +405,7 @@ namespace Jobs.Controllers
                                      OrderNo = p.JobOrderNo,
                                      JobOrderLineId = p.JobOrderLineId,
                                      OldRate = p.Rate,
-                                     JobWorkerName = p.JobWorker.Person.Name,
+                                     JobWorkerName = p.JobWorker.Name,
                                      ProductName = p.Product.ProductName,
                                      Dimension1Name = p.Dimension1.Dimension1Name,
                                      Dimension2Name = p.Dimension2.Dimension2Name,

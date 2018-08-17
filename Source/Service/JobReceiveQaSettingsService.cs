@@ -41,10 +41,19 @@ namespace Service
 
         public JobReceiveQASettings GetJobReceiveQASettingsForDocument(int DocTypeId,int DivisionId,int SiteId)
         {
-            return (from p in db.JobReceiveQASettings
+            JobReceiveQASettings temp;
+            temp = (from p in db.JobReceiveQASettings
                     where p.DocTypeId == DocTypeId && p.DivisionId == DivisionId && p.SiteId == SiteId
                     select p
                         ).FirstOrDefault();
+
+            if (temp == null)
+                temp = (from p in db.JobReceiveQASettings
+                        where p.DocTypeId == null && p.DivisionId == null && p.SiteId == null
+                        select p
+            ).FirstOrDefault();
+
+            return temp;
         }
 
 

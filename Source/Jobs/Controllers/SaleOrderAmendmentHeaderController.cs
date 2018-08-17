@@ -18,6 +18,7 @@ using Reports.Controllers;
 using Reports.Reports;
 using System.Configuration;
 using Model.ViewModels;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -89,7 +90,7 @@ namespace Jobs.Controllers
         {
             ViewBag.Name = new DocumentTypeService(_unitOfWork).Find(id).DocumentTypeName;
             ViewBag.id = id;
-            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(TransactionDocCategoryConstants.SaleOrderAmendment).ToList();
+            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(DocumentCategoryConstants.SaleOrderAmendment.DocumentCategoryName).ToList();
         }
 
         public ActionResult Index_PendingToSubmit(int id)

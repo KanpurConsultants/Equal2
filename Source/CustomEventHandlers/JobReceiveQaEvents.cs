@@ -47,7 +47,7 @@ namespace Jobs.Controllers
             //              }).FirstOrDefault();
 
             //int DocTypeId = (from D in db.DocumentType
-            //                where D.DocumentTypeName == TransactionDoctypeConstants.JobQC
+            //                where D.DocumentTypeName == DocumentTypeConstants.JobQC
             //                select new { DocTypeId = D.DocumentTypeId }).FirstOrDefault().DocTypeId;
 
             //int DyeingProcessId = (from P in db.Process

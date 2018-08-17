@@ -32,16 +32,16 @@ namespace Core.Common
         Percentage=2,
         Na=3,
     }
-    public class ChargeConstants
-    {
-        public const string Incentive = "Incentive";
-        public const string Penalty = "Penalty";
-    }
+    //public class ChargeConstants
+    //{
+        //public const string Incentive = "Incentive";
+        //public const string Penalty = "Penalty";
+    //}
 
-    public class ChargeTypeConstants
-    {
-        public const string SalesTaxableAmount = "Sales Taxable Amount";
-    }
+    //public class ChargeTypeConstants
+    //{
+        //public const string SalesTaxableAmount = "Sales Taxable Amount";
+    //}
 
     public enum DivisionEnum
     {

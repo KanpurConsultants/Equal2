@@ -278,18 +278,18 @@ namespace Jobs.Controllers
                     temp.ObjectState = Model.ObjectState.Modified;
                     _MaterialPlanHeaderService.Update(temp);
 
-                    PurchaseIndentHeader ExistingIndent = new PurchaseIndentHeaderService(_unitOfWork).GetPurchaseIndentForMaterialPlan(temp.MaterialPlanHeaderId);
+                    //PurchaseIndentHeader ExistingIndent = new PurchaseIndentHeaderService(_unitOfWork).GetPurchaseIndentForMaterialPlan(temp.MaterialPlanHeaderId);
 
                     ProdOrderHeader ExistingProdOrder = new ProdOrderHeaderService(_unitOfWork).GetProdOrderForMaterialPlan(temp.MaterialPlanHeaderId);
 
-                    if (ExistingIndent != null)
-                    {
-                        ExistingIndent.ModifiedBy = User.Identity.Name;
-                        ExistingIndent.ModifiedDate = DateTime.Now;
-                        ExistingIndent.Remark = temp.Remark;
-                        ExistingIndent.ObjectState = Model.ObjectState.Added;
-                        new PurchaseIndentHeaderService(_unitOfWork).Update(ExistingIndent);
-                    }
+                    //if (ExistingIndent != null)
+                    //{
+                    //    ExistingIndent.ModifiedBy = User.Identity.Name;
+                    //    ExistingIndent.ModifiedDate = DateTime.Now;
+                    //    ExistingIndent.Remark = temp.Remark;
+                    //    ExistingIndent.ObjectState = Model.ObjectState.Added;
+                    //    new PurchaseIndentHeaderService(_unitOfWork).Update(ExistingIndent);
+                    //}
 
                     if (ExistingProdOrder != null)
                     {
@@ -528,7 +528,7 @@ namespace Jobs.Controllers
 
 
                 List<ProdOrderLine> ProdOrderLines = new List<ProdOrderLine>();
-                List<PurchaseIndentLine> PurchaseIndentLines = new List<PurchaseIndentLine>();
+                //List<PurchaseIndentLine> PurchaseIndentLines = new List<PurchaseIndentLine>();
 
 
                 var materialplanline = new MaterialPlanLineService(_unitOfWork).GetMaterialPlanForDelete(vm.id).ToList();
@@ -567,20 +567,20 @@ namespace Jobs.Controllers
 
 
                     //Deleting PurchaseIndentLines & Headers
-                    PurchaseIndentLines = new PurchaseIndentLineService(_unitOfWork).GetPurchaseIndentLineForMaterialPlan(item.MaterialPlanLineId).ToList();
-                    foreach (var item2 in PurchaseIndentLines)
-                    {
+                    //PurchaseIndentLines = new PurchaseIndentLineService(_unitOfWork).GetPurchaseIndentLineForMaterialPlan(item.MaterialPlanLineId).ToList();
+                    //foreach (var item2 in PurchaseIndentLines)
+                    //{
 
-                        LogList.Add(new LogTypeViewModel
-                        {
-                            ExObj = item2,
-                        });
+                    //    LogList.Add(new LogTypeViewModel
+                    //    {
+                    //        ExObj = item2,
+                    //    });
 
-                        item2.ObjectState = Model.ObjectState.Deleted;
-                        //new PurchaseIndentLineService(_unitOfWork).Delete(item2);
-                        db.PurchaseIndentLine.Attach(item2);
-                        db.PurchaseIndentLine.Remove(item2);
-                    }
+                    //    item2.ObjectState = Model.ObjectState.Deleted;
+                    //    //new PurchaseIndentLineService(_unitOfWork).Delete(item2);
+                    //    db.PurchaseIndentLine.Attach(item2);
+                    //    db.PurchaseIndentLine.Remove(item2);
+                    //}
 
 
                     //Deleting MaterialplanforSaleOrder
@@ -659,19 +659,19 @@ namespace Jobs.Controllers
                     db.ProdOrderHeader.Remove(item2);
 
                 }
-                var PurchaseIndentHeaders = new PurchaseIndentHeaderService(_unitOfWork).GetPurchaseIndentListForMAterialPlan(vm.id).ToList();
-                foreach (var item2 in PurchaseIndentHeaders)
-                {
-                    LogList.Add(new LogTypeViewModel
-                    {
-                        ExObj = item2,
-                    });
+                //var PurchaseIndentHeaders = new PurchaseIndentHeaderService(_unitOfWork).GetPurchaseIndentListForMAterialPlan(vm.id).ToList();
+                //foreach (var item2 in PurchaseIndentHeaders)
+                //{
+                //    LogList.Add(new LogTypeViewModel
+                //    {
+                //        ExObj = item2,
+                //    });
 
-                    item2.ObjectState = Model.ObjectState.Deleted;
-                    //new PurchaseIndentHeaderService(_unitOfWork).Delete(item2.PurchaseIndentHeaderId);
-                    db.PurchaseIndentHeader.Attach(item2);
-                    db.PurchaseIndentHeader.Remove(item2);
-                }
+                //    item2.ObjectState = Model.ObjectState.Deleted;
+                //    //new PurchaseIndentHeaderService(_unitOfWork).Delete(item2.PurchaseIndentHeaderId);
+                //    db.PurchaseIndentHeader.Attach(item2);
+                //    db.PurchaseIndentHeader.Remove(item2);
+                //}
 
                 //Deleting MaterialPlanForProdORder
                 var MaterialPlanForProdOrder = new MaterialPlanForProdOrderService(_unitOfWork).GetMAterialPlanForProdORderForMaterialPlan(vm.id).ToList();
@@ -970,7 +970,7 @@ namespace Jobs.Controllers
                 if (User.Identity.Name == pd.ModifiedBy || UserRoles.Contains("Admin"))
                 {
                     SqlParameter SqlMaterialPlanHeaderId = new SqlParameter("@MaterialPlanHeaderId", Id);
-                    db.Database.SqlQuery<int>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_UpdateMaterialPlanForSaleOrder @MaterialPlanHeaderId", SqlMaterialPlanHeaderId).FirstOrDefault();
+                    db.Database.SqlQuery<int>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spMaterialPlanHeaderNewController_Submitted_UpdateMaterialPlanForSaleOrder @MaterialPlanHeaderId", SqlMaterialPlanHeaderId).FirstOrDefault();
 
 
                     pd.Status = (int)StatusConstants.Submitted;

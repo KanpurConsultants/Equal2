@@ -182,7 +182,7 @@ namespace Jobs.Controllers
                     temp.isVisibleAdvance = pt.isVisibleAdvance;
                     temp.isVisibleCurrency = pt.isVisibleCurrency;
                     temp.isVisibleDeliveryTerms = pt.isVisibleDeliveryTerms;
-                    temp.isVisibleDealUnit = pt.isVisibleDealUnit;
+                    //temp.isVisibleDealUnit = pt.isVisibleDealUnit;
                     temp.isVisibleShipMethod = pt.isVisibleShipMethod;
                     temp.isVisibleSpecification = pt.isVisibleSpecification;
                     temp.isVisibleProductCode = pt.isVisibleProductCode;
@@ -347,7 +347,7 @@ namespace Jobs.Controllers
                     temp.isVisibleAdvance = pt.isVisibleAdvance;
                     temp.isVisibleCurrency = pt.isVisibleCurrency;
                     temp.isVisibleDeliveryTerms = pt.isVisibleDeliveryTerms;
-                    temp.isVisibleDealUnit = pt.isVisibleDealUnit;
+                    //temp.isVisibleDealUnit = pt.isVisibleDealUnit;
                     temp.isVisibleShipMethod = pt.isVisibleShipMethod;
                     temp.isVisibleSpecification = pt.isVisibleSpecification;
                     temp.isVisibleProductCode = pt.isVisibleProductCode;

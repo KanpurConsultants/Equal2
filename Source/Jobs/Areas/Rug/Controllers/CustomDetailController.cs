@@ -11,10 +11,11 @@ using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
 using AutoMapper;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Model.ViewModel;
 using System.Xml.Linq;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -101,7 +102,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CustomDetail);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.CustomDetail.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -116,7 +117,7 @@ namespace Jobs.Areas.Rug.Controllers
 
         private void PrepareViewBag(CustomDetailViewModel s)
         {
-            ViewBag.DocTypeList = new DocumentTypeService(_unitOfWork).GetDocumentTypeList(TransactionDocCategoryConstants.CustomDetail);
+            ViewBag.DocTypeList = new DocumentTypeService(_unitOfWork).GetDocumentTypeList(DocumentCategoryConstants.CustomDetail.DocumentCategoryName);
         }
 
         // GET: /CustomDetail/Create
@@ -171,7 +172,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CustomDetail).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.CustomDetail.DocumentTypeName).DocumentTypeId,
                         DocId = CustomDetail.CustomDetailId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -218,7 +219,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CustomDetail).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.CustomDetail.DocumentTypeName).DocumentTypeId,
                         DocId = CustomDetail.CustomDetailId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -318,7 +319,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                 LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                 {
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CustomDetail).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.CustomDetail.DocumentTypeName).DocumentTypeId,
                     DocId = CustomDetail.CustomDetailId,
                     ActivityType = (int)ActivityTypeContants.Deleted,
                     UserRemark = vm.Reason,
@@ -354,7 +355,7 @@ namespace Jobs.Areas.Rug.Controllers
                     CreatedDate = DateTime.Now,
                     DocId = pd.CustomDetailId,                    
                     Narration = "Packing no" + pd.DocNo + " submitted.",
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.Packing).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.Packing.DocumentCategoryName).DocumentTypeId,
 
                 };
                 _ActivityLogService.Create(al);
@@ -400,7 +401,7 @@ namespace Jobs.Areas.Rug.Controllers
                     CreatedDate = DateTime.Now,
                     DocId = pd.CustomDetailId,                    
                     Narration = "Packing No" + pd.DocNo + " submitted.",
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.Packing).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.Packing.DocumentCategoryName).DocumentTypeId,
 
                 };
                 _ActivityLogService.Create(al);

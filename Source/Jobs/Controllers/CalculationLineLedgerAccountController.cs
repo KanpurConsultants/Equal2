@@ -11,7 +11,7 @@ using Data.Models;
 using Service;
 using Data.Infrastructure;
 using Core.Common;
-using System.Net.Http;
+using Jobs.Constants.DocumentType;
 using System.IO;
 using System.Web.UI.WebControls;
 using System.Web.UI;
@@ -86,6 +86,7 @@ namespace Jobs.Controllers
             {
                 if (svm.CalculationLineLedgerAccountId <= 0)
                 {
+                    s.CalculationLineLedgerAccountId = new CalculationLineLedgerAccountService(_unitOfWork).MaxId() + 1;
                     s.CreatedDate = DateTime.Now;
                     s.ModifiedDate = DateTime.Now;
                     s.CreatedBy = User.Identity.Name;
@@ -149,7 +150,7 @@ namespace Jobs.Controllers
                         return PartialView("_Create", svm);
                     }
 
-                   // LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.CalculationLedgerAccount).DocumentTypeId,
+                   // LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.CalculationLedgerAccount.DocumentTypeName).DocumentTypeId,
                    //temp1.CalculationLineLedgerAccountId,
                    //null,
                    //(int)ActivityTypeContants.Modified,
@@ -159,7 +160,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CalculationLedgerAccount).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.CalculationLedgerAccount.DocumentTypeName).DocumentTypeId,
                         DocId = temp1.CalculationLineLedgerAccountId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -227,7 +228,7 @@ namespace Jobs.Controllers
                 return PartialView("_Create", vm);
             }
 
-            //LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.CalculationLedgerAccount).DocumentTypeId,
+            //LogActivity.LogActivityDetail(new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.CalculationLedgerAccount.DocumentTypeName).DocumentTypeId,
             //     CalculationLineLedgerAccount.CalculationLineLedgerAccountId,
             //     null,
             //     (int)ActivityTypeContants.Deleted,
@@ -238,7 +239,7 @@ namespace Jobs.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.CalculationLedgerAccount).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.CalculationLedgerAccount.DocumentTypeName).DocumentTypeId,
                 DocId = CalculationLineLedgerAccount.CalculationLineLedgerAccountId,
                 ActivityType = (int)ActivityTypeContants.Deleted,
                 UserRemark = "",

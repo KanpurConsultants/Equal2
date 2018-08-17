@@ -37,7 +37,7 @@ namespace Model.Models
         [ForeignKey("JobWorker")]
         [Display(Name = "JobWorker Name")]
         public int JobWorkerId { get; set; }
-        public virtual JobWorker JobWorker { get; set; }
+        public virtual Person JobWorker { get; set; }
 
         [MaxLength(10)]
         public string RequestBy { get; set; }

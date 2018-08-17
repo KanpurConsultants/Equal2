@@ -108,7 +108,7 @@ namespace Service
                         ReviewCount = p.ReviewCount,
                         ReviewBy = p.ReviewBy,
                         Reviewed = (SqlFunctions.CharIndex(Uname, p.ReviewBy) > 0),
-                        BuyerName=p.Buyer.Person.Name,
+                        BuyerName=p.Buyer.Name,
                     }
                         );
 

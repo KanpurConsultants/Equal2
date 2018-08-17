@@ -45,7 +45,7 @@ namespace Jobs.Controllers
             var ProductNatureName = new ProductNatureService(_unitOfWork).Find(Id);
             if (ProductNatureName != null)
             {
-                ViewBag.productNatureName = ProductNatureName.ProductNatureName;
+                ViewBag.productNatureName = ProductNatureName;
             }
             else
             {

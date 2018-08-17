@@ -3,7 +3,7 @@ using System.Linq;
 using Data;
 using Data.Infrastructure;
 using Model.Models;
-
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using System;
 using Model;
@@ -13,6 +13,7 @@ using Model.ViewModel;
 using System.Data.Entity.SqlServer;
 using Model.ViewModels;
 using System.Data.SqlClient;
+using Jobs.Constants.ProductNature;
 
 namespace Service
 {
@@ -512,7 +513,7 @@ namespace Service
             List<string> UserRoles = (List<string>)System.Web.HttpContext.Current.Session["Roles"];
 
             int AdditionalChargesProductNatureId = 0;
-            var ProductNature = (from Pt in db.ProductNature where Pt.ProductNatureName == ProductNatureConstants.AdditionalCharges select Pt).FirstOrDefault();
+            var ProductNature = (from Pt in db.ProductNature where Pt.ProductNatureName == ProductNatureConstants.AdditionalCharges.ProductNatureName select Pt).FirstOrDefault();
             if (ProductNature != null)
                 AdditionalChargesProductNatureId = ProductNature.ProductNatureId;
 
@@ -636,7 +637,7 @@ namespace Service
                         join pr in db.PersonRole on p.PersonID equals pr.PersonId into PersonRoleTable
                         from PersonRoleTab in PersonRoleTable.DefaultIfEmpty()
                         //where PersonProcessTab.ProcessId == settings.ProcessId
-                        where (DocTypeName == TransactionDoctypeConstants.ExpenseVoucher ? 1 == 1 : (ProcessId == null ? PersonProcessTab.ProcessId == settings.ProcessId : PersonProcessTab.ProcessId == ProcessId))
+                        where (DocTypeName == DocumentTypeConstants.ExpenseVoucher.DocumentTypeName ? 1 == 1 : (ProcessId == null ? PersonProcessTab.ProcessId == settings.ProcessId : PersonProcessTab.ProcessId == ProcessId))
                         && (string.IsNullOrEmpty(term) ? 1 == 1 : (p.Name.ToLower().Contains(term.ToLower()) || p.Code.ToLower().Contains(term.ToLower()) || p.Suffix.ToLower().Contains(term.ToLower())))
                         && (string.IsNullOrEmpty(settings.filterPersonRoles) ? 1 == 1 : PersonRoles.Contains(PersonRoleTab.RoleDocTypeId.ToString()))
                         && BusinessEntityTab.DivisionIds.IndexOf(DivIdStr) != -1

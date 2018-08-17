@@ -286,7 +286,7 @@ namespace Jobs.Controllers
 
                     saleinvoiceheaderdetail.BillToBuyerId = vm.BillToBuyerId;
                     saleinvoiceheaderdetail.SaleToBuyerId = vm.SaleToBuyerId;
-                    saleinvoiceheaderdetail.CurrencyId = vm.CurrencyId;
+                    saleinvoiceheaderdetail.CurrencyId = (int)vm.CurrencyId;
                     saleinvoiceheaderdetail.DocDate = vm.DocDate;
                     saleinvoiceheaderdetail.DocNo = vm.DocNo;
                     saleinvoiceheaderdetail.FinancierId = vm.FinancierId;

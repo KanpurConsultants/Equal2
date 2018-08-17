@@ -23,6 +23,7 @@ using DocumentEvents;
 using Reports.Reports;
 using Reports.Controllers;
 using Model.ViewModels;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -668,14 +669,14 @@ namespace Jobs.Controllers
                             DocDate.SqlDbType = SqlDbType.DateTime;
                             SqlParameter Godown = new SqlParameter("@GodownId", pd.GodownId);
                             //SqlParameter DocType = new SqlParameter("@DocTypeId", pd.DocTypeId);
-                            SqlParameter DocType = new SqlParameter("@DocTypeId", new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.GatePass).DocumentTypeId);
+                            SqlParameter DocType = new SqlParameter("@DocTypeId", new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.GatePass.DocumentCategoryName).DocumentTypeId);
                             GatePassHeader GPHeader = new GatePassHeader();
                             GPHeader.CreatedBy = User.Identity.Name;
                             GPHeader.CreatedDate = DateTime.Now;
                             GPHeader.DivisionId = pd.DivisionId;
                             GPHeader.DocDate = DateTime.Now.Date;
                             GPHeader.DocNo = db.Database.SqlQuery<string>("Web.GetNewDocNoGatePass @DocTypeId, @DocDate, @GodownId ", DocType, DocDate, Godown).FirstOrDefault();
-                            GPHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.GatePass).DocumentTypeId;
+                            GPHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.GatePass.DocumentCategoryName).DocumentTypeId;
                             GPHeader.ModifiedBy = User.Identity.Name;
                             GPHeader.ModifiedDate = DateTime.Now;
                             GPHeader.Remark = pd.Remark;
@@ -1434,7 +1435,7 @@ namespace Jobs.Controllers
                 int PK = 0;
 
                 var Settings = new JobReceiveSettingsService(_unitOfWork).GetJobReceiveSettingsForDocument(DocTypeId, DivisionId, SiteId);
-                var GatePassDocTypeID = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.GatePass).DocumentTypeId;
+                var GatePassDocTypeID = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.GatePass.DocumentCategoryName).DocumentTypeId;
                 string JobHeaderIds = "";
 
                 try

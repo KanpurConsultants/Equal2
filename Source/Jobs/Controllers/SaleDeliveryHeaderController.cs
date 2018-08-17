@@ -7,7 +7,7 @@ using Data.Models;
 using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using Model.ViewModels;
 using System.Configuration;
@@ -21,7 +21,7 @@ using Reports.Reports;
 using System.Data;
 using SaleDeliveryDocumentEvents;
 using CustomEventArgs;
-
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -907,14 +907,14 @@ namespace Jobs.Controllers
                                 SqlParameter DocDate = new SqlParameter("@DocDate", DateTime.Now.Date);
                                 DocDate.SqlDbType = SqlDbType.DateTime;
                                 SqlParameter Godown = new SqlParameter("@GodownId", GodownId);
-                                SqlParameter DocType = new SqlParameter("@DocTypeId", new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.GatePass).DocumentTypeId);
+                                SqlParameter DocType = new SqlParameter("@DocTypeId", new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.GatePass.DocumentTypeName).DocumentTypeId);
                                 GatePassHeader GPHeader = new GatePassHeader();
                                 GPHeader.CreatedBy = User.Identity.Name;
                                 GPHeader.CreatedDate = DateTime.Now;
                                 GPHeader.DivisionId = Dh.DivisionId;
                                 GPHeader.DocDate = DateTime.Now.Date;
                                 GPHeader.DocNo = db.Database.SqlQuery<string>("Web.GetNewDocNoGatePass @DocTypeId, @DocDate, @GodownId ", DocType, DocDate, Godown).FirstOrDefault();
-                                GPHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.GatePass).DocumentTypeId;
+                                GPHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.GatePass.DocumentTypeName).DocumentTypeId;
                                 GPHeader.ModifiedBy = User.Identity.Name;
                                 GPHeader.ModifiedDate = DateTime.Now;
                                 GPHeader.Remark = Dh.Remark;
@@ -1072,7 +1072,7 @@ namespace Jobs.Controllers
                 int DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
                 int PK = 0;               
                 var Settings = new SaleDeliverySettingService(_unitOfWork).GetSaleDeliverySettingForDocument(DocTypeId, DivisionId, SiteId);
-                var GatePassDocTypeID = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.GatePass).DocumentTypeId;
+                var GatePassDocTypeID = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.GatePass.DocumentCategoryName).DocumentTypeId;
                 string SaleDeliveryIds = "";
                 try
                 {

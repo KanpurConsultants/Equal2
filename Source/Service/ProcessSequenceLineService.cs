@@ -9,7 +9,7 @@ using System;
 using Model;
 using System.Threading.Tasks;
 using Data.Models;
-
+using Jobs.Constants.DocumentType;
 
 namespace Service
 {
@@ -140,7 +140,7 @@ namespace Service
         public IQueryable<ProcessSequenceLineIndexViewModel> GetProcessSequenceLineListForProductCollectionIndex(int ProductCollectionId)
         {
 
-            int RefDocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.ProductCollection).DocumentTypeId;
+            int RefDocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.ProductCategory.DocumentTypeName).DocumentTypeId;
 
             var temp = from L in db.ProcessSequenceLine
                        join P in db.Process on L.ProcessId equals P.ProcessId into ProcessTable

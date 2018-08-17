@@ -11,11 +11,12 @@ using Data.Models;
 using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Core.Common;
 using System.Data.Entity.Validation;
 using System.Data.Entity.Infrastructure;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -177,7 +178,7 @@ namespace Jobs.Areas.Rug.Controllers
                     DocId = vm.id,
                     UserRemark = vm.Reason,
                     Narration = "Product collection is deleted with Name:" + temp.ServiceTaxCategoryName,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrder).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrder.DocumentCategoryName).DocumentTypeId,
                     UploadDate = DateTime.Now,
 
                 };
@@ -240,7 +241,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ServiceTaxCategory );
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ServiceTaxCategory.DocumentTypeName );
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 

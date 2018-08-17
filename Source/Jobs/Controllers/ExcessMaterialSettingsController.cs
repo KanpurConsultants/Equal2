@@ -115,7 +115,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = pt.DocTypeId,
+                        DocTypeId = (int)pt.DocTypeId,
                         DocId = pt.ExcessMaterialSettingsId,
                         ActivityType = (int)ActivityTypeContants.SettingsAdded,
                     }));
@@ -174,7 +174,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = temp.DocTypeId,
+                        DocTypeId = (int)temp.DocTypeId,
                         DocId = temp.ExcessMaterialSettingsId,
                         ActivityType = (int)ActivityTypeContants.SettingsModified,
                         xEModifications = Modifications,

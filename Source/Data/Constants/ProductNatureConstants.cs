@@ -43,5 +43,13 @@ namespace Jobs.Constants.ProductNature
             public const int ProductNatureId = 7;
             public const string ProductNatureName = "Ledger Account";
         }
+
+        public static class AdditionalCharges
+        {
+            public const int ProductNatureId = 8;
+            public const string ProductNatureName = "Addition/Deduction";
+        }
+
+        
     }
 }

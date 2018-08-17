@@ -5,7 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using AutoMapper;
 using System.Configuration;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Components.ExceptionHandlers;
 using Components.Logging;
 using System.Xml.Linq;
@@ -80,7 +80,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         public ActionResult Create()//DocumentTypeId
         {
             PaymentModeViewModel vm = new PaymentModeViewModel();
-            vm.DocTypeId = DocumentTypeIdConstants.PaymentMode;
+            vm.DocTypeId = DocumentTypeConstants.PaymentMode.DocumentTypeId;
             ViewBag.Mode = "Add";
             return View("Create", vm);
         }
@@ -139,7 +139,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.PaymentMode,
+                        DocTypeId = DocumentTypeConstants.PaymentMode.DocumentTypeId,
                         DocId = paymentmode.PaymentModeId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -212,7 +212,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.PaymentMode,
+                        DocTypeId = DocumentTypeConstants.PaymentMode.DocumentTypeId,
                         DocId = paymentmode.PaymentModeId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -390,7 +390,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         [HttpGet]
         public ActionResult Report()
         {
-            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeIdConstants.PaymentMode);
+            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeConstants.PaymentMode.DocumentTypeId);
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["CustomizeDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
         }
     }

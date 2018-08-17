@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using System.Configuration;
-using Presentation;
+using Jobs.Constants.RugDocumentType;
 using Model.ViewModel;
 using Reports.Controllers;
 
@@ -121,7 +121,7 @@ namespace Jobs.Areas.Rug.Controllers
             p.SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
             List<string> UserRoles = (List<string>)System.Web.HttpContext.Current.Session["Roles"];
 
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.TraceMapReceive).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.TraceMapReceive.DocumentTypeName).DocumentTypeId;
             p.DocTypeId = DocTypeId;
 
             //Getting Settings

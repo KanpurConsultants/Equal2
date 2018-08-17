@@ -3,13 +3,14 @@ using System.Linq;
 using Data;
 using Data.Infrastructure;
 using Model.Models;
-
+using Jobs.Constants.LedgerAccount;
 using Core.Common;
 using System;
 using Model;
 using System.Threading.Tasks;
 using Data.Models;
 using Model.ViewModel;
+using Jobs.Constants.ChargeType;
 
 namespace Service
 {
@@ -231,7 +232,7 @@ namespace Service
                                       where C.ChargeGroupPersonId == ChargeGroupPersonId && C.ChargeGroupProductId == ChargeGroupProductId
                                       select C;
 
-            int ChargeLedgerAccountId = new LedgerAccountService(_unitOfWork).Find(LedgerAccountConstants.Charge).LedgerAccountId;
+            int ChargeLedgerAccountId = new LedgerAccountService(_unitOfWork).Find(LedgerAccountConstants.CHARGE.LedgerAccountName).LedgerAccountId;
 
             return (from p in db.CalculationProduct
                     join t in db.CalculationLineLedgerAccount.Where(m => m.DocTypeId == DocumentTypeId && m.SiteId == SiteId && m.DivisionId == DivisionId) on p.CalculationProductId equals t.CalculationProductId into table1
@@ -292,7 +293,7 @@ namespace Service
             }
 
 
-            int ChargeLedgerAccountId = new LedgerAccountService(_unitOfWork).Find(LedgerAccountConstants.Charge).LedgerAccountId;
+            int ChargeLedgerAccountId = new LedgerAccountService(_unitOfWork).Find(LedgerAccountConstants.CHARGE.LedgerAccountName).LedgerAccountId;
 
             int? ProductLedgerAccountId = null;
             int? ChargeTypeId_SalesTaxTaxableAmount = null;
@@ -302,7 +303,7 @@ namespace Service
                 if (ProductLedgerAccount != null)
                     ProductLedgerAccountId = ProductLedgerAccount.LedgerAccountId;
 
-                var ChargeType_SalesTaxTaxableAmount = (from Ct in db.ChargeType where Ct.ChargeTypeName == ChargeTypeConstants.SalesTaxableAmount select Ct).FirstOrDefault();
+                var ChargeType_SalesTaxTaxableAmount = (from Ct in db.ChargeType where Ct.ChargeTypeName == ChargeTypeConstants.TaxableAmount.ChargeTypeName select Ct).FirstOrDefault();
                 if (ChargeType_SalesTaxTaxableAmount != null)
                     ChargeTypeId_SalesTaxTaxableAmount = ChargeType_SalesTaxTaxableAmount.ChargeTypeId;
             }

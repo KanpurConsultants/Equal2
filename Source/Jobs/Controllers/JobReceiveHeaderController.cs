@@ -8,7 +8,7 @@ using Data.Models;
 using Service;
 using Data.Infrastructure;
 using Presentation.ViewModels;
-using Presentation;
+using Jobs.Constants.RugDocumentType;
 using Core.Common;
 using Model.ViewModel;
 using AutoMapper;
@@ -848,7 +848,7 @@ namespace Jobs.Controllers
                             var MainJobRec = (from p in db.JobReceiveLine
                                               join t in db.JobReceiveHeader on p.JobReceiveHeaderId equals t.JobReceiveHeaderId
                                               join d in db.DocumentType on t.DocTypeId equals d.DocumentTypeId
-                                              where p.ProductUidId == Productuid && t.SiteId != temp.SiteId && d.DocumentTypeName == TransactionDoctypeConstants.WeavingBazar
+                                              where p.ProductUidId == Productuid && t.SiteId != temp.SiteId && d.DocumentTypeName == RugDocumentTypeConstants.WeavingReceive.DocumentTypeName
                                               && p.LockReason != null
                                               select p).ToList().LastOrDefault();
 
@@ -1627,7 +1627,7 @@ namespace Jobs.Controllers
             String QueryMain;
 
             QueryMain = @"DECLARE @TotalAmount DECIMAL 
-                    SET @TotalAmount = (SELECT Max(Amount) FROM web.JobReceiveheaderCharges WHERE HeaderTableId = " + item + @" AND ChargeId = 34 ) 
+                    SET @TotalAmount = 0  
 	
 	                DECLARE @DocDate DATETIME
                     SET @DocDate = (SELECT DocDate FROM Web.JobReceiveHeaders WHERE JobReceiveHeaderid = " + item + @") 

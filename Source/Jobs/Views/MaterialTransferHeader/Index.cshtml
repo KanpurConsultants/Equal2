@@ -29,10 +29,9 @@
         <div class="panel-info">
         <div class="btn-group">
             @Html.ActionLink(" ", "Create", "MaterialTransferHeader", new { @id = @ViewBag.id }, new { @class = "cbtn btn-circle glyphicon glyphicon-plus toolbar", @title = "Add New", @data_toggle = "tooltip" })
-            @if (ViewBag.SqlProcDocumentPrint !=null)
-            {
+
             @Html.ActionLink(" ", "GeneratePrints", "MaterialTransferHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-print toolbar", @title = "Print", @data_toggle = "tooltip", @id = "PrintRecordI", target = "_blank" })
-            }
+
             @if (ViewBag.SqlProcGatePass !=null)
             {
             @Html.ActionLink(" ", "GenerateGatePass", "MaterialTransferHeader", null, new { @class = "cbtn btn-circle glyphicon glyphicon-log-out toolbar", @title = "GatePass", @data_toggle = "tooltip", @id = "GenGatePassI" })

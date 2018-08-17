@@ -180,7 +180,7 @@ namespace Jobs.Controllers
                 int SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
                 int DivisionId = (int)System.Web.HttpContext.Current.Session["DivisionId"];
 
-                var Settings = new ProdOrderHeaderService(_unitOfWork).GetProductionOrderSettingsForDocument(DocTypeId, DivisionId, SiteId);
+                var Settings = new ProdOrderSettingsService(_unitOfWork).GetProdOrderSettingsForDocument(DocTypeId, DivisionId, SiteId);
 
                 if (new RolePermissionService(_unitOfWork).IsActionAllowed(UserRoles, DocTypeId, null, this.ControllerContext.RouteData.Values["controller"].ToString(), "GeneratePrints") == false)
                 {
@@ -212,8 +212,16 @@ namespace Jobs.Controllers
 
                         if (pd.Status == (int)StatusConstants.Drafted || pd.Status == (int)StatusConstants.Import || pd.Status == (int)StatusConstants.Modified)
                         {
-                            //LogAct(item.ToString());
-                            Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
+                            if (Settings.SqlProcDocumentPrint == null || Settings.SqlProcDocumentPrint == "")
+                            {
+                                ProdOrderCancelHeaderRDL cr = new ProdOrderCancelHeaderRDL();
+                                drp.CreateRDLFile("Std_ProdOrderCancel_Print", cr.Create_Std_ProdOrderCancel_Print());
+                                List<ListofQuery> QueryList = new List<ListofQuery>();
+                                QueryList = DocumentPrintData(item);
+                                Pdf = drp.DocumentPrint_New(QueryList, User.Identity.Name);
+                            }
+                            else
+                                Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
 
                             PdfStream.Add(Pdf);
                         }
@@ -251,6 +259,59 @@ namespace Jobs.Controllers
 
             }
             return Json(new { success = "Error", data = "No Records Selected." }, JsonRequestBehavior.AllowGet);
+
+        }
+
+        private List<ListofQuery> DocumentPrintData(int item)
+        {
+            List<ListofQuery> DocumentPrintData = new List<ListofQuery>();
+            String QueryMain;
+
+            QueryMain = @"SELECT H.ProdOrderCancelHeaderId,H.DocTypeId,H.DocNo,DocIdCaption + ' No' AS DocIdCaption,
+                        H.SiteId,H.DivisionId,H.DocDate,DTS.DocIdCaption + ' Date' AS DocIdCaptionDate, DocIdCaption+'Due Date' AS DocIdCaptionDueDate,
+                        H.Remark,DT.DocumentTypeShortName,H.ModifiedBy + ' ' + Replace(replace(convert(NVARCHAR, H.ModifiedDate, 106), ' ', '/'), '/20', '/') + substring(convert(NVARCHAR, H.ModifiedDate), 13, 7) AS ModifiedBy,
+                        H.ModifiedDate,(CASE WHEN Isnull(H.Status, 0)= 0 OR Isnull(H.Status, 0)= 8 THEN 0 ELSE 1 END)  AS Status,
+                        DTS.ContraDocTypeCaption, NULL ProductUidName, MH.DocNo ReferenceNo, NULL AS LotNo,
+                        VDC.CompanyName, DTS.PartyCaption AS  PartyCaption,DTS.SignatoryMiddleCaption,DTS.SignatoryRightCaption,
+                        --Line Table
+                        PD.ProductName,DTS.ProductCaption,U.UnitName,U.DecimalPlaces,DTS.DealQtyCaption,L.Qty, 
+                        D1.Dimension1Name,DTS.Dimension1Caption,D2.Dimension2Name,DTS.Dimension2Caption,D3.Dimension3Name,DTS.Dimension3Caption,D4.Dimension4Name,DTS.Dimension4Caption,
+                        (CASE WHEN DTS.PrintSpecification > 0 THEN ML.Specification ELSE '' END)  AS Specification, DTS.SpecificationCaption,DTS.SignatoryleftCaption, ML.Remark AS LineRemark,
+                        (SELECT TOP 1 SalesTaxProductCodeCaption FROM web.SiteDivisionSettings WHERE H.DocDate BETWEEN StartDate AND IsNull(EndDate, getdate()) AND SiteId = H.SiteId AND DivisionId = H.DivisionId)  AS SalesTaxProductCodeCaption,
+                        (CASE WHEN DTS.PrintProductGroup > 0 THEN isnull(PG.ProductGroupName, '') ELSE '' END)+(CASE WHEN DTS.PrintProductdescription > 0 THEN isnull(',' + PD.Productdescription, '') ELSE '' END) AS ProductGroupName,
+                            DTS.ProductGroupCaption,  DTS.ProductUidCaption,NULL AS SubReportProcList,
+                        (CASE WHEN Isnull(H.Status, 0) = 0 OR Isnull(H.Status, 0) = 8 THEN 'Provisional ' + isnull(DT.PrintTitle, DT.DocumentTypeName) ELSE isnull(DT.PrintTitle, DT.DocumentTypeName) END) AS ReportTitle,
+                        'Std_ProdOrderCancel_Print.rdl' AS ReportName
+                        FROM Web.ProdOrderCancelHeaders H WITH(Nolock)
+                        LEFT JOIN Web.ProdOrderCancelLines L WITH(Nolock) ON L.ProdOrderCancelHeaderId = H.ProdOrderCancelHeaderId
+                        LEFT JOIN web.DocumentTypes DT WITH(Nolock) ON DT.DocumentTypeId = H.DocTypeId
+                        LEFT JOIN Web._DocumentTypeSettings DTS WITH(Nolock) ON DTS.DocumentTypeId = DT.DocumentTypeId
+                        LEFT JOIN Web.ProdOrderSettings JOS WITH(Nolock) ON JOS.DocTypeId = DT.DocumentTypeId AND JOS.SiteId = H.SiteId AND JOS.DivisionId = H.DivisionId
+                        LEFT JOIN web.ViewDivisionCompany VDC WITH(Nolock) ON VDC.DivisionId = H.DivisionId
+                        LEFT JOIN web.ProdOrderLines ML ON ML.ProdOrderLineId = L.ProdOrderLineId
+                        LEFT JOIN web.ProdOrderHeaders MH ON MH.ProdOrderHeaderId = ML.ProdOrderHeaderId
+                        LEFT JOIN Web.Sites SI WITH(Nolock) ON SI.SiteId = H.SiteId
+                        LEFT JOIN Web.Divisions DIV WITH(Nolock) ON DIV.DivisionId = H.DivisionId
+                        LEFT JOIN Web.Companies Com ON Com.CompanyId = DIV.CompanyId
+                        LEFT JOIN Web.Cities CC WITH(Nolock) ON CC.CityId = Com.CityId
+                        LEFT JOIN Web.States CS WITH(Nolock) ON CS.StateId = CC.StateId
+                        LEFT JOIN web.Products PD WITH(Nolock) ON PD.ProductId = ML.ProductId
+                        LEFT JOIN web.ProductGroups PG WITH(Nolock) ON PG.ProductGroupId = PD.ProductGroupid
+                        LEFT JOIN Web.Dimension1 D1 WITH(Nolock) ON D1.Dimension1Id = ML.Dimension1Id
+                        LEFT JOIN web.Dimension2 D2 WITH(Nolock) ON D2.Dimension2Id = ML.Dimension2Id
+                        LEFT JOIN web.Dimension3 D3 WITH(Nolock) ON D3.Dimension3Id = ML.Dimension3Id
+                        LEFT JOIN Web.Dimension4 D4 WITH(nolock) ON D4.Dimension4Id = ML.Dimension4Id
+                        LEFT JOIN web.Units U WITH(Nolock) ON U.UnitId = PD.UnitId
+                        WHERE H.ProdOrderCancelHeaderId =  " + item + @" 
+                        ORDER BY L.ProdOrderCancelLineId";
+
+            ListofQuery QryMain = new ListofQuery();
+            QryMain.Query = QueryMain;
+            QryMain.QueryName = nameof(QueryMain);
+            DocumentPrintData.Add(QryMain);
+
+
+            return DocumentPrintData;
 
         }
 

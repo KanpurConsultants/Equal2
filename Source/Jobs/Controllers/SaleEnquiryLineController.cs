@@ -230,6 +230,9 @@ namespace Jobs.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult _CreatePost(SaleEnquiryLineViewModel svm)
         {
+            svm.DealQty = svm.Qty;
+            svm.UnitId = svm.DealUnitId;
+            svm.UnitConversionMultiplier = 1;
             SaleEnquiryLine s = Mapper.Map<SaleEnquiryLineViewModel, SaleEnquiryLine>(svm);
             SaleEnquiryHeader temp = new SaleEnquiryHeaderService(_unitOfWork).Find(s.SaleEnquiryHeaderId);
             //if (Command == "Submit" && (s.ProductId == 0))
@@ -237,7 +240,7 @@ namespace Jobs.Controllers
 
             if (svm.BuyerSpecification != null || svm.BuyerSpecification1 != null || svm.BuyerSpecification2 != null || svm.BuyerSpecification3 != null)
             {
-                SaleEnquiryLine es = new SaleEnquiryLineService(_unitOfWork).Find_WithLineDetail(svm.SaleEnquiryHeaderId, svm.BuyerSpecification, svm.BuyerSpecification1, svm.BuyerSpecification2, svm.BuyerSpecification3);
+                SaleEnquiryLine es = new SaleEnquiryLineService(_unitOfWork).Find_WithLineDetail(svm.SaleEnquiryHeaderId, svm.BuyerSpecification, svm.BuyerSpecification1, svm.BuyerSpecification2, svm.BuyerSpecification3, svm.DueDate);
 
                 if (es != null)
                 {
@@ -248,7 +251,6 @@ namespace Jobs.Controllers
 
                 }
             }
-
 
 
 
@@ -370,9 +372,9 @@ namespace Jobs.Controllers
                     temp1.Dimension4Id = svm.Dimension4Id;
                     temp1.Qty = svm.Qty;
                     temp1.UnitId = svm.UnitId;
-                    temp1.DealQty = svm.DealQty ?? 0;
+                    //temp1.DealQty = svm.DealQty ?? 0;
                     temp1.DealUnitId = svm.DealUnitId;
-                    temp1.UnitConversionMultiplier = svm.UnitConversionMultiplier;
+                    //temp1.UnitConversionMultiplier = svm.UnitConversionMultiplier;
                     temp1.Rate = svm.Rate ?? 0;
                     temp1.Amount = svm.Amount ?? 0;
                     temp1.Remark = svm.Remark;

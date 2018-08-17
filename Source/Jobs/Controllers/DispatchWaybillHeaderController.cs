@@ -12,11 +12,11 @@ using Jobs.Helpers;
 using Data.Infrastructure;
 using Presentation.ViewModels;
 using AutoMapper;
-using Presentation;
+using Jobs.Constants.DocumentType;
 using Reports.Controllers;
 using Model.ViewModel;
 using Reports.Reports;
-
+using Jobs.Constants.DocumentCategory;
 
 
 namespace Jobs.Controllers
@@ -253,7 +253,7 @@ namespace Jobs.Controllers
                     DispatchWaybillHeader.ModifiedBy = User.Identity.Name;
                     DispatchWaybillHeader.Status = (int)StatusConstants.Drafted;
 
-                    if (svm.DocTypeId == new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.PreDispatchWaybill).DocumentTypeId)
+                    if (svm.DocTypeId == new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.PreDispatchWaybill.DocumentTypeName).DocumentTypeId)
                     {
                         DispatchWaybillHeader.IsPreCarriage = true;
                     }
@@ -569,7 +569,7 @@ namespace Jobs.Controllers
                     DocId = DispatchWaybillHeader.DispatchWaybillHeaderId,
                     UserRemark = vm.Reason,
                     Narration = "Sale Order is deleted with DocNo:" + DispatchWaybillHeader.DocNo,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.Packing).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.Packing.DocumentCategoryName).DocumentTypeId,
                     UploadDate = DateTime.Now,
 
                 };

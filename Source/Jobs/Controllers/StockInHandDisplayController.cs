@@ -52,7 +52,7 @@ namespace Jobs.Controllers
             ViewBag.RouteId = Routeid.ToString();
             if (ProductNatureName != null)
             {
-                ViewBag.productNatureName = ProductNatureName.ProductNatureName;               
+                ViewBag.productNatureName = ProductNatureName;               
             }
             else
             {
@@ -552,7 +552,7 @@ namespace Jobs.Controllers
 
         //    //LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
         //    //{
-        //    //    DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.Report).DocumentTypeId,
+        //    //    DocTypeId = new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.Report.DocumentTypeName).DocumentTypeId,
         //    //    DocId = header.ReportHeaderId,
         //    //    ActivityType = (int)ActivityTypeContants.Report,
         //    //    xEModifications = s,

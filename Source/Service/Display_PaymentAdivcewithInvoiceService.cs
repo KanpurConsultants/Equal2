@@ -186,7 +186,7 @@ namespace Service
                         LEFT JOIN web.JobOrderHeaders JOH WITH (Nolock) ON JOH.JobOrderHeaderId=JOL.JobOrderHeaderId
                         LEFT JOIN web.Products PD WITH (Nolock) ON PD.ProductId=JOL.ProductId
                         LEFT JOIN web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId=PD.ProductGroupId
-                        LEFT JOIN web.ViewRugSize VRS with (nolock) on VRS.ProductId=PD.ProductId
+                        LEFT JOIN web.ViewProductSize VRS with (nolock) on VRS.ProductId=PD.ProductId
                         LEFT JOIN Web.SalesTaxProductCodes STC WITH (Nolock) ON STC.SalesTaxProductCodeId= IsNull(PD.SalesTaxProductCodeId, PG.DefaultSalesTaxProductCodeId)
 						LEFT JOIN Web.Units U WITH (Nolock) ON U.UnitId=L.DealUnitId
 						LEFT JOIN 

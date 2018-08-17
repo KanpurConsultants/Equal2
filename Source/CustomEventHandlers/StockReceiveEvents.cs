@@ -3,7 +3,7 @@ using Data.Models;
 using System;
 using StockReceiveDocumentEvents;
 using System.Linq;
-using Core.Common;
+using Jobs.Constants.RugDocumentType;
 using Model.Models;
 
 namespace Jobs.Controllers
@@ -40,7 +40,7 @@ namespace Jobs.Controllers
             StockHeader Header = db.StockHeader.Find(Id);
             string DocumentTypeName = db.DocumentType.Find(Header.DocTypeId).DocumentTypeName;
 
-            if (DocumentTypeName == TransactionDoctypeConstants.MaterialReturnFromWeaving)
+            if (DocumentTypeName == RugDocumentTypeConstants.MaterialReturnFromWeaving.DocumentTypeName)
             {
                 var StockHeader = (from p in DbContext.StockHeader
                                    where p.StockHeaderId == EventArgs.DocId
@@ -48,7 +48,7 @@ namespace Jobs.Controllers
                                 ).FirstOrDefault();
 
                 var DocType = (from p in DbContext.DocumentType
-                               where p.DocumentTypeName == TransactionDoctypeConstants.MaterialReturnFromWeaving
+                               where p.DocumentTypeName == RugDocumentTypeConstants.MaterialReturnFromWeaving.DocumentTypeName
                                select p).FirstOrDefault();
 
                 var IssueLineCostCenterRecords = (from p in DbContext.StockLine
@@ -111,7 +111,7 @@ namespace Jobs.Controllers
                             ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.MaterialReturnFromWeaving
+                           where p.DocumentTypeName == RugDocumentTypeConstants.MaterialReturnFromWeaving.DocumentTypeName
                            select p).FirstOrDefault();
 
             if (DocType != null)
@@ -167,7 +167,7 @@ namespace Jobs.Controllers
                             ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.MaterialReturnFromWeaving
+                           where p.DocumentTypeName == RugDocumentTypeConstants.MaterialReturnFromWeaving.DocumentTypeName
                            select p).FirstOrDefault();
 
             if (DocType != null)
@@ -243,7 +243,7 @@ namespace Jobs.Controllers
                             ).FirstOrDefault();
 
             var DocType = (from p in DbContext.DocumentType
-                           where p.DocumentTypeName == TransactionDoctypeConstants.MaterialReturnFromWeaving
+                           where p.DocumentTypeName == RugDocumentTypeConstants.MaterialReturnFromWeaving.DocumentTypeName
                            select p).FirstOrDefault();
 
             if (DocType != null)

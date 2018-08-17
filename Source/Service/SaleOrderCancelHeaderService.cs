@@ -186,7 +186,7 @@ namespace Service
                                             SaleOrderCancelHeaderId = H.SaleOrderCancelHeaderId,
                                             DocNo = H.DocNo,
                                             DocDate = H.DocDate,
-                                            BuyerName = H.Buyer.Person.Name,
+                                            BuyerName = H.Buyer.Name,
                                             ReasonName = H.Reason.ReasonName,
                                             Remark = H.Remark,
                                             Status = H.Status,

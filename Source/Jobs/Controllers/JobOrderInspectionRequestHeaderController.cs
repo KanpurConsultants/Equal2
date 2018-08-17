@@ -168,14 +168,16 @@ namespace Jobs.Controllers
 
             vm.DocTypeId = id;
 
-            int? JwID = new JobWorkerService(_unitOfWork).GetJobWorkerForUser(User.Identity.GetUserId());
+            //int? JwID = new JobWorkerService(_unitOfWork).GetJobWorkerForUser(User.Identity.GetUserId());
+
+            int? JwID = new PersonService(_unitOfWork).FindByName(User.Identity.Name).PersonID;
 
             vm.RequestBy = ((JwID == null || JwID == 0) ? "Company" : "JobWorker");
 
             if (JwID != null)
                 vm.JobWorkerId = JwID.Value;
 
-            vm.ProcessId = settings.ProcessId;
+            vm.ProcessId = (int)settings.ProcessId;
             vm.DocDate = DateTime.Now;
             vm.DocNo = new DocumentTypeService(_unitOfWork).FGetNewDocNo("DocNo", ConfigurationManager.AppSettings["DataBaseSchema"] + ".JobOrderInspectionRequestHeaders", vm.DocTypeId, vm.DocDate, vm.DivisionId, vm.SiteId);
             vm.DocumentTypeSettings = new DocumentTypeSettingsService(_unitOfWork).GetDocumentTypeSettingsForDocument(vm.DocTypeId);

@@ -60,8 +60,6 @@ namespace Model.Models
         public int? GodownId { get; set; }
         public virtual Godown Godown { get; set; }
 
-
-        [Required]
         public string PlanType { get; set; }
 
         [ForeignKey("WizardMenu")]

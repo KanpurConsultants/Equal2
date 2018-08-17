@@ -14,6 +14,7 @@ namespace Model.Models
         {
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Key]
         public int ProcessId { get; set; }
 
@@ -38,6 +39,14 @@ namespace Model.Models
         [ForeignKey("Department"), Display(Name = "Department")]
         public int? DepartmentId { get; set; }
         public virtual Department Department { get; set; }
+
+
+        [ForeignKey("SalesTaxProductCode"), Display(Name = "SalesTaxProductCode")]
+        public int? SalesTaxProductCodeId { get; set; }
+        public virtual SalesTaxProductCode SalesTaxProductCode { get; set; }
+
+        [MaxLength(20, ErrorMessage = "GSTPrintDesc cannot exceed 50 characters")]
+        public string GSTPrintDesc { get; set; }
 
         [Display(Name = "Is Affected Stock ?")]
         public Boolean IsAffectedStock { get; set; }

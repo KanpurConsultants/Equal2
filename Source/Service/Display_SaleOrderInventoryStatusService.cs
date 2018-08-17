@@ -296,7 +296,7 @@ namespace Service
                     LEFT JOIN web.FinishedProduct FP WITH (Nolock) ON FP.ProductId = P.ProductId 
                     LEFT JOIN web.Colours C WITH (Nolock) ON C.ColourId = FP.ColourId 
                     LEFT JOIN web.ProductQualities PQ WITH (Nolock) ON PQ.ProductQualityId = FP.ProductQualityId 
-                    LEFT JOIN web.ViewRugSize VRS ON VRS.ProductId = P.ProductId 
+                    LEFT JOIN web.ViewProductSize VRS ON VRS.ProductId = P.ProductId 
                     LEFT JOIN #FProdOrder PO WITH (Nolock) ON PO.SaleOrderLineId=H.SaleOrderLineId
                     LEFT JOIN #FProdOrderBalance POB ON  POB.ProdOrderHeaderId=PO.ProdOrderHeaderId AND H.ProductId=POB.ProductId
                     LEFT JOIN #OrderIssue OrderIssue ON OrderIssue.ProdOrderHeaderId=PO.ProdOrderHeaderId AND H.ProductId=OrderIssue.ProductId
@@ -416,7 +416,7 @@ namespace Service
                     LEFT JOIN web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId = P.ProductGroupId
                     LEFT JOIN web.FinishedProduct FP WITH (Nolock) ON FP.ProductId = P.ProductId 
                     LEFT JOIN web.Colours C WITH (Nolock) ON C.ColourId = FP.ColourId 
-                    LEFT JOIN web.ViewRugSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
+                    LEFT JOIN web.ViewProductSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
                     LEFT JOIN web.ProductCategories PC WITH (Nolock) ON PC.ProductCategoryId = P.ProductCategoryId 
                     LEFT JOIN web.ProductQualities PQ WITH (Nolock) ON PQ.ProductQualityId = FP.ProductQualityId  
                     LEFT JOIN web.SaleOrderLines SOL WITH (Nolock) ON SOL.SaleOrderLineId = PU.SaleOrderLineId
@@ -526,7 +526,7 @@ namespace Service
                     LEFT JOIN web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId = P.ProductGroupId
                     LEFT JOIN web.FinishedProduct FP WITH (Nolock) ON FP.ProductId = P.ProductId 
                     LEFT JOIN web.Colours C WITH (Nolock) ON C.ColourId = FP.ColourId 
-                    LEFT JOIN web.ViewRugSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
+                    LEFT JOIN web.ViewProductSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
                     LEFT JOIN web.ProductCategories PC WITH (Nolock) ON PC.ProductCategoryId = P.ProductCategoryId 
                     LEFT JOIN web.ProductQualities PQ WITH (Nolock) ON PQ.ProductQualityId = FP.ProductQualityId 
                     LEFT JOIN web.MaterialPlanForSaleOrders MOS WITH (Nolock) ON MOS.MaterialPlanLineId = POL1.MaterialPlanLineId  
@@ -634,7 +634,7 @@ namespace Service
                     LEFT JOIN web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId = P.ProductGroupId
                     LEFT JOIN web.FinishedProduct FP WITH (Nolock) ON FP.ProductId = P.ProductId 
                     LEFT JOIN web.Colours C WITH (Nolock) ON C.ColourId = FP.ColourId 
-                    LEFT JOIN web.ViewRugSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
+                    LEFT JOIN web.ViewProductSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
                     LEFT JOIN web.ProductCategories PC WITH (Nolock) ON PC.ProductCategoryId = P.ProductCategoryId 
                     LEFT JOIN web.ProductQualities PQ WITH (Nolock) ON PQ.ProductQualityId = FP.ProductQualityId 
                     LEFT JOIN web.SaleOrderLines SOL WITH (Nolock) ON SOL.SaleOrderLineId = PL.SaleOrderLineId
@@ -741,7 +741,7 @@ namespace Service
                     LEFT JOIN web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId = P.ProductGroupId
                     LEFT JOIN web.FinishedProduct FP WITH (Nolock) ON FP.ProductId = P.ProductId 
                     LEFT JOIN web.Colours C WITH (Nolock) ON C.ColourId = FP.ColourId 
-                    LEFT JOIN web.ViewRugSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
+                    LEFT JOIN web.ViewProductSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
                     LEFT JOIN web.ProductCategories PC WITH (Nolock) ON PC.ProductCategoryId = P.ProductCategoryId 
                     LEFT JOIN web.ProductQualities PQ WITH (Nolock) ON PQ.ProductQualityId = FP.ProductQualityId 
                     LEFT JOIN web.MaterialPlanForSaleOrders MOS WITH (Nolock) ON MOS.MaterialPlanLineId = POL1.MaterialPlanLineId  
@@ -848,7 +848,7 @@ namespace Service
                     LEFT JOIN web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId = P.ProductGroupId
                     LEFT JOIN web.FinishedProduct FP WITH (Nolock) ON FP.ProductId = P.ProductId 
                     LEFT JOIN web.Colours C WITH (Nolock) ON C.ColourId = FP.ColourId 
-                    LEFT JOIN web.ViewRugSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
+                    LEFT JOIN web.ViewProductSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
                     LEFT JOIN web.ProductCategories PC WITH (Nolock) ON PC.ProductCategoryId = P.ProductCategoryId 
                     LEFT JOIN web.ProductQualities PQ WITH (Nolock) ON PQ.ProductQualityId = FP.ProductQualityId 
                     LEFT JOIN web.SaleOrderLines SOL WITH (Nolock) ON SOL.SaleOrderLineId = PL.SaleOrderLineId
@@ -955,7 +955,7 @@ namespace Service
                     LEFT JOIN web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId = P.ProductGroupId
                     LEFT JOIN web.FinishedProduct FP WITH (Nolock) ON FP.ProductId = P.ProductId 
                     LEFT JOIN web.Colours C WITH (Nolock) ON C.ColourId = FP.ColourId 
-                    LEFT JOIN web.ViewRugSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
+                    LEFT JOIN web.ViewProductSize VRS WITH (Nolock) ON VRS.ProductId = P.ProductId 
                     LEFT JOIN web.ProductCategories PC WITH (Nolock) ON PC.ProductCategoryId = P.ProductCategoryId 
                     LEFT JOIN web.ProductQualities PQ WITH (Nolock) ON PQ.ProductQualityId = FP.ProductQualityId 
                     LEFT JOIN web.SaleOrderLines SOL WITH (Nolock) ON SOL.SaleOrderLineId = PL.SaleOrderLineId

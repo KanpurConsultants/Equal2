@@ -21,8 +21,9 @@ using System.Text;
 using System.Configuration;
 using System.IO;
 using ImageResizer;
-using Model.ViewModel;
+using Jobs.Constants.DocumentType;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -98,7 +99,7 @@ namespace Jobs.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Supplier);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Supplier.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -536,7 +537,7 @@ namespace Jobs.Controllers
                         Narration = logstring.ToString(),
                         CreatedDate = DateTime.Now,
                         CreatedBy = User.Identity.Name,
-                        //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.ProcessSequence).DocumentTypeId,
+                        //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.ProcessSequence).DocumentTypeId,
 
                     };
                     new ActivityLogService(_unitOfWork).Create(al);
@@ -734,7 +735,7 @@ namespace Jobs.Controllers
                     DocId = vm.id,
                     UserRemark = vm.Reason,
                     Narration = "Supplier is deleted with Name:" + person.Name,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrder).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrder.DocumentCategoryName).DocumentTypeId,
                     UploadDate = DateTime.Now,
 
                 };

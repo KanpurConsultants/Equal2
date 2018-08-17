@@ -35,6 +35,8 @@ namespace Model.Models
         public int? ProductUidId { get; set; }
         public virtual ProductUid ProductUid { get; set; }
 
+        public int? DocLineId { get; set; }
+
         [Display(Name = "Process")]
         [ForeignKey("Process")]
         public int? ProcessId { get; set; }

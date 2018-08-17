@@ -570,72 +570,72 @@ namespace Jobs.Controllers
                         {
 
 
-                            PurchaseIndentHeader ExistingIndent = new PurchaseIndentHeaderService(_unitOfWork).GetPurchaseIndentForMaterialPlan(pt.MaterialPlanHeaderId);
-                            int PurchaseIndentSr = 1;
-                            if (ExistingIndent == null)
-                            {
+                            //PurchaseIndentHeader ExistingIndent = new PurchaseIndentHeaderService(_unitOfWork).GetPurchaseIndentForMaterialPlan(pt.MaterialPlanHeaderId);
+                            //int PurchaseIndentSr = 1;
+                            //if (ExistingIndent == null)
+                            //{
 
-                                PurchaseIndentHeader indentHeader = new PurchaseIndentHeader();
-                                indentHeader.CreatedBy = User.Identity.Name;
-                                indentHeader.CreatedDate = DateTime.Now;
-                                indentHeader.DivisionId = pt.DivisionId;
-                                indentHeader.DocDate = pt.DocDate;
-                                indentHeader.DocNo = pt.DocNo;
-                                indentHeader.DocTypeId = Settings.DocTypePurchaseIndentId.Value;
-                                indentHeader.ModifiedBy = User.Identity.Name;
-                                indentHeader.MaterialPlanHeaderId = pt.MaterialPlanHeaderId;
-                                indentHeader.ModifiedDate = DateTime.Now;
-                                indentHeader.Remark = pt.Remark;
-                                indentHeader.SiteId = pt.SiteId;
-                                //indentHeader.Status = header.Status;
-                                indentHeader.Status = (int)StatusConstants.System;
-                                indentHeader.DepartmentId = (int)DepartmentConstants.Production;
-                                indentHeader.ObjectState = Model.ObjectState.Added;
-                                context.PurchaseIndentHeader.Add(indentHeader);
-                                foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
-                                {
-                                    PurchaseIndentLine indentLine = new PurchaseIndentLine();
-                                    indentLine.CreatedBy = User.Identity.Name;
-                                    indentLine.CreatedDate = DateTime.Now;
-                                    indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
-                                    indentLine.ModifiedBy = User.Identity.Name;
-                                    indentLine.ModifiedDate = DateTime.Now;
-                                    indentLine.ProductId = item.ProductId;
-                                    indentLine.Dimension1Id = item.Dimension1Id;
-                                    indentLine.Dimension2Id = item.Dimension2Id;
-                                    indentLine.Specification = item.Specification;
-                                    indentLine.PurchaseIndentHeaderId = indentHeader.PurchaseIndentHeaderId;
-                                    indentLine.Qty = item.PurchPlanQty;
-                                    indentLine.Sr = PurchaseIndentSr++;
-                                    indentLine.Remark = item.Remark;
-                                    indentLine.ObjectState = Model.ObjectState.Added;
-                                    context.PurchaseIndentLine.Add(indentLine);
-                                }
+                            //    PurchaseIndentHeader indentHeader = new PurchaseIndentHeader();
+                            //    indentHeader.CreatedBy = User.Identity.Name;
+                            //    indentHeader.CreatedDate = DateTime.Now;
+                            //    indentHeader.DivisionId = pt.DivisionId;
+                            //    indentHeader.DocDate = pt.DocDate;
+                            //    indentHeader.DocNo = pt.DocNo;
+                            //    indentHeader.DocTypeId = Settings.DocTypePurchaseIndentId.Value;
+                            //    indentHeader.ModifiedBy = User.Identity.Name;
+                            //    indentHeader.MaterialPlanHeaderId = pt.MaterialPlanHeaderId;
+                            //    indentHeader.ModifiedDate = DateTime.Now;
+                            //    indentHeader.Remark = pt.Remark;
+                            //    indentHeader.SiteId = pt.SiteId;
+                            //    //indentHeader.Status = header.Status;
+                            //    indentHeader.Status = (int)StatusConstants.System;
+                            //    indentHeader.DepartmentId = (int)DepartmentConstants.Production;
+                            //    indentHeader.ObjectState = Model.ObjectState.Added;
+                            //    context.PurchaseIndentHeader.Add(indentHeader);
+                            //    foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
+                            //    {
+                            //        PurchaseIndentLine indentLine = new PurchaseIndentLine();
+                            //        indentLine.CreatedBy = User.Identity.Name;
+                            //        indentLine.CreatedDate = DateTime.Now;
+                            //        indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
+                            //        indentLine.ModifiedBy = User.Identity.Name;
+                            //        indentLine.ModifiedDate = DateTime.Now;
+                            //        indentLine.ProductId = item.ProductId;
+                            //        indentLine.Dimension1Id = item.Dimension1Id;
+                            //        indentLine.Dimension2Id = item.Dimension2Id;
+                            //        indentLine.Specification = item.Specification;
+                            //        indentLine.PurchaseIndentHeaderId = indentHeader.PurchaseIndentHeaderId;
+                            //        indentLine.Qty = item.PurchPlanQty;
+                            //        indentLine.Sr = PurchaseIndentSr++;
+                            //        indentLine.Remark = item.Remark;
+                            //        indentLine.ObjectState = Model.ObjectState.Added;
+                            //        context.PurchaseIndentLine.Add(indentLine);
+                            //    }
 
-                            }
-                            else
-                            {
-                                PurchaseIndentSr = new PurchaseIndentLineService(_unitOfWork).GetMaxSr(ExistingIndent.PurchaseIndentHeaderId);
-                                foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
-                                {
-                                    PurchaseIndentLine indentLine = new PurchaseIndentLine();
-                                    indentLine.CreatedBy = User.Identity.Name;
-                                    indentLine.CreatedDate = DateTime.Now;
-                                    indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
-                                    indentLine.ModifiedBy = User.Identity.Name;
-                                    indentLine.Specification = item.Specification;
-                                    indentLine.ModifiedDate = DateTime.Now;
-                                    indentLine.ProductId = item.ProductId;
-                                    indentLine.Dimension1Id = item.Dimension1Id;
-                                    indentLine.Dimension2Id = item.Dimension2Id;
-                                    indentLine.Sr = PurchaseIndentSr++;
-                                    indentLine.PurchaseIndentHeaderId = ExistingIndent.PurchaseIndentHeaderId;
-                                    indentLine.Qty = item.PurchPlanQty;
-                                    indentLine.Remark = item.Remark;
-                                    indentLine.ObjectState = Model.ObjectState.Added;
-                                    context.PurchaseIndentLine.Add(indentLine);
-                                }
-                            }
+                            //}
+                            //else
+                            //{
+                            //    PurchaseIndentSr = new PurchaseIndentLineService(_unitOfWork).GetMaxSr(ExistingIndent.PurchaseIndentHeaderId);
+                            //    foreach (var item in context.MaterialPlanLine.Local.Where(m => m.PurchPlanQty > 0))
+                            //    {
+                            //        PurchaseIndentLine indentLine = new PurchaseIndentLine();
+                            //        indentLine.CreatedBy = User.Identity.Name;
+                            //        indentLine.CreatedDate = DateTime.Now;
+                            //        indentLine.MaterialPlanLineId = item.MaterialPlanLineId;
+                            //        indentLine.ModifiedBy = User.Identity.Name;
+                            //        indentLine.Specification = item.Specification;
+                            //        indentLine.ModifiedDate = DateTime.Now;
+                            //        indentLine.ProductId = item.ProductId;
+                            //        indentLine.Dimension1Id = item.Dimension1Id;
+                            //        indentLine.Dimension2Id = item.Dimension2Id;
+                            //        indentLine.Sr = PurchaseIndentSr++;
+                            //        indentLine.PurchaseIndentHeaderId = ExistingIndent.PurchaseIndentHeaderId;
+                            //        indentLine.Qty = item.PurchPlanQty;
+                            //        indentLine.Remark = item.Remark;
+                            //        indentLine.ObjectState = Model.ObjectState.Added;
+                            //        context.PurchaseIndentLine.Add(indentLine);
+                            //    }
+                            //}
 
 
 

@@ -15,6 +15,9 @@ using Model.ViewModel;
 using System.Data.SqlClient;
 using Reports.Controllers;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
+using Jobs.Constants.RugDocumentType;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -57,7 +60,7 @@ namespace Jobs.Areas.Rug.Controllers
             int SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
             List<string> UserRoles = (List<string>)System.Web.HttpContext.Current.Session["Roles"];
 
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.DyeingOrder).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeName).DocumentTypeId;
 
             //Getting Settings
             var settings = new JobOrderSettingsService(_unitOfWork).GetJobOrderSettingsForDocument(DocTypeId, DivisionId, SiteId);
@@ -82,9 +85,9 @@ namespace Jobs.Areas.Rug.Controllers
 
             SqlParameter SqlParameterSiteId = new SqlParameter("@SiteId", SiteId);
             SqlParameter SqlParameterDivisionId = new SqlParameter("@DivisionId", DivisionId);
-            SqlParameter SqlParameterDocCateId = new SqlParameter("@DocumentCategoryId", new DocumentCategoryService(_unitOfWork).FindByName(TransactionDocCategoryConstants.DyeingPlanning).DocumentCategoryId);
+            SqlParameter SqlParameterDocCateId = new SqlParameter("@DocumentCategoryId", new DocumentCategoryService(_unitOfWork).FindByName(DocumentCategoryConstants.Planning.DocumentCategoryName).DocumentCategoryId);
 
-            IEnumerable<DyeingOrderWizardViewModel> FgetProdOrders = db.Database.SqlQuery<DyeingOrderWizardViewModel>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_DyeingOrderWizard_Step1 @SiteId, @DivisionId, @DocumentCategoryId", SqlParameterSiteId, SqlParameterDivisionId, SqlParameterDocCateId).ToList();
+            IEnumerable<DyeingOrderWizardViewModel> FgetProdOrders = db.Database.SqlQuery<DyeingOrderWizardViewModel>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spDyeingOrderWizardController_PendingProdOrders_DyeingOrderWizard_Step1 @SiteId, @DivisionId, @DocumentCategoryId", SqlParameterSiteId, SqlParameterDivisionId, SqlParameterDocCateId).ToList();
 
 
             return Json(new { data = FgetProdOrders }, JsonRequestBehavior.AllowGet);
@@ -95,7 +98,7 @@ namespace Jobs.Areas.Rug.Controllers
         {
             SqlParameter SqlParameterProdOrderLineId = new SqlParameter("@ProdOrderLineIdList", ProdOrderLineId);
 
-            IEnumerable<DyeingOrderWizardViewModel> FgetProdOrders = db.Database.SqlQuery<DyeingOrderWizardViewModel>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_DyeingOrderWizard_Step2 @ProdOrderLineIdList", SqlParameterProdOrderLineId).ToList();
+            IEnumerable<DyeingOrderWizardViewModel> FgetProdOrders = db.Database.SqlQuery<DyeingOrderWizardViewModel>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spDyeingOrderWizardController_SelectedProdOrderList_DyeingOrderWizard_Step2 @ProdOrderLineIdList", SqlParameterProdOrderLineId).ToList();
             return Json(new { Success = true, Data = FgetProdOrders }, JsonRequestBehavior.AllowGet);
         }
 
@@ -112,7 +115,7 @@ namespace Jobs.Areas.Rug.Controllers
             int SiteId = (int)System.Web.HttpContext.Current.Session["SiteId"];
             List<string> UserRoles = (List<string>)System.Web.HttpContext.Current.Session["Roles"];
 
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.DyeingOrder).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeName).DocumentTypeId;
 
             //Getting Settings
             var settings = new JobOrderSettingsService(_unitOfWork).GetJobOrderSettingsForDocument(DocTypeId, DivisionId, SiteId);
@@ -204,7 +207,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             List<string> UserRoles = (List<string>)System.Web.HttpContext.Current.Session["Roles"];
 
-            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.DyeingOrder).DocumentTypeId;
+            int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.JobOrderDyeing.DocumentTypeName).DocumentTypeId;
 
             //Getting Settings
             var settings = new JobOrderSettingsService(_unitOfWork).GetJobOrderSettingsForDocument(DocTypeId, p.DivisionId, p.SiteId);
@@ -394,7 +397,7 @@ namespace Jobs.Areas.Rug.Controllers
                 {
                     cHeader.DocNo = s.DocNo;
                     cHeader.DocDate = s.DocDate;
-                    cHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDoctypeConstants.DyeingPlanCancel).DocumentTypeId;
+                    cHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ManufacturingPlanCancel.DocumentTypeName).DocumentTypeId;
                     cHeader.DivisionId = s.DivisionId;
                     cHeader.SiteId = s.SiteId;
                     cHeader.CreatedBy = User.Identity.Name;
@@ -661,18 +664,21 @@ namespace Jobs.Areas.Rug.Controllers
                 }
                 else
                 {
-                    decimal StatExtRate = ProdOrderIds.Min(m => m.Rate) > 0 ? ProdOrderIds.Min(m => m.Rate) : svm.Rate;
+                    if (Settings.isVisibleCostCenter==true)
+                    {
+                        decimal StatExtRate = ProdOrderIds.Min(m => m.Rate) > 0 ? ProdOrderIds.Min(m => m.Rate) : svm.Rate;
 
-                    var CostCenterStatusExtended = db.CostCenterStatusExtended.Find(s.CostCenterId);
-                    CostCenterStatusExtended.Rate = (!CostCenterStatusExtended.Rate.HasValue || CostCenterStatusExtended.Rate == 0)
-                        ? StatExtRate
-                        : (CostCenterStatusExtended.Rate > StatExtRate ? StatExtRate : CostCenterStatusExtended.Rate);
-                    CostCenterStatusExtended.OrderQty = CostCenterStatusExtended.OrderQty ?? 0 + OrderQty;
-                    CostCenterStatusExtended.OrderDealQty = CostCenterStatusExtended.OrderDealQty ?? 0 + OrderDealQty;
-                    //CostCenterStatusExtended.BOMQty = CostCenterStatusExtended.BOMQty ?? 0 + BomQty;
+                        var CostCenterStatusExtended = db.CostCenterStatusExtended.Find(s.CostCenterId);
+                        CostCenterStatusExtended.Rate = (!CostCenterStatusExtended.Rate.HasValue || CostCenterStatusExtended.Rate == 0)
+                            ? StatExtRate
+                            : (CostCenterStatusExtended.Rate > StatExtRate ? StatExtRate : CostCenterStatusExtended.Rate);
+                        CostCenterStatusExtended.OrderQty = CostCenterStatusExtended.OrderQty ?? 0 + OrderQty;
+                        CostCenterStatusExtended.OrderDealQty = CostCenterStatusExtended.OrderDealQty ?? 0 + OrderDealQty;
+                        //CostCenterStatusExtended.BOMQty = CostCenterStatusExtended.BOMQty ?? 0 + BomQty;
 
-                    CostCenterStatusExtended.ObjectState = Model.ObjectState.Modified;
-                    _unitOfWork.Repository<CostCenterStatusExtended>().Update(CostCenterStatusExtended);
+                        CostCenterStatusExtended.ObjectState = Model.ObjectState.Modified;
+                        _unitOfWork.Repository<CostCenterStatusExtended>().Update(CostCenterStatusExtended);
+                    }
                 }
 
                 new ChargesCalculationService(_unitOfWork).CalculateCharges(LineList, s.JobOrderHeaderId, CalculationId, MaxLineId, out LineCharges, out HeaderChargeEdit, out HeaderCharges, "Web.JobOrderHeaderCharges", "Web.JobOrderLineCharges", out PersonCount, s.DocTypeId, s.SiteId, s.DivisionId);

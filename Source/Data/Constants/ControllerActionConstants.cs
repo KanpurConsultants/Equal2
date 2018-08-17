@@ -113,7 +113,7 @@ namespace Jobs.Constants.ControllerAction
         public static class SaleInvoice
         {
             public const int ControllerActionId = 18;
-            public const string ControllerName = "SaleInvoiceHeader";
+            public const string ControllerName = "DirectSaleInvoiceHeader";
             public const string ActionName = "DocumentTypeIndex";
         }
         public static class SaleInvoiceReturn
@@ -268,10 +268,10 @@ namespace Jobs.Constants.ControllerAction
         }
         #endregion
         #region "Planning"
-        public static class SaleOrderPlan
+        public static class Planning
         {
             public const int ControllerActionId = 47;
-            public const string ControllerName = "MaterialPlanHeader";
+            public const string ControllerName = "MaterialPlanHeaderNew";
             public const string ActionName = "DocumentTypeIndex";
         }
         public static class ProductionOrder
@@ -327,7 +327,7 @@ namespace Jobs.Constants.ControllerAction
         {
             public const int ControllerActionId = 61;
             public const string ControllerName = "Product";
-            public const string ActionName = "MaterialIndex";
+            public const string ActionName = "Index";
         }
         public static class ProductGroup
         {
@@ -464,8 +464,8 @@ namespace Jobs.Constants.ControllerAction
         public static class CalculationLedgerAccounts
         {
             public const int ControllerActionId = 84;
-            public const string ControllerName = "CalculationLedgerAccounts";
-            public const string ActionName = "Index";
+            public const string ControllerName = "CalculationHeaderLedgerAccount";
+            public const string ActionName = "HeaderIndex";
         }
         public static class AssignPermissions
         {
@@ -529,5 +529,90 @@ namespace Jobs.Constants.ControllerAction
             public const string ActionName = "Index";
         }
         #endregion
+
+        public static class SaleEnquiryProductMappingWithGrid
+        {
+            public const int ControllerActionId = 95;
+            public const string ControllerName = "SaleEnquiryProductMappingWithGrid";
+            public const string ActionName = "Index";
+        }
+
+        public static class Collection
+        {
+            public const int ControllerActionId = 96;
+            public const string ControllerName = "ProductCollection";
+            public const string ActionName = "ProductTypeIndex";
+        }
+
+        public static class Content
+        {
+            public const int ControllerActionId = 97;
+            public const string ControllerName = "ProductContentHeader";
+            public const string ActionName = "Index";
+        }
+
+        public static class Quality
+        {
+            public const int ControllerActionId = 98;
+            public const string ControllerName = "ProductQuality";
+            public const string ActionName = "Index";
+        }
+        public static class Dimension1
+        {
+            public const int ControllerActionId = 99;
+            public const string ControllerName = "Dimension1";
+            public const string ActionName = "ProductTypeIndex";
+        }
+        public static class Size
+        {
+            public const int ControllerActionId = 100;
+            public const string ControllerName = "Size";
+            public const string ActionName = "Index";
+        }
+
+        
+        public static class ProcessSequenceHeader
+        {
+            public const int ControllerActionId = 101;
+            public const string ControllerName = "ProcessSequenceHeader";
+            public const string ActionName = "Index";
+        }
+        public static class Colour
+        {
+            public const int ControllerActionId = 102;
+            public const string ControllerName = "Colour";
+            public const string ActionName = "Index";
+        }
+        public static class StockBalanceDisplay
+        {
+            public const int ControllerActionId = 103;
+            public const string ControllerName = "Display_StockBalance";
+            public const string ActionName = "Display_StockBalance";
+        }
+
+        public static class TrialBalance
+        {
+            public const int ControllerActionId = 104;
+            public const string ControllerName = "FinancialDisplay";
+            public const string ActionName = "FinancialDisplayLayout";
+        }
+        //public static class DisplayStockBalance
+        //{
+        //    public const int ControllerActionId = 105;
+        //    public const string ControllerName = "Display_StockBalance";
+        //    public const string ActionName = "Display_StockBalance";
+        //}
+        //public static class DisplayStockBalance
+        //{
+        //    public const int ControllerActionId = 106;
+        //    public const string ControllerName = "Display_StockBalance";
+        //    public const string ActionName = "Display_StockBalance";
+        //}
+        //public static class DisplayStockBalance
+        //{
+        //    public const int ControllerActionId = 107;
+        //    public const string ControllerName = "Display_StockBalance";
+        //    public const string ActionName = "Display_StockBalance";
+        //}
     }
 }

@@ -17,7 +17,7 @@ using System.Data.Entity.Validation;
 using System.Data.Entity.Infrastructure;
 using Model.ViewModel;
 using AutoMapper;
-using System.Xml.Linq;
+using Jobs.Constants.DocumentType;
 using Jobs.Helpers;
 
 namespace Jobs.Controllers
@@ -87,7 +87,7 @@ namespace Jobs.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductUid).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductUid.DocumentTypeName).DocumentTypeId,
                         DocId = vm.ProductUIDId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));

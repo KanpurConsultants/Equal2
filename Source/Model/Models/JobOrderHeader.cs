@@ -46,15 +46,15 @@ namespace Model.Models
 
         [ForeignKey("JobWorker"), Display(Name = "Job Worker")]
         public int JobWorkerId { get; set; }
-        public virtual JobWorker JobWorker { get; set; }
+        public virtual Person JobWorker { get; set; }
 
         [ForeignKey("BillToParty"), Display(Name = "Job Worker")]
         public int BillToPartyId { get; set; }
-        public virtual JobWorker BillToParty { get; set; }
+        public virtual Person BillToParty { get; set; }
 
         [ForeignKey("OrderBy"), Display(Name = "Order By")]
         public int? OrderById { get; set; }
-        public virtual Employee OrderBy { get; set; }
+        public virtual Person OrderBy { get; set; }
 
         [ForeignKey("Godown"), Display(Name = "Godown")]
         public int? GodownId { get; set; }

@@ -22,9 +22,7 @@ namespace Model
         DbSet<JobOrderPerk> JobOrderPerk { get; set; }
         DbSet<JobOrderSettings> JobOrderSettings { get; set; }
         DbSet<LedgerSetting> LedgerSetting { get; set; }
-        DbSet<PurchaseOrderSetting> PurchaseOrderSetting { get; set; }
         DbSet<SaleInvoiceSetting> SaleInvoiceSetting { get; set; }
-        DbSet<PurchaseIndentSetting> PurchaseIndentSetting { get; set; }
         DbSet<StockHeaderSettings> MaterialIssueSettings { get; set; }
         DbSet<MaterialReceiveSettings> MaterialReceiveSettings { get; set; }
         DbSet<MaterialRequestSettings> MaterialRequestSettings { get; set; }
@@ -33,16 +31,8 @@ namespace Model
         DbSet<JobConsumptionSettings> JobConsumptionSettings { get; set; }
         DbSet<RateConversionSettings> RateConversionSettings { get; set; }
         DbSet<RequisitionSetting> RequisitionSetting { get; set; }
-        DbSet<PurchaseInvoiceHeaderCharge> PurchaseInvoiceHeaderCharge { get; set; }
-        DbSet<PurchaseInvoiceLineCharge> PurchaseInvoiceLineCharge { get; set; }
-        DbSet<PurchaseInvoiceReturnHeader> PurchaseInvoiceReturnHeader { get; set; }
-        DbSet<PurchaseInvoiceReturnHeaderCharge> PurchaseInvoiceReturnHeaderCharge { get; set; }
-        DbSet<PurchaseInvoiceReturnLine> PurchaseInvoiceReturnLine { get; set; }
-        DbSet<PurchaseInvoiceReturnLineCharge> PurchaseInvoiceReturnLineCharge { get; set; }
         DbSet<SaleInvoiceHeaderCharge> SaleInvoiceHeaderCharge { get; set; }
         DbSet<SaleInvoiceLineCharge> SaleInvoiceLineCharge { get; set; }
-        DbSet<PurchaseOrderHeaderCharge> PurchaseOrderHeaderCharges { get; set; }
-        DbSet<PurchaseOrderLineCharge> PurchaseOrderLineCharge { get; set; }
         DbSet<Route> Route { get; set; }
         DbSet<RouteLine> RouteLine { get; set; }
         DbSet<MenuModule> MenuModule { get; set; }
@@ -58,7 +48,7 @@ namespace Model
         DbSet<Menu> Menu { get; set; }
         DbSet<Agent> Agent { get; set; }
         DbSet<Manufacturer> Manufacturer { get; set; }
-        DbSet<Buyer> Buyer { get; set; }
+        //DbSet<Buyer> Buyer { get; set; }
         DbSet<Supplier> Supplier { get; set; }
         DbSet<City> City { get; set; }
         DbSet<DocumentStatus> DocumentStatus { get; set; }
@@ -92,13 +82,11 @@ namespace Model
         DbSet<JobOrderHeaderStatus> JobOrderHeaderStatus { get; set; }
         DbSet<ProdOrderLineStatus> ProdOrderLineStatus { get; set; }
         DbSet<ProdOrderHeaderStatus> ProdOrderHeaderStatus { get; set; }
-        DbSet<PurchaseOrderLineStatus> PurchaseOrderLineStatus { get; set; }
         DbSet<SaleOrderLineStatus> SaleOrderLineStatus { get; set; }
         DbSet<RequisitionLineStatus> RequisitionLineStatus { get; set; }
-        DbSet<PurchaseOrderHeaderStatus> PurchaseOrderHeaderStatus { get; set; }
         DbSet<ChargeGroupProduct> ChargeGroupProduct { get; set; }
         DbSet<ChargeGroupPerson> ChargeGroupPerson { get; set; }
-        DbSet<JobWorker> JobWorker { get; set; }
+        //DbSet<JobWorker> JobWorker { get; set; }
         //DbSet<Machine> Machine { get; set; }
         DbSet<Process> Process { get; set; }
         DbSet<Reason> Reason { get; set; }
@@ -152,7 +140,7 @@ namespace Model
         DbSet<ProductAttributes> ProductAttributes { get; set; }
         DbSet<BomDetail> BomDetail { get; set; }
         DbSet<ProductCategory> ProductCategory { get; set; }
-        DbSet<ProductCollection> ProductCollections { get; set; }
+        //DbSet<ProductCollection> ProductCollections { get; set; }
         // DbSet<ProductDesign> ProductDesign { get; set; }
         DbSet<ProductGroup> ProductGroups { get; set; }
         DbSet<ProductIncludedAccessories> ProductIncludedAccessories { get; set; }
@@ -276,29 +264,7 @@ namespace Model
         DbSet<RequisitionCancelHeader> RequisitionCancelHeader { get; set; }
         DbSet<RequisitionCancelLine> RequisitionCancelLine { get; set; }
 
-        DbSet<PurchaseIndentHeader> PurchaseIndentHeader { get; set; }
-        DbSet<PurchaseIndentLine> PurchaseIndentLine { get; set; }
-        DbSet<PurchaseIndentCancelHeader> PurchaseIndentCancelHeader { get; set; }
-        DbSet<PurchaseIndentCancelLine> PurchaseIndentCancelLine { get; set; }
-        DbSet<PurchaseQuotationHeader> PurchaseQuotationHeader { get; set; }
-        DbSet<PurchaseQuotationLine> PurchaseQuotationLine { get; set; }
-        DbSet<PurchaseOrderHeader> PurchaseOrderHeader { get; set; }
-        DbSet<PurchaseOrderLine> PurchaseOrderLine { get; set; }
-        DbSet<PurchaseOrderCancelHeader> PurchaseOrderCancelHeader { get; set; }
-        DbSet<PurchaseOrderCancelLine> PurchaseOrderCancelLine { get; set; }
-        DbSet<PurchaseOrderAmendmentHeader> PurchaseOrderAmendmentHeader { get; set; }
-        DbSet<PurchaseOrderQtyAmendmentLine> PurchaseOrderQtyAmendmentLine { get; set; }
-        DbSet<PurchaseOrderRateAmendmentLine> PurchaseOrderRateAmendmentLine { get; set; }
-        DbSet<PurchaseGoodsReceiptHeader> PurchaseGoodsReceiptHeader { get; set; }
-        DbSet<PurchaseGoodsReturnHeader> PurchaseGoodsReturnHeader { get; set; }
-        DbSet<PurchaseWaybill> PurchaseWaybill { get; set; }
-        DbSet<PurchaseGoodsReceiptLine> PurchaseGoodsReceiptLine { get; set; }
-        DbSet<PurchaseGoodsReturnLine> PurchaseGoodsReturnLine { get; set; }
-        DbSet<PurchaseInvoiceHeader> PurchaseInvoiceHeader { get; set; }
-        DbSet<PurchaseInvoiceLine> PurchaseInvoiceLine { get; set; }
         DbSet<ProductDesign> ProductDesigns { get; set; }
-        DbSet<PurchaseGoodsReceiptSetting> PurchaseGoodsReceiptSetting { get; set; }
-        DbSet<PurchaseInvoiceSetting> PurchaseInvoiceSetting { get; set; }
 
         //Packing Models
         DbSet<PackingSetting> PackingSettings { get; set; }
@@ -379,7 +345,7 @@ namespace Model
         DbSet<ViewSaleOrderBalanceForCancellation> ViewSaleOrderBalanceForCancellation { get; set; }
 
 
-        DbSet<ViewRugSize> ViewRugSize { get; set; }
+        DbSet<ViewProductSize> ViewProductSize { get; set; }
         DbSet<ViewRugArea> ViewRugArea { get; set; }
         DbSet<ViewSaleInvoiceLine> ViewSaleInvoiceLine { get; set; }
         DbSet<ViewPurchaseGoodsReceiptLine> ViewPurchaseGoodsReceiptLine { get; set; }

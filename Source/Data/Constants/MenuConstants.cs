@@ -5,7 +5,7 @@ using Jobs.Constants.Module;
 using Jobs.Constants.SubModule;
 using Jobs.Constants.ProductNature;
 using Jobs.Constants.Areas;
-using Jobs.Constants.ProductType;
+using Jobs.Constants.RugProductType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +32,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class SaleEnquiryCancel
         {
             public const int MenuId = 2;
@@ -46,10 +45,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.SaleEnquiryCancel.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.SaleEnquiryCancel.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class SaleQuotation
         {
             public const int MenuId = 3;
@@ -63,10 +61,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.SaleQuotation.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.SaleQuotation.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class SaleQuotationCancel
         {
             public const int MenuId = 4;
@@ -80,10 +77,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.SaleQuotationCancel.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.SaleQuotationCancel.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class SaleOrder
         {
             public const int MenuId = 5;
@@ -100,7 +96,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class SaleOrderCancel
         {
             public const int MenuId = 6;
@@ -117,7 +112,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class SaleOrderAmendment
         {
             public const int MenuId = 7;
@@ -131,10 +125,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.SaleOrderAmendment.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.SaleOrderAmendment.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class CustomerAuditRequest
         {
             public const int MenuId = 8;
@@ -148,11 +141,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.SaleInspectionRequest.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.CustomerAuditRequest.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
-
         public static class CustomerAudit
         {
             public const int MenuId = 9;
@@ -166,10 +157,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.SaleInspection.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.CustomerAudit.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class DeliveryOrder
         {
             public const int MenuId = 10;
@@ -186,7 +176,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class DeliveryOrderCancel
         {
             public const int MenuId = 11;
@@ -200,10 +189,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.SaleDeliveryOrderCancel.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.DeliveryOrderCancel.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class QualityCheckingOutword
         {
             public const int MenuId = 12;
@@ -217,10 +205,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.QualityChecking.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.QualityCheckingOutword.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class Packing
         {
             public const int MenuId = 13;
@@ -237,7 +224,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class PerformaInvoice
         {
             public const int MenuId = 14;
@@ -251,10 +237,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.PerformaInvoice.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.PerformaInvoice.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class SaleGoodsDispatch
         {
             public const int MenuId = 15;
@@ -268,10 +253,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.SaleDispatch.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.GoodsDispatch.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class SaleInvoice
         {
             public const int MenuId = 16;
@@ -288,8 +272,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
-
         public static class SaleReturn
         {
             public const int MenuId = 17;
@@ -303,7 +285,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.SaleInvoiceReturn.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.SaleReturn.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
         #endregion
@@ -320,110 +302,6 @@ namespace Jobs.Constants.Menu
             public const string ControllerName = ControllerActionConstants.Person.ControllerName;
             public const string ActionName = ControllerActionConstants.Person.ActionName;
             public static readonly string RouteId = DocumentTypeConstants.Customer.DocumentTypeId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-        #endregion
-        #region "Sales Standard Reports"
-        public static class SaleOrderReport
-        {
-            public const int MenuId = 19;
-            public const string MenuName = "Sale Order Report";
-            public const string Srl = "3";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Sale Order Report";
-            public const int ModuleId = ModuleConstants.Sales.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-
-        public static class SaleDispatchReport
-        {
-            public const int MenuId = 20;
-            public const string MenuName = "Sale Dispatch Report";
-            public const string Srl = "3.05";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Sale Dispatch Report";
-            public const int ModuleId = ModuleConstants.Sales.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-
-        public static class SaleInvoiceReport
-        {
-            public const int MenuId = 21;
-            public const string MenuName = "Sale Invoice Report";
-            public const string Srl = "3.1";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Sale Invoice Report";
-            public const int ModuleId = ModuleConstants.Sales.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-        #endregion
-        #region "Sales Status Reports"
-        public static class SaleEnquiryBalance
-        {
-            public const int MenuId = 22;
-            public const string MenuName = "Sale Enquiry Balance";
-            public const string Srl = "4";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Sale Enquiry Balance";
-            public const int ModuleId = ModuleConstants.Sales.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-
-        public static class SaleOrderBalance
-        {
-            public const int MenuId = 23;
-            public const string MenuName = "Sale Order Balance";
-            public const string Srl = "4.05";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Sale Order Balance";
-            public const int ModuleId = ModuleConstants.Sales.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-
-        public static class SaleDispatchBalance
-        {
-            public const int MenuId = 24;
-            public const string MenuName = "Sale Dispatch Balance";
-            public const string Srl = "4.1";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Sale Dispatch Balance";
-            public const int ModuleId = ModuleConstants.Sales.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
             public const string URL = "JobsDomain";
             public const bool IsVisible = true;
             public const string AreaName = null;
@@ -446,7 +324,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class PurchasePlanCancel
         {
             public const int MenuId = 26;
@@ -463,7 +340,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class PurchaseEnquiry
         {
             public const int MenuId = 27;
@@ -477,10 +353,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobEnquiry.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.PurchaseEnquiry.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class PurchaseEnquiryCancel
         {
             public const int MenuId = 28;
@@ -494,10 +369,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobEnquiryCancel.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.PurchaseEnquiryCancel.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class PurchaseQuotation
         {
             public const int MenuId = 29;
@@ -511,10 +385,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobQuotation.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.PurchaseQuotation.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class PurchaseQuotationCancel
         {
             public const int MenuId = 30;
@@ -528,10 +401,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobQuotationCancel.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.PurchaseQuotationCancel.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class PurchaseOrder
         {
             public const int MenuId = 31;
@@ -548,7 +420,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class PurchaseOrderCancel
         {
             public const int MenuId = 32;
@@ -565,7 +436,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class PurchaseOrderAmendment
         {
             public const int MenuId = 33;
@@ -579,10 +449,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobOrderAmendment.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.PurchaseOrderAmendment.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class SupplierAuditRequest
         {
             public const int MenuId = 34;
@@ -596,11 +465,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobInspectionRequest.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.SupplierAuditRequest.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
-
         public static class SupplierAudit
         {
             public const int MenuId = 35;
@@ -614,10 +481,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobInspection.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.SupplierAudit.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class GoodsReceipt
         {
             public const int MenuId = 36;
@@ -634,7 +500,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class QualityCheckingInword
         {
             public const int MenuId = 37;
@@ -648,10 +513,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobReceiveQC.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.QualityCheckingInword.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class PurchaseInvoice
         {
             public const int MenuId = 38;
@@ -668,7 +532,6 @@ namespace Jobs.Constants.Menu
             public const bool IsVisible = true;
             public const string AreaName = null;
         }
-
         public static class DebitNoteOutward
         {
             public const int MenuId = 39;
@@ -682,10 +545,9 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.LedgerHeader.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.DebitNoteOutward.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-
         public static class CreditNoteOutward
         {
             public const int MenuId = 40;
@@ -699,7 +561,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.LedgerHeader.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.CreditNoteOutward.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
         #endregion
@@ -722,74 +584,72 @@ namespace Jobs.Constants.Menu
         }
         #endregion
         #region "Purchase Standard Reports"
-        public static class PurchaseOrderSummary
-        {
-            public const int MenuId = 42;
-            public const string MenuName = "Purchase Order Summary";
-            public const string Srl = "3";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Purchase Order Summary";
-            public const int ModuleId = ModuleConstants.Purchase.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-
-        public static class PurchaseGoodsReceiptSummary
-        {
-            public const int MenuId = 43;
-            public const string MenuName = "Purchase Goods Receipt Summary";
-            public const string Srl = "3.05";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Purchase Goods Receipt Summary";
-            public const int ModuleId = ModuleConstants.Purchase.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-
-        public static class PurchaseInvoiceSummary
-        {
-            public const int MenuId = 44;
-            public const string MenuName = "Purchase Invoice Summary";
-            public const string Srl = "3.1";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Purchase Invoice Summary";
-            public const int ModuleId = ModuleConstants.Purchase.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-        #endregion
-        #region "Purchase Status Reports"
-        public static class PurchaseOrderBalance
-        {
-            public const int MenuId = 45;
-            public const string MenuName = "Purchase Order Balance";
-            public const string Srl = "4";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Purchase Order Balance";
-            public const int ModuleId = ModuleConstants.Purchase.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class PurchaseOrderSummary
+        //{
+        //    public const int MenuId = 42;
+        //    public const string MenuName = "Purchase Order Summary";
+        //    public const string Srl = "3";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Purchase Order Summary";
+        //    public const int ModuleId = ModuleConstants.Purchase.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
+        //public static class PurchaseGoodsReceiptSummary
+        //{
+        //    public const int MenuId = 43;
+        //    public const string MenuName = "Purchase Goods Receipt Summary";
+        //    public const string Srl = "3.05";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Purchase Goods Receipt Summary";
+        //    public const int ModuleId = ModuleConstants.Purchase.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
+        //public static class PurchaseInvoiceSummary
+        //{
+        //    public const int MenuId = 44;
+        //    public const string MenuName = "Purchase Invoice Summary";
+        //    public const string Srl = "3.1";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Purchase Invoice Summary";
+        //    public const int ModuleId = ModuleConstants.Purchase.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
+        //#endregion
+        //#region "Purchase Status Reports"
+        //public static class PurchaseOrderBalance
+        //{
+        //    public const int MenuId = 45;
+        //    public const string MenuName = "Purchase Order Balance";
+        //    public const string Srl = "4";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Purchase Order Balance";
+        //    public const int ModuleId = ModuleConstants.Purchase.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
         #endregion
         #region "Production Transactions"
         public static class ManufacturingPlan
@@ -839,7 +699,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobEnquiry.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.JobEnquiry.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
 
@@ -856,7 +716,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobEnquiryCancel.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.JobEnquiryCancel.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
 
@@ -873,7 +733,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobQuotation.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.JobQuotation.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
 
@@ -890,7 +750,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobQuotationCancel.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.JobQuotationCancel.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
 
@@ -941,7 +801,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobOrderAmendment.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.JobOrderAmendment.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
 
@@ -958,7 +818,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobInspectionRequest.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.JobInspectionRequest.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
 
@@ -975,7 +835,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobInspectionRequestCancel.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.JobInspectionRequestCancel.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
 
@@ -992,7 +852,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobInspection.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.JobInspection.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
 
@@ -1026,7 +886,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.JobReceiveQC.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.JobReceiveQC.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
 
@@ -1082,144 +942,144 @@ namespace Jobs.Constants.Menu
             public const string AreaName = null;
         }
         #endregion
-        #region "Production Standard Reports"
-        public static class JobOrderSummary
-        {
-            public const int MenuId = 62;
-            public const string MenuName = "Job Order Summary";
-            public const string Srl = "3";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Job Order Summary";
-            public const int ModuleId = ModuleConstants.Production.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //#region "Production Standard Reports"
+        //public static class JobOrderSummary
+        //{
+        //    public const int MenuId = 62;
+        //    public const string MenuName = "Job Order Summary";
+        //    public const string Srl = "3";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Job Order Summary";
+        //    public const int ModuleId = ModuleConstants.Production.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class JobReceiveSummary
-        {
-            public const int MenuId = 63;
-            public const string MenuName = "Job Receive Summary";
-            public const string Srl = "3.05";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Job Receive Summary";
-            public const int ModuleId = ModuleConstants.Production.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class JobReceiveSummary
+        //{
+        //    public const int MenuId = 63;
+        //    public const string MenuName = "Job Receive Summary";
+        //    public const string Srl = "3.05";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Job Receive Summary";
+        //    public const int ModuleId = ModuleConstants.Production.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class JobInvoiceSummary
-        {
-            public const int MenuId = 64;
-            public const string MenuName = "Job Invoice Summary";
-            public const string Srl = "3.1";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Job Invoice Summary";
-            public const int ModuleId = ModuleConstants.Production.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-        #endregion
-        #region "Production Status Reports"
-        public static class JobOrderBalance
-        {
-            public const int MenuId = 65;
-            public const string MenuName = "Job Order Balance";
-            public const string Srl = "4";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Job Order Balance";
-            public const int ModuleId = ModuleConstants.Production.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
-        #endregion
-        #region "Inventory Transactions"
-        public static class MaterialIssue
-        {
-            public const int MenuId = 66;
-            public const string MenuName = "Material Issue";
-            public const string Srl = "1";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Material Issue";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.StockIssue.ControllerName;
-            public const string ActionName = ControllerActionConstants.StockIssue.ActionName;
-            public static readonly string RouteId = DocumentCategoryConstants.MaterialIssue.DocumentCategoryId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class JobInvoiceSummary
+        //{
+        //    public const int MenuId = 64;
+        //    public const string MenuName = "Job Invoice Summary";
+        //    public const string Srl = "3.1";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Job Invoice Summary";
+        //    public const int ModuleId = ModuleConstants.Production.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StandardReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
+        //#endregion
+        //#region "Production Status Reports"
+        //public static class JobOrderBalance
+        //{
+        //    public const int MenuId = 65;
+        //    public const string MenuName = "Job Order Balance";
+        //    public const string Srl = "4";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Job Order Balance";
+        //    public const int ModuleId = ModuleConstants.Production.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
+        //#endregion
+        //#region "Inventory Transactions"
+        //public static class MaterialIssue
+        //{
+        //    public const int MenuId = 66;
+        //    public const string MenuName = "Material Issue";
+        //    public const string Srl = "1";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Material Issue";
+        //    public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.StockIssue.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.StockIssue.ActionName;
+        //    public static readonly string RouteId = DocumentCategoryConstants.MaterialIssue.DocumentCategoryId.ToString();
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class MaterialReceive
-        {
-            public const int MenuId = 67;
-            public const string MenuName = "Material Receive";
-            public const string Srl = "1.05";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Material Receive";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.StockReceive.ControllerName;
-            public const string ActionName = ControllerActionConstants.StockReceive.ActionName;
-            public static readonly string RouteId = DocumentCategoryConstants.MaterialReceive.DocumentCategoryId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class MaterialReceive
+        //{
+        //    public const int MenuId = 67;
+        //    public const string MenuName = "Material Receive";
+        //    public const string Srl = "1.05";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Material Receive";
+        //    public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.StockReceive.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.StockReceive.ActionName;
+        //    public static readonly string RouteId = DocumentCategoryConstants.MaterialReceive.DocumentCategoryId.ToString();
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class MaterialTransfer
-        {
-            public const int MenuId = 68;
-            public const string MenuName = "Material Transfer";
-            public const string Srl = "1.1";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Material Transfer";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.StockTransfer.ControllerName;
-            public const string ActionName = ControllerActionConstants.StockTransfer.ActionName;
-            public static readonly string RouteId = DocumentCategoryConstants.MaterialTransfer.DocumentCategoryId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class MaterialTransfer
+        //{
+        //    public const int MenuId = 68;
+        //    public const string MenuName = "Material Transfer";
+        //    public const string Srl = "1.1";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Material Transfer";
+        //    public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.StockTransfer.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.StockTransfer.ActionName;
+        //    public static readonly string RouteId = DocumentCategoryConstants.MaterialTransfer.DocumentCategoryId.ToString();
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class StockExchange
-        {
-            public const int MenuId = 69;
-            public const string MenuName = "Stock Exchange";
-            public const string Srl = "1.15";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Stock Exchange";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.StockExchange.ControllerName;
-            public const string ActionName = ControllerActionConstants.StockExchange.ActionName;
-            public static readonly string RouteId = DocumentCategoryConstants.StockExchange.DocumentCategoryId.ToString();
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class StockExchange
+        //{
+        //    public const int MenuId = 69;
+        //    public const string MenuName = "Stock Exchange";
+        //    public const string Srl = "1.15";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Stock Exchange";
+        //    public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.StockExchange.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.StockExchange.ActionName;
+        //    public static readonly string RouteId = DocumentCategoryConstants.StockExchange.DocumentCategoryId.ToString();
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
         public static class GatePass
         {
@@ -1234,7 +1094,7 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.GatePass.ActionName;
             public static readonly string RouteId = DocumentCategoryConstants.GatePass.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
 
@@ -1251,10 +1111,10 @@ namespace Jobs.Constants.Menu
             public const string ActionName = ControllerActionConstants.StockReconciliation.ActionName;
             public static readonly string RouteId = null;
             public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
+            public const bool IsVisible = false;
             public const string AreaName = null;
         }
-        #endregion
+
         #region "Inventory Masters"
         public static class Product
         {
@@ -1399,7 +1259,7 @@ namespace Jobs.Constants.Menu
             public const string Srl = "2.4";
             public const string IconName = "glyphicon glyphicon-book";
             public const string Description = "City";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int ModuleId = ModuleConstants.AdminSetup.ModuleId;
             public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
             public const string ControllerName = ControllerActionConstants.City.ControllerName;
             public const string ActionName = ControllerActionConstants.City.ActionName;
@@ -1416,7 +1276,7 @@ namespace Jobs.Constants.Menu
             public const string Srl = "2.45";
             public const string IconName = "glyphicon glyphicon-book";
             public const string Description = "State";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int ModuleId = ModuleConstants.AdminSetup.ModuleId;
             public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
             public const string ControllerName = ControllerActionConstants.State.ControllerName;
             public const string ActionName = ControllerActionConstants.State.ActionName;
@@ -1433,7 +1293,7 @@ namespace Jobs.Constants.Menu
             public const string Srl = "2.5";
             public const string IconName = "glyphicon glyphicon-book";
             public const string Description = "Country";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int ModuleId = ModuleConstants.AdminSetup.ModuleId;
             public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
             public const string ControllerName = ControllerActionConstants.Country.ControllerName;
             public const string ActionName = ControllerActionConstants.Country.ActionName;
@@ -1446,39 +1306,39 @@ namespace Jobs.Constants.Menu
         #region "Inventory Standard Reports"
         #endregion
         #region "Inventory Status Reports"
-        public static class StockInHand
-        {
-            public const int MenuId = 83;
-            public const string MenuName = "Stock In Hand";
-            public const string Srl = "4";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Stock In Hand";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class StockInHand
+        //{
+        //    public const int MenuId = 83;
+        //    public const string MenuName = "Stock In Hand";
+        //    public const string Srl = "4";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Stock In Hand";
+        //    public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class StockInProcess
-        {
-            public const int MenuId = 84;
-            public const string MenuName = "Stock In Process";
-            public const string Srl = "4.05";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Stock In Process";
-            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class StockInProcess
+        //{
+        //    public const int MenuId = 84;
+        //    public const string MenuName = "Stock In Process";
+        //    public const string Srl = "4.05";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Stock In Process";
+        //    public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
         #endregion
         #region "Human Resource Transactions"
         #endregion
@@ -1747,240 +1607,240 @@ namespace Jobs.Constants.Menu
         #region "Accounts Standard Reports"
         #endregion
         #region "Accounts Status Reports"
-        public static class TrialBalance
-        {
-            public const int MenuId = 100;
-            public const string MenuName = "Trial Balance";
-            public const string Srl = "4";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Trial Balance";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class TrialBalance
+        //{
+        //    public const int MenuId = 100;
+        //    public const string MenuName = "Trial Balance";
+        //    public const string Srl = "4";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Trial Balance";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class SubTrialBalance
-        {
-            public const int MenuId = 101;
-            public const string MenuName = "Sub Trial Balance";
-            public const string Srl = "4.05";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Sub Trial Balance";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class SubTrialBalance
+        //{
+        //    public const int MenuId = 101;
+        //    public const string MenuName = "Sub Trial Balance";
+        //    public const string Srl = "4.05";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Sub Trial Balance";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class BalanceSheet
-        {
-            public const int MenuId = 102;
-            public const string MenuName = "Balance Sheet";
-            public const string Srl = "4.1";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Balance Sheet";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class BalanceSheet
+        //{
+        //    public const int MenuId = 102;
+        //    public const string MenuName = "Balance Sheet";
+        //    public const string Srl = "4.1";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Balance Sheet";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class ProfitAndLossAc
-        {
-            public const int MenuId = 103;
-            public const string MenuName = "Profit & Loss A/c";
-            public const string Srl = "4.15";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Profit & Loss A/c";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class ProfitAndLossAc
+        //{
+        //    public const int MenuId = 103;
+        //    public const string MenuName = "Profit & Loss A/c";
+        //    public const string Srl = "4.15";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Profit & Loss A/c";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class CashBook
-        {
-            public const int MenuId = 104;
-            public const string MenuName = "Cash Book";
-            public const string Srl = "4.2";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Cash Book";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class CashBook
+        //{
+        //    public const int MenuId = 104;
+        //    public const string MenuName = "Cash Book";
+        //    public const string Srl = "4.2";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Cash Book";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class BankBook
-        {
-            public const int MenuId = 105;
-            public const string MenuName = "Bank Book";
-            public const string Srl = "4.25";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Bank Book";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class BankBook
+        //{
+        //    public const int MenuId = 105;
+        //    public const string MenuName = "Bank Book";
+        //    public const string Srl = "4.25";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Bank Book";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class DayBook
-        {
-            public const int MenuId = 106;
-            public const string MenuName = "Day Book";
-            public const string Srl = "4.3";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Day Book";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class DayBook
+        //{
+        //    public const int MenuId = 106;
+        //    public const string MenuName = "Day Book";
+        //    public const string Srl = "4.3";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Day Book";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class DebtorsAgeingAnalysisFIFO
-        {
-            public const int MenuId = 107;
-            public const string MenuName = "Debtors Ageing Analysis FIFO";
-            public const string Srl = "4.35";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Debtors Ageing Analysis FIFO";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class DebtorsAgeingAnalysisFIFO
+        //{
+        //    public const int MenuId = 107;
+        //    public const string MenuName = "Debtors Ageing Analysis FIFO";
+        //    public const string Srl = "4.35";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Debtors Ageing Analysis FIFO";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class DebtorsOutstandingFIFO
-        {
-            public const int MenuId = 108;
-            public const string MenuName = "Debtors Outstanding FIFO";
-            public const string Srl = "4.4";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Debtors Outstanding FIFO";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class DebtorsOutstandingFIFO
+        //{
+        //    public const int MenuId = 108;
+        //    public const string MenuName = "Debtors Outstanding FIFO";
+        //    public const string Srl = "4.4";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Debtors Outstanding FIFO";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class CreditorsAgeingAnalysisFIFO
-        {
-            public const int MenuId = 109;
-            public const string MenuName = "Creditors Ageing Analysis FIFO";
-            public const string Srl = "4.45";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Creditors Ageing Analysis FIFO";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class CreditorsAgeingAnalysisFIFO
+        //{
+        //    public const int MenuId = 109;
+        //    public const string MenuName = "Creditors Ageing Analysis FIFO";
+        //    public const string Srl = "4.45";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Creditors Ageing Analysis FIFO";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class CreditorsOutstandingFIFO
-        {
-            public const int MenuId = 110;
-            public const string MenuName = "Creditors Outstanding FIFO";
-            public const string Srl = "4.5";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Creditors Outstanding FIFO";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class CreditorsOutstandingFIFO
+        //{
+        //    public const int MenuId = 110;
+        //    public const string MenuName = "Creditors Outstanding FIFO";
+        //    public const string Srl = "4.5";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Creditors Outstanding FIFO";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class TDSAdvise
-        {
-            public const int MenuId = 111;
-            public const string MenuName = "TDS Advise";
-            public const string Srl = "4.55";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "TDS Advise";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class TDSAdvise
+        //{
+        //    public const int MenuId = 111;
+        //    public const string MenuName = "TDS Advise";
+        //    public const string Srl = "4.55";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "TDS Advise";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
 
-        public static class InputTaxReport
-        {
-            public const int MenuId = 112;
-            public const string MenuName = "Input Tax Report";
-            public const string Srl = "4.6";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Input Tax Report";
-            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
-            public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class InputTaxReport
+        //{
+        //    public const int MenuId = 112;
+        //    public const string MenuName = "Input Tax Report";
+        //    public const string Srl = "4.6";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Input Tax Report";
+        //    public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
         #endregion
         #region "Planning Transactions"
-        public static class SalesOrderPlan
+        public static class Planning
         {
             public const int MenuId = 113;
-            public const string MenuName = "Sales Order Plan";
+            public const string MenuName = "Planning";
             public const string Srl = "1";
             public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Sales Order Plan";
+            public const string Description = "Planning";
             public const int ModuleId = ModuleConstants.Planning.ModuleId;
             public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.SaleOrderPlan.ControllerName;
-            public const string ActionName = ControllerActionConstants.SaleOrderPlan.ActionName;
-            public static readonly string RouteId = DocumentCategoryConstants.SaleOrderPlan.DocumentCategoryId.ToString();
+            public const string ControllerName = ControllerActionConstants.Planning.ControllerName;
+            public const string ActionName = ControllerActionConstants.Planning.ActionName;
+            public static readonly string RouteId = DocumentCategoryConstants.Planning.DocumentCategoryId.ToString();
             public const string URL = "JobsDomain";
             public const bool IsVisible = true;
             public const string AreaName = null;
@@ -1991,22 +1851,22 @@ namespace Jobs.Constants.Menu
         #region "Planning Standard Reports"
         #endregion
         #region "Planning Status Reports"
-        public static class SaleOrderPlanStatus
-        {
-            public const int MenuId = 114;
-            public const string MenuName = "Sale Order Plan Status";
-            public const string Srl = "4";
-            public const string IconName = "glyphicon glyphicon-book";
-            public const string Description = "Sale Order Plan Status";
-            public const int ModuleId = ModuleConstants.Planning.ModuleId;
-            public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
-            public const string ControllerName = ControllerActionConstants.Report.ControllerName;
-            public const string ActionName = ControllerActionConstants.Report.ActionName;
-            public static readonly string RouteId = null;
-            public const string URL = "JobsDomain";
-            public const bool IsVisible = true;
-            public const string AreaName = null;
-        }
+        //public static class SaleOrderPlanStatus
+        //{
+        //    public const int MenuId = 114;
+        //    public const string MenuName = "Sale Order Plan Status";
+        //    public const string Srl = "4";
+        //    public const string IconName = "glyphicon glyphicon-book";
+        //    public const string Description = "Sale Order Plan Status";
+        //    public const int ModuleId = ModuleConstants.Planning.ModuleId;
+        //    public const int SubModuleId = SubModuleConstants.StatusReports.SubModuleId;
+        //    public const string ControllerName = ControllerActionConstants.Report.ControllerName;
+        //    public const string ActionName = ControllerActionConstants.Report.ActionName;
+        //    public static readonly string RouteId = null;
+        //    public const string URL = "JobsDomain";
+        //    public const bool IsVisible = true;
+        //    public const string AreaName = null;
+        //}
         #endregion
         #region "Admin Setup Transactions"
         #endregion
@@ -2312,6 +2172,223 @@ namespace Jobs.Constants.Menu
         #endregion
 
 
+        public static class SaleEnquiryProductMapping
+        {
+            public const int MenuId = 132;
+            public const string MenuName = "Sale Enquiry Product Mapping";
+            public const string Srl = "132";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Sale Enquiry Product Mapping";
+            public const int ModuleId = ModuleConstants.Sales.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Documents.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.SaleEnquiryProductMappingWithGrid.ControllerName;
+            public const string ActionName = ControllerActionConstants.SaleEnquiryProductMappingWithGrid.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = null;
+        }
 
+        public static class Collection
+        {
+            public const int MenuId = 133;
+            public const string MenuName = "Collection";
+            public const string Srl = "133";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Collection";
+            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.Collection.ControllerName;
+            public const string ActionName = ControllerActionConstants.Collection.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = AreaConstants.Rug.AreaName;
+        }
+
+        public static class Content
+        {
+            public const int MenuId = 134;
+            public const string MenuName = "Content";
+            public const string Srl = "134";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Content";
+            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.Content.ControllerName;
+            public const string ActionName = ControllerActionConstants.Content.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = AreaConstants.Rug.AreaName;
+        }
+
+        public static class Quality
+        {
+            public const int MenuId = 135;
+            public const string MenuName = "Quality";
+            public const string Srl = "135";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Quality";
+            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.Quality.ControllerName;
+            public const string ActionName = ControllerActionConstants.Quality.ActionName;
+            public static readonly string RouteId = RugProductTypeConstants.Rug.ProductTypeId.ToString();
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = AreaConstants.Rug.AreaName;
+        }
+
+        public static class Dimension1
+        {
+            public const int MenuId = 136;
+            public const string MenuName = "Dimension1";
+            public const string Srl = "132";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Dimension1";
+            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.Dimension1.ControllerName;
+            public const string ActionName = ControllerActionConstants.Dimension1.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = null;
+        }
+
+        public static class Size
+        {
+            public const int MenuId = 137;
+            public const string MenuName = "Size";
+            public const string Srl = "137";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Size";
+            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.Size.ControllerName;
+            public const string ActionName = ControllerActionConstants.Size.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = AreaConstants.Rug.AreaName;
+        }
+
+        public static class ProcessSequence
+        {
+            public const int MenuId = 138;
+            public const string MenuName = "Process Sequence";
+            public const string Srl = "138";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Process Sequence";
+            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.ProcessSequenceHeader.ControllerName;
+            public const string ActionName = ControllerActionConstants.ProcessSequenceHeader.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = null;
+        }
+
+        public static class Colour
+        {
+            public const int MenuId = 139;
+            public const string MenuName = "Colour";
+            public const string Srl = "139";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Colour";
+            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Setup.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.Colour.ControllerName;
+            public const string ActionName = ControllerActionConstants.Colour.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = AreaConstants.Rug.AreaName;
+        }
+
+
+        public static class StockBalanceDisplay
+        {
+            public const int MenuId = 140;
+            public const string MenuName = "Stock Balance Display";
+            public const string Srl = "140";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Stock Balance Display";
+            public const int ModuleId = ModuleConstants.Inventory.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Display.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.StockBalanceDisplay.ControllerName;
+            public const string ActionName = ControllerActionConstants.StockBalanceDisplay.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = null;
+        }
+
+        public static class TrialBalance
+        {
+            public const int MenuId = 141;
+            public const string MenuName = "Trial Balance";
+            public const string Srl = "141";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Trial Balance";
+            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Display.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.TrialBalance.ControllerName;
+            public const string ActionName = ControllerActionConstants.TrialBalance.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = null;
+        }
+        public static class SubTrialBalance
+        {
+            public const int MenuId = 142;
+            public const string MenuName = "Sub Trial Balance";
+            public const string Srl = "142";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Sub Trial Balance";
+            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Display.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.TrialBalance.ControllerName;
+            public const string ActionName = ControllerActionConstants.TrialBalance.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = null;
+        }
+        public static class BalanceSheet
+        {
+            public const int MenuId = 143;
+            public const string MenuName = "Balance Sheet";
+            public const string Srl = "143";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Balance Sheet";
+            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Display.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.TrialBalance.ControllerName;
+            public const string ActionName = ControllerActionConstants.TrialBalance.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = null;
+        }
+        public static class ProfitAndLoss
+        {
+            public const int MenuId = 144;
+            public const string MenuName = "Profit And Loss";
+            public const string Srl = "144";
+            public const string IconName = "glyphicon glyphicon-book";
+            public const string Description = "Profit And Loss";
+            public const int ModuleId = ModuleConstants.Accounts.ModuleId;
+            public const int SubModuleId = SubModuleConstants.Display.SubModuleId;
+            public const string ControllerName = ControllerActionConstants.TrialBalance.ControllerName;
+            public const string ActionName = ControllerActionConstants.TrialBalance.ActionName;
+            public static readonly string RouteId = null;
+            public const string URL = "JobsDomain";
+            public const bool IsVisible = true;
+            public const string AreaName = null;
+        }
     }
 }

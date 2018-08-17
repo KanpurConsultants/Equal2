@@ -808,20 +808,46 @@ namespace Jobs.Controllers
 
                             if (pd.Status == (int)StatusConstants.Drafted || pd.Status == (int)StatusConstants.Modified || pd.Status == (int)StatusConstants.Import)
                             {
-                                //LogAct(item.ToString());
-                                Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
+                                if (Settings.SqlProcDocumentPrint == null || Settings.SqlProcDocumentPrint == "")
+                                {
+                                    MaterialPlanHeaderRDL cr = new MaterialPlanHeaderRDL();
+                                    drp.CreateRDLFile("Std_MaterialPlan_Print", cr.Create_Std_MaterialPlan_Print());
+                                    List<ListofQuery> QueryList = new List<ListofQuery>();
+                                    QueryList = DocumentPrintData(item);
+                                    Pdf = drp.DocumentPrint_New(QueryList, User.Identity.Name);
+                                }
+                                else
+                                    Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
 
                                 PdfStream.Add(Pdf);
                             }
                             else if (pd.Status == (int)StatusConstants.Submitted || pd.Status == (int)StatusConstants.ModificationSubmitted)
                             {
-                                Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
+                                if (Settings.SqlProcDocumentPrint == null || Settings.SqlProcDocumentPrint == "")
+                                {
+                                    MaterialPlanHeaderRDL cr = new MaterialPlanHeaderRDL();
+                                    drp.CreateRDLFile("Std_MaterialPlan_Print", cr.Create_Std_MaterialPlan_Print());
+                                    List<ListofQuery> QueryList = new List<ListofQuery>();
+                                    QueryList = DocumentPrintData(item);
+                                    Pdf = drp.DocumentPrint_New(QueryList, User.Identity.Name);
+                                }
+                                else
+                                    Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
 
                                 PdfStream.Add(Pdf);
                             }
                             else if (pd.Status == (int)StatusConstants.Approved)
                             {
-                                Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
+                                if (Settings.SqlProcDocumentPrint == null || Settings.SqlProcDocumentPrint == "")
+                                {
+                                    MaterialPlanHeaderRDL cr = new MaterialPlanHeaderRDL();
+                                    drp.CreateRDLFile("Std_MaterialPlan_Print", cr.Create_Std_MaterialPlan_Print());
+                                    List<ListofQuery> QueryList = new List<ListofQuery>();
+                                    QueryList = DocumentPrintData(item);
+                                    Pdf = drp.DocumentPrint_New(QueryList, User.Identity.Name);
+                                }
+                                else
+                                    Pdf = drp.DirectDocumentPrint(Settings.SqlProcDocumentPrint, User.Identity.Name, item);
                                 PdfStream.Add(Pdf);
                             }
 
@@ -850,6 +876,74 @@ namespace Jobs.Controllers
 
         }
 
+
+        private List<ListofQuery> DocumentPrintData(int item)
+        {
+            MaterialPlanHeader JOH = new MaterialPlanHeaderService(_unitOfWork).Find(item);
+
+            List<ListofQuery> DocumentPrintData = new List<ListofQuery>();
+            String QueryMain;
+            QueryMain = @"SELECT H.MaterialPlanHeaderId,H.DocTypeId,H.DocNo,DocIdCaption + ' No' AS DocIdCaption,
+      H.SiteId,H.DivisionId,H.DocDate,DTS.DocIdCaption + ' Date' AS DocIdCaptionDate, format(H.DueDate, 'dd/MMM/yy') AS DueDate, DocIdCaption+'Due Date' AS DocIdCaptionDueDate, 	
+       H.Remark,DT.DocumentTypeShortName,H.ModifiedBy + ' ' + Replace(replace(convert(NVARCHAR, H.ModifiedDate, 106), ' ', '/'), '/20', '/') + substring(convert(NVARCHAR, H.ModifiedDate), 13, 7) AS ModifiedBy,
+               H.ModifiedDate,(CASE WHEN Isnull(H.Status, 0)= 0 OR Isnull(H.Status, 0)= 8 THEN 0 ELSE 1 END)  AS Status,
+              DTS.ContraDocTypeCaption, NULL   ProductUidName, NULL ReferenceNo, NULL AS LotNo,
+	(CASE WHEN SPR.[Party GST NO]
+        IS NULL THEN 'Yes' ELSE 'No' END ) AS ReverseCharge,
+VDC.CompanyName,
+    P.Name AS PartyName, DTS.PartyCaption AS  PartyCaption, P.Suffix AS PartySuffix,	
+    isnull(PA.Address,'')+' '+isnull(C.CityName,'')+','+isnull(PA.ZipCode,'')+(CASE WHEN isnull(CS.StateName,'') <> isnull(S.StateName,'') AND SPR.[Party GST NO] IS NOT NULL THEN ',State : '+isnull(S.StateName,'')+(CASE WHEN S.StateCode IS NULL THEN '' ELSE ', Code : '+S.StateCode END)    ELSE '' END ) AS PartyAddress,
+    isnull(S.StateName, '') AS PartyStateName, isnull(S.StateCode, '') AS PartyStateCode,
+
+       P.Mobile AS PartyMobileNo,	SPR.*,
+
+    DTS.SignatoryMiddleCaption,DTS.SignatoryRightCaption,
+	--Line Table
+    PD.ProductName,DTS.ProductCaption,U.UnitName,U.DecimalPlaces,DTS.DealQtyCaption,
+    L.RequiredQty, L.ExcessStockQty, L.StockPlanQty, L.ProdPlanQty, L.PurchPlanQty,
+          D1.Dimension1Name,DTS.Dimension1Caption,D2.Dimension2Name,DTS.Dimension2Caption,D3.Dimension3Name,DTS.Dimension3Caption,D4.Dimension4Name,DTS.Dimension4Caption,
+   (CASE WHEN DTS.PrintSpecification >0 THEN L.Specification ELSE '' END)  AS Specification, DTS.SpecificationCaption,DTS.SignatoryleftCaption,L.Remark AS LineRemark,
+    (SELECT TOP 1 SalesTaxProductCodeCaption FROM web.SiteDivisionSettings WHERE H.DocDate BETWEEN StartDate AND IsNull(EndDate, getdate()) AND SiteId = H.SiteId AND DivisionId = H.DivisionId)  AS SalesTaxProductCodeCaption,
+       (CASE WHEN DTS.PrintProductGroup > 0 THEN isnull(PG.ProductGroupName, '') ELSE '' END)+(CASE WHEN DTS.PrintProductdescription >0 THEN isnull(','+PD.Productdescription,'') ELSE '' END) AS ProductGroupName,
+         DTS.ProductGroupCaption,  
+   DTS.ProductUidCaption,
+NULL  AS SubReportProcList,
+     (CASE WHEN Isnull(H.Status, 0) = 0 OR Isnull(H.Status, 0) = 8 THEN 'Provisional ' + isnull(DT.PrintTitle, DT.DocumentTypeName) ELSE isnull(DT.PrintTitle, DT.DocumentTypeName) END) AS ReportTitle,
+          	'Std_MaterialPlan_Print.rdl' AS ReportName
+FROM Web.MaterialPlanHeaders H WITH (Nolock)
+LEFT JOIN Web.MaterialPlanLines L WITH (Nolock) ON L.MaterialPlanHeaderId = H.MaterialPlanHeaderId
+LEFT JOIN web.DocumentTypes DT WITH(Nolock) ON DT.DocumentTypeId=H.DocTypeId
+LEFT JOIN Web._DocumentTypeSettings DTS WITH (Nolock) ON DTS.DocumentTypeId=DT.DocumentTypeId
+LEFT JOIN Web.MaterialPlanSettings  JOS WITH (Nolock) ON JOS.DocTypeId=DT.DocumentTypeId AND JOS.SiteId= H.SiteId AND JOS.DivisionId= H.DivisionId
+LEFT JOIN web.ViewDivisionCompany VDC WITH (Nolock) ON VDC.DivisionId=H.DivisionId
+LEFT JOIN Web.Sites SI WITH (Nolock) ON SI.SiteId=H.SiteId
+LEFT JOIN Web.Divisions DIV WITH (Nolock) ON DIV.DivisionId=H.DivisionId
+LEFT JOIN Web.Companies Com ON Com.CompanyId = DIV.CompanyId
+LEFT JOIN Web.Cities CC WITH (Nolock) ON CC.CityId=Com.CityId
+LEFT JOIN Web.States CS WITH (Nolock) ON CS.StateId=CC.StateId
+LEFT JOIN Web.People P WITH (Nolock) ON P.PersonID=H.BuyerId
+LEFT JOIN(SELECT* FROM Web.PersonAddresses WITH (nolock) WHERE AddressType IS NULL) PA ON PA.PersonId = P.PersonID
+LEFT JOIN Web.Cities C WITH (nolock) ON C.CityId = PA.CityId
+LEFT JOIN Web.States S WITH (Nolock) ON S.StateId=C.StateId
+LEFT JOIN web.Products PD WITH (Nolock) ON PD.ProductId=L.ProductId
+LEFT JOIN web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId=PD.ProductGroupid
+LEFT JOIN Web.Dimension1 D1 WITH(Nolock) ON D1.Dimension1Id=L.Dimension1Id
+LEFT JOIN web.Dimension2 D2 WITH (Nolock) ON D2.Dimension2Id=L.Dimension2Id
+LEFT JOIN web.Dimension3 D3 WITH (Nolock) ON D3.Dimension3Id=L.Dimension3Id
+LEFT JOIN Web.Dimension4 D4 WITH (nolock) ON D4.Dimension4Id=L.Dimension4Id
+LEFT JOIN web.Units U WITH (Nolock) ON U.UnitId=PD.UnitId
+LEFT JOIN Web.Std_PersonRegistrations SPR WITH (Nolock) ON SPR.CustomerId=H.BuyerId 
+WHERE H.MaterialPlanHeaderId= " + item + @"
+ORDER BY L.Sr";
+            ListofQuery QryMain = new ListofQuery();
+            QryMain.Query = QueryMain;
+            QryMain.QueryName = nameof(QueryMain);
+            DocumentPrintData.Add(QryMain);
+                       
+
+            return DocumentPrintData;
+
+        }
 
 
         [HttpGet]
@@ -993,7 +1087,7 @@ namespace Jobs.Controllers
                 if (User.Identity.Name == pd.ModifiedBy || UserRoles.Contains("Admin"))
                 {
                     SqlParameter SqlMaterialPlanHeaderId = new SqlParameter("@MaterialPlanHeaderId", Id);
-                    db.Database.SqlQuery<int>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".sp_UpdateMaterialPlanForSaleOrder @MaterialPlanHeaderId", SqlMaterialPlanHeaderId).FirstOrDefault();
+                    db.Database.SqlQuery<int>("" + ConfigurationManager.AppSettings["DataBaseSchema"] + ".spMaterialPlanHeaderNewController_Submitted_UpdateMaterialPlanForSaleOrder @MaterialPlanHeaderId", SqlMaterialPlanHeaderId).FirstOrDefault();
 
 
                     pd.Status = (int)StatusConstants.Submitted;

@@ -6,7 +6,7 @@ using Model.Models;
 using Data.Models;
 using Service;
 using Data.Infrastructure;
-using Presentation;
+using Jobs.Constants.RugDocumentType;
 using Core.Common;
 using Model.ViewModel;
 using System.Xml.Linq;
@@ -111,7 +111,7 @@ namespace Jobs.Controllers
                         return View("Create", vm);
                     }
 
-                    int DocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Carpet).DocumentTypeId;
+                    int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.Carpet.DocumentTypeName).DocumentTypeId;
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
@@ -158,7 +158,7 @@ namespace Jobs.Controllers
                         return View("Create", pt);
                     }
 
-                    int DocTypeId = new DocumentTypeService(_unitOfWork).Find(MasterDocTypeConstants.Carpet).DocumentTypeId;
+                    int DocTypeId = new DocumentTypeService(_unitOfWork).Find(RugDocumentTypeConstants.Carpet.DocumentTypeName).DocumentTypeId;
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {

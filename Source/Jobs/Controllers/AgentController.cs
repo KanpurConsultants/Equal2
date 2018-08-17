@@ -18,6 +18,8 @@ using System.Configuration;
 using System.IO;
 using ImageResizer;
 using Jobs.Helpers;
+using Jobs.Constants.DocumentCategory;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Controllers
 {
@@ -93,7 +95,7 @@ namespace Jobs.Controllers
         {
 
             DocumentType Dt = new DocumentType();
-            Dt = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.Agent);
+            Dt = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Agent.DocumentTypeName);
 
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["JobsDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
 
@@ -359,7 +361,7 @@ namespace Jobs.Controllers
                         Narration = logstring.ToString(),
                         CreatedDate = DateTime.Now,
                         CreatedBy = User.Identity.Name,
-                        //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.ProcessSequence).DocumentTypeId,
+                        //DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.ProcessSequence).DocumentTypeId,
 
                     };
                     new ActivityLogService(_unitOfWork).Create(al);
@@ -564,7 +566,7 @@ namespace Jobs.Controllers
                     DocId = vm.id,
                     UserRemark = vm.Reason,
                     Narration = "Agent is deleted with Name:" + person.Name,
-                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.SaleOrder).DocumentTypeId,
+                    DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.SaleOrder.DocumentCategoryName).DocumentTypeId,
                     UploadDate = DateTime.Now,
 
                 };

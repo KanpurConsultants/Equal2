@@ -29,21 +29,21 @@ namespace Data.Models
 
         public string strSchemaName = "Web";
 
-        //public ApplicationDbContext()
-        //    : base((string)System.Web.HttpContext.Current.Session["DefaultConnectionString"] ?? "LoginDB", false)
-        //{
-        //    Configuration.ProxyCreationEnabled = false;
-        //    Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED");
-        //    Database.CommandTimeout = 60;
-        //}
-
         public ApplicationDbContext()
-            : base("Data Source=DESKTOP-IGOMECN\\SQLEXPRESS;Initial Catalog=RUG12;Integrated Security=true; User Id=sa; pwd=P@ssw0rd!", false)
+            : base((string)System.Web.HttpContext.Current.Session["DefaultConnectionString"] ?? "LoginDB", false)
         {
             Configuration.ProxyCreationEnabled = false;
             Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED");
             Database.CommandTimeout = 60;
         }
+
+        //public ApplicationDbContext()
+        //    : base("Data Source=DESKTOP-IGOMECN\\SQLEXPRESS;Initial Catalog=RugDemo;Integrated Security=true; User Id=sa; pwd=P@ssw0rd!", false)
+        //{
+        //    Configuration.ProxyCreationEnabled = false;
+        //    Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED");
+        //    Database.CommandTimeout = 60;
+        //}
 
         //public ApplicationDbContext()
         //    : base("DefaultConnection", false)
@@ -146,15 +146,11 @@ namespace Data.Models
         public DbSet<DocumentTypeSettings> DocumentTypeSettings { get; set; }
         public DbSet<DocumentTypeHeaderAttribute> DocumentTypeHeaderAttribute { get; set; }
         public DbSet<LedgerSetting> LedgerSetting { get; set; }
-        public DbSet<PurchaseOrderSetting> PurchaseOrderSetting { get; set; }
-        public DbSet<PurchaseQuotationSetting> PurchaseQuotationSetting { get; set; }
         public DbSet<SaleInvoiceSetting> SaleInvoiceSetting { get; set; }
 
         public DbSet<CarpetSkuSettings> CarpetSkuSettings { get; set; }
 
         public DbSet<ProductBuyerSettings> ProductBuyerSettings { get; set; }
-
-        public DbSet<PurchaseIndentSetting> PurchaseIndentSetting { get; set; }
         public DbSet<StockHeaderSettings> MaterialIssueSettings { get; set; }
         public DbSet<MaterialReceiveSettings> MaterialReceiveSettings { get; set; }
         public DbSet<MaterialRequestSettings> MaterialRequestSettings { get; set; }
@@ -163,20 +159,8 @@ namespace Data.Models
         public DbSet<JobConsumptionSettings> JobConsumptionSettings { get; set; }
         public DbSet<RateConversionSettings> RateConversionSettings { get; set; }
         public DbSet<RequisitionSetting> RequisitionSetting { get; set; }
-        public DbSet<PurchaseInvoiceHeaderCharge> PurchaseInvoiceHeaderCharge { get; set; }
-        public DbSet<PurchaseInvoiceLineCharge> PurchaseInvoiceLineCharge { get; set; }
-        public DbSet<PurchaseQuotationHeaderCharge> PurchaseQuotationHeaderCharge { get; set; }
-        public DbSet<PurchaseQuotationLineCharge> PurchaseQuotationLineCharge { get; set; }
-        public DbSet<PurchaseInvoiceReturnHeader> PurchaseInvoiceReturnHeader { get; set; }
-        public DbSet<PurchaseInvoiceReturnHeaderCharge> PurchaseInvoiceReturnHeaderCharge { get; set; }
-        public DbSet<PurchaseInvoiceReturnLine> PurchaseInvoiceReturnLine { get; set; }
-        public DbSet<PurchaseInvoiceReturnLineCharge> PurchaseInvoiceReturnLineCharge { get; set; }
         public DbSet<SaleInvoiceHeaderCharge> SaleInvoiceHeaderCharge { get; set; }
         public DbSet<SaleInvoiceLineCharge> SaleInvoiceLineCharge { get; set; }
-        public DbSet<PurchaseOrderHeaderCharge> PurchaseOrderHeaderCharges { get; set; }
-        public DbSet<PurchaseOrderLineCharge> PurchaseOrderLineCharge { get; set; }
-        public DbSet<PurchaseOrderAmendmentHeaderCharge> PurchaseOrderAmendmentHeaderCharges { get; set; }
-        public DbSet<PurchaseOrderRateAmendmentLineCharge> PurchaseOrderRateAmendmentLineCharge { get; set; }
         public DbSet<Route> Route { get; set; }
         public DbSet<RouteLine> RouteLine { get; set; }
         public DbSet<MenuModule> MenuModule { get; set; }
@@ -195,7 +179,7 @@ namespace Data.Models
         public DbSet<Menu> Menu { get; set; }
         public DbSet<Agent> Agent { get; set; }
         public DbSet<Manufacturer> Manufacturer { get; set; }
-        public DbSet<Buyer> Buyer { get; set; }
+        //public DbSet<Buyer> Buyer { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<City> City { get; set; }
         public DbSet<DocumentStatus> DocumentStatus { get; set; }
@@ -243,16 +227,14 @@ namespace Data.Models
         public DbSet<JobOrderHeaderStatus> JobOrderHeaderStatus { get; set; }
         public DbSet<ProdOrderLineStatus> ProdOrderLineStatus { get; set; }
         public DbSet<ProdOrderHeaderStatus> ProdOrderHeaderStatus { get; set; }
-        public DbSet<PurchaseOrderLineStatus> PurchaseOrderLineStatus { get; set; }
         public DbSet<SaleOrderLineStatus> SaleOrderLineStatus { get; set; }
         public DbSet<RequisitionLineStatus> RequisitionLineStatus { get; set; }
-        public DbSet<PurchaseOrderHeaderStatus> PurchaseOrderHeaderStatus { get; set; }
         public DbSet<SalesTaxProductCode> SalesTaxProductCode { get; set; }
         public DbSet<ChargeGroupProduct> ChargeGroupProduct { get; set; }
         public DbSet<ChargeGroupPerson> ChargeGroupPerson { get; set; }
         public DbSet<ChargeGroupPersonCalculation> ChargeGroupPersonCalculation { get; set; }
         public DbSet<ChargeGroupSettings> ChargeGroupSettings { get; set; }
-        public DbSet<JobWorker> JobWorker { get; set; }
+        //public DbSet<JobWorker> JobWorker { get; set; }
         //public DbSet<Machine> Machine { get; set; }
         public DbSet<Process> Process { get; set; }
         public DbSet<ProcessSettings> ProcessSettings { get; set; }
@@ -330,7 +312,7 @@ namespace Data.Models
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<ProductCategorySettings> ProductCategorySettings { get; set; }
         public DbSet<ProductCategoryProcessSettings> ProductCategoryProcessSettings { get; set; }
-        public DbSet<ProductCollection> ProductCollections { get; set; }
+        //public DbSet<ProductCollection> ProductCollections { get; set; }
         //public DbSet<ProductDesign> ProductDesign { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<ProductGroupSettings> ProductGroupSettings { get; set; }
@@ -380,16 +362,6 @@ namespace Data.Models
         public DbSet<JobOrderInspectionRequestSettings> JobOrderInspectionRequestSettings { get; set; }
         public DbSet<JobOrderInspectionSettings> JobOrderInspectionSettings { get; set; }
 
-        //Purchase Inspection
-
-        public DbSet<PurchaseOrderInspectionRequestHeader> PurchaseOrderInspectionRequestHeader { get; set; }
-        public DbSet<PurchaseOrderInspectionRequestLine> PurchaseOrderInspectionRequestLine { get; set; }
-        public DbSet<PurchaseOrderInspectionRequestCancelHeader> PurchaseOrderInspectionRequestCancelHeader { get; set; }
-        public DbSet<PurchaseOrderInspectionRequestCancelLine> PurchaseOrderInspectionRequestCancelLine { get; set; }
-        public DbSet<PurchaseOrderInspectionHeader> PurchaseOrderInspectionHeader { get; set; }
-        public DbSet<PurchaseOrderInspectionLine> PurchaseOrderInspectionLine { get; set; }
-        public DbSet<PurchaseOrderInspectionRequestSettings> PurchaseOrderInspectionRequestSettings { get; set; }
-        public DbSet<PurchaseOrderInspectionSettings> PurchaseOrderInspectionSettings { get; set; }
 
         //User Models
         public DbSet<IdentityUser> Users { get; set; }
@@ -529,33 +501,8 @@ namespace Data.Models
         public DbSet<RequisitionCancelHeader> RequisitionCancelHeader { get; set; }
         public DbSet<RequisitionCancelLine> RequisitionCancelLine { get; set; }
 
-        public DbSet<PurchaseIndentHeader> PurchaseIndentHeader { get; set; }
-        public DbSet<PurchaseIndentLine> PurchaseIndentLine { get; set; }
-        public DbSet<PurchaseIndentLineStatus> PurchaseIndentLineStatus { get; set; }
-        public DbSet<PurchaseIndentCancelHeader> PurchaseIndentCancelHeader { get; set; }
-        public DbSet<PurchaseIndentCancelLine> PurchaseIndentCancelLine { get; set; }
-        public DbSet<PurchaseQuotationHeader> PurchaseQuotationHeader { get; set; }
-        public DbSet<PurchaseQuotationLine> PurchaseQuotationLine { get; set; }
-        public DbSet<PurchaseOrderHeader> PurchaseOrderHeader { get; set; }
-        public DbSet<PurchaseOrderLine> PurchaseOrderLine { get; set; }
-        public DbSet<PurchaseOrderCancelHeader> PurchaseOrderCancelHeader { get; set; }
-        public DbSet<PurchaseOrderCancelLine> PurchaseOrderCancelLine { get; set; }
-        public DbSet<PurchaseOrderAmendmentHeader> PurchaseOrderAmendmentHeader { get; set; }
-        public DbSet<PurchaseOrderQtyAmendmentLine> PurchaseOrderQtyAmendmentLine { get; set; }
-        public DbSet<PurchaseOrderRateAmendmentLine> PurchaseOrderRateAmendmentLine { get; set; }
-        public DbSet<PurchaseGoodsReceiptHeader> PurchaseGoodsReceiptHeader { get; set; }
-        public DbSet<PurchaseGoodsReturnHeader> PurchaseGoodsReturnHeader { get; set; }
-        public DbSet<PurchaseWaybill> PurchaseWaybill { get; set; }
-        public DbSet<PurchaseGoodsReceiptLine> PurchaseGoodsReceiptLine { get; set; }
-        public DbSet<PurchaseGoodsReturnLine> PurchaseGoodsReturnLine { get; set; }
-        public DbSet<PurchaseInvoiceHeader> PurchaseInvoiceHeader { get; set; }
-        public DbSet<PurchaseInvoiceLine> PurchaseInvoiceLine { get; set; }
-        public DbSet<PurchaseInvoiceAmendmentHeader> PurchaseInvoiceAmendmentHeader { get; set; }
-        public DbSet<PurchaseInvoiceRateAmendmentLine> PurchaseInvoiceRateAmendmentLine { get; set; }
         public DbSet<ProductDesign> ProductDesigns { get; set; }
-        public DbSet<PurchaseGoodsReceiptSetting> PurchaseGoodsReceiptSetting { get; set; }
         public DbSet<SaleDispatchSetting> SaleDispatchSetting { get; set; }
-        public DbSet<PurchaseInvoiceSetting> PurchaseInvoiceSetting { get; set; }
 
         //Packing Models
         public DbSet<PackingSetting> PackingSettings { get; set; }
@@ -675,7 +622,7 @@ namespace Data.Models
         public DbSet<ViewSaleDeliveryOrderBalance> ViewSaleDeliveryOrderBalance { get; set; }
 
 
-        public DbSet<ViewRugSize> ViewRugSize { get; set; }
+        public DbSet<ViewProductSize> ViewProductSize { get; set; }
         public DbSet<ViewRugArea> ViewRugArea { get; set; }
         public DbSet<ViewSizeinCms> ViewSizeinCms { get; set; }
         public DbSet<ViewSaleInvoiceLine> ViewSaleInvoiceLine { get; set; }
@@ -779,7 +726,7 @@ namespace Data.Models
             //modelBuilder.Ignore<ViewPurchaseOrderLine>();
 
             //modelBuilder.Ignore<ViewRugArea>();
-            //modelBuilder.Ignore<ViewRugSize>();
+            //modelBuilder.Ignore<ViewProductSize>();
 
             //modelBuilder.Ignore<ViewSaleInvoiceHeader>();
             //modelBuilder.Ignore<ViewSaleInvoiceLine>();
@@ -788,6 +735,47 @@ namespace Data.Models
             //modelBuilder.Ignore<ViewSaleOrderLine>();
             //modelBuilder.Ignore<ViewSaleOrderBalance>();
             //modelBuilder.Ignore<ViewSaleOrderLineTheir>();
+
+
+
+            //modelBuilder.Ignore<ViewDesignColourConsumption>();
+            //modelBuilder.Ignore<ViewJobInvoiceBalance>();
+            //modelBuilder.Ignore<ViewJobInvoiceBalanceForRateAmendment>();
+            //modelBuilder.Ignore<ViewJobOrderBalanceForInspection>();
+            //modelBuilder.Ignore<ViewJobOrderBalanceForInspectionRequest>();
+            //modelBuilder.Ignore<ViewJobOrderBalanceForInvoice>();
+            //modelBuilder.Ignore<ViewJobOrderBalanceFromStatus>();
+            //modelBuilder.Ignore<ViewJobOrderInspectionRequestBalance>();
+            //modelBuilder.Ignore<ViewJobReceiveBalance>();
+            //modelBuilder.Ignore<ViewJobReceiveBalanceForInvoice>();
+            //modelBuilder.Ignore<ViewJobReceiveBalanceForQA>();
+            //modelBuilder.Ignore<ViewLedgerBalance>();
+            //modelBuilder.Ignore<ViewMaterialPlanBalance>();
+            //modelBuilder.Ignore<ViewMaterialPlanForProdOrderBalance>();
+            //modelBuilder.Ignore<ViewMaterialPlanForProdOrderLineBalance>();
+            //modelBuilder.Ignore<ViewMaterialPlanForSaleOrderBalance>();
+            //modelBuilder.Ignore<ViewMaterialRequestBalance>();
+            //modelBuilder.Ignore<ViewPackingBalance>();
+            //modelBuilder.Ignore<ViewProdOrderBalanceForMPlan>();
+            //modelBuilder.Ignore<ViewProductBuyer>();
+            //modelBuilder.Ignore<ViewPurchaseGoodsReceiptBalance>();
+            //modelBuilder.Ignore<ViewPurchaseGoodsReceiptLine>();
+            //modelBuilder.Ignore<ViewPurchaseInvoiceBalance>();
+            //modelBuilder.Ignore<ViewPurchaseOrderBalanceForInvoice>();
+            //modelBuilder.Ignore<ViewRequisitionBalance>();
+            //modelBuilder.Ignore<ViewSaleDeliveryOrderBalance>();
+            //modelBuilder.Ignore<ViewSaleDispatchBalance>();
+            //modelBuilder.Ignore<ViewSaleEnquiryBalance>();
+            //modelBuilder.Ignore<ViewSaleEnquiryBalanceForQuotation>();
+            //modelBuilder.Ignore<ViewSaleInvoiceBalance>();
+            //modelBuilder.Ignore<ViewSaleInvoiceBalanceForDelivery>();
+            //modelBuilder.Ignore<ViewSaleOrderBalanceForCancellation>();
+            //modelBuilder.Ignore<ViewSizeinCms>();
+            //modelBuilder.Ignore<ViewStockInBalance>();
+            //modelBuilder.Ignore<ViewStockProcessBalance>();
+
+
+
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
@@ -1291,10 +1279,10 @@ namespace Data.Models
 
             try
             {
-                mQry = " IF OBJECT_ID ('" + SchemaName + ".ViewRugSize') IS NOT NULL DROP VIEW " + SchemaName + ".ViewRugSize  ";
+                mQry = " IF OBJECT_ID ('" + SchemaName + ".ViewProductSize') IS NOT NULL DROP VIEW " + SchemaName + ".ViewProductSize  ";
                 db.Database.ExecuteSqlCommand(mQry);
 
-                mQry = " CREATE VIEW " + SchemaName + ".[ViewRugSize] "
+                mQry = " CREATE VIEW " + SchemaName + ".[ViewProductSize] "
                         + "AS   "
                         + "SELECT P.ProductId, SS.SizeId AS StandardSizeID, SS.SizeName AS StandardSizeName, "
                         + "SS.Area AS StandardSizeArea,  SM.SizeId AS ManufaturingSizeID, SM.SizeName AS ManufaturingSizeName,  "
@@ -1510,7 +1498,7 @@ namespace Data.Models
 
                 mQry = "CREATE VIEW " + SchemaName + ".ViewRugArea AS "
                         + " SELECT P.ProductId, P.ProductName, S.SizeId, S.ProductShapeId, S.SizeName, S.Area, S.UnitId, "
-                        + " (SELECT SqYard FROM  " + SchemaName + ".[FuncConvertSqFeetToSqYard] (S.Area) ) AS SqYardPerPcs "
+                        + " (SELECT SqYard FROM  " + SchemaName + ".[FConvertSqFeetToSqYard] (S.Area) ) AS SqYardPerPcs "
                         + " FROM  " + SchemaName + ".Products P "
                         + " LEFT JOIN " + SchemaName + ".ProductSizes PS ON PS.ProductId = P.ProductId AND PS.ProductSizeTypeId =1 "
                         + " LEFT JOIN " + SchemaName + ".Sizes S ON S.SizeId = PS.SizeId  "
@@ -2944,10 +2932,10 @@ namespace Data.Models
             #region FunConvertSqFeetToSqYard
             try
             {
-                mQry = " IF OBJECT_ID ('" + SchemaName + ".FuncConvertSqFeetToSqYard') IS NOT NULL DROP FUNCTION " + SchemaName + ".FuncConvertSqFeetToSqYard  ";
+                mQry = " IF OBJECT_ID ('" + SchemaName + ".FConvertSqFeetToSqYard') IS NOT NULL DROP FUNCTION " + SchemaName + ".FConvertSqFeetToSqYard  ";
                 db.Database.ExecuteSqlCommand(mQry);
 
-                mQry = " Create  FUNCTION " + SchemaName + ".FuncConvertSqFeetToSqYard(@SqFeets FLOAT) "
+                mQry = " Create  FUNCTION " + SchemaName + ".FConvertSqFeetToSqYard(@SqFeets FLOAT) "
                          + " RETURNS @Results TABLE (SqYard FLOAT) "
                          + " AS "
                          + " BEGIN "

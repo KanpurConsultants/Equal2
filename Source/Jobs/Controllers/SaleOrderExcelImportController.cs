@@ -22,7 +22,6 @@ namespace Jobs.Controllers
         ISaleOrderHeaderService _SaleOrderHeaderService;
         ISaleOrderLineService _SaleOrderLineService;
         IUnitOfWork _unitOfWork;
-        IBuyerService _BuyerService;
         ICurrencyService _currencyService;
         IShipMethodService _ShipMethodService;
         IDeliveryTermsService _DeliveryTermsService;
@@ -32,7 +31,6 @@ namespace Jobs.Controllers
                                        ISaleOrderHeaderService SaleOrderHeaderService,
                                        ISaleOrderLineService SaleOrderLineService, 
                                        IUnitOfWork unitOfWork,
-                                        IBuyerService buyer,
                                         ICurrencyService curr,
                                         IShipMethodService shipmethod,
                                         IDeliveryTermsService delterms)
@@ -40,7 +38,6 @@ namespace Jobs.Controllers
             _DeliveryTermsService = delterms;
             _ShipMethodService = shipmethod;
             _currencyService = curr;
-            _BuyerService = buyer;
             _ProductService = productService;
             _PersonService = personService;
             _SaleOrderHeaderService = SaleOrderHeaderService;
@@ -98,7 +95,7 @@ namespace Jobs.Controllers
                 }
                 if (SaleOrderRecord.SaleToBuyer!=null)
                 { 
-                if (_BuyerService.GetBuyerByName(SaleOrderRecord.SaleToBuyer) == null)
+                if (_PersonService.FindByName(SaleOrderRecord.SaleToBuyer) == null)
                 {
                     if (!strSaleToBuyer.ToString().Contains("" + SaleOrderRecord.SaleToBuyer))
                     {
@@ -108,7 +105,7 @@ namespace Jobs.Controllers
                 }
                 if (SaleOrderRecord.BillToBuyer!=null)
                 { 
-                if (_BuyerService.GetBuyerByName(SaleOrderRecord.BillToBuyer) == null)
+                if (_PersonService.FindByName(SaleOrderRecord.BillToBuyer) == null)
                 {
                     if (!strBillToBuyer.ToString().Contains("" + SaleOrderRecord.BillToBuyer))
                     {
@@ -259,9 +256,9 @@ namespace Jobs.Controllers
                             
 
                         s.ModifiedBy = User.Identity.Name;
-                        s.SaleToBuyerId = _BuyerService.GetBuyerByName(SaleOrderRecord.SaleToBuyer).PersonID;
+                        s.SaleToBuyerId = _PersonService.FindByName(SaleOrderRecord.SaleToBuyer).PersonID;
                         if (SaleOrderRecord.BillToBuyer != null)
-                            s.BillToBuyerId = _BuyerService.GetBuyerByName(SaleOrderRecord.BillToBuyer).PersonID;
+                            s.BillToBuyerId = _PersonService.FindByName(SaleOrderRecord.BillToBuyer).PersonID;
                         else
                         s.BillToBuyerId = s.SaleToBuyerId;
                         BuyerId = s.SaleToBuyerId;

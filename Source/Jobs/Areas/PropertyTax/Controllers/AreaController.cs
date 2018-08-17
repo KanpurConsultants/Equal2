@@ -16,6 +16,7 @@ using Model.Models;
 using Presentation.ViewModels;
 using Services.PropertyTax;
 using Jobs.Helpers;
+using Jobs.Constants.PropertyDocumentType;
 
 namespace Jobs.Areas.PropertyTax.Controllers
 {
@@ -118,7 +119,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.Area,
+                        DocTypeId = PropertyDocumentTypeConstants.Area.DocumentTypeId,
                         DocId = pt.AreaId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -165,7 +166,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.Area,
+                        DocTypeId = PropertyDocumentTypeConstants.Area.DocumentTypeId,
                         DocId = temp.AreaId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -267,7 +268,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
 
                     _logger.LogActivityDetail(logVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = DocumentTypeIdConstants.Area,
+                        DocTypeId = PropertyDocumentTypeConstants.Area.DocumentTypeId,
                         DocId = temp.AreaId,
                         ActivityType = (int)ActivityTypeContants.Deleted,
                         UserRemark = vm.Reason,
@@ -341,7 +342,7 @@ namespace Jobs.Areas.PropertyTax.Controllers
         [HttpGet]
         public ActionResult Report()
         {
-            DocumentType Dt = _DocumentTypeService.Find(DocumentTypeIdConstants.Area);
+            DocumentType Dt = _DocumentTypeService.Find(PropertyDocumentTypeConstants.Area.DocumentTypeId);
             return Redirect((string)System.Configuration.ConfigurationManager.AppSettings["CustomizeDomain"] + "/Report_ReportPrint/ReportPrint/?MenuId=" + Dt.ReportMenuId);
         }
     }

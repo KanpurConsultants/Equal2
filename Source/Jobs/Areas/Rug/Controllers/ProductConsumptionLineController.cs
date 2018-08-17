@@ -11,6 +11,7 @@ using Model.ViewModels;
 using AutoMapper;
 using Model.ViewModel;
 using System.Xml.Linq;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Areas.Rug.Controllers
 {
@@ -110,7 +111,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConsumption).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConsumption.DocumentTypeName).DocumentTypeId,
                         DocId = bomdetail.BomDetailId,
                         ActivityType = (int)ActivityTypeContants.Added,
                     }));
@@ -159,7 +160,7 @@ namespace Jobs.Areas.Rug.Controllers
 
                     LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
                     {
-                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConsumption).DocumentTypeId,
+                        DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConsumption.DocumentTypeName).DocumentTypeId,
                         DocId = bomdetail.BomDetailId,
                         ActivityType = (int)ActivityTypeContants.Modified,
                         xEModifications = Modifications,
@@ -232,7 +233,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.ProductConsumption).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.ProductConsumption.DocumentTypeName).DocumentTypeId,
                 DocId = vm.BomDetailId,
                 ActivityType = (int)ActivityTypeContants.Deleted,                
                 xEModifications = Modifications,

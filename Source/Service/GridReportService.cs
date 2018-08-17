@@ -338,7 +338,7 @@ namespace Service
                     LEFT JOIN Web.ProdOrderLines POL WITH (nolock) ON L.ProdOrderLineId = POL.ProdOrderLineId 
                     LEFT JOIN Web.ProdOrderHeaders POH WITH (nolock) ON POL.ProdOrderHeaderId  = POH.ProdOrderHeaderId
                     LEFT JOIN [Web].DocumentTypes DTPO WITH (nolock) ON DTPO.DocumentTypeId = POH.DocTypeId
-                    LEFT JOIN web.ViewRugSize VRS with (nolock) on VRS.ProductId=P.ProductId
+                    LEFT JOIN web.ViewProductSize VRS with (nolock) on VRS.ProductId=P.ProductId
                     WHERE 1=1 AND L.ProductId IS NOT NULL " +
                         (form["DocumentType"].ToString() != null && form["DocumentType"].ToString() != "" ? " AND H.DocTypeId IN (SELECT Items FROM [dbo].[Split] (@DocumentType, ','))" : "") +
                         (form["FromDate"].ToString() != null && form["FromDate"].ToString() != "" ? " AND H.DocDate >= @FromDate " : "") +
@@ -506,7 +506,7 @@ namespace Service
                                 LEFT JOIN Web.Products PD WITH (Nolock) ON PD.ProductId=JOL.ProductId
                                 LEFT JOIN Web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId  = PD.ProductGroupId
                                 LEFT JOIN Web.ProductTypes PT WITH (nolock)  ON Pg.ProductTypeId = Pt.ProductTypeId 
-                                LEFT JOIN Web.ViewRugSize VRS WITH (Nolock) ON VRS.ProductId=JOL.ProductId
+                                LEFT JOIN Web.ViewProductSize VRS WITH (Nolock) ON VRS.ProductId=JOL.ProductId
                                 LEFT JOIN Web.Dimension1 D1 WITH (Nolock) ON D1.Dimension1Id=JRL.Dimension1Id
                                 LEFT JOIN Web.Dimension2 D2 WITH (Nolock) ON D2.Dimension2Id=JRL.Dimension2Id
                                 LEFT JOIN Web.Dimension3 D3 WITH (Nolock) ON D3.Dimension3Id=JRL.Dimension3Id
@@ -674,7 +674,7 @@ namespace Service
                     Left Join Web.Dimension4 D4 with (Nolock) On D4.Dimension4Id=L.Dimension4Id                 
                     LEFT JOIN web.Sites SI WITH (nolock) ON SI.SiteId = H.SiteId
                     LEFT JOIN web.Divisions DI WITH (nolock) ON DI.DivisionId  = H.DivisionId
-                    LEFT JOIN web.ViewRugSize VRS with (nolock) on VRS.ProductId=P.ProductId
+                    LEFT JOIN web.ViewProductSize VRS with (nolock) on VRS.ProductId=P.ProductId
                     WHERE 1=1 AND L.ProductId IS NOT NULL   " +
                         (form["DocumentType"].ToString() != null && form["DocumentType"].ToString() != "" ? " AND H.DocTypeId IN (SELECT Items FROM [dbo].[Split] (@DocumentType, ','))" : "") +
                         (form["FromDate"].ToString() != null && form["FromDate"].ToString() != "" ? " AND H.DocDate >= @FromDate " : "") +
@@ -989,7 +989,7 @@ namespace Service
                                     LEFT JOIN Web.Products PD ON PD.ProductId = SOL.ProductId   
                                     LEFT JOIN Web.FinishedProduct FPD ON PD.ProductId = FPD.ProductId   
                                     LEFT JOIN Web.Units U ON U.UnitId = PD.UnitId   
-                                    LEFT JOIN Web.ViewRugSize UC ON UC.ProductId = SOL.ProductId  
+                                    LEFT JOIN Web.ViewProductSize UC ON UC.ProductId = SOL.ProductId  
                                     LEFT JOIN Web.Sizes PS ON PS.SizeId = UC.StandardSizeID
                                     LEFT JOIN Web.ProductGroups PG WITH (Nolock) ON PG.ProductGroupId=PD.ProductGroupId
                                     LEFT JOIN Web.ProductTypes PT ON PT.ProductTypeId =PG.ProductTypeId

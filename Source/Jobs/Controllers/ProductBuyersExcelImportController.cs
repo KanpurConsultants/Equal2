@@ -21,16 +21,13 @@ namespace Jobs.Controllers
         IProductService _ProductService;
         IProductBuyerService _ProductBuyerService;
         IUnitOfWork _unitOfWork;
-        IBuyerService _BuyerService;
 
 
         public ProductBuyersExcelImportController(IProductService productService,                                       
                                        IUnitOfWork unitOfWork,
-                                       IProductBuyerService productBuyerService, 
-                                       IBuyerService buyer)
+                                       IProductBuyerService productBuyerService)
         {
-
-            _BuyerService = buyer;
+          
             _ProductService = productService;
             _ProductBuyerService = productBuyerService;
             _unitOfWork = unitOfWork;

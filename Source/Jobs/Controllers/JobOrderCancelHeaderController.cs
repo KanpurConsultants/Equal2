@@ -23,6 +23,7 @@ using JobOrderCancelDocumentEvents;
 using Reports.Reports;
 using Reports.Controllers;
 using Model.ViewModels;
+using Jobs.Constants.DocumentCategory;
 
 namespace Jobs.Controllers
 {
@@ -76,8 +77,8 @@ namespace Jobs.Controllers
 
         public void PrepareViewBag(int id)
         {
-            //ViewBag.DocTypeList = new DocumentTypeService(_unitOfWork).GetDocumentTypeList(TransactionDocCategoryConstants.JobOrderCancel).ToList();
-            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(TransactionDocCategoryConstants.JobOrderCancel).ToList();
+            //ViewBag.DocTypeList = new DocumentTypeService(_unitOfWork).GetDocumentTypeList(DocumentCategoryConstants.JobOrderCancel).ToList();
+            ViewBag.ReasonList = new ReasonService(_unitOfWork).GetReasonList(DocumentCategoryConstants.JobOrderCancel.DocumentCategoryName).ToList();
             ViewBag.Name = new DocumentTypeService(_unitOfWork).Find(id).DocumentTypeName;
             ViewBag.id = id;
             ViewBag.AdminSetting = UserRoles.Contains("Admin").ToString();

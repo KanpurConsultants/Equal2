@@ -13,7 +13,7 @@ using Model.ViewModels;
 using Model.ViewModel;
 using System.Data.Entity.SqlServer;
 using System.Data.SqlClient;
-using Model.ViewModels;
+using Jobs.Constants.RugDocumentType;
 using AutoMapper;
 using System.Data;
 using System.Data.SqlClient;
@@ -981,7 +981,7 @@ namespace Service
                         var MainJobRec = (from p in db.JobReceiveLine
                                           join t in db.JobReceiveHeader on p.JobReceiveHeaderId equals t.JobReceiveHeaderId
                                           join d in db.DocumentType on t.DocTypeId equals d.DocumentTypeId
-                                          where p.ProductUidId == JobReceiveLine.ProductUidId && t.SiteId != JobReceiveHeader.SiteId && d.DocumentTypeName == TransactionDoctypeConstants.WeavingBazarHalfTuft
+                                          where p.ProductUidId == JobReceiveLine.ProductUidId && t.SiteId != JobReceiveHeader.SiteId && d.DocumentTypeName == RugDocumentTypeConstants.WeavingBazarHalfTuft.DocumentTypeName
                                           && p.LockReason != null
                                           select p).ToList().LastOrDefault();
 
@@ -1163,7 +1163,7 @@ namespace Service
                         from FPTab in FPTable.DefaultIfEmpty()
                         join C in db.Colour on FPTab.ColourId equals C.ColourId into CTable
                         from CTab in CTable.DefaultIfEmpty()
-                        join RS in db.ViewRugSize on p.ProductId equals RS.ProductId into RSTable
+                        join RS in db.ViewProductSize on p.ProductId equals RS.ProductId into RSTable
                         from RSTab in RSTable.DefaultIfEmpty()
                         join SC in db.ViewSizeinCms on RSTab.ManufaturingSizeID equals SC.SizeId into SCTable
                         from SCTab in SCTable.DefaultIfEmpty()

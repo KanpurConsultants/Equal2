@@ -11,7 +11,7 @@ using System.Data;
 using System.Text;
 using Core.Common;
 using Reports.Controllers;
-using Jobs.Helpers;
+using Jobs.Constants.DocumentType;
 using Model.ViewModel;
 using System.Xml.Linq;
 
@@ -172,7 +172,7 @@ namespace Jobs.Areas.Rug.Controllers
 
             LogActivity.LogActivityDetail(LogVm.Map(new ActiivtyLogViewModel
             {
-                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(TransactionDoctypeConstants.Report).DocumentTypeId,
+                DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.Report.DocumentTypeName).DocumentTypeId,
                 DocId = header.ReportHeaderId,
                 Narration = header.ReportName,
                 ActivityType = (int)ActivityTypeContants.Report,

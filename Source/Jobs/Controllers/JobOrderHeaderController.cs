@@ -25,6 +25,8 @@ using Reports.Reports;
 using Reports.Controllers;
 using Model.ViewModels;
 using Mailer.Model;
+using Jobs.Constants.DocumentCategory;
+using Jobs.Constants.DocumentType;
 
 namespace Jobs.Controllers
 {
@@ -1723,14 +1725,14 @@ namespace Jobs.Controllers
                                 SqlParameter DocDate = new SqlParameter("@DocDate", DateTime.Now.Date);
                                 DocDate.SqlDbType = SqlDbType.DateTime;
                                 SqlParameter Godown = new SqlParameter("@GodownId", pd.GodownId);
-                                SqlParameter DocType = new SqlParameter("@DocTypeId", new DocumentTypeService(_unitOfWork).Find(TransactionDoctypeConstants.GatePass).DocumentTypeId);
+                                SqlParameter DocType = new SqlParameter("@DocTypeId", new DocumentTypeService(_unitOfWork).Find(DocumentTypeConstants.GatePass.DocumentTypeName).DocumentTypeId);
                                 GatePassHeader GPHeader = new GatePassHeader();
                                 GPHeader.CreatedBy = User.Identity.Name;
                                 GPHeader.CreatedDate = DateTime.Now;
                                 GPHeader.DivisionId = pd.DivisionId;
                                 GPHeader.DocDate = DateTime.Now.Date;
                                 GPHeader.DocNo = context.Database.SqlQuery<string>("Web.GetNewDocNoGatePass @DocTypeId, @DocDate, @GodownId ", DocType, DocDate, Godown).FirstOrDefault();
-                                GPHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(MasterDocTypeConstants.GatePass).DocumentTypeId;
+                                GPHeader.DocTypeId = new DocumentTypeService(_unitOfWork).FindByName(DocumentTypeConstants.GatePass.DocumentTypeName).DocumentTypeId;
                                 GPHeader.ModifiedBy = User.Identity.Name;
                                 GPHeader.ModifiedDate = DateTime.Now;
                                 GPHeader.Remark = pd.Remark;
@@ -2348,7 +2350,7 @@ namespace Jobs.Controllers
                 int PK = 0;
 
                 var Settings = new JobOrderSettingsService(_unitOfWork).GetJobOrderSettingsForDocument(DocTypeId, DivisionId, SiteId);
-                var GatePassDocTypeID = new DocumentTypeService(_unitOfWork).FindByName(TransactionDocCategoryConstants.GatePass).DocumentTypeId;
+                var GatePassDocTypeID = new DocumentTypeService(_unitOfWork).FindByName(DocumentCategoryConstants.GatePass.DocumentCategoryName).DocumentTypeId;
                 string JobHeaderIds = "";
 
                 try
@@ -2800,7 +2802,7 @@ VDC.CompanyName,
           D1.Dimension1Name,DTS.Dimension1Caption,D2.Dimension2Name,DTS.Dimension2Caption,D3.Dimension3Name,DTS.Dimension3Caption,D4.Dimension4Name,DTS.Dimension4Caption,
 	L.LotNo AS LotNo,(CASE WHEN DTS.PrintSpecification >0 THEN L.Specification ELSE '' END)  AS Specification, DTS.SpecificationCaption,DTS.SignatoryleftCaption,L.Remark AS LineRemark,
 	L.DiscountPer AS DiscountPer,
-	L.DiscountAmt AS DiscountAmt,
+	L.DiscountAmount AS DiscountAmt,
 	--STC.Code AS SalesTaxProductCodes,
 	(CASE WHEN H.ProcessId IN(26,28) THEN STC.Code ELSE PSSTC.Code END)  AS SalesTaxProductCodes,
     (SELECT TOP 1 SalesTaxProductCodeCaption FROM web.SiteDivisionSettings WHERE H.DocDate BETWEEN StartDate AND IsNull(EndDate, getdate()) AND SiteId = H.SiteId AND DivisionId = H.DivisionId)  AS SalesTaxProductCodeCaption,
@@ -3109,7 +3111,7 @@ EXEC(@Qry);	";
                              JobOrderHeaderId = H.JobOrderHeaderId,
                              DocTypeId = H.DocTypeId,
                              Subject = H.DocType.DocumentTypeName,
-                             EMail = H.JobWorker.Person.Email,
+                             EMail = H.JobWorker.Email,
                              DocDate = H.DocDate,
                              DocNo = H.DocNo
                          }).FirstOrDefault();
